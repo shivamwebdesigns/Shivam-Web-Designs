@@ -99,7 +99,7 @@ function StartProjectForm() {
       }
 
       if (typeof data.inquiryId !== 'string' || !data.inquiryId) {
-        throw new Error('Email delivery could not be confirmed. Please try again.');
+        throw new Error('Your brief could not be saved. Please try again.');
       }
 
       setInquiryId(data.inquiryId);
@@ -145,10 +145,10 @@ function StartProjectForm() {
 
               <div>
                 <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
-                  Email Delivery Confirmed
+                  Inquiry Saved
                 </span>
                 <h2 className="text-3xl font-light text-white tracking-tight mt-1">
-                  Brief Sent for Quotation
+                  Brief Received
                 </h2>
                 <div className="mt-3 inline-block px-4 py-1.5 bg-neutral-900 border border-neutral-800 text-xs font-mono text-neutral-300">
                   Tracking ID: {inquiryId}
@@ -163,7 +163,7 @@ function StartProjectForm() {
                       ? formData.customProjectType
                       : formData.projectType}
                   </span>{' '}
-                  project has been sent to the studio for quotation.
+                  project has been saved for studio review.
                 </p>
                 <p className="text-neutral-400 text-xs">
                   Shivam Purohit will review your timeline and requirements, assess our sprint capacity, and respond directly to <span className="text-white font-mono">{formData.email}</span> within 24 to 48 hours.

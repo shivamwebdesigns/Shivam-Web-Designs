@@ -27,6 +27,7 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 - Responsive mobile portrait mode allowing natural one-handed vertical viewing on smartphones.
 - Zero tracking cookies, DPDP Act 2023 / GDPR compliance, and sub-2.0s load times.
 - Frictionless project brief submission with server-side email dispatch and a contact form fallback.
+- Private, owner-only inquiry dashboard so project and contact submissions remain available when email notifications fail.
 
 ## 4. Target Users
 ### User Type 1: High-Growth Founders & Product Leaders
@@ -63,10 +64,15 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 
 ### Feature 4: Workable Project Brief Generator
 - Purpose: Project intake form collecting client name, email, service, project scope, INR budget range, and timeline.
-- Output: Server-validated project brief emailed through Resend to `shivamwebdesigns23@gmail.com`; delivery failures are shown with a link to the contact form.
+- Output: Server-validated project brief saved to Firestore; Resend email is a separate backup notification and is never represented as delivered unless accepted.
+
+### Feature 5: Private Inquiry Dashboard (`/admin`)
+- Purpose: Let the studio owner review project briefs and contact messages without depending on email delivery.
+- Access: Google sign-in with server-verified authorization restricted to `shivamwebdesigns23@gmail.com`.
+- Data: Server-only Firebase Admin SDK access to Firestore; the dashboard is not linked publicly and is marked `noindex`.
 
 ## 7. Non-Goals
-- User account creation / login systems (the platform is strictly privacy-first, zero tracking).
+- Public user account creation or login; the only sign-in flow is the private owner inquiry dashboard.
 - Unnecessary frameworks, dependencies, third-party tracking scripts, and cookie consent banners.
 - Third-party tracking scripts, cookie consent banners, or intrusive advertising pixels.
 - Generic AI copy, purple gradients, or fake customer counters.
@@ -74,7 +80,8 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 ## 8. MVP Scope
 ### Must Have:
 - 100% workable 3D business card on desktop and mobile with Front, Back, Flip, Portrait/Landscape, and vCard buttons.
-- Fully workable project brief intake with confirmed email delivery and a contact form fallback.
+- Fully workable project brief intake with confirmed Firestore persistence, optional email notification, and a contact form fallback.
+- Firestore-backed persistence for project and contact submissions, with an owner-only authenticated dashboard.
 - Sub-2-second load times on 4G networks.
 - Clean legal compliance suite (`privacy.html`, `terms.html`, `sitemap.xml`, `robots.txt`).
 - Structured JSON-LD metadata for Google search optimization.

@@ -43,10 +43,17 @@
 ## Flow 7: Project Brief Formulation & Dispatch
 1. User opens `/start-project` from a project CTA.
 2. User enters contact details, service, estimated budget in INR, timeline, and project description.
-3. On submission, the server validates the brief and sends it through Resend to `shivamwebdesigns23@gmail.com`.
-4. The page confirms delivery only after Resend accepts the email; if delivery is unavailable, it displays an error and a link to the contact form.
+3. On submission, the server validates the brief and saves it to Firestore.
+4. The page confirms the brief was saved; optional Resend notification status is recorded separately and can be checked in the private dashboard.
 
 ## Flow 8: Contact Form Without Public Direct Details
 1. User opens `/contact`; the personal email address and phone number are not displayed, while Direct Email and WhatsApp actions remain available.
 2. User submits their name, reply email, and message through the contact form.
-3. The contact form displays the delivery status.
+3. The message is saved to Firestore and the contact form confirms it was received; optional email status is tracked separately.
+
+## Flow 9: Owner Inquiry Dashboard
+1. The studio owner opens `/admin` (not linked in public navigation).
+2. The owner signs in with Google; Firebase Authentication returns an ID token.
+3. The dashboard sends the token to `GET /api/admin/inquiries`.
+4. The server verifies the token and restricts access to `shivamwebdesigns23@gmail.com` before returning paginated project briefs and contact messages.
+5. Each inquiry shows its creation time and whether its separate email notification was sent, failed, or not configured.

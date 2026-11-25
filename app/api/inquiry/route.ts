@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
+import { sendEmailNotification } from '@/lib/email-notifications';
+import { saveInquiry, updateInquiryEmailStatus } from '@/lib/inquiry-store';
 
-const recipientEmail = 'shivamwebdesigns23@gmail.com';
+export const runtime = 'nodejs';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -8,16 +10,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function singleLine(value: string, maxLength: number): string {
   return value.replace(/[\r\n\t]+/g, ' ').trim().slice(0, maxLength);
-}
-
-function deliveryError(status: number) {
-  return NextResponse.json(
-    {
-      error:
-        'We could not email your brief right now. Please try again.',
-    },
-    { status }
-  );
 }
 
 export async function POST(request: Request) {
@@ -110,78 +102,68 @@ export async function POST(request: Request) {
     }
   }
 
-  const resendApiKey = process.env.RESEND_API_KEY?.trim();
-  const fromEmail = process.env.CONTACT_FROM_EMAIL?.trim();
-  if (!resendApiKey || !fromEmail) {
+  let inquiryId: string;
+  try {
+    inquiryId = await saveInquiry({
+      kind: 'project',
+      name: fullNameValue,
+      email: emailValue,
+      company: companyValue,
+      projectType: projectTypeValue,
+      budget: budgetValue,
+      timeline: timelineValue,
+      description: descriptionValue,
+      referenceUrl: referenceUrlValue,
+      additionalRequirements: additionalRequirementsValue,
+    });
+  } catch (error) {
+    console.error('[SWD_INQUIRY_STORAGE_ERROR]', {
+      name: error instanceof Error ? error.name : 'UnknownError',
+    });
     return NextResponse.json(
-      {
-        error:
-          'Email delivery is not configured yet.',
-      },
+      { error: 'We could not save your brief right now. Please try again.' },
       { status: 503 }
     );
   }
 
-  const inquiryId = `SWD-${Date.now().toString(36).toUpperCase()}`;
-  const emailText = [
-    'New Project Quotation Request',
-    '',
-    `Inquiry ID: ${inquiryId}`,
-    `Client: ${fullNameValue}`,
-    `Email: ${emailValue}`,
-    `Company: ${companyValue || 'Not provided'}`,
-    `Service: ${projectTypeValue}`,
-    `Estimated investment (INR): ${budgetValue}`,
-    `Timeline: ${timelineValue}`,
-    `Reference URL: ${referenceUrlValue || 'Not provided'}`,
-    '',
-    'Project description:',
-    descriptionValue,
-    '',
-    'Additional notes:',
-    additionalRequirementsValue || 'None',
-    '',
-    'Submitted via https://shivamwebdesigns.devs.li/start-project',
-  ].join('\n');
-
-  let emailResponse: Response;
+  const emailStatus = await sendEmailNotification({
+    replyTo: emailValue,
+    subject: `[Project Quotation Request] ${inquiryId}`,
+    text: [
+      'New Project Quotation Request',
+      '',
+      `Inquiry ID: ${inquiryId}`,
+      `Client: ${fullNameValue}`,
+      `Email: ${emailValue}`,
+      `Company: ${companyValue || 'Not provided'}`,
+      `Service: ${projectTypeValue}`,
+      `Estimated investment (INR): ${budgetValue}`,
+      `Timeline: ${timelineValue}`,
+      `Reference URL: ${referenceUrlValue || 'Not provided'}`,
+      '',
+      'Project description:',
+      descriptionValue,
+      '',
+      'Additional notes:',
+      additionalRequirementsValue || 'None',
+      '',
+      'Submitted via https://shivamwebdesigns.devs.li/start-project',
+    ].join('\n'),
+  });
 
   try {
-    emailResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${resendApiKey}`,
-      },
-      body: JSON.stringify({
-        from: fromEmail,
-        to: [recipientEmail],
-        reply_to: emailValue,
-        subject: `[Project Quotation Request] ${inquiryId}`,
-        text: emailText,
-      }),
-    });
+    await updateInquiryEmailStatus(inquiryId, emailStatus);
   } catch (error) {
-    console.error('[SWD_INQUIRY_EMAIL_NETWORK_ERROR]', {
+    console.error('[SWD_INQUIRY_STATUS_UPDATE_ERROR]', {
       inquiryId,
-      message: error instanceof Error ? error.message : 'Unknown network error',
+      name: error instanceof Error ? error.name : 'UnknownError',
     });
-    return deliveryError(502);
   }
-
-  if (!emailResponse.ok) {
-    console.error('[SWD_INQUIRY_EMAIL_PROVIDER_ERROR]', {
-      inquiryId,
-      status: emailResponse.status,
-    });
-    return deliveryError(502);
-  }
-
-  console.info('[SWD_INQUIRY_EMAIL_SENT]', { inquiryId });
 
   return NextResponse.json({
     success: true,
     inquiryId,
-    message: 'Your project brief was emailed to the studio for quotation review.',
+    emailSent: emailStatus === 'sent',
+    message: 'Your project brief was received.',
   });
 }

@@ -23,8 +23,8 @@ Do not contradict these documents without explicitly identifying the conflict.
 ## 3. General Rules
 - Understand existing code before modifying it.
 - Reuse existing CSS variables and utility classes.
-- Maintain zero runtime dependencies (no adding React, Three.js, Tailwind, etc.).
-- Maintain exact synchronization between `website/` and root mirror files.
+- Keep runtime dependencies focused; Firebase client/Admin SDKs are approved only for owner authentication and inquiry persistence.
+- Maintain exact synchronization between static files in `website/` and their root mirrors; Next.js App Router features are maintained under `app/`.
 - Do not invent business requirements or fake reviews/counters.
 - Do not hardcode secret keys or test credentials.
 - Ensure all interactive elements have $\ge 44	ext{px}$ touch targets.

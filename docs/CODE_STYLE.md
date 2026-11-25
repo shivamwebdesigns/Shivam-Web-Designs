@@ -5,7 +5,7 @@
 - Prefer clean, readable vanilla code over heavy framework abstractions.
 - Keep functions small, focused, and single-purpose.
 - Prefer consistency across the codebase over novel, untested syntax.
-- Maintain zero runtime dependencies.
+- Keep runtime dependencies focused; Firebase client/Admin SDKs are limited to the inquiry dashboard and storage feature.
 - Follow mobile-first and responsive design principles.
 
 ## 2. Naming Conventions
@@ -18,6 +18,7 @@
 ## 3. Folder Structure & Synchronization Rules
 - Canonical Source: `website/` is the primary editing root for HTML, CSS, and JS files.
 - Static Host Mirroring: Root files (`index.html`, `styles.css`, `script.js`, `businesscard.html`, `sitemap.xml`, `robots.txt`, `privacy.html`, `terms.html`) must be kept in 100% sync with `website/` to ensure zero routing discrepancies on any host.
+- Next.js App Router pages and API routes are maintained in `app/` and do not have static mirrors.
 
 ## 4. HTML Guidelines
 - Always use semantic HTML5 elements (`<header>`, `<nav>`, `<main>`, `<section>`, `<dialog>`, `<footer>`).

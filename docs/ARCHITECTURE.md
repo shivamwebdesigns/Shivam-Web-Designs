@@ -2,17 +2,20 @@
 # 03 / ARCHITECTURE.md
 
 ## 1. System Overview
-Shivam Web Designs is engineered as a zero-bloat, high-performance static web platform deployed globally via Vercel Edge CDN. The architecture combines semantic server-renderable HTML5, hardware-accelerated CSS 3D transforms, and modular vanilla JavaScript.
+Shivam Web Designs combines its high-performance public site with Next.js serverless form APIs deployed on Vercel. Public content uses semantic HTML and CSS 3D transforms; inquiry processing uses Firebase Admin SDK and Firestore on the server.
 
 ## 2. Architecture Pattern
-- Pattern: Jamstack / Static Architecture with Edge Serverless Rewrites
-- Reason: Maximizes performance (sub-2.0s load time worldwide), guarantees zero downtime, eliminates server database attack surfaces, and provides instant edge routing.
+- Pattern: Jamstack public site with serverless API routes and a private authenticated admin surface
+- Reason: Keep public content fast while persisting inquiries server-side and limiting private data access to the authorized studio owner.
 
 ## 3. Technology Stack
 - Presentation: Semantic HTML5, CSS Grid, Flexbox, CSS 3D Transforms
 - Graphics & Physics: Hardware-accelerated CSS 3D rendering, WebGL Canvas progressive enhancement, requestAnimationFrame physics loop
-- Scripting: Vanilla JavaScript (ES2022+), zero runtime frameworks
+- Scripting: React/TypeScript for Next.js routes; vanilla JavaScript (ES2022+) for the static mirrored experience
 - Hosting & CDN: Vercel Global Edge Network
+- Inquiry Storage: Firebase Firestore through the server-only Firebase Admin SDK
+- Owner Authentication: Firebase Google Authentication with server-verified ID tokens and an email allowlist
+- Email Notifications: Resend as a separate optional notification channel
 - Routing: `vercel.json` declarative rewrites and clean URLs
 - Standards: vCard 3.0 specification for digital business cards, Schema.org JSON-LD
 
@@ -23,10 +26,13 @@ Shivam Web Designs is engineered as a zero-bloat, high-performance static web pl
 ### Component 2: 3D Business Card Engine (`businesscard.html`)
 - Responsibilities: 360-degree interactive 3D spatial card simulation, orientation switcher (Portrait / Landscape), dynamic foil specular shader, micro-grain paper texture, and vCard generator.
 
-### Component 3: Project Brief & Client Intake (`app/start-project/page.tsx`, `app/api/inquiry/route.ts`)
-- Responsibilities: Collects and validates project details, including INR budget ranges, then sends quotation requests through Resend to the studio inbox. Delivery failures are surfaced to the client with a link to the contact form.
+### Component 3: Inquiry Intake (`app/api/inquiry/route.ts`, `app/api/contact/route.ts`)
+- Responsibilities: Validates project and contact submissions, stores them in Firestore, and records the separate Resend notification outcome.
 
-### Component 4: Edge Routing & File Mirrors
+### Component 4: Private Inquiry Dashboard (`app/admin`, `app/api/admin/inquiries/route.ts`)
+- Responsibilities: Signs in the studio owner with Google Authentication and returns paginated inquiries only after server-side ID token and email allowlist verification.
+
+### Component 5: Edge Routing & File Mirrors
 - Responsibilities: `vercel.json` maps friendly routes (`/businesscard`, `/card`, `/privacy`, `/terms`, `/sitemap.xml`, `/robots.txt`) to optimized canonical resources.
 
 ## 5. Architecture Diagram
@@ -54,9 +60,20 @@ flowchart TD
 
   subgraph Conversion [Client Conversion Actions]
     StartProject[Start Project Form] --> InquiryAPI[POST /api/inquiry]
-    InquiryAPI --> Resend[Resend Email Delivery]
+    ContactForm[Contact Form] --> ContactAPI[POST /api/contact]
+    InquiryAPI --> Firestore[Firestore Inquiry Store]
+    ContactAPI --> Firestore
+    InquiryAPI --> Resend[Optional Resend Notification]
+    ContactAPI --> Resend
     Resend --> StudioInbox[shivamwebdesigns23@gmail.com]
     VCard --> MobileContacts[iOS / Android Contacts App]
+  end
+
+  subgraph Admin [Private Admin Access]
+    AdminUI[/admin] --> GoogleAuth[Firebase Google Sign-in]
+    AdminUI --> AdminAPI[GET /api/admin/inquiries]
+    AdminAPI -->|Verify ID token + allowlisted email| GoogleAuth
+    AdminAPI --> Firestore
   end
 ```
 
@@ -65,7 +82,8 @@ flowchart TD
 2. Browser parses semantic HTML and renders first paint in < 400ms.
 3. 3D physics loop initializes with RAF and listens for Pointer Events.
 4. User clicks "Add to Contacts" → JavaScript generates RFC 2426 vCard string, creates ephemeral object URL, and triggers instant OS download.
-5. User submits a project brief → `/api/inquiry` validates the request and sends it through Resend; the page confirms only after provider acceptance.
+5. User submits a project brief or contact message → the API validates and saves it to Firestore before attempting a Resend notification.
+6. `/admin` signs in with Google; the API verifies the Firebase ID token and owner email before returning a page of inquiry records.
 
 ## 7. Project Structure
 ```
@@ -101,7 +119,7 @@ Shivam-Web-Designs/
 ```
 
 ## 8. Dependency Rules
-- Zero third-party npm runtime libraries.
+- Firebase client and Admin SDK packages are limited to authentication and inquiry persistence; no unrelated runtime frameworks are added.
 - All styles must use CSS Custom Properties defined in `:root`.
 - No raw string DOM injection (`innerHTML` with unescaped input).
 - All image assets must include explicit dimensions and descriptive `alt` tags.
@@ -120,8 +138,11 @@ Shivam-Web-Designs/
 - RequestAnimationFrame throttled physics simulation that sleeps during idle states.
 
 ## 11. Scalability Considerations
-- Serverless static edge delivery scales effortlessly to millions of hits with zero database load or cold starts.
+- Public content scales through the Vercel edge; inquiry storage and reads use Firebase Firestore server-side.
 
 ## 12. Failure Scenarios
 - JavaScript Disabled: All core text, portfolio works, and direct email links remain 100% readable and functional via semantic HTML.
 - Slow Network / Offline: Cached assets allow viewing; vCard generation occurs locally without internet access.
+- Firebase Configuration Missing: The API reports a storage failure; no successful inquiry receipt is shown unless persistence succeeds.
+- Resend Failure: The saved inquiry remains in Firestore and its email status is shown in the owner dashboard.
+- Unauthorized Admin Request: `/api/admin/inquiries` returns `401` or `403` without exposing inquiry data.

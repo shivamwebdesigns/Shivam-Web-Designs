@@ -44,6 +44,7 @@ export default function ContactPage() {
           email: formData.email,
           subject: formData.subject || 'General Inquiry via SWD Contact Form',
           message: formData.message,
+          honeypot: formData.honeypot,
         }),
       });
 
@@ -184,9 +185,9 @@ export default function ContactPage() {
                     <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center mx-auto">
                       <CheckCircle2 className="w-6 h-6" />
                     </div>
-                    <h3 className="text-xl font-light text-white">Message Dispatched Successfully</h3>
+                    <h3 className="text-xl font-light text-white">Message Received</h3>
                     <p className="text-sm text-neutral-400 max-w-md mx-auto">
-                      Thank you for contacting ShivamWebDesigns. Shivam has received your note and will review it shortly. You can expect a response within 24 business hours.
+                      Thank you for contacting ShivamWebDesigns. Your message has been saved for review. You can expect a response within 24 business hours.
                     </p>
                     <button
                       onClick={() => setStatus('idle')}

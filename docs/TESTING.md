@@ -10,13 +10,18 @@
 ## 2. Test Types
 ### Manual & Visual Verification
 - 3D Business Card: Drag to rotate 360°, tap to flip, click Front/Back buttons, toggle Portrait/Landscape mode, and verify vCard download.
-- Project Brief Form: Submit valid details and verify successful email delivery; verify missing or failed email configuration displays an error and a Contact page fallback.
+- Project Brief Form: Submit valid details and verify Firestore persistence; verify the user is not told that email was sent unless Resend accepts it.
+- Contact Form: Submit valid details and verify Firestore persistence; verify the server no longer logs message contents.
+- Admin Dashboard: Verify the owner Google account can load inquiries, a different account receives `403`, and missing/invalid tokens receive `401`.
+- Firestore Rules: Verify browser clients cannot directly read or write inquiry documents.
 - Case Study Inspector: Open each case study modal, verify dynamic content population and responsive layout.
 
 ### Automated Syntax & Build Verification
 - JavaScript Syntax Validation: `node -c website/script.js`
 - Embedded Card Script Syntax: Validate script blocks with Node.js parser.
 - HTML Structure Validation: Verify valid closing tags, doctypes, and semantic hierarchy.
+- Next.js Build and Type Check: `npm run build` and `npx tsc --noEmit`
+- API Access Control: `GET /api/admin/inquiries` without a bearer token returns `401`; an authenticated non-owner returns `403`.
 
 ### Edge Route & HTTP Status Verification
 - Test all Vercel clean URL routes and mirrors:

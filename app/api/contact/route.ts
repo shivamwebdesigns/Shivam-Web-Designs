@@ -1,81 +1,124 @@
 import { NextResponse } from 'next/server';
+import { sendEmailNotification } from '@/lib/email-notifications';
+import { saveInquiry, updateInquiryEmailStatus } from '@/lib/inquiry-store';
+
+export const runtime = 'nodejs';
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function singleLine(value: string, maxLength: number) {
+  return value.replace(/[\r\n\t]+/g, ' ').trim().slice(0, maxLength);
+}
 
 export async function POST(request: Request) {
+  let payload: unknown;
   try {
-    const body = await request.json();
-    const { name, email, subject, message, honeypot } = body;
-
-    // Honeypot spam trap
-    if (honeypot) {
-      return NextResponse.json({
-        success: true,
-        message: 'Message dispatched successfully.',
-      });
-    }
-
-    if (!name || typeof name !== 'string' || name.trim().length === 0) {
-      return NextResponse.json(
-        { error: 'Name is required.' },
-        { status: 400 }
-      );
-    }
-
-    if (!email || typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
-      return NextResponse.json(
-        { error: 'A valid email address is required.' },
-        { status: 400 }
-      );
-    }
-
-    if (!message || typeof message !== 'string' || message.trim().length < 5) {
-      return NextResponse.json(
-        { error: 'Message must be at least 5 characters.' },
-        { status: 400 }
-      );
-    }
-
-    console.log('[SWD_CONTACT_MESSAGE_RECEIVED]', {
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
-      subject: subject?.trim() || 'General Inquiry',
-      message: message.trim(),
-      timestamp: new Date().toISOString(),
-    });
-
-    // Optional email dispatch hook if Resend key is configured
-    const resendApiKey = process.env.RESEND_API_KEY;
-    const recipientEmail = process.env.CONTACT_EMAIL || 'shivamwebdesigns23@gmail.com';
-
-    if (resendApiKey) {
-      try {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${resendApiKey}`,
-          },
-          body: JSON.stringify({
-            from: 'ShivamWebDesigns Contact <contact@shivamwebdesigns.com>',
-            to: [recipientEmail],
-            reply_to: email,
-            subject: `[Contact Form] ${subject || 'New Message'} from ${name}`,
-            text: `From: ${name} <${email}>\n\nMessage:\n${message}`,
-          }),
-        });
-      } catch (mailError) {
-        console.error('[SWD_CONTACT_MAIL_ERROR]', mailError);
-      }
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Message dispatched successfully.',
-    });
-  } catch (error) {
-    console.error('[SWD_API_CONTACT_ERROR]', error);
+    payload = await request.json();
+  } catch {
     return NextResponse.json(
-      { error: 'Internal server error processing contact message.' },
-      { status: 500 }
+      { error: 'Request body must be valid JSON.' },
+      { status: 400 }
     );
   }
+
+  if (!isRecord(payload)) {
+    return NextResponse.json(
+      { error: 'Request body must be a JSON object.' },
+      { status: 400 }
+    );
+  }
+
+  const { name, email, subject, message, honeypot } = payload;
+  if (typeof honeypot === 'string' && honeypot.trim()) {
+    return NextResponse.json({ success: true, message: 'Message received.' });
+  }
+
+  if (typeof name !== 'string' || !name.trim() || name.trim().length > 120) {
+    return NextResponse.json(
+      { error: 'A name of 1–120 characters is required.' },
+      { status: 400 }
+    );
+  }
+
+  if (
+    typeof email !== 'string' ||
+    email.trim().length > 254 ||
+    !/^\S+@\S+\.\S+$/.test(email.trim())
+  ) {
+    return NextResponse.json(
+      { error: 'A valid email address is required.' },
+      { status: 400 }
+    );
+  }
+
+  if (
+    typeof message !== 'string' ||
+    message.trim().length < 5 ||
+    message.trim().length > 3000
+  ) {
+    return NextResponse.json(
+      { error: 'Message must be between 5 and 3,000 characters.' },
+      { status: 400 }
+    );
+  }
+
+  if (
+    subject !== undefined &&
+    (typeof subject !== 'string' || subject.trim().length > 150)
+  ) {
+    return NextResponse.json(
+      { error: 'Subject must be 150 characters or fewer.' },
+      { status: 400 }
+    );
+  }
+
+  const nameValue = singleLine(name, 120);
+  const emailValue = email.trim().toLowerCase();
+  const subjectValue =
+    typeof subject === 'string' && subject.trim()
+      ? singleLine(subject, 150)
+      : 'General Inquiry';
+  const messageValue = message.trim();
+
+  let inquiryId: string;
+  try {
+    inquiryId = await saveInquiry({
+      kind: 'contact',
+      name: nameValue,
+      email: emailValue,
+      subject: subjectValue,
+      message: messageValue,
+    });
+  } catch (error) {
+    console.error('[SWD_CONTACT_STORAGE_ERROR]', {
+      name: error instanceof Error ? error.name : 'UnknownError',
+    });
+    return NextResponse.json(
+      { error: 'We could not save your message right now. Please try again.' },
+      { status: 503 }
+    );
+  }
+
+  const emailStatus = await sendEmailNotification({
+    replyTo: emailValue,
+    subject: `[Contact Form] ${subjectValue} from ${nameValue}`,
+    text: `From: ${nameValue} <${emailValue}>\n\nMessage:\n${messageValue}`,
+  });
+
+  try {
+    await updateInquiryEmailStatus(inquiryId, emailStatus);
+  } catch (error) {
+    console.error('[SWD_CONTACT_STATUS_UPDATE_ERROR]', {
+      inquiryId,
+      name: error instanceof Error ? error.name : 'UnknownError',
+    });
+  }
+
+  return NextResponse.json({
+    success: true,
+    message: 'Message received.',
+    emailSent: emailStatus === 'sent',
+  });
 }

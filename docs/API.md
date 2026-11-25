@@ -3,7 +3,7 @@
 
 ## 1. Conventions
 - Base URL: `https://shivamwebdesigns.devs.li`
-- Architecture: Static Edge Rewrites + Client Protocol Handlers
+- Architecture: Next.js App Router APIs + Vercel static edge rewrites
 - Data Formats: MIME `text/vcard; charset=utf-8` (vCard), MIME `application/ld+json` (Schema.org), RFC 6068 `mailto:` URI scheme
 - Clean URLs: Enforced by Vercel (`cleanUrls: true`)
 
@@ -25,14 +25,14 @@
 - File Name: `Shivam_WebDesigns.vcf`
 - Payload Schema: RFC 2426 vCard v3.0
 
-## 4. Protocol 2: Project Brief Dispatch Schema
+## 4. Protocol 2: Project Brief Persistence & Notification
 - Endpoint: `POST /api/inquiry`
-- Target Recipient: `shivamwebdesigns23@gmail.com`
-- Delivery: Resend; requires `RESEND_API_KEY` and a Resend-verified `CONTACT_FROM_EMAIL`
+- Persistence: Firestore `inquiries` collection through Firebase Admin SDK; requires server-side Firebase service-account configuration
+- Notification: Optional Resend notification to `CONTACT_EMAIL` (defaults to the studio inbox); requires `RESEND_API_KEY` and a Resend-verified `CONTACT_FROM_EMAIL`
 - Reply-To: The inquiring client's validated email address
 - Budget: INR-denominated ranges
-- Success: Returned only after Resend accepts the message
-- Delivery Errors: `503` when email configuration is missing; `502` when Resend delivery fails
+- Success: Returned only after Firestore saves the inquiry; email outcome is stored separately as `sent`, `failed`, or `not_configured`
+- Storage Error: `503` when the inquiry cannot be saved; no success response is returned
 - Subject Line: `[Project Quotation Request] [Inquiry ID]`
 - Body Structure:
   ```
@@ -55,7 +55,22 @@
   Submitted via https://shivamwebdesigns.devs.li/start-project
   ```
 
-## 5. Protocol 3: Schema.org JSON-LD Knowledge Graph
+## 5. Protocol 3: Contact Message Persistence & Notification
+- Endpoint: `POST /api/contact`
+- Persistence: Same Firestore `inquiries` collection with `kind: "contact"`
+- Notification: Optional Resend email; result is stored on the inquiry record
+- Success: Returned only after Firestore saves the message
+- Validation: Name (1–120), email, subject (up to 150), message (5–3,000 characters)
+
+## 6. Protocol 4: Private Inquiry Read API
+- Endpoint: `GET /api/admin/inquiries`
+- Authentication: `Authorization: Bearer <Firebase ID token>`
+- Authorization: Server verifies the token and requires a verified email matching `FIREBASE_ADMIN_EMAIL` (configured as `shivamwebdesigns23@gmail.com`)
+- Pagination: 50 newest records per request; pass the returned `nextCursor` as `?cursor=...`
+- Cache: `Cache-Control: private, no-store`
+- Errors: `401` missing/invalid token, `403` unauthorized account, `400` invalid cursor, `503` missing Firebase configuration or storage failure
+
+## 7. Protocol 5: Schema.org JSON-LD Knowledge Graph
 - Location: `<script type="application/ld+json">` in `index.html`
 - Entities:
   - `@type: ["Organization", "ProfessionalService"]`
