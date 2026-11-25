@@ -15,7 +15,7 @@
   --bg-light: #fafafa;
   --surface-light: #ffffff;
   --surface-subtle-light: #f4f4f5;
-  --surface-glass-light: rgba(255, 255, 255, 0.85);
+  --surface-glass-light: rgba(255, 255, 255, 0.88);
   --border-light: #e4e4e7;
   --border-strong-light: #d4d4d8;
   --text-main-light: #09090b;
@@ -28,7 +28,7 @@
   --bg-dark: #09090b;
   --surface-dark: #121215;
   --surface-subtle-dark: #18181c;
-  --surface-glass-dark: rgba(18, 18, 21, 0.85);
+  --surface-glass-dark: rgba(18, 18, 21, 0.88);
   --border-dark: #242429;
   --border-strong-dark: #35353e;
   --text-main-dark: #f4f4f5;
@@ -454,19 +454,24 @@ button, input, select, textarea {
   inset: 0;
   inline-size: 100%;
   block-size: 100%;
-  pointer-events: none;
   z-index: 1;
-  opacity: 0.65;
+  opacity: 0.7;
+  cursor: grab;
   transition: opacity var(--transition-slow);
 }
 
+.hero-3d-canvas:active {
+  cursor: grabbing;
+}
+
 [data-theme="dark"] .hero-3d-canvas {
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .hero-container-rel {
   position: relative;
   z-index: 2;
+  pointer-events: auto;
 }
 
 .hero-label {
@@ -500,7 +505,7 @@ button, input, select, textarea {
   grid-template-columns: 1.4fr 1fr;
   gap: 3rem;
   align-items: flex-start;
-  margin-block-end: 3.5rem;
+  margin-block-end: 2.5rem;
 }
 
 .hero-lead {
@@ -514,6 +519,61 @@ button, input, select, textarea {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+/* Interactive 3D Canvas Controls */
+.hero-canvas-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-block-end: 3rem;
+}
+
+.canvas-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.hint-dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.canvas-shape-switchers {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.shape-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.shape-btn:hover,
+.shape-btn.active {
+  background: var(--text-main);
+  color: var(--bg);
+  border-color: var(--text-main);
 }
 
 .hero-meta-bar {
@@ -544,7 +604,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   7. SCROLL-TO-OPEN STACKING DECK ENGINE (Requested Core Feature)
+   7. SCROLL-TO-OPEN STACKING DECK ENGINE
    ========================================================================== */
 .stack-section {
   position: relative;
@@ -604,7 +664,7 @@ button, input, select, textarea {
 .stack-nav-pill {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  padding: 0.3rem 0.7rem;
+  padding: 0.35rem 0.75rem;
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text-muted);
@@ -620,33 +680,31 @@ button, input, select, textarea {
   border-color: var(--text-main);
 }
 
-/* The Stacking Deck Wrapper */
+/* Stacking Deck Container */
 .stack-deck {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 3.5rem;
   position: relative;
-  padding-block-end: 4rem;
+  padding-block-end: 6rem;
 }
 
 /* Each Stacking Card: Sticky behavior that stacks progressively */
 .stack-card {
   position: sticky;
-  /* Dynamic stacking offset calculated per card index */
   inset-block-start: calc(84px + (var(--stack-index) - 1) * 32px);
   z-index: var(--stack-index);
   background-color: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-  /* Progressive scale down for cards underneath */
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.09), 0 1px 3px rgba(0, 0, 0, 0.04);
   transform-origin: center top;
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 [data-theme="dark"] .stack-card {
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border);
 }
 
 .card-glass-glow {
@@ -656,7 +714,7 @@ button, input, select, textarea {
   inline-size: 100%;
   block-size: 2px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .stack-card-inner {
@@ -734,7 +792,6 @@ button, input, select, textarea {
   overflow: hidden;
 }
 
-/* 3D Wireframe Interactive Preview */
 .visual-3d-box {
   padding: 1.5rem;
   display: flex;
@@ -762,7 +819,6 @@ button, input, select, textarea {
   border-radius: var(--radius-xs);
 }
 
-/* CSS 3D Cube animation */
 .tilt-visual-wireframe {
   perspective: 600px;
   inline-size: 100px;
@@ -976,7 +1032,7 @@ button, input, select, textarea {
   transition: transform 0.12s var(--ease-out);
 }
 
-/* 9. Works Section */
+/* 9. Selected Works Section & Interactive Case Studies */
 .work-filter {
   display: flex;
   flex-wrap: wrap;
@@ -1021,12 +1077,20 @@ button, input, select, textarea {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition), border-color var(--transition);
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .work-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-strong);
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px var(--accent-glow);
+}
+
+.work-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .work-card[hidden] {
@@ -1041,6 +1105,30 @@ button, input, select, textarea {
   padding: 2rem;
   position: relative;
   border-block-end: 1px solid var(--border);
+}
+
+.open-case-pill {
+  position: absolute;
+  inset-block-end: 1rem;
+  inset-inline-end: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+  color: var(--text-main);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all var(--transition);
+}
+
+.work-card:hover .open-case-pill,
+.work-card:focus-visible .open-case-pill {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .bg-noir { background: #121214; color: #ffffff; }
@@ -1669,7 +1757,172 @@ button, input, select, textarea {
   color: var(--text-faint);
 }
 
-/* 16. Dialog */
+/* ==========================================================================
+   16. CASE STUDY INSPECTION DIALOG (<dialog>)
+   ========================================================================== */
+.case-dialog {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-inline-size: min(100% - 2rem, 860px);
+  margin: auto;
+  border-radius: var(--radius-lg);
+}
+
+.case-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+}
+
+.case-dialog-shell {
+  background-color: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  color: var(--text-main);
+  max-block-size: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.75rem 2rem 1.25rem;
+  border-block-end: 1px solid var(--border);
+  gap: 1rem;
+  background: var(--surface-glass);
+}
+
+.case-dialog-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-block: 0.2rem;
+}
+
+.case-dialog-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.case-dialog-body {
+  padding: 2rem;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.case-hero-visual {
+  aspect-ratio: 16 / 8;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.case-metrics-banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+}
+
+.case-metric-tile {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-metric-tile small {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  margin-block-end: 0.2rem;
+}
+
+.case-metric-tile strong {
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  color: var(--text-main);
+}
+
+.case-editorial-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.5rem;
+}
+
+.case-col-main h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-block-end: 0.5rem;
+}
+
+.case-col-main p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-block-end: 1.75rem;
+}
+
+.case-col-aside h4 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  margin-block-end: 0.65rem;
+}
+
+.case-stack-pills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-block-end: 1.75rem;
+}
+
+.case-stack-pills li {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.55rem;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+}
+
+.case-deliverables {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-block-end: 2rem;
+}
+
+.case-deliverables li {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.case-deliverables li::before {
+  content: "✓";
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   17. WORKABLE PROJECT BRIEF DIALOG
+   ========================================================================== */
 .brief-dialog {
   border: none;
   background: transparent;
@@ -1789,7 +2042,7 @@ button, input, select, textarea {
 
 .brief-success {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 1.5rem 0.5rem;
 }
 
 .success-mark {
@@ -1818,7 +2071,42 @@ button, input, select, textarea {
   margin-block-end: 1.5rem;
 }
 
-/* 17. Reduced Motion Guidelines */
+.success-actions-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+
+.success-note {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  margin-block-start: 0.5rem;
+}
+
+/* 18. Toast Notification */
+.toast-popup {
+  position: fixed;
+  inset-block-end: 2rem;
+  inset-inline-end: 2rem;
+  z-index: 1000;
+  background: var(--text-main);
+  color: var(--bg);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  animation: toast-in 0.2s var(--ease-out);
+}
+
+@keyframes toast-in {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 19. Reduced Motion Guidelines */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -1836,7 +2124,7 @@ button, input, select, textarea {
   }
 }
 
-/* 18. Responsive Adaptations */
+/* 20. Responsive Adaptations */
 @media (max-width: 992px) {
   .hero-footer-grid {
     grid-template-columns: 1fr;
@@ -1853,6 +2141,14 @@ button, input, select, textarea {
   }
 
   .works-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-editorial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-metrics-banner {
     grid-template-columns: 1fr;
   }
 
