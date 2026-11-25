@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { MobileDock } from '@/components/MobileDock';
 import { siteConfig } from '@/data/siteConfig';
 
 const inter = Inter({
@@ -110,7 +111,7 @@ export default function RootLayout({
               name: siteConfig.name,
               image: `${siteConfig.url}${siteConfig.assets.logoPng}`,
               url: siteConfig.url,
-              ...(siteConfig.contact.phone ? { telephone: siteConfig.contact.phone } : {}),
+              telephone: siteConfig.contact.phone,
               email: siteConfig.contact.email,
               priceRange: '$$$$',
               address: {
@@ -127,6 +128,7 @@ export default function RootLayout({
                 siteConfig.social.linkedin,
                 siteConfig.social.github,
                 siteConfig.social.instagram,
+                siteConfig.contact.whatsapp,
               ],
             }),
           }}
@@ -134,10 +136,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-black text-white font-sans antialiased selection:bg-white selection:text-black flex flex-col">
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 pb-16 md:pb-0">
           {children}
         </main>
         <Footer />
+        <MobileDock />
       </body>
     </html>
   );

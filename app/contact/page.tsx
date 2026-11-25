@@ -141,7 +141,7 @@ export default function ContactPage() {
                         WhatsApp Quick Chat
                       </div>
                       <div className="text-sm font-medium text-white group-hover:underline">
-                        Start Direct WhatsApp Conversation
+                        WhatsApp: {siteConfig.contact.phone}
                       </div>
                       <div className="text-xs text-neutral-400 mt-1">
                         Direct link to founder chat

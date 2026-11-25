@@ -1,6 +1,7 @@
 import React from 'react';
 import { Hero } from '@/components/Hero';
 import { ServicesSection } from '@/components/ServicesSection';
+import { SpatialStack } from '@/components/SpatialStack';
 import { FeaturedProjects } from '@/components/FeaturedProjects';
 import { WhyChooseUs } from '@/components/WhyChooseUs';
 import { WorkingProcess } from '@/components/WorkingProcess';
@@ -12,6 +13,7 @@ export default function HomePage() {
     <div className="flex flex-col">
       <Hero />
       <ServicesSection />
+      <SpatialStack />
       <FeaturedProjects />
       <WhyChooseUs />
       <WorkingProcess />

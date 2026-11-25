@@ -9,7 +9,7 @@ export interface SocialLinks {
   github: string;
   instagram: string;
   email: string;
-  whatsapp?: string;
+  whatsapp: string;
 }
 
 export interface SiteConfig {
@@ -29,9 +29,10 @@ export interface SiteConfig {
   };
   contact: {
     email: string;
+    phone: string;
+    whatsapp: string;
     location: string;
     availability: string;
-    phone?: string;
   };
   social: SocialLinks;
   navigation: NavItem[];
@@ -56,6 +57,8 @@ export const siteConfig: SiteConfig = {
   },
   contact: {
     email: 'shivam@shivamwebdesigns.com',
+    phone: '+91 78619 65480',
+    whatsapp: 'https://wa.me/917861965480?s=p',
     location: 'India • Serving Clients Worldwide',
     availability: 'Accepting select new projects',
   },
@@ -64,6 +67,7 @@ export const siteConfig: SiteConfig = {
     linkedin: 'https://www.linkedin.com/company/shivamwebdesigns/',
     github: 'https://github.com/shivamwebdesigns/Shivam-Web-Designs',
     instagram: 'https://www.instagram.com/shivamwebdesigns/',
+    whatsapp: 'https://wa.me/917861965480?s=p',
     email: 'mailto:shivam@shivamwebdesigns.com',
   },
   navigation: [
