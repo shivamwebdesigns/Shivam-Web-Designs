@@ -1,6 +1,0 @@
-# Robots.txt for Shivam Web Designs
-User-agent: *
-Allow: /
-
-# Canonical Sitemap
-Sitemap: https://shivamwebdesigns.devs.li/sitemap.xml

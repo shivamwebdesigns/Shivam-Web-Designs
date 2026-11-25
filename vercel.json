@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "framework": "nextjs",
   "headers": [
     {
       "source": "/(.*)",
@@ -11,43 +10,6 @@
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
-    },
-    {
-      "source": "/(.*)\\.(png|jpg|jpeg|svg|webp|ico|pdf|PNG)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)\\.(css|js)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
-      ]
     }
-  ],
-  "rewrites": [
-    { "source": "/businesscard", "destination": "/businesscard.html" },
-    { "source": "/businesscard/", "destination": "/businesscard.html" },
-    { "source": "/card", "destination": "/businesscard.html" },
-    { "source": "/card/", "destination": "/businesscard.html" },
-    { "source": "/business-card", "destination": "/businesscard.html" },
-    { "source": "/business-card/", "destination": "/businesscard.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/privacy/", "destination": "/privacy.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/terms/", "destination": "/terms.html" },
-    { "source": "/website", "destination": "/index.html" },
-    { "source": "/website/", "destination": "/index.html" },
-    { "source": "/website/index.html", "destination": "/index.html" },
-    { "source": "/website/businesscard", "destination": "/businesscard.html" },
-    { "source": "/website/businesscard/", "destination": "/businesscard.html" },
-    { "source": "/website/card", "destination": "/businesscard.html" },
-    { "source": "/website/card/", "destination": "/businesscard.html" },
-    { "source": "/website/business-card", "destination": "/businesscard.html" },
-    { "source": "/website/business-card/", "destination": "/businesscard.html" },
-    { "source": "/website/privacy", "destination": "/privacy.html" },
-    { "source": "/website/privacy/", "destination": "/privacy.html" },
-    { "source": "/website/terms", "destination": "/terms.html" },
-    { "source": "/website/terms/", "destination": "/terms.html" }
   ]
 }

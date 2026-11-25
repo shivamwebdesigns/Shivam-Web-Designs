@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
         source: '/business-card',
         destination: '/businesscard.html',
       },
+      {
+        source: '/privacy',
+        destination: '/privacy.html',
+      },
+      {
+        source: '/terms',
+        destination: '/terms.html',
+      },
     ];
   },
 };
