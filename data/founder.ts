@@ -38,7 +38,7 @@ export const founderData: FounderProfile = {
   name: 'Shivam Purohit',
   role: 'Founder & CEO',
   company: 'ShivamWebDesigns',
-  image: '/assets/founder.jpg',
+  image: '/assets/founder-hd.jpg',
   intro:
     'Designer, frontend engineer, and founder dedicated to building purposeful digital flagships that fuse Swiss aesthetic restraint with uncompromising technical performance.',
   story: {

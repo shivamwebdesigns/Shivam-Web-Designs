@@ -50,7 +50,7 @@ export const siteConfig: SiteConfig = {
     logoPng: '/assets/logo.png',
     bannerDesktop: '/assets/banner-desktop.png',
     bannerMobile: '/assets/banner-mobile.png',
-    founderImage: '/assets/founder.jpg',
+    founderImage: '/assets/founder-hd.jpg',
   },
   contact: {
     email: 'shivamwebdesigns23@gmail.com',
