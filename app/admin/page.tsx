@@ -7,7 +7,7 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import {
   getFirebaseClientAuth,
   isFirebaseClientConfigured,
@@ -60,6 +60,9 @@ export default function AdminPage() {
   const firebaseConfigured = isFirebaseClientConfigured();
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [pin, setPin] = useState('');
+  const [pinLoading, setPinLoading] = useState(false);
+  const [pinVerified, setPinVerified] = useState(false);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [listLoading, setListLoading] = useState(false);
@@ -80,6 +83,11 @@ export default function AdminPage() {
         const result = (await response.json()) as InquiryPage & { error?: string };
 
         if (!response.ok) {
+          if (response.status === 401) {
+            setPinVerified(false);
+            setInquiries([]);
+            setNextCursor(null);
+          }
           throw new Error(result.error || 'Unable to load inquiries.');
         }
 
@@ -117,13 +125,11 @@ export default function AdminPage() {
         (activeUser) => {
           setUser(activeUser);
           setAuthLoading(false);
-          if (activeUser) {
-            void loadInquiries(activeUser);
-          } else {
-            setInquiries([]);
-            setNextCursor(null);
-            setError('');
-          }
+          setPinVerified(false);
+          setPin('');
+          setInquiries([]);
+          setNextCursor(null);
+          setError('');
         },
         () => {
           setAuthLoading(false);
@@ -136,7 +142,7 @@ export default function AdminPage() {
     }
 
     return () => unsubscribe?.();
-  }, [firebaseConfigured, loadInquiries]);
+  }, [firebaseConfigured]);
 
   async function handleSignIn() {
     setError('');
@@ -152,9 +158,59 @@ export default function AdminPage() {
   async function handleSignOut() {
     setError('');
     try {
+      const response = await fetch('/api/admin/unlock', {
+        method: 'DELETE',
+        cache: 'no-store',
+      });
+      if (!response.ok) {
+        throw new Error('Could not clear the admin PIN session.');
+      }
+
       await signOut(getFirebaseClientAuth());
+      setPinVerified(false);
+      setPin('');
     } catch {
-      setError('Could not sign out. Please close this page and try again.');
+      setError('Could not lock and sign out. Please try again.');
+    }
+  }
+
+  async function handleUnlock(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!user || pin.length !== 4) {
+      return;
+    }
+
+    setPinLoading(true);
+    setError('');
+    try {
+      const token = await user.getIdToken();
+      const response = await fetch('/api/admin/unlock', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pin }),
+        cache: 'no-store',
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Unable to unlock the dashboard.');
+      }
+
+      setPin('');
+      setPinVerified(true);
+      await loadInquiries(user);
+    } catch (unlockError) {
+      setPin('');
+      setError(
+        unlockError instanceof Error
+          ? unlockError.message
+          : 'Unable to unlock the dashboard. Please try again.'
+      );
+    } finally {
+      setPinLoading(false);
     }
   }
 
@@ -215,6 +271,49 @@ export default function AdminPage() {
             >
               Continue with Google
             </button>
+          </section>
+        ) : !pinVerified ? (
+          <section className="max-w-xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8">
+            <h2 className="text-xl font-light">Admin PIN required</h2>
+            <p className="mt-3 text-sm leading-6 text-neutral-400">
+              Enter your four-digit PIN to unlock the inquiry dashboard. Too many
+              incorrect attempts will temporarily lock access.
+            </p>
+            <form className="mt-6" onSubmit={handleUnlock}>
+              <label
+                className="mb-2 block font-mono text-xs uppercase tracking-wider text-neutral-400"
+                htmlFor="admin-pin"
+              >
+                Four-digit PIN
+              </label>
+              <input
+                id="admin-pin"
+                type="password"
+                inputMode="numeric"
+                autoComplete="off"
+                pattern="[0-9]{4}"
+                maxLength={4}
+                value={pin}
+                onChange={(event) =>
+                  setPin(event.target.value.replace(/\D/g, '').slice(0, 4))
+                }
+                required
+                className="min-h-12 w-full border border-neutral-700 bg-black px-4 font-mono tracking-[0.4em] text-white outline-none focus:border-white"
+                aria-describedby={error ? 'admin-pin-error' : undefined}
+              />
+              {error && (
+                <p id="admin-pin-error" className="mt-3 text-sm text-red-300" role="alert">
+                  {error}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={pin.length !== 4 || pinLoading}
+                className="mt-5 min-h-12 border border-white bg-white px-5 text-xs font-mono uppercase tracking-wider text-black transition-colors hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {pinLoading ? 'Checking…' : 'Unlock dashboard'}
+              </button>
+            </form>
           </section>
         ) : (
           <section aria-label="Saved inquiries">

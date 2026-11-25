@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import {
-  getFirebaseAdminAuth,
+  adminPinCookieName,
+  getAdminPinConfig,
+  isValidAdminPinSession,
+} from '@/lib/admin-pin';
+import { verifyAdminIdToken } from '@/lib/admin-auth';
+import {
   getFirebaseAdminConfigStatus,
   getFirebaseAdminDb,
   getFirebaseErrorCode,
@@ -30,17 +35,9 @@ export async function GET(request: Request) {
   }
 
   const adminEmail = process.env.FIREBASE_ADMIN_EMAIL?.trim().toLowerCase();
-  if (!adminEmail) {
-    console.error('[SWD_ADMIN_CONFIG_ERROR]', {
-      reason: 'missing_admin_email',
-      ...getFirebaseAdminConfigStatus(),
-    });
-    return unavailable();
-  }
-
-  let firebaseAuth;
+  let identity;
   try {
-    firebaseAuth = getFirebaseAdminAuth();
+    identity = await verifyAdminIdToken(token);
   } catch (error) {
     console.error('[SWD_ADMIN_FIREBASE_INIT_ERROR]', {
       name: error instanceof Error ? error.name : 'UnknownError',
@@ -50,20 +47,46 @@ export async function GET(request: Request) {
     return unavailable();
   }
 
-  let decodedToken;
-  try {
-    decodedToken = await firebaseAuth.verifyIdToken(token);
-  } catch {
+  if (identity.kind === 'misconfigured' || !adminEmail) {
+    console.error('[SWD_ADMIN_CONFIG_ERROR]', {
+      reason: 'missing_admin_email',
+      ...getFirebaseAdminConfigStatus(),
+    });
+    return unavailable();
+  }
+  if (identity.kind === 'unauthorized') {
     return unauthorized();
   }
-
-  if (
-    decodedToken.email_verified !== true ||
-    decodedToken.email?.toLowerCase() !== adminEmail
-  ) {
+  if (identity.kind === 'forbidden') {
     return NextResponse.json(
       { error: 'This Google account is not authorized to view inquiries.' },
       { status: 403 }
+    );
+  }
+
+  let pinConfig;
+  try {
+    pinConfig = getAdminPinConfig();
+  } catch {
+    console.error('[SWD_ADMIN_PIN_CONFIG_ERROR]', {
+      reason: 'invalid_or_missing_pin_configuration',
+    });
+    return NextResponse.json(
+      { error: 'The admin PIN is not configured on this deployment.' },
+      { status: 503 }
+    );
+  }
+
+  const pinSession = request.headers
+    .get('cookie')
+    ?.split(';')
+    .map((cookie) => cookie.trim())
+    .find((cookie) => cookie.startsWith(`${adminPinCookieName}=`))
+    ?.slice(adminPinCookieName.length + 1);
+  if (!isValidAdminPinSession(identity.uid, pinSession, pinConfig.sessionSecret)) {
+    return NextResponse.json(
+      { error: 'Enter your admin PIN to view inquiries.' },
+      { status: 401, headers: { 'Cache-Control': 'private, no-store' } }
     );
   }
 
