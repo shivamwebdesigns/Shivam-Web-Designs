@@ -1110,4 +1110,111 @@ ${details}
 
     renderCardPhysics();
   }
+
+    // =========================================================================
+    // DEDICATED MOBILE VERSION INTERACTIONS
+    // =========================================================================
+    const dockBriefBtn = document.getElementById('dock-brief-btn');
+    if (dockBriefBtn && briefDialog) {
+      dockBriefBtn.addEventListener('click', () => {
+        briefDialog.showModal();
+        document.body.classList.add('dialog-open');
+      });
+    }
+
+    // Mobile Bottom Dock Scroll-Spy Active Indicator
+    const dockItems = document.querySelectorAll('.mobile-bottom-dock .dock-item[data-section]');
+    const trackedSections = document.querySelectorAll('section[id]');
+    
+    if (dockItems.length && trackedSections.length && 'IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            dockItems.forEach(item => {
+              if (item.getAttribute('data-section') === id) {
+                item.classList.add('active');
+              } else {
+                item.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-30% 0px -50% 0px' });
+
+      trackedSections.forEach(sec => sectionObserver.observe(sec));
+    }
+
+    // Mobile Contact Card Direct Actions
+    const mobileVcfBtn = document.getElementById('mobile-card-vcf-btn');
+    if (mobileVcfBtn) {
+      mobileVcfBtn.addEventListener('click', () => {
+        const vcardData = [
+          'BEGIN:VCARD',
+          'VERSION:3.0',
+          'FN:Shivam WebDesigns',
+          'N:WebDesigns;Shivam;;;',
+          'ORG:Shivam Web Designs',
+          'TITLE:Digital Design & 3D Web Engineering Studio',
+          'EMAIL;TYPE=INTERNET,WORK:shivam@shivamwebdesigns.com',
+          'URL:https://shivamwebdesigns.devs.li',
+          'URL;TYPE=LinkedIn:https://www.linkedin.com/company/shivamwebdesigns/',
+          'URL;TYPE=GitHub:https://github.com/PurohitBhagyesh/Shivam-Web-Designs',
+          'URL;TYPE=Instagram:https://www.instagram.com/shivamwebdesigns/',
+          'NOTE:Designing and building modern websites with a focus on UI/UX, creativity and performance.',
+          'REV:2026-11-25T12:00:00Z',
+          'END:VCARD'
+        ].join('\r\n');
+
+        const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Shivam_WebDesigns.vcf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('vCard downloaded! Open file to save to phone contacts.');
+      });
+    }
+
+    const mobileShareAction = document.getElementById('mobile-card-share-action');
+    if (mobileShareAction) {
+      mobileShareAction.addEventListener('click', async () => {
+        const shareUrl = `${window.location.origin}/businesscard`;
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Shivam Web Designs — 3D Business Card',
+              text: 'Check out the interactive 3D business card of Shivam Purohit',
+              url: shareUrl
+            });
+            showToast('Card shared!');
+            return;
+          } catch (e) {
+            if (e.name !== 'AbortError') console.log('Share dismissed');
+          }
+        }
+        if (navigator.clipboard) {
+          await navigator.clipboard.writeText(shareUrl);
+          showToast('Card URL copied to clipboard!');
+        }
+      });
+    }
+
+    // Works Carousel Touch Snap Dot Tracker
+    const worksGrid = document.querySelector('.works-grid');
+    const swipeDots = document.querySelectorAll('#mobile-works-dots .swipe-dot');
+    if (worksGrid && swipeDots.length) {
+      worksGrid.addEventListener('scroll', () => {
+        const scrollLeft = worksGrid.scrollLeft;
+        const cardWidth = worksGrid.querySelector('.work-card')?.offsetWidth || 300;
+        const activeIdx = Math.round(scrollLeft / (cardWidth + 16));
+        swipeDots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === activeIdx);
+        });
+      }, { passive: true });
+    }
+
 });

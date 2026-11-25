@@ -1,122 +1,53 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "rewrites": [
+  "trailingSlash": false,
+  "headers": [
     {
-      "source": "/",
-      "destination": "/website/index.html"
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
     },
     {
-      "source": "/index.html",
-      "destination": "/website/index.html"
+      "source": "/(.*)\\.(png|jpg|jpeg|svg|webp|ico|pdf|PNG)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
     },
     {
-      "source": "/businesscard",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/businesscard/",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/businesscard.html",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/card",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/card/",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/card.html",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/business-card",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/business-card/",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/business-card.html",
-      "destination": "/website/businesscard.html"
-    },
-    {
-      "source": "/privacy",
-      "destination": "/website/privacy.html"
-    },
-    {
-      "source": "/privacy/",
-      "destination": "/website/privacy.html"
-    },
-    {
-      "source": "/privacy.html",
-      "destination": "/website/privacy.html"
-    },
-    {
-      "source": "/terms",
-      "destination": "/website/terms.html"
-    },
-    {
-      "source": "/terms/",
-      "destination": "/website/terms.html"
-    },
-    {
-      "source": "/terms.html",
-      "destination": "/website/terms.html"
-    },
-    {
-      "source": "/sitemap.xml",
-      "destination": "/website/sitemap.xml"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "/website/robots.txt"
-    },
-    {
-      "source": "/styles.css",
-      "destination": "/website/styles.css"
-    },
-    {
-      "source": "/script.js",
-      "destination": "/website/script.js"
-    },
-    {
-      "source": "/Brand Logo.PNG",
-      "destination": "/website/Brand Logo.PNG"
-    },
-    {
-      "source": "/Brand%20Logo.PNG",
-      "destination": "/website/Brand Logo.PNG"
-    },
-    {
-      "source": "/business-card-front.png",
-      "destination": "/website/business-card-front.png"
-    },
-    {
-      "source": "/business-card-back.png",
-      "destination": "/website/business-card-back.png"
-    },
-    {
-      "source": "/banner-wide.png",
-      "destination": "/website/banner-wide.png"
-    },
-    {
-      "source": "/banner-balanced.png",
-      "destination": "/website/banner-balanced.png"
-    },
-    {
-      "source": "/Business_Card_Print_Front_Back.pdf",
-      "destination": "/website/Business_Card_Print_Front_Back.pdf"
-    },
-    {
-      "source": "/((?!website/).*)",
-      "destination": "/website/$1"
+      "source": "/(.*)\\.(css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+      ]
     }
+  ],
+  "rewrites": [
+    { "source": "/businesscard", "destination": "/businesscard.html" },
+    { "source": "/businesscard/", "destination": "/businesscard.html" },
+    { "source": "/card", "destination": "/businesscard.html" },
+    { "source": "/card/", "destination": "/businesscard.html" },
+    { "source": "/business-card", "destination": "/businesscard.html" },
+    { "source": "/business-card/", "destination": "/businesscard.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/privacy/", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/terms/", "destination": "/terms.html" },
+    { "source": "/website", "destination": "/index.html" },
+    { "source": "/website/", "destination": "/index.html" },
+    { "source": "/website/index.html", "destination": "/index.html" },
+    { "source": "/website/businesscard", "destination": "/businesscard.html" },
+    { "source": "/website/businesscard/", "destination": "/businesscard.html" },
+    { "source": "/website/card", "destination": "/businesscard.html" },
+    { "source": "/website/card/", "destination": "/businesscard.html" },
+    { "source": "/website/business-card", "destination": "/businesscard.html" },
+    { "source": "/website/business-card/", "destination": "/businesscard.html" },
+    { "source": "/website/privacy", "destination": "/privacy.html" },
+    { "source": "/website/privacy/", "destination": "/privacy.html" },
+    { "source": "/website/terms", "destination": "/terms.html" },
+    { "source": "/website/terms/", "destination": "/terms.html" }
   ]
 }
