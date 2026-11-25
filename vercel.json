@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/website/index.html" },
+    { "source": "/index.html", "destination": "/website/index.html" },
+    { "source": "/styles.css", "destination": "/website/styles.css" },
+    { "source": "/script.js", "destination": "/website/script.js" },
+    { "source": "/Brand Logo.PNG", "destination": "/website/Brand Logo.PNG" },
+    { "source": "/Brand%20Logo.PNG", "destination": "/website/Brand Logo.PNG" },
+    { "source": "/((?!website/).*)", "destination": "/website/$1" }
+  ]
+}
