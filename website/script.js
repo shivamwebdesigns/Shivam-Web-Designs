@@ -895,15 +895,27 @@ ${details}
     });
 
     // Pointer Drag (Mouse / Touch 360 Rotation)
+    let pointerCaptured = false;
+
     cardStage.addEventListener('pointerdown', (e) => {
       // Don't drag if clicking directly on a hotspot link
-      if (e.target.closest('.card-hotspot')) return;
+      if (e.target.closest('.card-hotspot, a, button')) return;
 
       isDragging = true;
       startX = e.clientX;
       startY = e.clientY;
       dragDist = 0;
-      cardStage.setPointerCapture(e.pointerId);
+      pointerCaptured = false;
+
+      // On non-touch pointers (mouse/pen), capture immediately for smooth orbit
+      if (e.pointerType !== 'touch') {
+        try {
+          cardStage.setPointerCapture(e.pointerId);
+          pointerCaptured = true;
+        } catch (err) {
+          // ignore
+        }
+      }
       cardObject.classList.add('is-dragging');
     });
 
@@ -911,7 +923,25 @@ ${details}
       if (!isDragging) return;
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
-      dragDist += Math.hypot(dx, dy);
+      const dist = Math.hypot(dx, dy);
+      dragDist += dist;
+
+      // For touch pointers: if vertical scroll is dominant early, cancel drag so user can scroll page smoothly
+      if (e.pointerType === 'touch' && !pointerCaptured && dragDist > 6) {
+        if (Math.abs(dy) > Math.abs(dx) * 1.5) {
+          isDragging = false;
+          cardObject.classList.remove('is-dragging');
+          return;
+        } else {
+          try {
+            cardStage.setPointerCapture(e.pointerId);
+            pointerCaptured = true;
+          } catch (err) {
+            // ignore
+          }
+        }
+      }
+
       startX = e.clientX;
       startY = e.clientY;
 
@@ -932,14 +962,17 @@ ${details}
       if (!isDragging) return;
       isDragging = false;
       cardObject.classList.remove('is-dragging');
-      try {
-        cardStage.releasePointerCapture(e.pointerId);
-      } catch (err) {
-        // ignore
+      if (pointerCaptured) {
+        try {
+          cardStage.releasePointerCapture(e.pointerId);
+        } catch (err) {
+          // ignore
+        }
+        pointerCaptured = false;
       }
 
-      // If moved less than 8px, treat as a click to flip
-      if (dragDist < 8) {
+      // If moved less than 8px and not clicking a control, treat as a click to flip
+      if (dragDist < 8 && !e.target.closest('.card-hotspot, a, button')) {
         toggleCardFlip();
       }
       dragDist = 0;
@@ -993,9 +1026,9 @@ ${details}
           'TITLE:Digital Design & 3D Web Engineering Studio',
           'EMAIL;TYPE=INTERNET,WORK:shivam@shivamwebdesigns.com',
           'URL:https://shivamwebdesigns.devs.li',
-          'URL;TYPE=GitHub:https://github.com/shivamwebdesigns',
-          'URL;TYPE=LinkedIn:https://linkedin.com/company/shivamwebdesigns',
-          'URL;TYPE=Instagram:https://instagram.com/shivamwebdesigns',
+          'URL;TYPE=LinkedIn:https://www.linkedin.com/company/shivamwebdesigns/',
+          'URL;TYPE=GitHub:https://github.com/PurohitBhagyesh/Shivam-Web-Designs',
+          'URL;TYPE=Instagram:https://www.instagram.com/shivamwebdesigns/',
           'NOTE:Designing and building modern websites with a focus on UI/UX, creativity and performance.',
           'REV:2026-11-25T12:00:00Z',
           'END:VCARD'
