@@ -38,7 +38,7 @@ EMAIL;TYPE=WORK,INTERNET:shivam@shivamwebdesigns.com
 TEL;TYPE=WORK,VOICE:+919876543210
 URL:https://shivamwebdesigns.devs.li
 URL;TYPE=LinkedIn:https://www.linkedin.com/company/shivamwebdesigns/
-URL;TYPE=GitHub:https://github.com/PurohitBhagyesh/Shivam-Web-Designs
+URL;TYPE=GitHub:https://github.com/shivamwebdesigns/Shivam-Web-Designs
 URL;TYPE=Instagram:https://www.instagram.com/shivamwebdesigns/
 NOTE:Designing and building modern websites with a focus on UI/UX, creativity and performance.
 END:VCARD
