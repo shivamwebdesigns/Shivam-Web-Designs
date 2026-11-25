@@ -15,7 +15,8 @@ function StartProjectForm() {
     email: '',
     company: '',
     projectType: initialService || 'Website Design',
-    budget: '$3,000 – $5,000',
+    customProjectType: '',
+    budget: '₹2,000 – ₹3,000',
     timeline: '1 Month',
     description: '',
     referenceUrl: '',
@@ -39,11 +40,11 @@ function StartProjectForm() {
   ];
 
   const budgetTiers = [
-    '$1,500 – $3,000',
-    '$3,000 – $5,000',
-    '$5,000 – $10,000',
-    '$10,000+',
-    'Flexible / Undecided',
+    '₹500 – ₹1,000',
+    '₹1,000 – ₹2,000',
+    '₹2,000 – ₹3,000',
+    '₹3,000 – ₹4,000',
+    '₹4,000 – ₹5,000',
   ];
 
   const timelines = [
@@ -69,14 +70,27 @@ function StartProjectForm() {
       return;
     }
 
+    if (formData.projectType === 'Other / Custom' && !formData.customProjectType.trim()) {
+      setStatus('error');
+      setErrorMessage('Please describe the service or project type you need.');
+      return;
+    }
+
     setStatus('loading');
     setErrorMessage('');
 
     try {
+      const { customProjectType, ...submissionData } = formData;
       const res = await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...submissionData,
+          projectType:
+            formData.projectType === 'Other / Custom'
+              ? `Other / Custom: ${customProjectType.trim()}`
+              : formData.projectType,
+        }),
       });
 
       const data = await res.json();
@@ -85,7 +99,11 @@ function StartProjectForm() {
         throw new Error(data.error || 'Failed to submit project inquiry. Please try again.');
       }
 
-      setInquiryId(data.inquiryId || 'SWD-' + Math.floor(100000 + Math.random() * 900000));
+      if (typeof data.inquiryId !== 'string' || !data.inquiryId) {
+        throw new Error('Email delivery could not be confirmed. Please try again or email us directly.');
+      }
+
+      setInquiryId(data.inquiryId);
       setStatus('success');
     } catch (err: unknown) {
       setStatus('error');
@@ -128,10 +146,10 @@ function StartProjectForm() {
 
               <div>
                 <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
-                  Receipt Confirmation
+                  Email Delivery Confirmed
                 </span>
                 <h2 className="text-3xl font-light text-white tracking-tight mt-1">
-                  Project Inquiry Received
+                  Brief Sent for Quotation
                 </h2>
                 <div className="mt-3 inline-block px-4 py-1.5 bg-neutral-900 border border-neutral-800 text-xs font-mono text-neutral-300">
                   Tracking ID: {inquiryId}
@@ -141,10 +159,15 @@ function StartProjectForm() {
               <div className="space-y-3 text-sm text-neutral-300 font-light max-w-xl mx-auto leading-relaxed pt-4 border-t border-neutral-900">
                 <p>
                   Thank you, <span className="text-white font-medium">{formData.fullName}</span>. Your brief for a{' '}
-                  <span className="text-white font-medium">{formData.projectType}</span> project has been recorded in our dispatch queue.
+                  <span className="text-white font-medium">
+                    {formData.projectType === 'Other / Custom'
+                      ? formData.customProjectType
+                      : formData.projectType}
+                  </span>{' '}
+                  project has been sent to the studio for quotation.
                 </p>
                 <p className="text-neutral-400 text-xs">
-                  Shivam Purohit will review your timeline and requirements, assess our sprint capacity, and respond directly to <span className="text-white font-mono">{formData.email}</span> within 24 business hours.
+                  Shivam Purohit will review your timeline and requirements, assess our sprint capacity, and respond directly to <span className="text-white font-mono">{formData.email}</span> within 24 to 48 hours.
                 </p>
               </div>
 
@@ -181,7 +204,16 @@ function StartProjectForm() {
               {status === 'error' && (
                 <div className="p-4 bg-red-950/30 border border-red-900/60 text-red-300 text-xs font-mono flex items-start gap-2">
                   <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                  <span>{errorMessage}</span>
+                  <span>
+                    {errorMessage}{' '}
+                    <a
+                      href={`mailto:${siteConfig.contact.email}`}
+                      className="text-white underline underline-offset-2"
+                    >
+                      Email us directly
+                    </a>
+                    .
+                  </span>
                 </div>
               )}
 
@@ -203,7 +235,7 @@ function StartProjectForm() {
                       required
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      placeholder="e.g. Elena Rostova"
+                      placeholder="Your full name"
                       className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                     />
                   </div>
@@ -217,7 +249,7 @@ function StartProjectForm() {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="elena@company.com"
+                      placeholder="you@example.com"
                       className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                     />
                   </div>
@@ -231,7 +263,7 @@ function StartProjectForm() {
                     type="text"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    placeholder="e.g. Rostova Studio / Independent"
+                    placeholder="Your company or brand"
                     className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                   />
                 </div>
@@ -265,6 +297,28 @@ function StartProjectForm() {
                       </button>
                     ))}
                   </div>
+                  {formData.projectType === 'Other / Custom' && (
+                    <div className="mt-4">
+                      <label
+                        htmlFor="custom-project-type"
+                        className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2"
+                      >
+                        Describe the service or project type <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        id="custom-project-type"
+                        type="text"
+                        required
+                        maxLength={80}
+                        value={formData.customProjectType}
+                        onChange={(e) =>
+                          setFormData({ ...formData, customProjectType: e.target.value })
+                        }
+                        placeholder="What would you like to build?"
+                        className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -279,7 +333,7 @@ function StartProjectForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   <div>
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
-                      Estimated Investment Budget
+                      Estimated Investment Budget (INR)
                     </label>
                     <div className="space-y-2">
                       {budgetTiers.map((tier) => (
@@ -382,10 +436,10 @@ function StartProjectForm() {
                   className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black hover:bg-neutral-200 transition-colors text-xs font-mono uppercase tracking-wider font-semibold disabled:opacity-50 shadow-2xl"
                 >
                   {status === 'loading' ? (
-                    <span>Registering Brief in Queue...</span>
+                    <span>Sending Brief for Quotation...</span>
                   ) : (
                     <>
-                      <span>Transmit Project Brief</span>
+                      <span>Send Brief for Quotation</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
