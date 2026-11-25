@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Shivam Web Designs — Independent digital design and engineering studio. We build bespoke digital flagships, web applications, and high-performance design systems for ambitious brands.">
-  <title>Shivam Web Designs — Digital Design & Engineering Studio</title>
+  <meta name="description" content="Shivam Web Designs — Independent digital design & 3D engineering studio. We build bespoke digital flagships, 3D spatial web experiences, and high-performance design systems for ambitious brands.">
+  <title>Shivam Web Designs — Digital Design, 3D Web & Engineering Studio</title>
   
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -23,6 +23,7 @@
       <nav class="main-nav" aria-label="Main Navigation">
         <ul class="nav-list">
           <li><a href="#works" class="nav-link">Selected Work</a></li>
+          <li><a href="#stack" class="nav-link">The 3D Stack</a></li>
           <li><a href="#capabilities" class="nav-link">Capabilities</a></li>
           <li><a href="#approach" class="nav-link">Approach</a></li>
           <li><a href="#engagements" class="nav-link">Engagements</a></li>
@@ -72,6 +73,7 @@
     <div id="mobile-menu" class="mobile-drawer" hidden>
       <ul class="mobile-links">
         <li><a href="#works">Selected Work</a></li>
+        <li><a href="#stack">The 3D Stack</a></li>
         <li><a href="#capabilities">Capabilities</a></li>
         <li><a href="#approach">Approach</a></li>
         <li><a href="#engagements">Engagements</a></li>
@@ -86,22 +88,25 @@
   </header>
 
   <main id="main-content">
-    <!-- Hero Section -->
+    <!-- Hero Section with Interactive 3D Spatial Canvas -->
     <section id="hero" class="hero-section">
-      <div class="container">
+      <!-- Background 3D Interactive Spatial Canvas -->
+      <canvas id="hero-3d-canvas" class="hero-3d-canvas" aria-hidden="true"></canvas>
+
+      <div class="container hero-container-rel">
         <div class="hero-label">
           <span class="label-index">01 / OVERVIEW</span>
           <span class="label-sep">—</span>
-          <span class="label-desc">Independent Digital Design &amp; Engineering Practice</span>
+          <span class="label-desc">Independent Digital Design &amp; 3D Engineering Practice</span>
         </div>
 
         <h1 class="hero-heading">
-          Design-led engineering for brands that refuse to blend in.
+          Design-led 3D engineering for brands that refuse to blend in.
         </h1>
 
         <div class="hero-footer-grid">
           <p class="hero-lead">
-            Shivam Web Designs crafts distinctive digital flagships, web applications, and precision-tuned design systems. No bloated templates. No cookie-cutter abstractions. Just meticulous craftsmanship, sub-second performance, and quiet confidence.
+            Shivam Web Designs crafts bespoke digital flagships, spatial 3D web applications, and precision design systems. Meticulous code, timeless Swiss typography, and uncompromising sub-second performance.
           </p>
 
           <div class="hero-actions">
@@ -109,8 +114,8 @@
               Initiate Project Brief
               <span class="btn-arrow" aria-hidden="true">&rarr;</span>
             </button>
-            <a href="#works" class="btn btn-ghost btn-lg">
-              View Work Index
+            <a href="#stack" class="btn btn-ghost btn-lg">
+              Explore Scroll Stack &darr;
             </a>
           </div>
         </div>
@@ -118,16 +123,224 @@
         <div class="hero-meta-bar">
           <div class="meta-col">
             <span class="meta-label">DISCIPLINES</span>
-            <span class="meta-val">Art Direction, UI/UX, Full-Stack Frontend, Design Systems</span>
+            <span class="meta-val">Spatial 3D Web, UI/UX, Creative Frontend, Design Systems</span>
           </div>
           <div class="meta-col">
-            <span class="meta-label">STANDARDS</span>
-            <span class="meta-val">100/100 Core Web Vitals, Zero-Shift Layouts, WCAG AA</span>
+            <span class="meta-label">BENCHMARK</span>
+            <span class="meta-val">100/100 Core Web Vitals, 60fps WebGL/Canvas, WCAG AA</span>
           </div>
           <div class="meta-col">
             <span class="meta-label">DIRECTOR</span>
-            <span class="meta-val">Shivam Purohit • Studio Lead</span>
+            <span class="meta-val">Shivam Purohit &bull; Studio Lead</span>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scroll-to-Open Stacking Deck Section -->
+    <section id="stack" class="section stack-section" aria-labelledby="stack-heading">
+      <div class="container">
+        <div class="section-meta">
+          <span class="meta-index">02 / ARCHITECTURE</span>
+          <h2 id="stack-heading" class="section-title">The Foundation Stack</h2>
+          <span class="section-count">Scroll to Peel Open Layers</span>
+        </div>
+
+        <div class="stack-intro-bar">
+          <div class="scroll-prompt">
+            <span class="mouse-icon" aria-hidden="true">
+              <span class="mouse-wheel"></span>
+            </span>
+            <span class="prompt-text">Scroll down &mdash; watch the architecture stack unfold layer by layer</span>
+          </div>
+          <div class="stack-indicator-pills" role="tablist" aria-label="Architecture Layer Switcher">
+            <button class="stack-nav-pill active" data-target="layer-1" type="button">01 / Creative 3D</button>
+            <button class="stack-nav-pill" data-target="layer-2" type="button">02 / Frontend Core</button>
+            <button class="stack-nav-pill" data-target="layer-3" type="button">03 / Headless CMS</button>
+            <button class="stack-nav-pill" data-target="layer-4" type="button">04 / Performance Engine</button>
+          </div>
+        </div>
+
+        <!-- The Stacking Deck Container -->
+        <div class="stack-deck" id="stack-deck">
+          <!-- Stack Card 01 -->
+          <article class="stack-card" id="layer-1" data-card-index="1" style="--stack-index: 1;">
+            <div class="card-glass-glow" aria-hidden="true"></div>
+            <div class="stack-card-inner">
+              <div class="stack-card-header">
+                <div class="card-step-badge">LAYER 01 / SPATIAL &amp; VISUAL</div>
+                <div class="card-version">WebGL &bull; Canvas 3D &bull; Figma</div>
+              </div>
+
+              <div class="stack-card-content">
+                <div class="stack-card-text">
+                  <h3 class="stack-card-title">Interactive 3D Experiences &amp; Art Direction</h3>
+                  <p class="stack-card-desc">
+                    We transcend static 2D templates by embedding lightweight, hardware-accelerated 3D elements, interactive WebGL shaders, and smooth micro-interactions that respond to mouse physics and scroll momentum.
+                  </p>
+                  <div class="stack-pill-row">
+                    <span class="tech-tag">WebGL / Three.js</span>
+                    <span class="tech-tag">CSS 3D Perspective</span>
+                    <span class="tech-tag">Custom Shaders</span>
+                    <span class="tech-tag">Figma Design Tokens</span>
+                  </div>
+                </div>
+
+                <div class="stack-card-preview visual-3d-box">
+                  <div class="interactive-tilt-preview" data-tilt>
+                    <div class="tilt-badge">SPATIAL PERSPECTIVE</div>
+                    <div class="tilt-visual-wireframe">
+                      <div class="cube-3d">
+                        <div class="cube-face face-front">3D</div>
+                        <div class="cube-face face-back">S/WD</div>
+                        <div class="cube-face face-right">60fps</div>
+                        <div class="cube-face face-left">WebGL</div>
+                        <div class="cube-face face-top"></div>
+                        <div class="cube-face face-bottom"></div>
+                      </div>
+                    </div>
+                    <div class="tilt-status">
+                      <span>Interactive GPU Rendering</span>
+                      <strong class="text-accent">&lt; 12KB Payload</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Stack Card 02 -->
+          <article class="stack-card" id="layer-2" data-card-index="2" style="--stack-index: 2;">
+            <div class="card-glass-glow" aria-hidden="true"></div>
+            <div class="stack-card-inner">
+              <div class="stack-card-header">
+                <div class="card-step-badge">LAYER 02 / FRONTEND CORE</div>
+                <div class="card-version">HTML5 &bull; CSS Grid &bull; TypeScript</div>
+              </div>
+
+              <div class="stack-card-content">
+                <div class="stack-card-text">
+                  <h3 class="stack-card-title">Modern Semantic Frontend Engineering</h3>
+                  <p class="stack-card-desc">
+                    Bulletproof code built directly on modern web platform primitives: native CSS Container Queries, CSS Grid with subgrid, logical properties, and light-dark() progressive color tokens. Zero framework bloat.
+                  </p>
+                  <div class="stack-pill-row">
+                    <span class="tech-tag">Modern CSS Grid</span>
+                    <span class="tech-tag">Container Queries</span>
+                    <span class="tech-tag">Astro / React / Next.js</span>
+                    <span class="tech-tag">WCAG 2.1 AA Compliant</span>
+                  </div>
+                </div>
+
+                <div class="stack-card-preview code-editor-box">
+                  <div class="editor-header">
+                    <span class="ed-dot red"></span><span class="ed-dot yellow"></span><span class="ed-dot green"></span>
+                    <span class="ed-filename">architecture.config.ts</span>
+                  </div>
+                  <pre class="editor-code"><code><span class="c-key">export const</span> <span class="c-val">shivamStack</span> = {
+  <span class="c-prop">layout</span>: <span class="c-str">'CSS Grid + Subgrid'</span>,
+  <span class="c-prop">typography</span>: <span class="c-str">'Fluid clamp() (WCAG 200%)'</span>,
+  <span class="c-prop">colorScheme</span>: <span class="c-str">'light-dark() tokens'</span>,
+  <span class="c-prop">performance</span>: <span class="c-str">'100/100 Core Web Vitals'</span>,
+  <span class="c-prop">runtimeBloat</span>: <span class="c-val">0</span>
+};</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Stack Card 03 -->
+          <article class="stack-card" id="layer-3" data-card-index="3" style="--stack-index: 3;">
+            <div class="card-glass-glow" aria-hidden="true"></div>
+            <div class="stack-card-inner">
+              <div class="stack-card-header">
+                <div class="card-step-badge">LAYER 03 / CONTENT &amp; COMMERCE</div>
+                <div class="card-version">Sanity &bull; Shopify &bull; Strapi &bull; Supabase</div>
+              </div>
+
+              <div class="stack-card-content">
+                <div class="stack-card-text">
+                  <h3 class="stack-card-title">Headless CMS &amp; Distributed Data</h3>
+                  <p class="stack-card-desc">
+                    Your marketing team gets a visual, drag-and-drop editorial workspace tailored strictly to your design system. Real-time previewing, global CDN edge delivery, and frictionless API connectivity.
+                  </p>
+                  <div class="stack-pill-row">
+                    <span class="tech-tag">Sanity Visual Studio</span>
+                    <span class="tech-tag">Shopify Storefront GraphQL</span>
+                    <span class="tech-tag">Edge Caching</span>
+                    <span class="tech-tag">Instant Revalidation</span>
+                  </div>
+                </div>
+
+                <div class="stack-card-preview headless-preview-box">
+                  <div class="headless-ui">
+                    <div class="headless-ui-row">
+                      <span class="h-icon">&bull;</span>
+                      <span class="h-title">Document: CaseStudy_Komorebi.json</span>
+                      <span class="h-badge">PUBLISHED</span>
+                    </div>
+                    <div class="h-stat-grid">
+                      <div class="h-stat">
+                        <small>Edge Sync Latency</small>
+                        <strong>18ms</strong>
+                      </div>
+                      <div class="h-stat">
+                        <small>Global Availability</small>
+                        <strong>99.99%</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Stack Card 04 -->
+          <article class="stack-card" id="layer-4" data-card-index="4" style="--stack-index: 4;">
+            <div class="card-glass-glow" aria-hidden="true"></div>
+            <div class="stack-card-inner">
+              <div class="stack-card-header">
+                <div class="card-step-badge">LAYER 04 / SPEED &amp; SEO ENGINE</div>
+                <div class="card-version">Cloudflare Edge &bull; JSON-LD &bull; AVIF</div>
+              </div>
+
+              <div class="stack-card-content">
+                <div class="stack-card-text">
+                  <h3 class="stack-card-title">Sub-Second Delivery &amp; Search Dominance</h3>
+                  <p class="stack-card-desc">
+                    Every website is rigorously tested on real-world throttled 4G devices. Next-gen image format pipelines (AVIF/WebP), zero cumulative layout shifts, and deep structured schema markup for top search ranking.
+                  </p>
+                  <div class="stack-pill-row">
+                    <span class="tech-tag">Sub-350ms FCP</span>
+                    <span class="tech-tag">Zero Layout Shift (CLS: 0.00)</span>
+                    <span class="tech-tag">Rich Snippets Schema</span>
+                    <span class="tech-tag">Automated Sitemap</span>
+                  </div>
+                </div>
+
+                <div class="stack-card-preview audit-score-box">
+                  <div class="audit-circle-row">
+                    <div class="score-circle">
+                      <span class="score-val">100</span>
+                      <span class="score-label">Performance</span>
+                    </div>
+                    <div class="score-circle">
+                      <span class="score-val">100</span>
+                      <span class="score-label">Accessibility</span>
+                    </div>
+                    <div class="score-circle">
+                      <span class="score-val">100</span>
+                      <span class="score-label">Best Practices</span>
+                    </div>
+                    <div class="score-circle">
+                      <span class="score-val">100</span>
+                      <span class="score-label">SEO</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -136,7 +349,7 @@
     <section id="works" class="section works-section">
       <div class="container">
         <div class="section-meta">
-          <span class="meta-index">02 / ARCHIVE</span>
+          <span class="meta-index">03 / ARCHIVE</span>
           <h2 class="section-title">Selected Works</h2>
           <span class="section-count">2024 — 2026</span>
         </div>
@@ -151,7 +364,7 @@
 
         <div class="works-grid">
           <!-- Project 01 -->
-          <article class="work-card" data-category="editorial">
+          <article class="work-card" data-category="editorial" data-tilt>
             <div class="work-visual bg-noir">
               <div class="visual-canvas">
                 <div class="canvas-tag">KOMOREBI ARCHITECTURE</div>
@@ -183,7 +396,7 @@
           </article>
 
           <!-- Project 02 -->
-          <article class="work-card" data-category="software">
+          <article class="work-card" data-category="software" data-tilt>
             <div class="work-visual bg-cobalt">
               <div class="visual-canvas">
                 <div class="canvas-tag">MONOLITH DISTRIBUTED SYSTEMS</div>
@@ -212,7 +425,7 @@
           </article>
 
           <!-- Project 03 -->
-          <article class="work-card" data-category="commerce">
+          <article class="work-card" data-category="commerce" data-tilt>
             <div class="work-visual bg-sand">
               <div class="visual-canvas">
                 <div class="canvas-tag">AEVUM INDEPENDENT WATCHMAKERS</div>
@@ -242,7 +455,7 @@
           </article>
 
           <!-- Project 04 -->
-          <article class="work-card" data-category="editorial">
+          <article class="work-card" data-category="editorial" data-tilt>
             <div class="work-visual bg-emerald">
               <div class="visual-canvas">
                 <div class="canvas-tag">REVISTA QUARTERLY</div>
@@ -278,7 +491,7 @@
     <section id="capabilities" class="section capabilities-section">
       <div class="container">
         <div class="section-meta">
-          <span class="meta-index">03 / EXPERTISE</span>
+          <span class="meta-index">04 / EXPERTISE</span>
           <h2 class="section-title">Studio Capabilities</h2>
           <span class="section-count">From Ideation to Code</span>
         </div>
@@ -286,9 +499,9 @@
         <div class="capabilities-grid">
           <div class="cap-col">
             <span class="cap-num">01</span>
-            <h3 class="cap-title">Digital Art Direction &amp; UI/UX</h3>
+            <h3 class="cap-title">Spatial 3D &amp; Digital Art Direction</h3>
             <p class="cap-desc">
-              We translate abstract strategic vision into sharp, intuitive digital interfaces. We don't rely on off-the-shelf component libraries; every layout is custom-drawn with purposeful proportion and editorial typographic heirarchy.
+              We translate abstract strategic vision into sharp, intuitive digital interfaces. We don't rely on off-the-shelf component libraries; every layout is custom-drawn with purposeful proportion and editorial typographic hierarchy.
             </p>
             <ul class="cap-list">
               <li>Creative Direction &amp; Concepting</li>
@@ -333,7 +546,7 @@
     <section id="approach" class="section approach-section">
       <div class="container">
         <div class="section-meta">
-          <span class="meta-index">04 / DISCIPLINE</span>
+          <span class="meta-index">05 / DISCIPLINE</span>
           <h2 class="section-title">How We Build</h2>
           <span class="section-count">4 Step Methodology</span>
         </div>
@@ -398,14 +611,14 @@
     <section id="engagements" class="section engagements-section">
       <div class="container">
         <div class="section-meta">
-          <span class="meta-index">05 / ENGAGEMENTS</span>
+          <span class="meta-index">06 / ENGAGEMENTS</span>
           <h2 class="section-title">Transparent Working Models</h2>
           <span class="section-count">Scope &amp; Scope Planning</span>
         </div>
 
         <div class="tier-grid">
           <!-- Tier 1 -->
-          <div class="tier-card">
+          <div class="tier-card" data-tilt>
             <div class="tier-top">
               <span class="tier-name">Design &amp; Direction Sprint</span>
               <div class="tier-price">
@@ -429,7 +642,7 @@
           </div>
 
           <!-- Tier 2 -->
-          <div class="tier-card tier-featured">
+          <div class="tier-card tier-featured" data-tilt>
             <div class="tier-badge">Flagship Model</div>
             <div class="tier-top">
               <span class="tier-name">Complete Flagship Build</span>
@@ -438,15 +651,15 @@
                 <span class="price-cycle">/ end-to-end</span>
               </div>
               <p class="tier-desc">
-                Full-cycle bespoke design, custom engineering, CMS integration, and seamless production launch.
+                Full-cycle bespoke design, 3D interactions, custom engineering, CMS integration, and seamless production launch.
               </p>
             </div>
             <ul class="tier-features">
               <li>Complete Custom UI/UX &amp; Creative Direction</li>
+              <li>Interactive 3D / WebGL Highlights</li>
               <li>Modern Semantic Frontend Engineering</li>
               <li>Headless CMS (Sanity / WordPress / Strapi)</li>
               <li>100/100 Core Web Vitals Optimization</li>
-              <li>Technical SEO, Schema &amp; Analytics Integration</li>
               <li>30-Day Post-Launch Active Warranty</li>
             </ul>
             <button class="btn btn-primary btn-block select-tier-btn" data-tier="Flagship Build" type="button">
@@ -455,7 +668,7 @@
           </div>
 
           <!-- Tier 3 -->
-          <div class="tier-card">
+          <div class="tier-card" data-tilt>
             <div class="tier-top">
               <span class="tier-name">Studio Partner Retainer</span>
               <div class="tier-price">
@@ -494,7 +707,7 @@
                   <option value="landing">Single High-Impact Landing Page</option>
                   <option value="multipage" selected>Full Multi-Page Website (5&ndash;10 Pages)</option>
                   <option value="commerce">E-Commerce Flagship Store</option>
-                  <option value="custom_app">Web Application / Portal</option>
+                  <option value="custom_app">3D Web Application / Portal</option>
                 </select>
               </div>
 
@@ -508,10 +721,10 @@
               </div>
 
               <div class="calc-group">
-                <label class="calc-label" for="calc-motion">Motion &amp; Interaction</label>
+                <label class="calc-label" for="calc-motion">3D &amp; Spatial Motion</label>
                 <select id="calc-motion" name="motion">
                   <option value="standard">Refined Standard Transitions</option>
-                  <option value="advanced" selected>Custom Micro-Interactions &amp; 3D Highlights</option>
+                  <option value="advanced" selected>Interactive 3D Elements &amp; Stacking Physics</option>
                 </select>
               </div>
             </div>
@@ -538,7 +751,7 @@
     <section id="faq" class="section faq-section" aria-labelledby="faq-heading">
       <div class="container container-narrow">
         <div class="section-meta text-center">
-          <span class="meta-index">06 / ANSWERS</span>
+          <span class="meta-index">07 / ANSWERS</span>
           <h2 id="faq-heading" class="section-title">Straight Answers</h2>
           <span class="section-count">Frequently Discussed Topics</span>
         </div>
@@ -551,19 +764,19 @@
             </summary>
             <div class="faq-content">
               <p>
-                Shivam leads and personally executes every critical phase of design, information architecture, and frontend engineering. You work directly with senior craftspeople, not junior account managers or offshore subcontractors.
+                Shivam leads and personally executes every critical phase of design, 3D interaction, information architecture, and frontend engineering. You work directly with senior craftspeople, not junior account managers or offshore subcontractors.
               </p>
             </div>
           </details>
 
           <details name="faq" class="faq-row">
             <summary class="faq-trigger">
-              <span>How do you guarantee sub-second page performance?</span>
+              <span>How do you guarantee sub-second performance even with 3D elements?</span>
               <span class="faq-chevron" aria-hidden="true"></span>
             </summary>
             <div class="faq-content">
               <p>
-                By building with modern web platform primitives: semantic HTML, native CSS layouts (Grid and Container Queries), strict image format pipelines (AVIF/WebP), tree-shaken JavaScript, and zero unnecessary npm bloatware. We test every build against real-world mobile throttling before shipping.
+                By building lightweight, hardware-accelerated shaders and canvas routines without heavy bloated frameworks. We run animations on the GPU compositor thread, defer non-critical assets, and respect users' reduced-motion preferences.
               </p>
             </div>
           </details>
@@ -610,7 +823,7 @@
     <!-- Final Call to Action -->
     <section class="section cta-section">
       <div class="container">
-        <div class="cta-box">
+        <div class="cta-box" data-tilt>
           <div class="cta-inner">
             <span class="cta-tag">GET STARTED</span>
             <h2 class="cta-title">Have a project in mind? Let's build something exceptional.</h2>
@@ -642,7 +855,7 @@
             <span class="brand-full">Shivam Web Designs</span>
           </div>
           <p class="footer-tagline">
-            Independent digital design and engineering studio. Crafted with precision, engineered for velocity.
+            Independent digital design and 3D engineering studio. Crafted with precision, engineered for velocity.
           </p>
         </div>
 
@@ -650,6 +863,7 @@
           <span class="footer-col-title">Navigation</span>
           <ul>
             <li><a href="#works">Selected Works</a></li>
+            <li><a href="#stack">The 3D Stack</a></li>
             <li><a href="#capabilities">Capabilities</a></li>
             <li><a href="#approach">Our Approach</a></li>
             <li><a href="#engagements">Engagement Models</a></li>
@@ -670,7 +884,7 @@
         <div class="footer-nav-col">
           <span class="footer-col-title">Studio Colophon</span>
           <p class="colophon-text">
-            Built using semantic HTML5, modern CSS Grid, and vanilla JavaScript. 0 tracking cookies, 0 framework bloat.
+            Built using semantic HTML5, modern CSS Grid, 3D Canvas, and vanilla JavaScript. 0 tracking cookies, 0 framework bloat.
           </p>
           <div class="footer-clock">
             <span class="clock-dot" aria-hidden="true"></span>
@@ -727,7 +941,7 @@
             <select id="brief-budget" name="budget">
               <option value="2.5k_4k">$2,500 &ndash; $4,500 (Sprint / Single Page)</option>
               <option value="4.5k_8k" selected>$4,500 &ndash; $8,000 (Full Flagship Website)</option>
-              <option value="8k_plus">$8,000+ (Complex Custom Platform / App)</option>
+              <option value="8k_plus">$8,000+ (3D Spatial Platform / App)</option>
               <option value="retainer">Ongoing Retainer ($1,800/mo)</option>
             </select>
           </div>
@@ -735,7 +949,7 @@
 
         <div class="field">
           <label for="brief-details">Project Summary &amp; Goals <span class="required">*</span></label>
-          <textarea id="brief-details" name="details" rows="4" required placeholder="Describe what you want to build, current challenges, inspiration links, or desired launch date..."></textarea>
+          <textarea id="brief-details" name="details" rows="4" required placeholder="Describe what you want to build, 3D interaction goals, timeline, or current website URL..."></textarea>
         </div>
 
         <div class="dialog-actions">
