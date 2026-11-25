@@ -43,11 +43,11 @@ export function Navbar() {
           >
             <div className="relative h-10 sm:h-12 w-auto flex items-center">
               <Image
-                src={siteConfig.assets.logoPng}
-                alt="ShivamWebDesigns Logo"
-                width={180}
-                height={50}
-                className="h-10 sm:h-12 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
+                src={siteConfig.assets.logoSvg}
+                alt="Shivam Web Designs"
+                width={400}
+                height={310}
+                className="h-12 sm:h-14 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
                 priority
               />
             </div>

@@ -15,22 +15,16 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-5">
             <Link href="/" className="inline-block py-1" aria-label="ShivamWebDesigns Home">
               <Image
-                src={siteConfig.assets.logoPng}
-                alt="ShivamWebDesigns Logo"
-                width={200}
-                height={56}
-                className="h-12 sm:h-14 w-auto object-contain"
+                src={siteConfig.assets.logoSvg}
+                alt="Shivam Web Designs"
+                width={400}
+                height={310}
+                className="h-16 sm:h-20 w-auto object-contain"
               />
             </Link>
             <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
               {siteConfig.supportingText}
             </p>
-            <div className="pt-2">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-mono bg-neutral-900 text-neutral-300 border border-neutral-800">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 animate-pulse" />
-                {siteConfig.contact.availability}
-              </span>
-            </div>
           </div>
 
           {/* Quick Navigation */}
@@ -56,7 +50,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/projects" className="hover:text-white transition-colors">
-                  Selected Work
+                  Projects
                 </Link>
               </li>
               <li>

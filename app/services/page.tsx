@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Services',
   description:
     'Explore the design and engineering services offered by ShivamWebDesigns — Website Design, Frontend Development, UI/UX Architecture, Redesigns, and Maintenance.',
+  alternates: { canonical: '/services' },
 };
 
 export default function ServicesPage() {

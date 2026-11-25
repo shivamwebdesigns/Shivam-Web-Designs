@@ -32,7 +32,6 @@ export interface SiteConfig {
     phone: string;
     whatsapp: string;
     location: string;
-    availability: string;
   };
   social: SocialLinks;
   navigation: NavItem[];
@@ -41,12 +40,12 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   name: 'ShivamWebDesigns',
   shortName: 'SWD',
-  tagline: 'Independent Web Design & Development Agency',
+  tagline: 'Web Design & Development Studio',
   headline: 'Building Digital Experiences That Move Businesses Forward.',
   supportingText:
     'We design and develop thoughtful digital experiences that help individuals, brands and businesses establish a stronger online presence.',
   description:
-    'ShivamWebDesigns (SWD) is an independent digital studio specializing in bespoke website design, UI/UX architecture, frontend engineering, and high-performance digital flagships.',
+    'ShivamWebDesigns is a web design and development studio based in India, creating custom websites, considered UI/UX, and digital experiences for businesses.',
   url: 'https://shivamwebdesigns.devs.li',
   assets: {
     logoPng: '/assets/logo.png',
@@ -60,7 +59,6 @@ export const siteConfig: SiteConfig = {
     phone: '+91 78619 65480',
     whatsapp: 'https://wa.me/917861965480?s=p',
     location: 'India • Serving Clients Worldwide',
-    availability: 'Accepting select new projects',
   },
   social: {
     website: 'https://shivamwebdesigns.devs.li',

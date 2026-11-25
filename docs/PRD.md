@@ -43,7 +43,7 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 - As a prospective client, I want to rotate, tilt, and flip the 3D business card with 60fps physics so that I can evaluate the studio's spatial engineering skills.
 - As a smartphone user, I want to switch the card to Portrait Mode so that I can comfortably view and read the card vertically on my phone.
 - As a mobile client, I want to tap "Add to Contacts" so that Shivam Purohit's details are saved instantly into my device address book.
-- As an enterprise lead, I want to inspect in-depth case studies with metrics, architectural decisions, and deliverables.
+- As a visitor, I want a clear notice when the project portfolio is being updated.
 - As a client with a concrete project, I want to configure and submit a structured project brief with scope and budget options.
 
 ## 6. Core Features
@@ -57,9 +57,9 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 - Purpose: Educational and visual breakdown of the studio's spatial web engineering layers.
 - Interaction: Interactive stack controls, responsive stage, and layer inspection.
 
-### Feature 3: Selected Work & Case Study Inspection Modal
-- Purpose: Deep dive into delivered client projects across Commerce, FinTech, and 3D Platforms.
-- Content: Objective, architectural solutions, technology stack pills, and key metrics.
+### Feature 3: Project Portfolio Status
+- Purpose: Clearly mark the portfolio as being updated while project work is prepared for publication.
+- Behavior: Show “Updating soon” on the homepage and `/projects`; permanently redirect previous project detail URLs and omit them from the sitemap.
 
 ### Feature 4: Workable Project Brief Generator
 - Purpose: Native HTML5 `<dialog>` form collecting client name, work email, project scope, budget tier, and timeline.
@@ -67,7 +67,7 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 
 ## 7. Non-Goals
 - User account creation / login systems (the platform is strictly privacy-first, zero tracking).
-- Heavy client-side frameworks (no React, Next.js, Vue, or Angular dependencies).
+- Unnecessary frameworks, dependencies, third-party tracking scripts, and cookie consent banners.
 - Third-party tracking scripts, cookie consent banners, or intrusive advertising pixels.
 - Generic AI copy, purple gradients, or fake customer counters.
 
@@ -91,7 +91,7 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 - User Engagement: Average time on card > 45 seconds, zero interaction console errors.
 
 ## 10. Constraints
-- Technical: Zero runtime dependencies. Standard semantic HTML5, CSS3, ES2022 JavaScript.
+- Technical: Next.js App Router, React, TypeScript, and Tailwind CSS; keep dependencies focused.
 - Security: No exposed API keys, no client-side secret variables, strict input sanitization.
 - Brand: Obsidian monochrome aesthetic (`#050505` to `#16161a`), cobalt blue accent (`#3b82f6`).
 

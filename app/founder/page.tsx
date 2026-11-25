@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     description: founderData.intro,
     images: [{ url: founderData.image }],
   },
+  alternates: { canonical: '/founder' },
 };
 
 export default function FounderPage() {

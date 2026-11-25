@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, Clock, Mail, MapPin, MessageSquare, Phone, Send, AlertCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Mail, MapPin, MessageSquare, Phone, Send, AlertCircle } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 export default function ContactPage() {
@@ -167,22 +167,6 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900">
-                  <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400">
-                    <Clock className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                      Current Availability
-                    </div>
-                    <div className="text-sm font-medium text-emerald-400">
-                      {siteConfig.contact.availability}
-                    </div>
-                    <div className="text-xs text-neutral-400 mt-1">
-                      Booking sprints 2–4 weeks in advance
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 

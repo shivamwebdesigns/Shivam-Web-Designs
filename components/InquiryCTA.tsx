@@ -10,13 +10,6 @@ export const InquiryCTA: React.FC = () => {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full mb-6">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span className="text-xs font-mono text-neutral-300">
-            {siteConfig.contact.availability}
-          </span>
-        </div>
-
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6 max-w-3xl mx-auto leading-tight">
           Ready to build a digital experience that moves your business forward?
         </h2>

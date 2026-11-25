@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
 import { ServicesSection } from '@/components/ServicesSection';
 import { SpatialStack } from '@/components/SpatialStack';
@@ -7,6 +8,10 @@ import { WhyChooseUs } from '@/components/WhyChooseUs';
 import { WorkingProcess } from '@/components/WorkingProcess';
 import { FounderPreview } from '@/components/FounderPreview';
 import { InquiryCTA } from '@/components/InquiryCTA';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 export default function HomePage() {
   return (

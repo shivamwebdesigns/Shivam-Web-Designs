@@ -1,39 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 export function Hero() {
   return (
     <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-44 lg:pb-36 overflow-hidden">
-      {/* Subtle Ambient Background Gradients (Pure Neutral) */}
-      <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-neutral-800/20 blur-[140px] pointer-events-none rounded-full"
-        aria-hidden="true"
-      />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Main Official Studio Logo Centerpiece */}
-          <div className="relative inline-flex items-center justify-center mx-auto mb-2 group">
-            <div className="absolute -inset-6 bg-gradient-to-r from-neutral-800/40 via-neutral-700/20 to-neutral-800/40 rounded-3xl blur-2xl group-hover:bg-neutral-700/30 transition-all duration-700 pointer-events-none" />
-            <div className="relative p-4 sm:p-5 bg-black/90 border border-neutral-800/90 rounded-2xl shadow-2xl backdrop-blur-xl">
-              <Image
-                src={siteConfig.assets.logoPng}
-                alt="ShivamWebDesigns Official Logo"
-                width={360}
-                height={100}
-                className="h-16 sm:h-20 md:h-24 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
-                priority
-              />
-            </div>
-          </div>
-
-          {/* Studio Tag & Availability Pill */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neutral-800 bg-neutral-900/60 backdrop-blur-sm text-xs font-mono text-neutral-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Independent Digital Design &amp; Development Studio</span>
+          <div className="mx-auto mb-2 w-fit">
+            <Image
+              src={siteConfig.assets.logoSvg}
+              alt="Shivam Web Designs"
+              width={400}
+              height={310}
+              className="h-28 sm:h-36 md:h-40 w-auto object-contain"
+              priority
+            />
           </div>
 
           {/* Suggested Hero Headline */}
@@ -60,7 +44,7 @@ export function Hero() {
               href="/projects"
               className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 text-sm uppercase tracking-wider font-semibold text-white bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-700/60 rounded-md transition-all duration-200 active:scale-95"
             >
-              Explore Our Work
+              Project Updates
               <ArrowUpRight className="ml-2 h-4 w-4 opacity-70" />
             </Link>
           </div>

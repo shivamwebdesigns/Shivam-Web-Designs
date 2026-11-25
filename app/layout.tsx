@@ -36,14 +36,11 @@ export const metadata: Metadata = {
     'ShivamWebDesigns',
     'SWD',
     'Shivam Purohit',
-    'Web Design Agency',
-    'Website Development',
-    'UI UX Design',
-    'Next.js Agency',
-    'Frontend Engineering',
-    'Minimalist Web Design',
-    'Independent Digital Studio',
-    'Digital Agency India',
+    'web design studio India',
+    'custom website design',
+    'website development',
+    'UI/UX design',
+    'frontend development',
   ],
   authors: [{ name: 'Shivam Purohit', url: siteConfig.url }],
   creator: 'Shivam Purohit',
@@ -100,7 +97,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth dark`}>
       <head>
-        <link rel="canonical" href={siteConfig.url} />
         {/* Structured JSON-LD Schema */}
         <script
           type="application/ld+json"
@@ -113,7 +109,6 @@ export default function RootLayout({
               url: siteConfig.url,
               telephone: siteConfig.contact.phone,
               email: siteConfig.contact.email,
-              priceRange: '$$$$',
               address: {
                 '@type': 'PostalAddress',
                 addressCountry: 'IN',

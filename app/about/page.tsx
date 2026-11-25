@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: 'About',
   description:
     'Learn about ShivamWebDesigns (SWD) — our philosophy, mission, values, and how we build bespoke digital flagships without agency overhead.',
+  alternates: { canonical: '/about' },
 };
 
 export default function AboutPage() {
