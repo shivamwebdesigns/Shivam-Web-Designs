@@ -31,6 +31,8 @@ The site logo appears in the shared header and footer only. The homepage hero us
 
 Other brand artwork printed into the interactive business card remains part of that card experience. See [asset rights](ASSET_RIGHTS.md) for reuse terms.
 
+The founder profile uses the upscaled portrait at `public/assets/founder-hd.jpg`; the original image remains at `public/assets/founder.jpg`.
+
 ## Local Development
 
 Requirements: Node.js 18.18 or newer and npm.
