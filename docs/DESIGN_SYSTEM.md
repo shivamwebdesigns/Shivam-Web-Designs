@@ -13,6 +13,7 @@
 - Brand Name: Shivam Web Designs
 - Monogram: S/WD
 - Logo: Official high-resolution transparent asset (`Brand Logo.PNG`)
+- Browser favicon: SWD monogram in `public/favicon.ico`; PNG variants remain available for app and Apple icons.
 - Brand Voice: Confident, direct, technical, architectural, client-focused.
 
 ## 3. Color Palette
