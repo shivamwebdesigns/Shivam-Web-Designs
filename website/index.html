@@ -33,11 +33,11 @@
         <ul class="nav-list">
           <li><a href="#works" class="nav-link">Selected Work</a></li>
           <li><a href="#stack" class="nav-link">The 3D Stack</a></li>
-          <li><a href="#card" class="nav-link nav-link-badge">3D Card <span class="nav-spark" aria-hidden="true"></span></a></li>
           <li><a href="#capabilities" class="nav-link">Capabilities</a></li>
           <li><a href="#approach" class="nav-link">Approach</a></li>
           <li><a href="#engagements" class="nav-link">Engagements</a></li>
           <li><a href="#faq" class="nav-link">Questions</a></li>
+          <li><a href="#contact" class="nav-link nav-link-badge">Contact Us <span class="nav-spark" aria-hidden="true"></span></a></li>
         </ul>
       </nav>
 
@@ -112,15 +112,18 @@
       <ul class="mobile-links">
         <li><a href="#works">Selected Work</a></li>
         <li><a href="#stack">The 3D Stack</a></li>
-        <li><a href="businesscard.html" class="mobile-card-link">
-          <span>3D Business Card (/businesscard)</span>
-          <span class="mobile-pill-badge">Live 3D &nearr;</span>
-        </a></li>
-        <li><a href="#card">3D Card Section</a></li>
         <li><a href="#capabilities">Capabilities</a></li>
         <li><a href="#approach">Approach</a></li>
         <li><a href="#engagements">Engagements</a></li>
         <li><a href="#faq">Questions</a></li>
+        <li><a href="#contact" class="mobile-card-link">
+          <span>Contact Us &amp; 3D Card</span>
+          <span class="mobile-pill-badge">3D &nearr;</span>
+        </a></li>
+        <li><a href="businesscard.html" class="mobile-card-link">
+          <span>Dedicated Card (/businesscard)</span>
+          <span class="mobile-pill-badge">Client Link &nearr;</span>
+        </a></li>
       </ul>
 
       <!-- Mobile Social Channels Bar (>= 44px Touch Targets) -->
@@ -193,9 +196,9 @@
               Initiate Project Brief
               <span class="btn-arrow" aria-hidden="true">&rarr;</span>
             </button>
-            <a href="#card" class="btn btn-secondary btn-lg">
+            <a href="#contact" class="btn btn-secondary btn-lg">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="7" cy="15" r="1"/></svg>
-              Interactive 3D Card
+              Contact &amp; 3D Card
             </a>
             <a href="#stack" class="btn btn-ghost btn-lg">
               Explore Scroll Stack &darr;
@@ -587,171 +590,11 @@
       </div>
     </section>
 
-    <!-- Section 04: Interactive 3D Business Card -->
-    <section id="card" class="section card-section" aria-labelledby="card-heading">
-      <div class="container">
-        <div class="section-meta">
-          <span class="meta-index">04 / IDENTITY</span>
-          <h2 id="card-heading" class="section-title">Interactive 3D Business Card</h2>
-          <span class="section-count">Spatial Identity &amp; vCard</span>
-        </div>
-
-        <div class="card-showcase-grid">
-          <!-- 3D Card Stage Viewport -->
-          <div class="card-stage-container" id="card-stage-container">
-            <div class="card-stage-header">
-              <div class="card-stage-indicator">
-                <span class="live-pulse" aria-hidden="true"></span>
-                <span id="card-face-label">Front Face &bull; Drag to Rotate 3D</span>
-              </div>
-              <div class="card-gyro-hint">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                <span>Click to flip &bull; <a href="businesscard.html" style="color: var(--primary); text-decoration: underline; font-weight: 600;">/businesscard &nearr;</a></span>
-              </div>
-            </div>
-
-            <!-- The 3D Perspective Stage -->
-            <div class="card-perspective-stage" id="card-stage" tabindex="0" role="region" aria-label="Interactive 3D Business Card - Hover or drag to tilt in 3D, click or press spacebar to flip">
-              <div class="business-card-3d" id="business-card-3d" data-flipped="false">
-                <!-- Front Face -->
-                <div class="card-face card-face-front">
-                  <img src="business-card-front.png" alt="Shivam Web Designs Business Card Front" class="card-img" draggable="false" width="1920" height="1080">
-                  <div class="card-foil-sheen" aria-hidden="true"></div>
-                  <div class="card-grain-layer" aria-hidden="true"></div>
-                </div>
-
-                <!-- Back Face -->
-                <div class="card-face card-face-back">
-                  <img src="business-card-back.png" alt="Shivam Web Designs Business Card Back" class="card-img" draggable="false" width="2100" height="1200">
-                  <div class="card-foil-sheen" aria-hidden="true"></div>
-                  <div class="card-grain-layer" aria-hidden="true"></div>
-
-                  <!-- Hotspot overlay for direct interaction -->
-                  <div class="card-back-hotspots" aria-label="Direct Card Links">
-                    <a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" class="card-hotspot hotspot-site" title="Visit shivamwebdesigns.devs.li">
-                      <span class="hotspot-ping" aria-hidden="true"></span>
-                      <span class="hotspot-label">shivamwebdesigns.devs.li</span>
-                    </a>
-                    <a href="https://linkedin.com/company/shivamwebdesigns" target="_blank" rel="noopener" class="card-hotspot hotspot-linkedin" title="Open LinkedIn Profile">
-                      <span class="hotspot-ping" aria-hidden="true"></span>
-                      <span class="hotspot-label">LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/shivamwebdesigns" target="_blank" rel="noopener" class="card-hotspot hotspot-github" title="Open GitHub Profile">
-                      <span class="hotspot-ping" aria-hidden="true"></span>
-                      <span class="hotspot-label">GitHub</span>
-                    </a>
-                    <a href="https://instagram.com/shivamwebdesigns" target="_blank" rel="noopener" class="card-hotspot hotspot-instagram" title="Open Instagram Profile">
-                      <span class="hotspot-ping" aria-hidden="true"></span>
-                      <span class="hotspot-label">Instagram</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 3D Card Interactive Controller Bar -->
-            <div class="card-controls-bar">
-              <button id="card-flip-btn" class="card-ctrl-btn active" type="button" aria-label="Flip Business Card">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12v-2a8 8 0 0 1 14.93-4M20 12v2a8 8 0 0 1-14.93 4"/><polyline points="20 4 20 10 14 10"/><polyline points="4 20 4 14 10 14"/></svg>
-                <span id="flip-btn-text">Flip to Back</span>
-              </button>
-
-              <button id="card-orbit-btn" class="card-ctrl-btn" type="button" aria-pressed="false" aria-label="Toggle Auto Orbiting">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                <span id="orbit-btn-text">Auto Orbit: Off</span>
-              </button>
-
-              <button id="card-reset-btn" class="card-ctrl-btn" type="button" aria-label="Reset Tilt Angle">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
-                <span>Reset View</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Card Information & Executive Details Panel -->
-          <div class="card-info-panel">
-            <div class="card-brand-badge">
-              <span class="badge-dot" aria-hidden="true"></span>
-              <span>OFFICIAL IDENTITY ASSET</span>
-            </div>
-
-            <h3 class="card-info-title">Executive 3D Spatial Business Card</h3>
-            <p class="card-info-desc">
-              Designing and building modern websites with a focus on UI/UX, creativity and performance. Tactile 3D physics with holographic foil reflections, 360&deg; rotational freedom, and instant digital vCard syncing.
-            </p>
-
-            <div class="card-spec-grid">
-              <div class="spec-item">
-                <span class="spec-label">CORE PILLARS</span>
-                <span class="spec-val">UI/UX &bull; Frontend &bull; Website Redesign</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-label">FINISH SPECIFICATION</span>
-                <span class="spec-val">Silk Matte 350gsm &bull; Metallic Foil Sheen</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-label">INTERACTION ENGINE</span>
-                <span class="spec-val">CSS 3D Matrix &bull; 60fps Gyro Dampening</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-label">CANONICAL DOMAIN</span>
-                <span class="spec-val"><a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener">shivamwebdesigns.devs.li</a></span>
-              </div>
-            </div>
-
-            <div class="card-action-cluster">
-              <a href="businesscard.html" class="btn btn-primary btn-lg" title="Open full dedicated 3D card experience at /businesscard">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-                Open /businesscard &nearr;
-              </a>
-
-              <button id="card-download-vcf" class="btn btn-secondary btn-lg" type="button">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Save vCard (.vcf)
-              </button>
-
-              <button id="card-share-btn" class="btn btn-outline btn-lg" type="button">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                Share Card
-              </button>
-
-              <a href="Business_Card_Print_Front_Back.pdf" download="ShivamWebDesigns_Business_Card_Print.pdf" class="btn btn-ghost btn-lg" title="Download 2-page print-ready 300dpi PDF">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-                Print PDF (300dpi)
-              </a>
-            </div>
-
-            <div class="card-social-direct-list">
-              <span class="social-list-title">Official Connected Channels</span>
-              <div class="channel-pills">
-                <a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" class="channel-pill" title="Official Studio Website">
-                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                  <span>Website</span>
-                </a>
-                <a href="https://www.linkedin.com/company/shivamwebdesigns/" target="_blank" rel="noopener" class="channel-pill" title="Official LinkedIn Profile">
-                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.4 9.74V10.13H5.06v8.37h2.8z"/></svg>
-                  <span>LinkedIn</span>
-                </a>
-                <a href="https://github.com/PurohitBhagyesh/Shivam-Web-Designs" target="_blank" rel="noopener" class="channel-pill" title="Official GitHub Repository">
-                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
-                  <span>GitHub</span>
-                </a>
-                <a href="https://www.instagram.com/shivamwebdesigns/" target="_blank" rel="noopener" class="channel-pill" title="Official Instagram Profile">
-                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                  <span>Instagram</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Capabilities Section -->
     <section id="capabilities" class="section capabilities-section">
       <div class="container">
         <div class="section-meta">
-          <span class="meta-index">05 / EXPERTISE</span>
+          <span class="meta-index">04 / EXPERTISE</span>
           <h2 class="section-title">Studio Capabilities</h2>
           <span class="section-count">From Ideation to Code</span>
         </div>
@@ -820,7 +663,7 @@
     <section id="approach" class="section approach-section">
       <div class="container">
         <div class="section-meta">
-          <span class="meta-index">06 / DISCIPLINE</span>
+          <span class="meta-index">05 / DISCIPLINE</span>
           <h2 class="section-title">How We Build</h2>
           <span class="section-count">4 Step Methodology</span>
         </div>
@@ -885,7 +728,7 @@
     <section id="engagements" class="section engagements-section">
       <div class="container">
         <div class="section-meta">
-          <span class="meta-index">07 / ENGAGEMENTS</span>
+          <span class="meta-index">06 / ENGAGEMENTS</span>
           <h2 class="section-title">Transparent Working Models</h2>
           <span class="section-count">Scope &amp; Scope Planning</span>
         </div>
@@ -1025,7 +868,7 @@
     <section id="faq" class="section faq-section" aria-labelledby="faq-heading">
       <div class="container container-narrow">
         <div class="section-meta text-center">
-          <span class="meta-index">08 / ANSWERS</span>
+          <span class="meta-index">07 / ANSWERS</span>
           <h2 id="faq-heading" class="section-title">Straight Answers</h2>
           <span class="section-count">Frequently Discussed Topics</span>
         </div>
@@ -1094,22 +937,149 @@
       </div>
     </section>
 
-    <!-- Final Call to Action -->
-    <section class="section cta-section">
+    <!-- Section 08: Contact Us & 3D Business Card -->
+    <section id="contact" class="section contact-section" aria-labelledby="contact-heading">
       <div class="container">
-        <div class="cta-box" data-tilt>
-          <div class="cta-inner">
-            <span class="cta-tag">GET STARTED</span>
-            <h2 class="cta-title">Have a project in mind? Let's build something exceptional.</h2>
-            <p class="cta-sub">
-              We take on a limited number of client engagements each quarter to preserve uncompromising quality and dedicated focus.
+        <div class="section-meta">
+          <span class="meta-index">08 / CONTACT</span>
+          <h2 id="contact-heading" class="section-title">Contact Us &amp; 3D Identity</h2>
+          <span class="section-count">Direct Line &bull; Spatial Business Card</span>
+        </div>
+
+        <div class="contact-showcase-grid">
+          <!-- 3D Business Card Stage (Clean Gesture-Driven, No Cluttered Buttons) -->
+          <div class="contact-card-col">
+            <div class="card-stage-container" id="card-stage-container">
+              <div class="card-stage-header">
+                <div class="card-stage-indicator">
+                  <span class="live-pulse" aria-hidden="true"></span>
+                  <span id="card-face-label">Front Face &bull; Drag to Rotate 3D</span>
+                </div>
+                <div class="card-gyro-hint">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                  <span>Tap card to flip &bull; <a href="businesscard.html" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: underline; font-weight: 600;">/businesscard &nearr;</a></span>
+                </div>
+              </div>
+
+              <!-- The 3D Perspective Stage -->
+              <div class="card-perspective-stage" id="card-stage" tabindex="0" role="region" aria-label="Interactive 3D Business Card - Hover or drag to tilt in 3D, click or press spacebar to flip">
+                <div class="business-card-3d" id="business-card-3d" data-flipped="false">
+                  <!-- Front Face -->
+                  <div class="card-face card-face-front">
+                    <img src="business-card-front.png" alt="Shivam Web Designs Business Card Front" class="card-img" draggable="false" width="1920" height="1080">
+                    <div class="card-foil-sheen" aria-hidden="true"></div>
+                    <div class="card-grain-layer" aria-hidden="true"></div>
+                  </div>
+
+                  <!-- Back Face -->
+                  <div class="card-face card-face-back">
+                    <img src="business-card-back.png" alt="Shivam Web Designs Business Card Back" class="card-img" draggable="false" width="2100" height="1200">
+                    <div class="card-foil-sheen" aria-hidden="true"></div>
+                    <div class="card-grain-layer" aria-hidden="true"></div>
+
+                    <!-- Hotspot overlay for direct interaction -->
+                    <div class="card-back-hotspots" aria-label="Direct Card Links">
+                      <a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" class="card-hotspot hotspot-site" title="Visit shivamwebdesigns.devs.li">
+                        <span class="hotspot-ping" aria-hidden="true"></span>
+                        <span class="hotspot-label">shivamwebdesigns.devs.li</span>
+                      </a>
+                      <a href="https://www.linkedin.com/company/shivamwebdesigns/" target="_blank" rel="noopener" class="card-hotspot hotspot-linkedin" title="Open LinkedIn Profile">
+                        <span class="hotspot-ping" aria-hidden="true"></span>
+                        <span class="hotspot-label">LinkedIn</span>
+                      </a>
+                      <a href="https://github.com/PurohitBhagyesh/Shivam-Web-Designs" target="_blank" rel="noopener" class="card-hotspot hotspot-github" title="Open GitHub Profile">
+                        <span class="hotspot-ping" aria-hidden="true"></span>
+                        <span class="hotspot-label">GitHub</span>
+                      </a>
+                      <a href="https://www.instagram.com/shivamwebdesigns/" target="_blank" rel="noopener" class="card-hotspot hotspot-instagram" title="Open Instagram Profile">
+                        <span class="hotspot-ping" aria-hidden="true"></span>
+                        <span class="hotspot-label">Instagram</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gesture-Only Interaction Pill -->
+              <div class="card-gesture-hint">
+                <span class="hint-dot" aria-hidden="true"></span>
+                <span>Drag or swipe to rotate 360&deg; &bull; Tap card to flip &bull; Click links on back</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Studio Engagement & Contact Hub Column -->
+          <div class="contact-info-col">
+            <div class="contact-badge">
+              <span class="badge-dot" aria-hidden="true"></span>
+              <span>AVAILABLE FOR Q1/Q2 ENGAGEMENTS</span>
+            </div>
+
+            <h3 class="contact-title">Have a project in mind? Let's build something exceptional.</h3>
+            <p class="contact-desc">
+              Designing and building modern websites with a focus on UI/UX, creativity and performance. Every engagement is led directly with meticulous art direction, 60fps 3D spatial engineering, and zero fluff.
             </p>
-            <div class="cta-buttons">
+
+            <!-- Direct Contact Card -->
+            <div class="contact-cards-wrap">
+              <a href="mailto:shivam@shivamwebdesigns.com" class="contact-main-card" title="Email Shivam Web Designs">
+                <div class="contact-main-card-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </svg>
+                </div>
+                <div class="contact-main-card-text">
+                  <span class="contact-main-label">DIRECT INQUIRIES</span>
+                  <span class="contact-main-email">shivam@shivamwebdesigns.com</span>
+                </div>
+                <span class="contact-main-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+
+              <!-- Studio Channels Row -->
+              <div class="contact-channels-group">
+                <span class="contact-channels-label">Connected Studio Channels</span>
+                <div class="contact-channels-grid">
+                  <a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" class="channel-grid-btn" title="Canonical Website">
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                      <path d="M2 12h20"></path>
+                    </svg>
+                    <span>Website</span>
+                  </a>
+                  <a href="https://www.linkedin.com/company/shivamwebdesigns/" target="_blank" rel="noopener" class="channel-grid-btn" title="Official LinkedIn Profile">
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.4 9.74V10.13H5.06v8.37h2.8z"/>
+                    </svg>
+                    <span>LinkedIn</span>
+                  </a>
+                  <a href="https://github.com/PurohitBhagyesh/Shivam-Web-Designs" target="_blank" rel="noopener" class="channel-grid-btn" title="GitHub Repository">
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                    </svg>
+                    <span>GitHub</span>
+                  </a>
+                  <a href="https://www.instagram.com/shivamwebdesigns/" target="_blank" rel="noopener" class="channel-grid-btn" title="Instagram Profile">
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span>Instagram</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Cluster -->
+            <div class="contact-actions-row">
               <button id="cta-brief-btn" class="btn btn-primary btn-lg" type="button">
-                Submit Project Brief
+                Submit Project Brief &rarr;
               </button>
-              <a href="mailto:shivam@shivamwebdesigns.com" class="btn btn-outline btn-lg">
-                shivam@shivamwebdesigns.com
+              <a href="businesscard.html" class="btn btn-outline btn-lg" target="_blank" rel="noopener" title="Dedicated 3D Business Card Link for Clients">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                Dedicated Card (/businesscard) &nearr;
               </a>
             </div>
           </div>
@@ -1138,12 +1108,12 @@
           <ul>
             <li><a href="#works">Selected Works</a></li>
             <li><a href="#stack">The 3D Stack</a></li>
-            <li><a href="businesscard.html">3D Business Card (/businesscard) &nearr;</a></li>
-            <li><a href="#card">3D Business Card Showcase</a></li>
             <li><a href="#capabilities">Capabilities</a></li>
             <li><a href="#approach">Our Approach</a></li>
             <li><a href="#engagements">Engagement Models</a></li>
             <li><a href="#faq">Questions</a></li>
+            <li><a href="#contact">Contact Us &amp; 3D Card</a></li>
+            <li><a href="businesscard.html">3D Business Card (/businesscard) &nearr;</a></li>
           </ul>
         </div>
 
