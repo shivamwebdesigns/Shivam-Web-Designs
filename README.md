@@ -58,7 +58,7 @@ npm run build
 ## Contact
 
 - Website: <https://shivamwebdesigns.devs.li>
-- Email: <shivam@shivamwebdesigns.com>
+- Email: <shivamwebdesigns23@gmail.com>
 - LinkedIn: <https://www.linkedin.com/company/shivamwebdesigns/>
 - GitHub: <https://github.com/shivamwebdesigns/Shivam-Web-Designs>
 - Instagram: <https://www.instagram.com/shivamwebdesigns/>

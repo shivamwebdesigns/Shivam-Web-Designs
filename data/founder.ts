@@ -128,7 +128,7 @@ export const founderData: FounderProfile = {
     linkedin: 'https://www.linkedin.com/company/shivamwebdesigns/',
     github: 'https://github.com/shivamwebdesigns/Shivam-Web-Designs',
     instagram: 'https://www.instagram.com/shivamwebdesigns/',
-    email: 'shivam@shivamwebdesigns.com',
+    email: 'shivamwebdesigns23@gmail.com',
     businessCard: '/businesscard',
   },
 };

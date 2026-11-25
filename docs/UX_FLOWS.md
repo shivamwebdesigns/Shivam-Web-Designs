@@ -44,4 +44,4 @@
 1. User clicks "Initiate Project Brief" CTA in header, hero, or contact section.
 2. Native `<dialog>` modal opens with accessible inputs for Name, Email, Scope, Budget Tier, and Timeline.
 3. User completes fields and clicks "Send Project Brief".
-4. Brief is validated, packaged into clean Markdown, copied to the user's clipboard, and launches the user's native email app with pre-filled recipient `shivam@shivamwebdesigns.com`.
+4. Brief is validated, packaged into clean Markdown, copied to the user's clipboard, and launches the user's native email app with pre-filled recipient `shivamwebdesigns23@gmail.com`.

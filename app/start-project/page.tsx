@@ -90,7 +90,7 @@ function StartProjectForm() {
     } catch (err: unknown) {
       setStatus('error');
       setErrorMessage(
-        err instanceof Error ? err.message : 'An unexpected error occurred. Please reach out to shivam@shivamwebdesigns.com directly.'
+        err instanceof Error ? err.message : 'An unexpected error occurred. Please reach out to shivamwebdesigns23@gmail.com directly.'
       );
     }
   };

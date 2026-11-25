@@ -34,7 +34,7 @@ N:Purohit;Shivam;;;
 FN:Shivam Purohit
 ORG:Shivam Web Designs
 TITLE:Founder & Creative Director
-EMAIL;TYPE=WORK,INTERNET:shivam@shivamwebdesigns.com
+EMAIL;TYPE=WORK,INTERNET:shivamwebdesigns23@gmail.com
 TEL;TYPE=WORK,VOICE:+919876543210
 URL:https://shivamwebdesigns.devs.li
 URL;TYPE=LinkedIn:https://www.linkedin.com/company/shivamwebdesigns/

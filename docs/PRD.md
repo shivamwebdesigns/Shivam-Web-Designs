@@ -63,7 +63,7 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 
 ### Feature 4: Workable Project Brief Generator
 - Purpose: Native HTML5 `<dialog>` form collecting client name, work email, project scope, budget tier, and timeline.
-- Output: Instant clipboard formatting, local storage draft preservation, and native `mailto:` dispatch to `shivam@shivamwebdesigns.com`.
+- Output: Instant clipboard formatting, local storage draft preservation, and native `mailto:` dispatch to `shivamwebdesigns23@gmail.com`.
 
 ## 7. Non-Goals
 - User account creation / login systems (the platform is strictly privacy-first, zero tracking).

@@ -633,7 +633,7 @@ ${details}
       const mailSubject = encodeURIComponent(`Project Brief from ${name} [${company}]`);
       const mailBody = encodeURIComponent(`Hi Shivam,\n\nHere are my project details:\n\n${currentBriefText}\n\nLooking forward to hearing from you!`);
       if (successMailLink) {
-        successMailLink.href = `mailto:shivam@shivamwebdesigns.com?subject=${mailSubject}&body=${mailBody}`;
+        successMailLink.href = `mailto:shivamwebdesigns23@gmail.com?subject=${mailSubject}&body=${mailBody}`;
       }
 
       briefForm.hidden = true;
@@ -1024,7 +1024,7 @@ ${details}
           'N:WebDesigns;Shivam;;;',
           'ORG:Shivam Web Designs',
           'TITLE:Digital Design & 3D Web Engineering Studio',
-          'EMAIL;TYPE=INTERNET,WORK:shivam@shivamwebdesigns.com',
+          'EMAIL;TYPE=INTERNET,WORK:shivamwebdesigns23@gmail.com',
           'URL:https://shivamwebdesigns.devs.li',
           'URL;TYPE=LinkedIn:https://www.linkedin.com/company/shivamwebdesigns/',
           'URL;TYPE=GitHub:https://github.com/shivamwebdesigns/Shivam-Web-Designs',
@@ -1156,7 +1156,7 @@ ${details}
           'N:WebDesigns;Shivam;;;',
           'ORG:Shivam Web Designs',
           'TITLE:Digital Design & 3D Web Engineering Studio',
-          'EMAIL;TYPE=INTERNET,WORK:shivam@shivamwebdesigns.com',
+          'EMAIL;TYPE=INTERNET,WORK:shivamwebdesigns23@gmail.com',
           'URL:https://shivamwebdesigns.devs.li',
           'URL;TYPE=LinkedIn:https://www.linkedin.com/company/shivamwebdesigns/',
           'URL;TYPE=GitHub:https://github.com/shivamwebdesigns/Shivam-Web-Designs',

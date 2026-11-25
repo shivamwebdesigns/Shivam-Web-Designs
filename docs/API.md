@@ -26,7 +26,7 @@
 - Payload Schema: RFC 2426 vCard v3.0
 
 ## 4. Protocol 2: Project Brief Dispatch Schema
-- Target Recipient: `shivam@shivamwebdesigns.com`
+- Target Recipient: `shivamwebdesigns23@gmail.com`
 - Subject Line: `New Project Inquiry: [Company Name] via Shivam Web Designs`
 - Body Structure:
   ```

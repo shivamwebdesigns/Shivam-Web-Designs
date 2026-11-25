@@ -54,7 +54,7 @@ flowchart TD
 
   subgraph Conversion [Client Conversion Actions]
     JS --> BriefDialog[Native Project Brief Dialog]
-    BriefDialog --> MailDispatch[Native Mail Client / shivam@shivamwebdesigns.com]
+    BriefDialog --> MailDispatch[Native Mail Client / shivamwebdesigns23@gmail.com]
     BriefDialog --> Clipboard[Formatted Brief Clipboard API]
     VCard --> MobileContacts[iOS / Android Contacts App]
   end

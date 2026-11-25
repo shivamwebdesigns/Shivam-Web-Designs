@@ -53,7 +53,7 @@ export const siteConfig: SiteConfig = {
     founderImage: '/assets/founder.jpg',
   },
   contact: {
-    email: 'shivam@shivamwebdesigns.com',
+    email: 'shivamwebdesigns23@gmail.com',
     phone: '+91 78619 65480',
     whatsapp: 'https://wa.me/917861965480?s=p',
     location: 'India • Serving Clients Worldwide',
@@ -64,7 +64,7 @@ export const siteConfig: SiteConfig = {
     github: 'https://github.com/shivamwebdesigns/Shivam-Web-Designs',
     instagram: 'https://www.instagram.com/shivamwebdesigns/',
     whatsapp: 'https://wa.me/917861965480?s=p',
-    email: 'mailto:shivam@shivamwebdesigns.com',
+    email: 'mailto:shivamwebdesigns23@gmail.com',
   },
   navigation: [
     { label: 'Home', href: '/' },

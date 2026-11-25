@@ -8,7 +8,7 @@
 
 ## 2. Secrets Management
 - Zero Secrets in Frontend: No private API tokens, database passwords, or secret keys are stored in the client codebase or git repository.
-- Public Configuration: Only public constants (e.g., domain `https://shivamwebdesigns.devs.li`, contact email `shivam@shivamwebdesigns.com`) are embedded.
+- Public Configuration: Only public constants (e.g., domain `https://shivamwebdesigns.devs.li`, contact email `shivamwebdesigns23@gmail.com`) are embedded.
 - Environment Variables: Handled securely via Vercel platform dashboard if serverless extensions are added.
 
 ## 3. Input Validation & XSS Prevention
@@ -33,7 +33,7 @@
   - Transparent Privacy Policy published at `/privacy`.
   - Terms of Service published at `/terms`.
   - Zero third-party behavioral cookies or telemetry tracking pixels.
-  - Direct email line to Studio Data Officer (`shivam@shivamwebdesigns.com`).
+  - Direct email line to Studio Data Officer (`shivamwebdesigns23@gmail.com`).
 
 ## 6. Security Checklist
 - [x] No API keys or private secrets in frontend repository.

@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
     // Optional email dispatch hook if Resend key is configured
     const resendApiKey = process.env.RESEND_API_KEY;
-    const recipientEmail = process.env.CONTACT_EMAIL || 'shivam@shivamwebdesigns.com';
+    const recipientEmail = process.env.CONTACT_EMAIL || 'shivamwebdesigns23@gmail.com';
 
     if (resendApiKey) {
       try {
