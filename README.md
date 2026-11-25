@@ -25,6 +25,12 @@ ShivamWebDesigns is a Next.js website for the studio's services, founder profile
 - Vercel deployment; route rewrites are configured in `next.config.ts`
 - Contact and inquiry handlers at `/api/contact` and `/api/inquiry`
 
+## Branding
+
+The site logo appears in the shared header and footer only. The homepage hero uses text and calls to action without a separate logo image. Both shared placements crop the official `public/assets/logo.png` to remove excess surrounding space.
+
+Other brand artwork printed into the interactive business card remains part of that card experience. See [asset rights](ASSET_RIGHTS.md) for reuse terms.
+
 ## Local Development
 
 Requirements: Node.js 18.18 or newer and npm.

@@ -13,14 +13,16 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-5">
-            <Link href="/" className="inline-block py-1" aria-label="ShivamWebDesigns Home">
-              <Image
-                src={siteConfig.assets.logoSvg}
-                alt="Shivam Web Designs"
-                width={400}
-                height={310}
-                className="h-16 sm:h-20 w-auto object-contain"
-              />
+            <Link href="/" className="inline-block" aria-label="ShivamWebDesigns Home">
+              <div className="relative h-12 w-[74px] overflow-hidden sm:h-14 sm:w-[86px]">
+                <Image
+                  src={siteConfig.assets.logoPng}
+                  alt="Shivam Web Designs"
+                  fill
+                  sizes="(max-width: 640px) 74px, 86px"
+                  className="scale-[2.1] object-cover"
+                />
+              </div>
             </Link>
             <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
               {siteConfig.supportingText}

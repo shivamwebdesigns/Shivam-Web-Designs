@@ -22,7 +22,6 @@ export interface SiteConfig {
   url: string;
   assets: {
     logoPng: string;
-    logoSvg: string;
     bannerDesktop: string;
     bannerMobile: string;
     founderImage: string;
@@ -49,7 +48,6 @@ export const siteConfig: SiteConfig = {
   url: 'https://shivamwebdesigns.devs.li',
   assets: {
     logoPng: '/assets/logo.png',
-    logoSvg: '/assets/logo.svg',
     bannerDesktop: '/assets/banner-desktop.png',
     bannerMobile: '/assets/banner-mobile.png',
     founderImage: '/assets/founder.jpg',

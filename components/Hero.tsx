@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
@@ -9,17 +8,6 @@ export function Hero() {
     <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-44 lg:pb-36 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          <div className="mx-auto mb-2 w-fit">
-            <Image
-              src={siteConfig.assets.logoSvg}
-              alt="Shivam Web Designs"
-              width={400}
-              height={310}
-              className="h-28 sm:h-36 md:h-40 w-auto object-contain"
-              priority
-            />
-          </div>
-
           {/* Suggested Hero Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] text-balance">
             {siteConfig.headline}

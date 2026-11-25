@@ -38,16 +38,16 @@ export function Navbar() {
           {/* Official Logo Only - Proportions strictly preserved */}
           <Link
             href="/"
-            className="flex items-center group transition-transform duration-200 active:scale-95 py-1"
+            className="flex items-center group transition-transform duration-200 active:scale-95"
             aria-label="ShivamWebDesigns Home"
           >
-            <div className="relative h-10 sm:h-12 w-auto flex items-center">
+            <div className="relative h-10 w-[62px] overflow-hidden sm:h-12 sm:w-[74px]">
               <Image
-                src={siteConfig.assets.logoSvg}
+                src={siteConfig.assets.logoPng}
                 alt="Shivam Web Designs"
-                width={400}
-                height={310}
-                className="h-12 sm:h-14 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
+                fill
+                sizes="(max-width: 640px) 62px, 74px"
+                className="scale-[2.1] object-cover transition-opacity duration-200 group-hover:opacity-90"
                 priority
               />
             </div>
