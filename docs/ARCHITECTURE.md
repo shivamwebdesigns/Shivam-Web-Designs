@@ -30,7 +30,7 @@ Shivam Web Designs combines its high-performance public site with Next.js server
 - Responsibilities: Validates project and contact submissions, stores them in Firestore, and records the separate Resend notification outcome.
 
 ### Component 4: Private Inquiry Dashboard (`app/admin`, `app/api/admin/inquiries/route.ts`)
-- Responsibilities: Signs in the studio owner with Google Authentication, requires a server-side password check with Firestore-backed attempt limiting, and returns paginated inquiries only after both checks pass.
+- Responsibilities: Signs in the studio owner with Google Authentication, then returns paginated inquiries only when the verified ID token matches the configured owner email and Google provider.
 
 ### Component 5: Edge Routing & File Mirrors
 - Responsibilities: `vercel.json` maps friendly routes (`/businesscard`, `/card`, `/privacy`, `/terms`, `/sitemap.xml`, `/robots.txt`) to optimized canonical resources.
@@ -71,10 +71,8 @@ flowchart TD
 
   subgraph Admin [Private Admin Access]
     AdminUI[/admin] --> GoogleAuth[Firebase Google Sign-in]
-    AdminUI --> UnlockAPI[POST /api/admin/unlock]
     AdminUI --> AdminAPI[GET /api/admin/inquiries]
-    UnlockAPI -->|Verify owner token + password; rate limit attempts| Firestore
-    AdminAPI -->|Verify owner token + password session| GoogleAuth
+    AdminAPI -->|Verify owner token + Google provider| GoogleAuth
     AdminAPI --> Firestore
   end
 ```
@@ -85,7 +83,7 @@ flowchart TD
 3. 3D physics loop initializes with RAF and listens for Pointer Events.
 4. User clicks "Add to Contacts" → JavaScript generates RFC 2426 vCard string, creates ephemeral object URL, and triggers instant OS download.
 5. User submits a project brief or contact message → the API validates and saves it to Firestore before attempting a Resend notification.
-6. `/admin` signs in with Google, verifies the server-only password, and receives a short-lived HttpOnly session cookie. The API verifies the owner ID token and password session before returning inquiry records; failed password attempts are rate-limited in Firestore.
+6. `/admin` signs in with Google. The inquiry API returns records only when the verified ID token contains the configured owner email and Google sign-in provider.
 
 ## 7. Project Structure
 ```

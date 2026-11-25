@@ -1,9 +1,4 @@
 import { NextResponse } from 'next/server';
-import {
-  adminPasswordCookieName,
-  getAdminPasswordConfig,
-  isValidAdminPasswordSession,
-} from '@/lib/admin-password';
 import { verifyAdminIdToken } from '@/lib/admin-auth';
 import {
   getFirebaseAdminConfigStatus,
@@ -61,38 +56,6 @@ export async function GET(request: Request) {
     return NextResponse.json(
       { error: 'This Google account is not authorized to view inquiries.' },
       { status: 403 }
-    );
-  }
-
-  let passwordConfig;
-  try {
-    passwordConfig = getAdminPasswordConfig();
-  } catch {
-    console.error('[SWD_ADMIN_PASSWORD_CONFIG_ERROR]', {
-      reason: 'invalid_or_missing_password_configuration',
-    });
-    return NextResponse.json(
-      { error: 'The admin password is not configured on this deployment.' },
-      { status: 503 }
-    );
-  }
-
-  const passwordSession = request.headers
-    .get('cookie')
-    ?.split(';')
-    .map((cookie) => cookie.trim())
-    .find((cookie) => cookie.startsWith(`${adminPasswordCookieName}=`))
-    ?.slice(adminPasswordCookieName.length + 1);
-  if (
-    !isValidAdminPasswordSession(
-      identity.uid,
-      passwordSession,
-      passwordConfig.sessionSecret
-    )
-  ) {
-    return NextResponse.json(
-      { error: 'Enter your admin password to view inquiries.' },
-      { status: 401, headers: { 'Cache-Control': 'private, no-store' } }
     );
   }
 

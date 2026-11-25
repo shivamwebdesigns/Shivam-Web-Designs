@@ -29,5 +29,9 @@ export async function verifyAdminIdToken(
     return { kind: 'forbidden' };
   }
 
+  if (decodedToken.firebase.sign_in_provider !== 'google.com') {
+    return { kind: 'forbidden' };
+  }
+
   return { kind: 'authorized', uid: decodedToken.uid };
 }

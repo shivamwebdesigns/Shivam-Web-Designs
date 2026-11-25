@@ -7,16 +7,11 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
-import { useCallback, useEffect, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   getFirebaseClientAuth,
   isFirebaseClientConfigured,
 } from '@/lib/firebase/client';
-import {
-  adminPasswordMaxLength,
-  adminPasswordMinLength,
-  isAdminPasswordLengthValid,
-} from '@/lib/admin-password-policy';
 
 type InquiryEmailStatus = 'pending' | 'sent' | 'not_configured' | 'failed';
 
@@ -65,9 +60,6 @@ export default function AdminPage() {
   const firebaseConfigured = isFirebaseClientConfigured();
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [password, setPassword] = useState('');
-  const [passwordLoading, setPasswordLoading] = useState(false);
-  const [passwordVerified, setPasswordVerified] = useState(false);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [listLoading, setListLoading] = useState(false);
@@ -89,7 +81,6 @@ export default function AdminPage() {
 
         if (!response.ok) {
           if (response.status === 401) {
-            setPasswordVerified(false);
             setInquiries([]);
             setNextCursor(null);
           }
@@ -130,8 +121,6 @@ export default function AdminPage() {
         (activeUser) => {
           setUser(activeUser);
           setAuthLoading(false);
-          setPasswordVerified(false);
-          setPassword('');
           setInquiries([]);
           setNextCursor(null);
           setError('');
@@ -149,12 +138,19 @@ export default function AdminPage() {
     return () => unsubscribe?.();
   }, [firebaseConfigured]);
 
+  useEffect(() => {
+    if (user) {
+      void loadInquiries(user);
+    }
+  }, [loadInquiries, user]);
+
   async function handleSignIn() {
     setError('');
+    const auth = getFirebaseClientAuth();
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: 'select_account' });
-      await signInWithPopup(getFirebaseClientAuth(), provider);
+      await signInWithPopup(auth, provider);
     } catch {
       setError('Google sign-in did not complete. Please try again.');
     }
@@ -163,59 +159,9 @@ export default function AdminPage() {
   async function handleSignOut() {
     setError('');
     try {
-      const response = await fetch('/api/admin/unlock', {
-        method: 'DELETE',
-        cache: 'no-store',
-      });
-      if (!response.ok) {
-        throw new Error('Could not clear the admin password session.');
-      }
-
       await signOut(getFirebaseClientAuth());
-      setPasswordVerified(false);
-      setPassword('');
     } catch {
       setError('Could not lock and sign out. Please try again.');
-    }
-  }
-
-  async function handleUnlock(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!user || !isAdminPasswordLengthValid(password)) {
-      return;
-    }
-
-    setPasswordLoading(true);
-    setError('');
-    try {
-      const token = await user.getIdToken();
-      const response = await fetch('/api/admin/unlock', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password }),
-        cache: 'no-store',
-      });
-      const result = (await response.json()) as { error?: string };
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Unable to unlock the dashboard.');
-      }
-
-      setPassword('');
-      setPasswordVerified(true);
-      await loadInquiries(user);
-    } catch (unlockError) {
-      setPassword('');
-      setError(
-        unlockError instanceof Error
-          ? unlockError.message
-          : 'Unable to unlock the dashboard. Please try again.'
-      );
-    } finally {
-      setPasswordLoading(false);
     }
   }
 
@@ -269,6 +215,11 @@ export default function AdminPage() {
             <p className="mt-3 text-sm leading-6 text-neutral-400">
               Sign in with the authorized Google account to view inquiries.
             </p>
+            {error && (
+              <p className="mt-4 text-sm text-red-300" role="alert">
+                {error}
+              </p>
+            )}
             <button
               type="button"
               onClick={handleSignIn}
@@ -277,178 +228,138 @@ export default function AdminPage() {
               Continue with Google
             </button>
           </section>
-        ) : !passwordVerified ? (
-          <section className="max-w-xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8">
-            <h2 className="text-xl font-light">Admin password required</h2>
-            <p className="mt-3 text-sm leading-6 text-neutral-400">
-              Enter your admin password to unlock the inquiry dashboard. Too many
-              incorrect attempts will temporarily lock access.
-            </p>
-            <form className="mt-6" onSubmit={handleUnlock}>
-              <label
-                className="mb-2 block font-mono text-xs uppercase tracking-wider text-neutral-400"
-                htmlFor="admin-password"
-              >
-                Password
-              </label>
-              <input
-                id="admin-password"
-                type="password"
-                autoComplete="current-password"
-                minLength={adminPasswordMinLength}
-                maxLength={adminPasswordMaxLength}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
-                className="min-h-12 w-full border border-neutral-700 bg-black px-4 font-mono tracking-[0.4em] text-white outline-none focus:border-white"
-                aria-describedby={error ? 'admin-password-error' : undefined}
-              />
-              {error && (
-                <p id="admin-password-error" className="mt-3 text-sm text-red-300" role="alert">
-                  {error}
-                </p>
-              )}
-              <button
-                type="submit"
-                disabled={!isAdminPasswordLengthValid(password) || passwordLoading}
-                className="mt-5 min-h-12 border border-white bg-white px-5 text-xs font-mono uppercase tracking-wider text-black transition-colors hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {passwordLoading ? 'Checking…' : 'Unlock dashboard'}
-              </button>
-            </form>
-          </section>
         ) : (
           <section aria-label="Saved inquiries">
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-              <p className="text-sm text-neutral-400" aria-live="polite">
-                {inquiries.length} {inquiries.length === 1 ? 'inquiry' : 'inquiries'} loaded
-              </p>
-              <button
-                type="button"
-                onClick={() => void loadInquiries(user)}
-                disabled={listLoading}
-                className="min-h-11 border border-neutral-700 px-4 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white disabled:cursor-wait disabled:opacity-50"
-              >
-                {listLoading ? 'Loading…' : 'Refresh'}
-              </button>
-            </div>
-
-            {error && (
-              <div
-                className="mb-6 border border-red-900/70 bg-red-950/30 p-4 text-sm text-red-200"
-                role="alert"
-              >
-                {error}
-              </div>
-            )}
-
-            {inquiries.length === 0 && !listLoading && !error ? (
-              <div className="border border-neutral-800 bg-neutral-950 p-8 text-center">
-                <h2 className="text-lg font-light">No inquiries saved yet</h2>
-                <p className="mt-2 text-sm text-neutral-500">
-                  New project and contact form submissions will appear here.
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {inquiries.map((inquiry) => (
-                  <article
-                    key={inquiry.id}
-                    className="border border-neutral-800 bg-neutral-950 p-5 sm:p-7"
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+                  <p className="text-sm text-neutral-400" aria-live="polite">
+                    {inquiries.length} {inquiries.length === 1 ? 'inquiry' : 'inquiries'} loaded
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => void loadInquiries(user)}
+                    disabled={listLoading}
+                    className="min-h-11 border border-neutral-700 px-4 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white disabled:cursor-wait disabled:opacity-50"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <span className="font-mono text-xs uppercase tracking-wider text-white">
-                          {inquiry.kind === 'project' ? 'Project brief' : 'Contact message'}
-                        </span>
-                        <span className="border border-neutral-700 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
-                          {emailStatusLabels[inquiry.emailStatus] ?? 'Email status unknown'}
-                        </span>
-                      </div>
-                      <time
-                        className="text-xs text-neutral-500"
-                        dateTime={inquiry.createdAt ?? undefined}
+                    {listLoading ? 'Loading…' : 'Refresh'}
+                  </button>
+                </div>
+
+                {error && (
+                  <div
+                    className="mb-6 border border-red-900/70 bg-red-950/30 p-4 text-sm text-red-200"
+                    role="alert"
+                  >
+                    {error}
+                  </div>
+                )}
+
+                {inquiries.length === 0 && !listLoading && !error ? (
+                  <div className="border border-neutral-800 bg-neutral-950 p-8 text-center">
+                    <h2 className="text-lg font-light">No inquiries saved yet</h2>
+                    <p className="mt-2 text-sm text-neutral-500">
+                      New project and contact form submissions will appear here.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {inquiries.map((inquiry) => (
+                      <article
+                        key={inquiry.id}
+                        className="border border-neutral-800 bg-neutral-950 p-5 sm:p-7"
                       >
-                        {formatDate(inquiry.createdAt)}
-                      </time>
-                    </div>
-
-                    <div className="mt-5 grid gap-5 sm:grid-cols-[1fr_auto]">
-                      <div>
-                        <h2 className="text-xl font-light">{inquiry.name}</h2>
-                        <a
-                          className="mt-1 inline-block break-all text-sm text-neutral-400 underline underline-offset-4 hover:text-white"
-                          href={`mailto:${inquiry.email}`}
-                        >
-                          {inquiry.email}
-                        </a>
-                      </div>
-                      <p className="font-mono text-[10px] uppercase tracking-wider text-neutral-600">
-                        Ref: {inquiry.id}
-                      </p>
-                    </div>
-
-                    {inquiry.kind === 'project' ? (
-                      <div className="mt-5 grid gap-4 border-t border-neutral-800 pt-5 sm:grid-cols-2">
-                        {inquiry.company && (
-                          <Info label="Company" value={inquiry.company} />
-                        )}
-                        <Info label="Service" value={inquiry.projectType} />
-                        <Info label="Budget" value={inquiry.budget} />
-                        <Info label="Timeline" value={inquiry.timeline} />
-                        <div className="sm:col-span-2">
-                          <Info label="Project description" value={inquiry.description} />
+                        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
+                          <div className="flex flex-wrap items-center gap-3">
+                            <span className="font-mono text-xs uppercase tracking-wider text-white">
+                              {inquiry.kind === 'project' ? 'Project brief' : 'Contact message'}
+                            </span>
+                            <span className="border border-neutral-700 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                              {emailStatusLabels[inquiry.emailStatus] ?? 'Email status unknown'}
+                            </span>
+                          </div>
+                          <time
+                            className="text-xs text-neutral-500"
+                            dateTime={inquiry.createdAt ?? undefined}
+                          >
+                            {formatDate(inquiry.createdAt)}
+                          </time>
                         </div>
-                        {inquiry.referenceUrl && (
+
+                        <div className="mt-5 grid gap-5 sm:grid-cols-[1fr_auto]">
                           <div>
-                            <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-500">
-                              Reference
-                            </p>
+                            <h2 className="text-xl font-light">{inquiry.name}</h2>
                             <a
-                              className="break-all text-sm text-neutral-300 underline underline-offset-4 hover:text-white"
-                              href={inquiry.referenceUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                              className="mt-1 inline-block break-all text-sm text-neutral-400 underline underline-offset-4 hover:text-white"
+                              href={`mailto:${inquiry.email}`}
                             >
-                              {inquiry.referenceUrl}
+                              {inquiry.email}
                             </a>
                           </div>
-                        )}
-                        {inquiry.additionalRequirements && (
-                          <div className="sm:col-span-2">
-                            <Info
-                              label="Additional notes"
-                              value={inquiry.additionalRequirements}
-                            />
+                          <p className="font-mono text-[10px] uppercase tracking-wider text-neutral-600">
+                            Ref: {inquiry.id}
+                          </p>
+                        </div>
+
+                        {inquiry.kind === 'project' ? (
+                          <div className="mt-5 grid gap-4 border-t border-neutral-800 pt-5 sm:grid-cols-2">
+                            {inquiry.company && (
+                              <Info label="Company" value={inquiry.company} />
+                            )}
+                            <Info label="Service" value={inquiry.projectType} />
+                            <Info label="Budget" value={inquiry.budget} />
+                            <Info label="Timeline" value={inquiry.timeline} />
+                            <div className="sm:col-span-2">
+                              <Info label="Project description" value={inquiry.description} />
+                            </div>
+                            {inquiry.referenceUrl && (
+                              <div>
+                                <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-500">
+                                  Reference
+                                </p>
+                                <a
+                                  className="break-all text-sm text-neutral-300 underline underline-offset-4 hover:text-white"
+                                  href={inquiry.referenceUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {inquiry.referenceUrl}
+                                </a>
+                              </div>
+                            )}
+                            {inquiry.additionalRequirements && (
+                              <div className="sm:col-span-2">
+                                <Info
+                                  label="Additional notes"
+                                  value={inquiry.additionalRequirements}
+                                />
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="mt-5 border-t border-neutral-800 pt-5">
+                            {inquiry.subject && <Info label="Subject" value={inquiry.subject} />}
+                            <div className="mt-4">
+                              <Info label="Message" value={inquiry.message} />
+                            </div>
                           </div>
                         )}
-                      </div>
-                    ) : (
-                      <div className="mt-5 border-t border-neutral-800 pt-5">
-                        {inquiry.subject && <Info label="Subject" value={inquiry.subject} />}
-                        <div className="mt-4">
-                          <Info label="Message" value={inquiry.message} />
-                        </div>
-                      </div>
-                    )}
-                  </article>
-                ))}
-              </div>
-            )}
+                      </article>
+                    ))}
+                  </div>
+                )}
 
-            {canLoadMore && (
-              <div className="mt-6 text-center">
-                <button
-                  type="button"
-                  onClick={() => void loadInquiries(user, nextCursor ?? undefined, true)}
-                  className="min-h-12 border border-neutral-700 px-6 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white"
-                >
-                  Load more
-                </button>
-              </div>
+                {canLoadMore && (
+                  <div className="mt-6 text-center">
+                    <button
+                      type="button"
+                      onClick={() => void loadInquiries(user, nextCursor ?? undefined, true)}
+                      className="min-h-12 border border-neutral-700 px-6 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white"
+                    >
+                      Load more
+                    </button>
+                  </div>
+                )}
+              </section>
             )}
-          </section>
-        )}
 
         {error && (!user || authLoading || !firebaseConfigured) && (
           <p className="mt-6 text-sm text-red-300" role="alert">
