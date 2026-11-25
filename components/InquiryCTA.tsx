@@ -42,15 +42,24 @@ export const InquiryCTA: React.FC = () => {
             <span>General Inquiry</span>
           </Link>
 
-          <a
-            href={siteConfig.social.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 bg-neutral-900/80 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors text-sm font-mono tracking-wide"
-          >
-            <MessageSquare className="w-4 h-4 text-emerald-400" />
-            <span>WhatsApp</span>
-          </a>
+          {siteConfig.social.whatsapp ? (
+            <a
+              href={siteConfig.social.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 bg-neutral-900/80 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors text-sm font-mono tracking-wide"
+            >
+              <MessageSquare className="w-4 h-4 text-emerald-400" />
+              <span>WhatsApp</span>
+            </a>
+          ) : (
+            <Link
+              href="/projects"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-neutral-900/80 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors text-sm font-mono tracking-wide"
+            >
+              <span>Explore Works</span>
+            </Link>
+          )}
         </div>
 
         <div className="pt-8 border-t border-neutral-900 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-mono text-neutral-500">

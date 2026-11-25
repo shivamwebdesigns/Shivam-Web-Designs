@@ -160,17 +160,19 @@ export function Footer() {
                   <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
                 </a>
               </li>
-              <li>
-                <a
-                  href={siteConfig.social.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors flex items-center"
-                >
-                  WhatsApp
-                  <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                </a>
-              </li>
+              {siteConfig.social.whatsapp && (
+                <li>
+                  <a
+                    href={siteConfig.social.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors flex items-center"
+                  >
+                    WhatsApp
+                    <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>

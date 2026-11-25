@@ -31,11 +31,11 @@ export default function FounderPage() {
                     src={founderData.image}
                     alt={founderData.name}
                     fill
-                    className="object-cover grayscale contrast-110 hover:grayscale-0 transition-all duration-700"
+                    className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70" />
+                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />
                   
                   <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/90 backdrop-blur-md border border-neutral-800">
                     <div className="text-sm font-medium text-white">

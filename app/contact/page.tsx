@@ -126,27 +126,29 @@ export default function ContactPage() {
                   </div>
                 </a>
 
-                <a
-                  href={siteConfig.social.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
-                >
-                  <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 transition-colors">
-                    <MessageSquare className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                      WhatsApp Quick Chat
+                {siteConfig.social.whatsapp && (
+                  <a
+                    href={siteConfig.social.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 transition-colors">
+                      <MessageSquare className="w-4 h-4" />
                     </div>
-                    <div className="text-sm font-medium text-white group-hover:underline">
-                      Start Direct WhatsApp Conversation
+                    <div>
+                      <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
+                        WhatsApp Quick Chat
+                      </div>
+                      <div className="text-sm font-medium text-white group-hover:underline">
+                        Start Direct WhatsApp Conversation
+                      </div>
+                      <div className="text-xs text-neutral-400 mt-1">
+                        Direct link to founder chat
+                      </div>
                     </div>
-                    <div className="text-xs text-neutral-400 mt-1">
-                      Direct link to founder chat
-                    </div>
-                  </div>
-                </a>
+                  </a>
+                )}
 
                 <div className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900">
                   <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400">

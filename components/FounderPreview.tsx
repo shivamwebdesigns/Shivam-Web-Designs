@@ -17,11 +17,11 @@ export const FounderPreview: React.FC = () => {
                   src={founderData.image}
                   alt={founderData.name}
                   fill
-                  className="object-cover grayscale contrast-110 hover:grayscale-0 transition-all duration-700"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />
                 
                 {/* Overlay Name Tag */}
                 <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/80 backdrop-blur-md border border-neutral-800">

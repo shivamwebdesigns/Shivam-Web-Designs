@@ -110,7 +110,7 @@ export default function RootLayout({
               name: siteConfig.name,
               image: `${siteConfig.url}${siteConfig.assets.logoPng}`,
               url: siteConfig.url,
-              telephone: siteConfig.contact.phone,
+              ...(siteConfig.contact.phone ? { telephone: siteConfig.contact.phone } : {}),
               email: siteConfig.contact.email,
               priceRange: '$$$$',
               address: {

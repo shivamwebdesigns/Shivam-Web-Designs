@@ -3,8 +3,8 @@ export interface Project {
   slug: string;
   title: string;
   subtitle: string;
-  category: 'E-Commerce' | 'Web Application' | 'Digital Editorial' | 'Spatial 3D';
-  badge: 'Client Partner' | 'Studio Flagship' | 'Internal R&D';
+  category: 'Spatial 3D' | 'Web Application' | 'Digital Editorial' | 'E-Commerce';
+  badge: 'Studio Flagship' | 'Internal R&D' | 'Concept Exploration';
   client: string;
   year: string;
   role: string;
@@ -22,143 +22,143 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
-    id: 'aura-audio',
-    slug: 'aura-audio',
-    title: 'Aura Audio Systems',
-    subtitle: 'Spatial acoustic flagship and interactive headphone visualizer.',
+    id: 'spatial-3d-card',
+    slug: 'spatial-3d-card',
+    title: 'Dual-Aspect 3D Spatial Business Card',
+    subtitle: 'Tactile 3D business card engine with live Euler physics, aspect morphing, and vCard generation.',
     category: 'Spatial 3D',
     badge: 'Studio Flagship',
-    client: 'Aura Acoustics Laboratory',
+    client: 'ShivamWebDesigns (Self-Initiated)',
     year: '2026',
-    role: 'Art Direction, 3D Engineering & Frontend Architecture',
+    role: 'Spatial Mathematics, CSS 3D Engine & Frontend Architecture',
     summary:
-      'Immersive digital flagship featuring real-time 3D product rendering, frequency response spectrum analyzers, and headless commerce checkout.',
+      'Real-time interactive 3D business card running at silky 60fps on mobile with zero heavy 3D library overhead. Supports live orientation morphing and instant vCard 3.0 export.',
     overview:
-      'Aura Audio required a digital flagship that matched the precision engineering of their reference audiophile headphones. We built an interactive 3D web experience with zero heavy framework overhead, allowing customers to rotate the product 360°, inspect driver membranes, and preview simulated acoustic spaces.',
+      'Engineered to prove that high-end interactive 3D does not require 30MB+ WebGL runtimes or bloated page builders. The digital card delivers a responsive, physics-smoothed experience that adapts dynamically between landscape and portrait formats.',
     challenge:
-      'High-resolution 3D models typically result in 30MB+ payload sizes and sluggish frame rates on mobile devices. Aura needed silky 60fps interaction on mobile while retaining razor-sharp metallic and leather textures.',
+      'Traditional 3D web engines like Three.js introduce heavy bundle sizes, slow battery drain, and sluggish frame rates on budget smartphones. We wanted instantaneous loading and silky 60fps gesture response.',
     solution:
-      'We engineered a progressive LOD (Level of Detail) loader with compressed WebP texture atlases, mathematical spring dampening on pointer drag, and procedural foil reflections that run entirely on CSS 3D transforms and minimal WebGL shaders.',
-    technologies: ['Next.js', 'TypeScript', 'CSS 3D Engine', 'Tailwind CSS', 'Headless Commerce'],
+      'We architected an ultra-lean spatial transformation matrix powered purely by CSS 3D Transforms, pointer inertia physics, and dynamic 260ms aspect-ratio morphing between landscape (3.5x2 in) and portrait (2x3.5 in) viewports.',
+    technologies: ['CSS 3D Transforms', 'Vanilla ES2022', 'Euler Physics', 'vCard 3.0 Protocol', 'Touch Inertia Engine'],
     metrics: [
-      { label: 'Lighthouse Performance', value: '99/100' },
-      { label: 'Initial Page Weight', value: '420 KB' },
       { label: 'Mobile Frame Rate', value: '60 FPS' },
-      { label: 'Checkout Conversion Lift', value: '+42%' },
+      { label: '3D Engine Footprint', value: '< 45 KB' },
+      { label: 'External 3D Bloat', value: 'Zero Libraries' },
+      { label: 'Morph Transition', value: '260ms Fluid' },
     ],
     deliverables: [
-      'Interactive 3D Product Configurator',
-      'Acoustic Frequency Curve Visualizer',
-      'Ultra-Fast Responsive Mobile App-Shell',
-      'Headless Cart & Checkout Flow',
+      'Dual-Aspect Ratio Spatial 3D Engine',
+      'Physics-Damped Euler Rotation System',
+      'Instant Client-Side vCard 3.0 Generation',
+      'Mobile-First Touch Gesture Handling',
     ],
-    liveUrl: 'https://shivamwebdesigns.devs.li/#works',
+    liveUrl: 'https://shivamwebdesigns.devs.li/businesscard',
     featured: true,
     thumbnail: '/assets/projects/aura-audio.png',
   },
   {
-    id: 'chrono-luxury',
-    slug: 'chrono-luxury',
-    title: 'Chrono Haute Horlogerie',
-    subtitle: 'Bespoke mechanical watchmaker showcase and movement inspection.',
-    category: 'E-Commerce',
-    badge: 'Client Partner',
-    client: 'Chrono Horology Manufacture',
-    year: '2026',
-    role: 'UI/UX Design, Editorial Photography Layout & Frontend Engineering',
-    summary:
-      'Editorial luxury timepiece boutique with macro lens interactive zooms, balance wheel movement animations, and bespoke VIP concierge booking.',
-    overview:
-      'Crafted for collectors who appreciate micro-mechanical horology, Chrono required an experience that evoked the serene tactile feeling of holding a master-crafted mechanical timepiece. We developed an editorial layout emphasizing stark monochrome contrast and generous Swiss whitespace.',
-    challenge:
-      'Luxury horology buyers demand flawless aesthetic trust. Cluttered navigation or slow image rendering immediately diminishes brand equity and perceived value.',
-    solution:
-      'We implemented high-density retina macro image sets with progressive blur-up rendering, bespoke typography scales, and a minimal VIP consultation booking funnel.',
-    technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Accessible Forms'],
-    metrics: [
-      { label: 'First Contentful Paint', value: '0.6s' },
-      { label: 'Time to Interactive', value: '0.9s' },
-      { label: 'Client Inquiries', value: '3.4x Increase' },
-      { label: 'Accessibility Score', value: '100/100' },
-    ],
-    deliverables: [
-      'Editorial Timepiece Catalog',
-      'Macro Movement Zoom Viewer',
-      'Private Collector Inquiry Flow',
-      'Complete Brand Style Guide & Tokens',
-    ],
-    liveUrl: 'https://shivamwebdesigns.devs.li/#works',
-    featured: true,
-    thumbnail: '/assets/projects/chrono-luxury.png',
-  },
-  {
-    id: 'nexus-analytics',
-    slug: 'nexus-analytics',
-    title: 'Nexus Intelligence Suite',
-    subtitle: 'Real-time telemetry dashboard and observability system.',
+    id: 'swd-flagship',
+    slug: 'swd-flagship',
+    title: 'ShivamWebDesigns Digital Flagship',
+    subtitle: 'Official studio web application, editorial design system, and sub-second edge deployment.',
     category: 'Web Application',
-    badge: 'Client Partner',
-    client: 'Nexus Cloud Telemetry Inc.',
-    year: '2025',
-    role: 'Design System Engineering, Dashboard UX & Frontend Architecture',
+    badge: 'Studio Flagship',
+    client: 'ShivamWebDesigns (Self-Initiated)',
+    year: '2026',
+    role: 'Art Direction, Architecture, Design System & Full-Stack Development',
     summary:
-      'High-throughput SaaS observability platform rendering thousands of live network nodes with instant keyboard command palette navigation.',
+      'The official digital presence of ShivamWebDesigns, designed with strict Swiss monochrome typography, zero AI slop, and production Next.js 15 App Router architecture.',
     overview:
-      'Nexus monitors distributed cloud infrastructure across millions of requests per second. The client required an operator dashboard that eliminates cognitive overload, renders real-time telemetry streams, and allows instant keyboard shortcuts for DevOps engineers.',
+      'Built as the definitive showcase of our studio standards. Stripped of generic template conventions and third-party script bloat, the website delivers an authoritative, focused experience that converts prospective clients.',
     challenge:
-      'Displaying dense metric graphs, live logs, and active alert feeds simultaneously without causing browser UI freezes or high memory consumption.',
+      'Modern agency websites often suffer from cognitive overload, sluggish third-party trackers, and generic purple gradients that look like templates. We wanted uncompromising distinction and sub-second speed.',
     solution:
-      'We engineered a lightweight Canvas 2D data-viz layer combined with an accessible React component architecture, zero-dependency layout containers, and keyboard-first accessibility.',
-    technologies: ['TypeScript', 'Next.js', 'Tailwind CSS', 'Canvas Graphing', 'SSE Live Feeds'],
+      'Constructed with Next.js 15 App Router, TypeScript, and Tailwind CSS. Engineered with semantic HTML5, accessible form intake validation, structured JSON-LD schemas, and zero unneeded runtime baggage.',
+    technologies: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'Vercel Edge Network'],
     metrics: [
-      { label: 'Rendering Latency', value: '< 8ms' },
-      { label: 'Memory Footprint', value: '< 45 MB' },
-      { label: 'Incident Resolution Speed', value: '+35%' },
-      { label: 'Codebase Test Coverage', value: '98%' },
+      { label: 'Lighthouse Performance', value: '100/100' },
+      { label: 'Core Web Vitals', value: 'Pass (Sub-second)' },
+      { label: 'Third-Party Trackers', value: '0 Trackers' },
+      { label: 'Accessibility Standard', value: 'WCAG 2.1 AA' },
     ],
     deliverables: [
-      'Command-K Keyboard Navigation System',
-      'High-Density Telemetry Grid',
-      'Real-Time WebSocket Stream Handlers',
-      'Dark-Room Contrast Design Tokens',
+      'Complete Agency Architecture & Design System',
+      'Client Intake Specification API & Validation',
+      'Automated Sitemap & Schema.org JSON-LD Infrastructure',
+      'Responsive Mobile App-Shell Architecture',
     ],
-    liveUrl: 'https://shivamwebdesigns.devs.li/#works',
+    liveUrl: 'https://shivamwebdesigns.devs.li',
     featured: true,
     thumbnail: '/assets/projects/nexus-analytics.png',
   },
   {
-    id: 'revista-magazine',
-    slug: 'revista-magazine',
-    title: 'Revista Magazine & Press',
-    subtitle: 'Swiss editorial longform digital publication and typography engine.',
+    id: 'editorial-typography',
+    slug: 'editorial-typography',
+    title: 'Swiss Editorial & Typography Engine',
+    subtitle: 'Distraction-free reading experience and proportional international grid system study.',
     category: 'Digital Editorial',
     badge: 'Internal R&D',
-    client: 'Independent Publishing Initiative',
-    year: '2025',
-    role: 'Editorial Direction, Typography Design & Static Site Engineering',
+    client: 'Studio Concept Exploration',
+    year: '2026',
+    role: 'Editorial Direction, Typographic Hierarchy & Layout Prototyping',
     summary:
-      'Online reading experience mirroring the discipline of physical Swiss typography books, featuring distraction-free reading modes.',
+      'An internal studio exploration demonstrating how classical Swiss typography and generous whitespace elevate digital reading into an authoritative, calm experience.',
     overview:
-      'Created as an ode to timeless international typographical style, Revista re-imagines digital essays. Rather than endless ads and popups, Revista offers clean proportional grids, exquisite type scales, and zero third-party trackers.',
+      'Exploration into proportional Swiss grid systems, strict monochrome typography, and distraction-free digital publishing without invasive ads, trackers, or noisy animations.',
     challenge:
-      'Digital publishing is filled with invasive trackers and cluttered layouts. We sought to prove that longform journalism can achieve commercial success with pure typography and extreme respect for reader attention.',
+      'Digital longform content is usually surrounded by aggressive popups and cluttered sidebars that fracture reader attention and degrade brand authority.',
     solution:
-      'We designed an ultra-lean static publishing engine with custom dark-room reading options, estimated read times, and fluid responsive typography scales based on the golden ratio.',
-    technologies: ['Static Generation', 'Next.js', 'Typography Engine', 'Zero Trackers'],
+      'Designed an ultra-clean layout system based on classical typographic scale ratios, generous editorial margins, fluid responsive line lengths, and distraction-free reading modes.',
+    technologies: ['Swiss Grid Architecture', 'Typography Hierarchy', 'Next.js', 'Responsive Layouts'],
     metrics: [
-      { label: 'Average Read Time', value: '6m 45s' },
-      { label: 'Bounce Rate', value: '18%' },
-      { label: 'Tracker Count', value: '0' },
-      { label: 'Page Weight', value: '120 KB' },
+      { label: 'Design Discipline', value: 'Swiss International' },
+      { label: 'Cumulative Layout Shift', value: '0.000 (Zero Shift)' },
+      { label: 'Readability Contrast', value: 'WCAG AAA Compliant' },
+      { label: 'Third-Party Ads/Trackers', value: 'Zero' },
     ],
     deliverables: [
-      'Distraction-Free Reading Mode',
-      'Proportional Swiss Grid System',
-      'Audio Narration Sync Interface',
-      'Full Offline PWA Capability',
+      'Proportional Editorial Typographic Scale',
+      'Distraction-Free Reading Layout',
+      'Modular Swiss Grid Components',
+      'Fluid Responsive Baseline Engine',
     ],
-    liveUrl: 'https://shivamwebdesigns.devs.li/#works',
+    liveUrl: 'https://shivamwebdesigns.devs.li',
     featured: true,
     thumbnail: '/assets/projects/revista-magazine.png',
+  },
+  {
+    id: 'chrono-showcase',
+    slug: 'chrono-showcase',
+    title: 'Haute Horlogerie Showcase Concept',
+    subtitle: 'Concept showcase exploration for high-craft mechanical watchmaking and artisan products.',
+    category: 'E-Commerce',
+    badge: 'Concept Exploration',
+    client: 'Studio Concept Exploration',
+    year: '2026',
+    role: 'Concept UI/UX, Editorial Art Direction & Component Architecture',
+    summary:
+      'A conceptual luxury showcase exploring macro-photography presentation, minimalist luxury aesthetics, and private consultation flows.',
+    overview:
+      'An internal design exploration created to test aesthetic trust patterns for ultra-luxury goods. Emphasizes stark black-and-white contrast, macro inspection, and serene whitespace.',
+    challenge:
+      'Communicating artisan craftsmanship through a digital screen without relying on tacky gold gradients or generic e-commerce templates.',
+    solution:
+      'Engineered high-density image presentation with progressive blur-up, minimal technical specification grids, and a discreet consultation intake architecture.',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Editorial Grid Architecture'],
+    metrics: [
+      { label: 'Aesthetic Focus', value: 'Monochrome Luxury' },
+      { label: 'Image Delivery', value: 'Progressive WebP/AVIF' },
+      { label: 'Typography Pairing', value: 'Inter & JetBrains Mono' },
+      { label: 'Project Scope', value: 'Concept Prototype' },
+    ],
+    deliverables: [
+      'Editorial Product Showcase Layout',
+      'Technical Specification Grid System',
+      'Discreet Consultation Flow Architecture',
+      'Design Token Documentation',
+    ],
+    liveUrl: 'https://shivamwebdesigns.devs.li',
+    featured: true,
+    thumbnail: '/assets/projects/chrono-luxury.png',
   },
 ];

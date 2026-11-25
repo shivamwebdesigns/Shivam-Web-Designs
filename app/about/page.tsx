@@ -197,7 +197,7 @@ export default function AboutPage() {
                   src={founderData.image}
                   alt={founderData.name}
                   fill
-                  className="object-cover grayscale contrast-110"
+                  className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 33vw"
                 />
               </div>
