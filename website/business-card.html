@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Shivam Web Designs — Official Interactive 3D Spatial Business Card. Designing and building modern websites with a focus on UI/UX, creativity and performance. Rotate 360°, flip, scan QR, and download vCard.">
+  <title>Shivam Web Designs — Interactive 3D Business Card</title>
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:title" content="Shivam Web Designs — Interactive 3D Business Card">
+  <meta property="og:description" content="Designing and building modern websites with a focus on UI/UX, creativity and performance. Interactive 3D spatial card with vCard & QR syncing.">
+  <meta property="og:image" content="banner-balanced.png">
+  <meta property="og:url" content="https://shivamwebdesigns.devs.li/card">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shivam Web Designs — Interactive 3D Business Card">
+  <meta name="twitter:description" content="Rotate 360°, flip, scan QR, and download vCard. Designing and building modern websites with a focus on UI/UX, creativity and performance.">
+  <meta name="twitter:image" content="banner-balanced.png">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Specific Page Layout for 3D Business Card */
+    :root {
+      --card-w: min(580px, 90vw);
+      --card-t: 8px; /* Physical Card Thickness Extrusion */
+    }
+
+    body.card-page {
+      min-block-size: 100vh;
+      min-block-size: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(ellipse at 50% 25%, var(--surface-subtle) 0%, var(--bg) 75%);
+    }
+
+    .card-page-header {
+      inline-size: 100%;
+      border-block-end: 1px solid var(--border);
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 50;
+      padding-block: 0.85rem;
+    }
+
+    .card-page-header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface-card);
+      transition: all var(--transition);
+    }
+
+    .back-home-link:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+      transform: translateX(-2px);
+    }
+
+    .card-page-main {
+      flex: 1;
+      padding-block: clamp(2rem, 5vw, 4rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card-hero-intro {
+      text-align: center;
+      margin-block-end: 2rem;
+      max-inline-size: 720px;
+    }
+
+    .card-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      background: var(--primary-subtle);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      margin-block-end: 1rem;
+    }
+
+    .card-hero-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-block-end: 0.75rem;
+    }
+
+    .card-hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* Standalone 3D Card Stage */
+    .standalone-card-stage-wrap {
+      position: relative;
+      margin-block: 1rem 2.5rem;
+      inline-size: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .standalone-stage {
+      perspective: 1600px;
+      inline-size: var(--card-w);
+      aspect-ratio: 1.75 / 1;
+      touch-action: pan-y;
+      cursor: grab;
+      outline: none;
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .standalone-stage:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 12px;
+      border-radius: 12px;
+    }
+
+    .standalone-stage:active {
+      cursor: grabbing;
+    }
+
+    .standalone-card {
+      position: relative;
+      inline-size: 100%;
+      block-size: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transform: rotateX(var(--rx, 6deg)) rotateY(var(--ry, -18deg));
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .standalone-card.is-dragging {
+      transition: none;
+    }
+
+    /* Faces with true physical 3D thickness */
+    .card-plate-face,
+    .card-plate-side {
+      position: absolute;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card-plate-face {
+      inset: 0;
+      border-radius: 14px;
+      background-size: 100% 100%;
+      overflow: hidden;
+      box-shadow:
+        0 30px 60px -15px rgba(0, 0, 0, 0.5),
+        0 12px 24px -8px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.14);
+      background-color: #09090b;
+    }
+
+    .plate-front {
+      transform: translateZ(calc(var(--card-t) / 2));
+      background-image: url('business-card-front.png');
+      background-position: center;
+      background-size: cover;
+    }
+
+    .plate-back {
+      transform: rotateY(180deg) translateZ(calc(var(--card-t) / 2));
+      background-image: url('business-card-back.png');
+      background-position: center;
+      background-size: cover;
+    }
+
+    /* Dynamic Specular Shimmer */
+    .card-plate-face::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      background: radial-gradient(
+        circle at var(--shine-x, 50%) var(--shine-y, 50%),
+        rgba(255, 255, 255, 0.75) 0%,
+        rgba(255, 255, 255, 0.25) 25%,
+        rgba(240, 215, 120, 0.2) 45%,
+        rgba(59, 130, 246, 0.15) 65%,
+        transparent 85%
+      );
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Realistic 3D Edge Extrusions (Silk-touch core layer) */
+    .card-plate-side {
+      background: linear-gradient(135deg, #27272a, #111113, #27272a);
+      backface-visibility: visible;
+      box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .side-left, .side-right {
+      inline-size: var(--card-t);
+      block-size: calc(100% - 20px);
+      inset-block-start: 10px;
+      inset-inline-start: calc(50% - var(--card-t) / 2);
+    }
+
+    .side-left {
+      transform: rotateY(-90deg) translateZ(calc(var(--card-w) / 2));
+    }
+
+    .side-right {
+      transform: rotateY(90deg) translateZ(calc(var(--card-w) / 2));
+    }
+
+    .side-top, .side-bottom {
+      block-size: var(--card-t);
+      inline-size: calc(100% - 20px);
+      inset-inline-start: 10px;
+      inset-block-start: calc(50% - var(--card-t) / 2);
+    }
+
+    .side-top {
+      transform: rotateX(90deg) translateZ(calc(var(--card-w) / 3.5));
+    }
+
+    .side-bottom {
+      transform: rotateX(-90deg) translateZ(calc(var(--card-w) / 3.5));
+    }
+
+    /* Ambient Contact Shadow */
+    .stage-contact-shadow {
+      position: absolute;
+      inset-inline-start: 8%;
+      inset-inline-end: 8%;
+      inset-block-end: -40px;
+      block-size: 32px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, transparent 72%);
+      border-radius: 50%;
+      filter: blur(8px);
+      transform: translateZ(-50px);
+      pointer-events: none;
+    }
+
+    /* Interactive Hotspots for the Back */
+    .back-hotspots-grid {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 7% 7%;
+      gap: 0.35rem;
+      z-index: 10;
+    }
+
+    .back-hotspot-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(9, 9, 11, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+      padding: 0.28rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: clamp(0.62rem, 1.3vw, 0.75rem);
+      font-weight: 500;
+      color: #ffffff;
+      text-decoration: none;
+      transition: all var(--transition);
+      opacity: 0.92;
+    }
+
+    .back-hotspot-link:hover,
+    .back-hotspot-link:focus-visible {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      transform: translateX(4px) scale(1.02);
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.45);
+    }
+
+    .hotspot-dot-pulse {
+      inline-size: 6px;
+      block-size: 6px;
+      border-radius: var(--radius-full);
+      background: var(--primary);
+      box-shadow: 0 0 6px var(--primary);
+    }
+
+    .back-hotspot-link:hover .hotspot-dot-pulse {
+      background: #ffffff;
+      box-shadow: 0 0 8px #ffffff;
+    }
+
+    /* Controls Bar */
+    .stage-controls-cluster {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-block-start: 1.5rem;
+    }
+
+    .stage-ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.55rem 1.15rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface-card);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .stage-ctrl-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .stage-ctrl-btn[aria-pressed="true"] {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .interaction-hint-text {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-align: center;
+      margin-block: 0.75rem 0;
+    }
+
+    /* Executive Details & QR Showcase Grid */
+    .card-extra-details-grid {
+      inline-size: 100%;
+      max-inline-size: 960px;
+      margin-block-start: 3rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .card-spec-box {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+
+    .spec-box-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-block-end: 0.5rem;
+    }
+
+    .spec-box-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-block-end: 1.5rem;
+    }
+
+    .spec-rows {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      padding-block: 1.5rem;
+      border-block: 1px solid var(--border);
+      margin-block-end: 1.75rem;
+    }
+
+    .spec-col-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .spec-tag-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .spec-tag-main {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .card-actions-row {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    /* QR Scan Card Box */
+    .card-qr-box {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .qr-frame-wrap {
+      inline-size: 160px;
+      block-size: 160px;
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+      margin-block-end: 1.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .qr-frame-wrap img {
+      inline-size: 100%;
+      block-size: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .qr-box-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-block-end: 0.35rem;
+    }
+
+    .qr-box-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-block-end: 1.25rem;
+    }
+
+    .qr-scan-url {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    /* Bottom Flagship Promo Banner */
+    .flagship-promo-banner {
+      inline-size: 100%;
+      max-inline-size: 960px;
+      margin-block-start: 3rem;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flagship-promo-banner::before {
+      content: '';
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block: 0;
+      inline-size: 4px;
+      background: var(--primary);
+    }
+
+    .flagship-promo-text h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-block-end: 0.25rem;
+    }
+
+    .flagship-promo-text p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    @media (max-width: 860px) {
+      .card-extra-details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .spec-rows {
+        grid-template-columns: 1fr;
+      }
+      .card-actions-row {
+        flex-direction: column;
+      }
+      .card-actions-row .btn {
+        inline-size: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body class="card-page">
+  <!-- Minimalist Studio Navigation -->
+  <header class="card-page-header">
+    <div class="container">
+      <a href="index.html" class="brand" aria-label="Shivam Web Designs Home">
+        <img src="Brand Logo.PNG" alt="Shivam Web Designs Logo" class="brand-logo-img" width="110" height="32">
+        <span class="brand-monogram">S/WD</span>
+        <span class="brand-full">Shivam Web Designs</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="index.html" class="back-home-link" title="Return to Flagship Studio Portfolio">
+          <span aria-hidden="true">&larr;</span>
+          <span>Main Studio</span>
+        </a>
+
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle color mode" title="Toggle theme">
+          <svg class="sun-icon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Card Experience Viewport -->
+  <main class="card-page-main container">
+    <div class="card-hero-intro">
+      <div class="card-hero-badge">
+        <span class="live-pulse" aria-hidden="true"></span>
+        <span>EXECUTIVE DIGITAL IDENTITY &bull; 3D SPATIAL VCARD</span>
+      </div>
+      <h1 class="card-hero-title">Shivam Web Designs</h1>
+      <p class="card-hero-desc">
+        Designing and building modern websites with a focus on UI/UX, creativity and performance. Rotate in 3D, swipe to flip, scan the QR code, or save directly to your mobile contacts.
+      </p>
+    </div>
+
+    <!-- The 3D Perspective Stage -->
+    <div class="standalone-card-stage-wrap">
+      <div class="standalone-stage" id="standalone-stage" tabindex="0" role="group" aria-label="3D business card. Drag or swipe to rotate 360 degrees. Tap to flip.">
+        <div class="standalone-card" id="standalone-card">
+          <!-- Front Face Plate -->
+          <div class="card-plate-face plate-front" aria-label="Business Card Front Side"></div>
+
+          <!-- Back Face Plate with QR Code & Interactive Hotspots -->
+          <div class="card-plate-face plate-back" aria-label="Business Card Back Side with Links">
+            <div class="back-hotspots-grid">
+              <a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" class="back-hotspot-link" title="Visit website">
+                <span class="hotspot-dot-pulse" aria-hidden="true"></span>
+                <span>shivamwebdesigns.devs.li</span>
+              </a>
+              <a href="https://linkedin.com/company/shivamwebdesigns" target="_blank" rel="noopener" class="back-hotspot-link" title="Open LinkedIn Profile">
+                <span class="hotspot-dot-pulse" aria-hidden="true"></span>
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://github.com/shivamwebdesigns" target="_blank" rel="noopener" class="back-hotspot-link" title="Open GitHub Profile">
+                <span class="hotspot-dot-pulse" aria-hidden="true"></span>
+                <span>GitHub</span>
+              </a>
+              <a href="https://instagram.com/shivamwebdesigns" target="_blank" rel="noopener" class="back-hotspot-link" title="Open Instagram Profile">
+                <span class="hotspot-dot-pulse" aria-hidden="true"></span>
+                <span>Instagram</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Realistic 3D Thickness Extrusion Walls -->
+          <div class="card-plate-side side-left" aria-hidden="true"></div>
+          <div class="card-plate-side side-right" aria-hidden="true"></div>
+          <div class="card-plate-side side-top" aria-hidden="true"></div>
+          <div class="card-plate-side side-bottom" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- Ambient Drop Shadow -->
+      <div class="stage-contact-shadow" aria-hidden="true"></div>
+    </div>
+
+    <!-- Interactive Stage Controls -->
+    <div class="stage-controls-cluster">
+      <button id="btn-front" class="stage-ctrl-btn" type="button" aria-pressed="true">
+        <span>Front Side</span>
+      </button>
+
+      <button id="btn-back" class="stage-ctrl-btn" type="button" aria-pressed="false">
+        <span>Back Side (QR &amp; Links)</span>
+      </button>
+
+      <button id="btn-auto-orbit" class="stage-ctrl-btn" type="button" aria-pressed="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <span id="orbit-label">Auto Spin</span>
+      </button>
+
+      <button id="btn-reset" class="stage-ctrl-btn" type="button" aria-label="Reset Tilt Angle">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/></svg>
+        <span>Reset</span>
+      </button>
+
+      <button id="btn-sound" class="stage-ctrl-btn" type="button" aria-pressed="true" title="Physical haptic audio on flip">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        <span id="sound-label">Audio: On</span>
+      </button>
+    </div>
+
+    <p class="interaction-hint-text">
+      Swipe or drag to spin 360&deg; &bull; Click to flip card &bull; Tap links or scan QR on back
+    </p>
+
+    <!-- Additional Details & QR Scanner Grid -->
+    <div class="card-extra-details-grid">
+      <!-- Specifications & Direct Downloads -->
+      <div class="card-spec-box">
+        <h3 class="spec-box-title">Executive Identity &amp; Print Assets</h3>
+        <p class="spec-box-desc">
+          Official physical and digital identity card for Shivam Web Designs. Precision crafted for high-performance creative development, client consultations, and strategic partnerships.
+        </p>
+
+        <div class="spec-rows">
+          <div class="spec-col-item">
+            <span class="spec-tag-sub">PHYSICAL STOCK</span>
+            <span class="spec-tag-main">350gsm Silk Matte + Spot UV</span>
+          </div>
+          <div class="spec-col-item">
+            <span class="spec-tag-sub">DIMENSIONS</span>
+            <span class="spec-tag-main">3.5 &times; 2.0 in (89 &times; 51 mm)</span>
+          </div>
+          <div class="spec-col-item">
+            <span class="spec-tag-sub">PRINT RESOLUTION</span>
+            <span class="spec-tag-main">600 DPI Vector Master</span>
+          </div>
+          <div class="spec-col-item">
+            <span class="spec-tag-sub">CORE SERVICES</span>
+            <span class="spec-tag-main">UI/UX, Frontend &amp; 3D Web</span>
+          </div>
+        </div>
+
+        <div class="card-actions-row">
+          <button id="btn-download-vcf" class="btn btn-primary" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Save to Contacts (.vcf)
+          </button>
+
+          <a href="Business_Card_Print_Front_Back.pdf" download="ShivamWebDesigns_Business_Card_Print.pdf" class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Print PDF (300dpi)
+          </a>
+
+          <button id="btn-share-card" class="btn btn-outline" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Share Card
+          </button>
+        </div>
+      </div>
+
+      <!-- Scannable Mobile QR Box -->
+      <div class="card-qr-box">
+        <div class="qr-frame-wrap">
+          <img src="QR_Website.png" alt="Website QR Code for Shivam Web Designs" width="160" height="160">
+        </div>
+        <h4 class="qr-box-title">Scan to View on Phone</h4>
+        <p class="qr-box-desc">
+          Point your phone camera to open this interactive 3D card instantly on mobile.
+        </p>
+        <a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" class="qr-scan-url">
+          shivamwebdesigns.devs.li
+        </a>
+      </div>
+    </div>
+
+    <!-- Full Flagship Promo Banner -->
+    <div class="flagship-promo-banner">
+      <div class="flagship-promo-text">
+        <h4>Explore the Full Studio Flagship</h4>
+        <p>Discover our interactive 3D spatial web stack, selected client flagships, and detailed case studies.</p>
+      </div>
+      <a href="index.html" class="btn btn-primary">
+        Open Main Studio &rarr;
+      </a>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" style="margin-block-start: auto;">
+    <div class="container">
+      <div class="footer-bottom-row" style="padding-block: 1.5rem;">
+        <p class="copyright">&copy; 2026 Shivam Web Designs. All rights reserved.</p>
+        <p class="footer-credit">Handcrafted by Shivam Purohit &bull; <a href="index.html" style="color: var(--primary);">shivamwebdesigns.devs.li</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification System -->
+  <div id="toast" class="toast-notice" role="status" aria-live="polite" hidden></div>
+
+  <!-- Interactive Card Script Engine -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toast notification helper
+      const toast = document.getElementById('toast');
+      let toastTimer;
+      function showToast(msg) {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.hidden = false;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => { toast.hidden = true; }, 3000);
+      }
+
+      // Web Audio Sound Synthesizer (physical card snap/flick sound)
+      let soundEnabled = true;
+      let audioCtx = null;
+      function playCardSound() {
+        if (!soundEnabled) return;
+        try {
+          if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
+          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.08);
+        } catch (e) {
+          // audio fallback
+        }
+      }
+
+      // Elements
+      const stage = document.getElementById('standalone-stage');
+      const card = document.getElementById('standalone-card');
+      const btnFront = document.getElementById('btn-front');
+      const btnBack = document.getElementById('btn-back');
+      const btnOrbit = document.getElementById('btn-auto-orbit');
+      const orbitLabel = document.getElementById('orbit-label');
+      const btnReset = document.getElementById('btn-reset');
+      const btnSound = document.getElementById('btn-sound');
+      const soundLabel = document.getElementById('sound-label');
+      const btnVcf = document.getElementById('btn-download-vcf');
+      const btnShare = document.getElementById('btn-share-card');
+
+      // State
+      let ry = -18, rx = 6;
+      let targetRy = -18, targetRx = 6;
+      let isDragging = false;
+      let isOrbiting = false;
+      let startX = 0, startY = 0;
+      let dragDistance = 0;
+      let orbitTime = 0;
+
+      // Update button state based on angle
+      function updateButtonStates() {
+        const rad = (targetRy * Math.PI) / 180;
+        const isFacingFront = Math.cos(rad) >= 0;
+        if (btnFront) btnFront.setAttribute('aria-pressed', isFacingFront ? 'true' : 'false');
+        if (btnBack) btnBack.setAttribute('aria-pressed', isFacingFront ? 'false' : 'true');
+      }
+
+      function rotateTo(targetY, targetX = 6) {
+        targetRy = targetY;
+        targetRx = targetX;
+        isOrbiting = false;
+        if (btnOrbit) btnOrbit.setAttribute('aria-pressed', 'false');
+        if (orbitLabel) orbitLabel.textContent = 'Auto Spin';
+        playCardSound();
+        updateButtonStates();
+      }
+
+      // Pointer Drag & Click
+      stage.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('.back-hotspot-link')) return;
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        dragDistance = 0;
+        card.classList.add('is-dragging');
+        stage.setPointerCapture(e.pointerId);
+      });
+
+      stage.addEventListener('pointermove', (e) => {
+        if (!isDragging) {
+          // Hover tilt
+          const rect = stage.getBoundingClientRect();
+          const normX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+          const normY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+          const shineX = (normX * 0.5 + 0.5) * 100;
+          const shineY = (normY * 0.5 + 0.5) * 100;
+          card.style.setProperty('--shine-x', `${shineX.toFixed(1)}%`);
+          card.style.setProperty('--shine-y', `${shineY.toFixed(1)}%`);
+          return;
+        }
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        dragDistance += Math.hypot(dx, dy);
+        startX = e.clientX;
+        startY = e.clientY;
+
+        targetRy += dx * 0.7;
+        targetRx = Math.max(-80, Math.min(80, targetRx - dy * 0.7));
+
+        updateButtonStates();
+      });
+
+      function stopDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        card.classList.remove('is-dragging');
+        try { stage.releasePointerCapture(e.pointerId); } catch(err) {}
+
+        // If tap/click with minimal movement, flip card!
+        if (dragDistance < 8) {
+          const rad = (targetRy * Math.PI) / 180;
+          const isFront = Math.cos(rad) >= 0;
+          rotateTo(isFront ? 180 : 0);
+          showToast(isFront ? 'Back: QR & Direct Links' : 'Front Side');
+        }
+        dragDistance = 0;
+      }
+
+      stage.addEventListener('pointerup', stopDrag);
+      stage.addEventListener('pointercancel', stopDrag);
+
+      // Keyboard support
+      stage.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          const rad = (targetRy * Math.PI) / 180;
+          const isFront = Math.cos(rad) >= 0;
+          rotateTo(isFront ? 180 : 0);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          targetRy -= 20;
+          updateButtonStates();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          targetRy += 20;
+          updateButtonStates();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          targetRx = Math.min(80, targetRx + 15);
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          targetRx = Math.max(-80, targetRx - 15);
+        }
+      });
+
+      // Button Handlers
+      if (btnFront) btnFront.addEventListener('click', () => { rotateTo(0); showToast('Front Side'); });
+      if (btnBack) btnBack.addEventListener('click', () => { rotateTo(180); showToast('Back Side: QR & Links'); });
+
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          targetRx = 6;
+          targetRy = -18;
+          isOrbiting = false;
+          if (btnOrbit) btnOrbit.setAttribute('aria-pressed', 'false');
+          if (orbitLabel) orbitLabel.textContent = 'Auto Spin';
+          playCardSound();
+          updateButtonStates();
+          showToast('View Angle Reset');
+        });
+      }
+
+      if (btnOrbit) {
+        btnOrbit.addEventListener('click', () => {
+          isOrbiting = !isOrbiting;
+          btnOrbit.setAttribute('aria-pressed', isOrbiting ? 'true' : 'false');
+          orbitLabel.textContent = isOrbiting ? 'Spinning...' : 'Auto Spin';
+          showToast(isOrbiting ? 'Auto Spin Active' : 'Auto Spin Paused');
+        });
+      }
+
+      if (btnSound) {
+        btnSound.addEventListener('click', () => {
+          soundEnabled = !soundEnabled;
+          btnSound.setAttribute('aria-pressed', soundEnabled ? 'true' : 'false');
+          soundLabel.textContent = soundEnabled ? 'Audio: On' : 'Audio: Off';
+          showToast(soundEnabled ? 'Haptic Audio Enabled' : 'Haptic Audio Muted');
+        });
+      }
+
+      // Download vCard (.vcf)
+      if (btnVcf) {
+        btnVcf.addEventListener('click', () => {
+          const vcard = [
+            'BEGIN:VCARD',
+            'VERSION:3.0',
+            'FN:Shivam WebDesigns',
+            'N:WebDesigns;Shivam;;;',
+            'ORG:Shivam Web Designs',
+            'TITLE:Digital Design & 3D Web Engineering Studio',
+            'EMAIL;TYPE=INTERNET,WORK:shivam@shivamwebdesigns.com',
+            'URL:https://shivamwebdesigns.devs.li',
+            'URL;TYPE=GitHub:https://github.com/shivamwebdesigns',
+            'URL;TYPE=LinkedIn:https://linkedin.com/company/shivamwebdesigns',
+            'URL;TYPE=Instagram:https://instagram.com/shivamwebdesigns',
+            'NOTE:Designing and building modern websites with a focus on UI/UX, creativity and performance.',
+            'REV:2026-11-25T12:00:00Z',
+            'END:VCARD'
+          ].join('\r\n');
+
+          const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'Shivam_WebDesigns.vcf';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('vCard downloaded! Open file to save to Contacts.');
+        });
+      }
+
+      // Share Digital Card Link
+      if (btnShare) {
+        btnShare.addEventListener('click', async () => {
+          const shareUrl = window.location.href;
+          if (navigator.share) {
+            try {
+              await navigator.share({
+                title: 'Shivam Web Designs — Interactive 3D Business Card',
+                text: 'Rotate 360°, flip, scan QR, and save to contacts.',
+                url: shareUrl
+              });
+              showToast('Card shared successfully!');
+              return;
+            } catch (e) {
+              if (e.name !== 'AbortError') console.log(e);
+            }
+          }
+          if (navigator.clipboard) {
+            try {
+              await navigator.clipboard.writeText(shareUrl);
+              showToast('Link copied to clipboard!');
+              return;
+            } catch(e) {}
+          }
+          showToast(`Share URL: ${shareUrl}`);
+        });
+      }
+
+      // Theme toggle sync
+      const themeToggle = document.getElementById('theme-toggle');
+      function applyTheme(theme) {
+        if (theme) {
+          document.documentElement.setAttribute('data-theme', theme);
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      }
+      const savedTheme = localStorage.getItem('swd_theme');
+      if (savedTheme) applyTheme(savedTheme);
+
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const cur = document.documentElement.getAttribute('data-theme');
+          let next;
+          if (!cur) {
+            next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
+          } else if (cur === 'dark') {
+            next = 'light';
+          } else {
+            next = 'dark';
+          }
+          applyTheme(next);
+          localStorage.setItem('swd_theme', next);
+          showToast(`Theme: ${next === 'dark' ? 'Dark Mode' : 'Light Mode'}`);
+        });
+      }
+
+      // Smooth 60fps render loop with lerp
+      function tick() {
+        if (isOrbiting) {
+          orbitTime += 0.02;
+          targetRy += 0.65;
+          targetRx = Math.sin(orbitTime * 0.7) * 12;
+          updateButtonStates();
+        }
+
+        const factor = isDragging ? 0.35 : 0.12;
+        rx += (targetRx - rx) * factor;
+        ry += (targetRy - ry) * factor;
+
+        card.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+
+        requestAnimationFrame(tick);
+      }
+      tick();
+      updateButtonStates();
+    });
+  </script>
+</body>
+</html>
