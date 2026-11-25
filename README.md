@@ -12,8 +12,8 @@ ShivamWebDesigns is a Next.js website for the studio's services, founder profile
 | `/projects` | Portfolio notice: projects are updating soon |
 | `/projects/[slug]` | Previous case-study URLs permanently redirect to `/projects` |
 | `/founder` | Founder profile |
-| `/contact` | Contact form and studio details |
-| `/start-project` | Project inquiry form |
+| `/contact` | Contact form; direct personal email and phone are not shown |
+| `/start-project` | Quotation brief with custom service options and INR budget tiers from ₹500 to ₹5,000 |
 | `/businesscard` | Interactive 3D business card |
 | `/privacy` | Privacy policy |
 | `/terms` | Terms of service |
@@ -49,6 +49,8 @@ npx tsc --noEmit
 npm run build
 ```
 
+Project quotation emails are sent through Resend. Configure `RESEND_API_KEY` and a Resend-verified `CONTACT_FROM_EMAIL` in `.env.local` for local development and in the deployment environment for production. The form confirms delivery only after Resend accepts the message.
+
 ## Project Documents
 
 - [Privacy policy](https://shivamwebdesigns.devs.li/privacy) and [terms of service](https://shivamwebdesigns.devs.li/terms)
@@ -60,7 +62,7 @@ npm run build
 ## Contact
 
 - Website: <https://shivamwebdesigns.devs.li>
-- Email: <shivamwebdesigns23@gmail.com>
+- Contact form: <https://shivamwebdesigns.devs.li/contact>
 - LinkedIn: <https://www.linkedin.com/company/shivamwebdesigns/>
 - GitHub: <https://github.com/shivamwebdesigns/Shivam-Web-Designs>
 - Instagram: <https://www.instagram.com/shivamwebdesigns/>
