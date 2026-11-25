@@ -3258,3 +3258,24 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Legal & Compliance Footer Links (Anti-Slop) */
+.footer-legal-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.footer-legal-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  transition: color 0.2s ease;
+}
+.footer-legal-link:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+.legal-sep {
+  color: var(--border);
+  font-size: 0.75rem;
+}

@@ -2,26 +2,121 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/website/index.html" },
-    { "source": "/index.html", "destination": "/website/index.html" },
-    { "source": "/businesscard", "destination": "/website/businesscard.html" },
-    { "source": "/businesscard/", "destination": "/website/businesscard.html" },
-    { "source": "/businesscard.html", "destination": "/website/businesscard.html" },
-    { "source": "/card", "destination": "/website/businesscard.html" },
-    { "source": "/card/", "destination": "/website/businesscard.html" },
-    { "source": "/card.html", "destination": "/website/businesscard.html" },
-    { "source": "/business-card", "destination": "/website/businesscard.html" },
-    { "source": "/business-card/", "destination": "/website/businesscard.html" },
-    { "source": "/business-card.html", "destination": "/website/businesscard.html" },
-    { "source": "/styles.css", "destination": "/website/styles.css" },
-    { "source": "/script.js", "destination": "/website/script.js" },
-    { "source": "/Brand Logo.PNG", "destination": "/website/Brand Logo.PNG" },
-    { "source": "/Brand%20Logo.PNG", "destination": "/website/Brand Logo.PNG" },
-    { "source": "/business-card-front.png", "destination": "/website/business-card-front.png" },
-    { "source": "/business-card-back.png", "destination": "/website/business-card-back.png" },
-    { "source": "/banner-wide.png", "destination": "/website/banner-wide.png" },
-    { "source": "/banner-balanced.png", "destination": "/website/banner-balanced.png" },
-    { "source": "/Business_Card_Print_Front_Back.pdf", "destination": "/website/Business_Card_Print_Front_Back.pdf" },
-    { "source": "/((?!website/).*)", "destination": "/website/$1" }
+    {
+      "source": "/",
+      "destination": "/website/index.html"
+    },
+    {
+      "source": "/index.html",
+      "destination": "/website/index.html"
+    },
+    {
+      "source": "/businesscard",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/businesscard/",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/businesscard.html",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/card",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/card/",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/card.html",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/business-card",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/business-card/",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/business-card.html",
+      "destination": "/website/businesscard.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/website/privacy.html"
+    },
+    {
+      "source": "/privacy/",
+      "destination": "/website/privacy.html"
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/website/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/website/terms.html"
+    },
+    {
+      "source": "/terms/",
+      "destination": "/website/terms.html"
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/website/terms.html"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/website/sitemap.xml"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/website/robots.txt"
+    },
+    {
+      "source": "/styles.css",
+      "destination": "/website/styles.css"
+    },
+    {
+      "source": "/script.js",
+      "destination": "/website/script.js"
+    },
+    {
+      "source": "/Brand Logo.PNG",
+      "destination": "/website/Brand Logo.PNG"
+    },
+    {
+      "source": "/Brand%20Logo.PNG",
+      "destination": "/website/Brand Logo.PNG"
+    },
+    {
+      "source": "/business-card-front.png",
+      "destination": "/website/business-card-front.png"
+    },
+    {
+      "source": "/business-card-back.png",
+      "destination": "/website/business-card-back.png"
+    },
+    {
+      "source": "/banner-wide.png",
+      "destination": "/website/banner-wide.png"
+    },
+    {
+      "source": "/banner-balanced.png",
+      "destination": "/website/banner-balanced.png"
+    },
+    {
+      "source": "/Business_Card_Print_Front_Back.pdf",
+      "destination": "/website/Business_Card_Print_Front_Back.pdf"
+    },
+    {
+      "source": "/((?!website/).*)",
+      "destination": "/website/$1"
+    }
   ]
 }
