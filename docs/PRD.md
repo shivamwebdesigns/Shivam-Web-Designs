@@ -26,7 +26,7 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 - One-click contact saving via standardized vCard 3.0 (`Shivam_WebDesigns.vcf`).
 - Responsive mobile portrait mode allowing natural one-handed vertical viewing on smartphones.
 - Zero tracking cookies, DPDP Act 2023 / GDPR compliance, and sub-2.0s load times.
-- Frictionless project brief submission with direct clipboard copy and native email client launch.
+- Frictionless project brief submission with server-side email dispatch and a contact form fallback.
 
 ## 4. Target Users
 ### User Type 1: High-Growth Founders & Product Leaders
@@ -62,8 +62,8 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 - Behavior: Show “Updating soon” on the homepage and `/projects`; permanently redirect previous project detail URLs and omit them from the sitemap.
 
 ### Feature 4: Workable Project Brief Generator
-- Purpose: Native HTML5 `<dialog>` form collecting client name, work email, project scope, budget tier, and timeline.
-- Output: Instant clipboard formatting, local storage draft preservation, and native `mailto:` dispatch to `shivamwebdesigns23@gmail.com`.
+- Purpose: Project intake form collecting client name, email, service, project scope, INR budget range, and timeline.
+- Output: Server-validated project brief emailed through Resend to `shivamwebdesigns23@gmail.com`; delivery failures are shown with a link to the contact form.
 
 ## 7. Non-Goals
 - User account creation / login systems (the platform is strictly privacy-first, zero tracking).
@@ -74,7 +74,7 @@ Provide an unforgettable, lightning-fast digital flagship and workable 3D busine
 ## 8. MVP Scope
 ### Must Have:
 - 100% workable 3D business card on desktop and mobile with Front, Back, Flip, Portrait/Landscape, and vCard buttons.
-- Fully workable project brief intake with clipboard fallback and email launch.
+- Fully workable project brief intake with confirmed email delivery and a contact form fallback.
 - Sub-2-second load times on 4G networks.
 - Clean legal compliance suite (`privacy.html`, `terms.html`, `sitemap.xml`, `robots.txt`).
 - Structured JSON-LD metadata for Google search optimization.

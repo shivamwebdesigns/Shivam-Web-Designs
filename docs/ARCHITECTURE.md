@@ -23,8 +23,8 @@ Shivam Web Designs is engineered as a zero-bloat, high-performance static web pl
 ### Component 2: 3D Business Card Engine (`businesscard.html`)
 - Responsibilities: 360-degree interactive 3D spatial card simulation, orientation switcher (Portrait / Landscape), dynamic foil specular shader, micro-grain paper texture, and vCard generator.
 
-### Component 3: Project Brief & Client Intake (`script.js`)
-- Responsibilities: Manages native `<dialog>` modals, input validation, formatted brief generation, clipboard copying, and direct `mailto:` client launch.
+### Component 3: Project Brief & Client Intake (`app/start-project/page.tsx`, `app/api/inquiry/route.ts`)
+- Responsibilities: Collects and validates project details, including INR budget ranges, then sends quotation requests through Resend to the studio inbox. Delivery failures are surfaced to the client with a link to the contact form.
 
 ### Component 4: Edge Routing & File Mirrors
 - Responsibilities: `vercel.json` maps friendly routes (`/businesscard`, `/card`, `/privacy`, `/terms`, `/sitemap.xml`, `/robots.txt`) to optimized canonical resources.
@@ -53,9 +53,9 @@ flowchart TD
   end
 
   subgraph Conversion [Client Conversion Actions]
-    JS --> BriefDialog[Native Project Brief Dialog]
-    BriefDialog --> MailDispatch[Native Mail Client / shivamwebdesigns23@gmail.com]
-    BriefDialog --> Clipboard[Formatted Brief Clipboard API]
+    StartProject[Start Project Form] --> InquiryAPI[POST /api/inquiry]
+    InquiryAPI --> Resend[Resend Email Delivery]
+    Resend --> StudioInbox[shivamwebdesigns23@gmail.com]
     VCard --> MobileContacts[iOS / Android Contacts App]
   end
 ```
@@ -65,7 +65,7 @@ flowchart TD
 2. Browser parses semantic HTML and renders first paint in < 400ms.
 3. 3D physics loop initializes with RAF and listens for Pointer Events.
 4. User clicks "Add to Contacts" → JavaScript generates RFC 2426 vCard string, creates ephemeral object URL, and triggers instant OS download.
-5. User submits Project Brief → Client-side validation checks inputs, packages Markdown-formatted brief, copies to clipboard, and generates mailto link.
+5. User submits a project brief → `/api/inquiry` validates the request and sends it through Resend; the page confirms only after provider acceptance.
 
 ## 7. Project Structure
 ```

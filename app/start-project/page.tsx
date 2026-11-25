@@ -4,7 +4,6 @@ import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, AlertCircle } from 'lucide-react';
-import { siteConfig } from '@/data/siteConfig';
 
 function StartProjectForm() {
   const searchParams = useSearchParams();
@@ -100,7 +99,7 @@ function StartProjectForm() {
       }
 
       if (typeof data.inquiryId !== 'string' || !data.inquiryId) {
-        throw new Error('Email delivery could not be confirmed. Please try again or email us directly.');
+        throw new Error('Email delivery could not be confirmed. Please try again.');
       }
 
       setInquiryId(data.inquiryId);
@@ -108,7 +107,7 @@ function StartProjectForm() {
     } catch (err: unknown) {
       setStatus('error');
       setErrorMessage(
-        err instanceof Error ? err.message : 'An unexpected error occurred. Please reach out to shivamwebdesigns23@gmail.com directly.'
+        err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.'
       );
     }
   };
@@ -206,12 +205,12 @@ function StartProjectForm() {
                   <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>
                     {errorMessage}{' '}
-                    <a
-                      href={`mailto:${siteConfig.contact.email}`}
+                    <Link
+                      href="/contact"
                       className="text-white underline underline-offset-2"
                     >
-                      Email us directly
-                    </a>
+                      Contact us
+                    </Link>
                     .
                   </span>
                 </div>

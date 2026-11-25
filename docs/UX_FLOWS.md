@@ -44,7 +44,7 @@
 1. User opens `/start-project` from a project CTA.
 2. User enters contact details, service, estimated budget in INR, timeline, and project description.
 3. On submission, the server validates the brief and sends it through Resend to `shivamwebdesigns23@gmail.com`.
-4. The page confirms delivery only after Resend accepts the email; if delivery is unavailable, it displays an error and a direct email link.
+4. The page confirms delivery only after Resend accepts the email; if delivery is unavailable, it displays an error and a link to the contact form.
 
 ## Flow 8: Contact Form Without Public Direct Details
 1. User opens `/contact`; the personal email address and phone number are not displayed, while Direct Email and WhatsApp actions remain available.

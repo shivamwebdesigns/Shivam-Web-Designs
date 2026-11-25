@@ -10,7 +10,7 @@
 ## 2. Test Types
 ### Manual & Visual Verification
 - 3D Business Card: Drag to rotate 360°, tap to flip, click Front/Back buttons, toggle Portrait/Landscape mode, and verify vCard download.
-- Project Brief Modal: Open modal, enter required fields, submit, verify formatted clipboard payload, and verify mailto link formulation.
+- Project Brief Form: Submit valid details and verify successful email delivery; verify missing or failed email configuration displays an error and a Contact page fallback.
 - Case Study Inspector: Open each case study modal, verify dynamic content population and responsive layout.
 
 ### Automated Syntax & Build Verification
