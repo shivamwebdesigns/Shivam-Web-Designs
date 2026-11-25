@@ -14,9 +14,7 @@ export function MobileDock() {
     { label: '3D Stack', href: '/#3d-stack', icon: Layers, isExternal: false },
     { label: 'Projects', href: '/projects', icon: Briefcase, isExternal: false },
     { label: '3D Card', href: '/businesscard', icon: CreditCard, isExternal: false },
-    ...(pathname === '/contact'
-      ? []
-      : [{ label: 'WhatsApp', href: siteConfig.contact.whatsapp, icon: MessageSquare, isExternal: true }]),
+    { label: 'WhatsApp', href: siteConfig.contact.whatsapp, icon: MessageSquare, isExternal: true },
   ];
 
   return (

@@ -1,16 +1,11 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/data/siteConfig';
 import { ArrowUpRight } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const pathname = usePathname();
-  const showDirectContactLinks = pathname !== '/contact';
 
   return (
     <footer className="bg-black border-t border-neutral-900 text-neutral-400">
@@ -119,17 +114,15 @@ export function Footer() {
               Connect
             </h4>
             <ul className="space-y-2.5 text-sm">
-              {showDirectContactLinks && (
-                <li>
-                  <a
-                    href={siteConfig.social.email}
-                    className="hover:text-white transition-colors flex items-center"
-                  >
-                    Direct Email
-                    <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
-                  </a>
-                </li>
-              )}
+              <li>
+                <a
+                  href={siteConfig.social.email}
+                  className="hover:text-white transition-colors flex items-center"
+                >
+                  Direct Email
+                  <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
+                </a>
+              </li>
               <li>
                 <a
                   href={siteConfig.social.linkedin}
@@ -163,7 +156,7 @@ export function Footer() {
                   <ArrowUpRight className="ml-1 h-3 w-3 opacity-60" />
                 </a>
               </li>
-              {showDirectContactLinks && siteConfig.social.whatsapp && (
+              {siteConfig.social.whatsapp && (
                 <li>
                   <a
                     href={siteConfig.social.whatsapp}

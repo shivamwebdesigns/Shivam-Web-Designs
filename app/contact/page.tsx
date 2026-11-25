@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle2, MapPin, Send, AlertCircle } from 'lucide-react';
+import { CheckCircle2, Mail, MapPin, MessageSquare, Send, AlertCircle } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 export default function ContactPage() {
@@ -105,6 +105,50 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-6">
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
+                >
+                  <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-300 group-hover:border-white group-hover:text-white transition-colors">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
+                      Direct Email
+                    </div>
+                    <div className="text-sm font-medium text-white group-hover:underline">
+                      Contact us directly
+                    </div>
+                    <div className="text-xs text-neutral-400 mt-1">
+                      Guaranteed reply within 24 hours
+                    </div>
+                  </div>
+                </a>
+
+                {siteConfig.social.whatsapp && (
+                  <a
+                    href={siteConfig.social.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 transition-colors">
+                      <MessageSquare className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
+                        WhatsApp Quick Chat
+                      </div>
+                      <div className="text-sm font-medium text-white group-hover:underline">
+                        Message the founder directly
+                      </div>
+                      <div className="text-xs text-neutral-400 mt-1">
+                        Direct link to founder chat
+                      </div>
+                    </div>
+                  </a>
+                )}
+
                 <div className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900">
                   <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400">
                     <MapPin className="w-4 h-4" />

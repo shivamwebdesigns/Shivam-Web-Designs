@@ -47,6 +47,6 @@
 4. The page confirms delivery only after Resend accepts the email; if delivery is unavailable, it displays an error and a direct email link.
 
 ## Flow 8: Contact Form Without Public Direct Details
-1. User opens `/contact`; personal email and phone/WhatsApp links are not displayed on this page, including its shared navigation and footer.
+1. User opens `/contact`; the personal email address and phone number are not displayed, while Direct Email and WhatsApp actions remain available.
 2. User submits their name, reply email, and message through the contact form.
 3. The contact form displays the delivery status.

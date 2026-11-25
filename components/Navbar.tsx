@@ -136,11 +136,9 @@ export function Navbar() {
               <ArrowUpRight className="ml-1.5 h-4 w-4" />
             </Link>
             <div className="flex items-center justify-between pt-2 text-xs text-neutral-400 px-2 font-mono">
-              {pathname !== '/contact' && (
-                <a href={siteConfig.social.email} className="hover:text-white transition-colors">
-                  {siteConfig.contact.email}
-                </a>
-              )}
+              <a href={siteConfig.social.email} className="hover:text-white transition-colors">
+                Email
+              </a>
               <Link href="/businesscard" className="hover:text-white transition-colors">
                 3D Card &rarr;
               </Link>
