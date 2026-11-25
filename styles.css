@@ -341,6 +341,14 @@ button, input, select, textarea {
   letter-spacing: -0.02em;
 }
 
+.brand-logo-img {
+  max-block-size: 34px;
+  inline-size: auto;
+  object-fit: contain;
+  border-radius: var(--radius-xs);
+  display: block;
+}
+
 .brand-monogram {
   font-family: var(--font-mono);
   font-size: 0.8rem;
