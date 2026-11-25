@@ -98,7 +98,7 @@ function StartProjectForm() {
   return (
     <div className="flex flex-col">
       {/* Header */}
-      <section className="pt-32 pb-20 border-b border-neutral-900 bg-neutral-950/60">
+      <section className="pt-32 pb-10 border-b border-neutral-900 bg-neutral-950/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 mb-4">
@@ -118,7 +118,7 @@ function StartProjectForm() {
       </section>
 
       {/* Main Intake Section */}
-      <section className="py-24 border-b border-neutral-900 bg-black min-h-screen">
+      <section className="pt-10 pb-24 border-b border-neutral-900 bg-black min-h-screen">
         <div className="max-w-4xl mx-auto px-6">
           {status === 'success' ? (
             <div className="p-10 md:p-16 border border-neutral-800 bg-neutral-950 text-center space-y-6">
