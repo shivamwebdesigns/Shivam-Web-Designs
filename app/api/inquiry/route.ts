@@ -1,122 +1,187 @@
 import { NextResponse } from 'next/server';
 
+const recipientEmail = 'shivamwebdesigns23@gmail.com';
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function singleLine(value: string, maxLength: number): string {
+  return value.replace(/[\r\n\t]+/g, ' ').trim().slice(0, maxLength);
+}
+
+function deliveryError(status: number) {
+  return NextResponse.json(
+    {
+      error:
+        'We could not email your brief right now. Please try again.',
+    },
+    { status }
+  );
+}
+
 export async function POST(request: Request) {
+  let payload: unknown;
+
   try {
-    const body = await request.json();
-    const {
-      fullName,
-      email,
-      company,
-      projectType,
-      budget,
-      timeline,
-      description,
-      referenceUrl,
-      additionalRequirements,
-      honeypot,
-    } = body;
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Request body must be valid JSON.' }, { status: 400 });
+  }
 
-    // Honeypot spam trap
-    if (honeypot) {
-      return NextResponse.json({
-        success: true,
-        inquiryId: `SWD-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-        message: 'Inquiry registered',
-      });
-    }
+  if (!isRecord(payload)) {
+    return NextResponse.json({ error: 'Request body must be a JSON object.' }, { status: 400 });
+  }
 
-    // Validation
-    if (!fullName || typeof fullName !== 'string' || fullName.trim().length === 0) {
-      return NextResponse.json(
-        { error: 'Full name is required.' },
-        { status: 400 }
-      );
-    }
+  const {
+    fullName,
+    email,
+    company,
+    projectType,
+    budget,
+    timeline,
+    description,
+    referenceUrl,
+    additionalRequirements,
+    honeypot,
+  } = payload;
 
-    if (!email || typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
-      return NextResponse.json(
-        { error: 'A valid email address is required.' },
-        { status: 400 }
-      );
-    }
-
-    if (!description || typeof description !== 'string' || description.trim().length < 10) {
-      return NextResponse.json(
-        { error: 'Project description must be at least 10 characters.' },
-        { status: 400 }
-      );
-    }
-
-    const inquiryId = `SWD-${Date.now().toString(36).toUpperCase()}`;
-
-    // Payload logging for server observability
-    console.log('[SWD_INQUIRY_RECEIVED]', {
-      inquiryId,
-      fullName: fullName.trim(),
-      email: email.trim().toLowerCase(),
-      company: company?.trim() || 'N/A',
-      projectType: projectType || 'General',
-      budget: budget || 'Flexible',
-      timeline: timeline || 'Standard',
-      description: description.trim(),
-      referenceUrl: referenceUrl?.trim() || 'N/A',
-      additionalRequirements: additionalRequirements?.trim() || 'N/A',
-      timestamp: new Date().toISOString(),
-    });
-
-    // Optional email dispatch hook if Resend key is configured
-    const resendApiKey = process.env.RESEND_API_KEY;
-    const recipientEmail = process.env.CONTACT_EMAIL || 'shivamwebdesigns23@gmail.com';
-
-    if (resendApiKey) {
-      try {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${resendApiKey}`,
-          },
-          body: JSON.stringify({
-            from: 'ShivamWebDesigns Inquiries <inquiries@shivamwebdesigns.com>',
-            to: [recipientEmail],
-            reply_to: email,
-            subject: `[New Project Inquiry] ${inquiryId}: ${fullName} (${projectType})`,
-            text: `
-New Project Inquiry Received
-
-Inquiry ID: ${inquiryId}
-Client: ${fullName}
-Email: ${email}
-Company: ${company || 'N/A'}
-Service: ${projectType}
-Budget: ${budget}
-Timeline: ${timeline}
-Reference URL: ${referenceUrl || 'None'}
-
-Description:
-${description}
-
-Additional Requirements:
-${additionalRequirements || 'None'}
-            `,
-          }),
-        });
-      } catch (mailError) {
-        console.error('[SWD_MAIL_DISPATCH_ERROR]', mailError);
-        // Do not fail user request if mail transport had an issue
-      }
-    }
-
+  if (typeof honeypot === 'string' && honeypot.trim()) {
     return NextResponse.json({
       success: true,
-      inquiryId,
-      message: 'Project inquiry successfully registered in dispatch queue.',
+      inquiryId: `SWD-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+      message: 'Inquiry registered',
     });
-  } catch (error) {
-    console.error('[SWD_API_INQUIRY_ERROR]', error);
+  }
+
+  if (typeof fullName !== 'string' || !fullName.trim() || fullName.trim().length > 120) {
+    return NextResponse.json({ error: 'A name of 1–120 characters is required.' }, { status: 400 });
+  }
+
+  if (typeof email !== 'string' || email.trim().length > 254 || !/^\S+@\S+\.\S+$/.test(email.trim())) {
+    return NextResponse.json({ error: 'A valid email address is required.' }, { status: 400 });
+  }
+
+  if (typeof description !== 'string' || description.trim().length < 10 || description.trim().length > 2000) {
     return NextResponse.json(
-      { error: 'Internal server error processing inquiry.' },
-      { status: 500 }
+      { error: 'Project description must be between 10 and 2,000 characters.' },
+      { status: 400 }
     );
   }
+
+  const optionalFields = [
+    ['company', company, 160],
+    ['project type', projectType, 100],
+    ['budget', budget, 100],
+    ['timeline', timeline, 100],
+    ['reference URL', referenceUrl, 2048],
+    ['additional notes', additionalRequirements, 1000],
+  ] as const;
+
+  for (const [label, value, maxLength] of optionalFields) {
+    if (value !== undefined && typeof value !== 'string') {
+      return NextResponse.json({ error: `Invalid ${label}.` }, { status: 400 });
+    }
+
+    if (typeof value === 'string' && value.trim().length > maxLength) {
+      return NextResponse.json({ error: `${label} must be ${maxLength} characters or fewer.` }, { status: 400 });
+    }
+  }
+
+  const fullNameValue = singleLine(fullName, 120);
+  const emailValue = email.trim().toLowerCase();
+  const companyValue = typeof company === 'string' ? singleLine(company, 160) : '';
+  const projectTypeValue = typeof projectType === 'string' ? singleLine(projectType, 100) : 'General';
+  const budgetValue = typeof budget === 'string' ? singleLine(budget, 100) : 'Flexible';
+  const timelineValue = typeof timeline === 'string' ? singleLine(timeline, 100) : 'Flexible';
+  const descriptionValue = description.trim();
+  const referenceUrlValue = typeof referenceUrl === 'string' ? referenceUrl.trim() : '';
+  const additionalRequirementsValue =
+    typeof additionalRequirements === 'string' ? additionalRequirements.trim() : '';
+
+  if (referenceUrlValue) {
+    try {
+      const url = new URL(referenceUrlValue);
+      if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+        return NextResponse.json({ error: 'Reference URL must use HTTP or HTTPS.' }, { status: 400 });
+      }
+    } catch {
+      return NextResponse.json({ error: 'Please provide a valid reference URL.' }, { status: 400 });
+    }
+  }
+
+  const resendApiKey = process.env.RESEND_API_KEY?.trim();
+  const fromEmail = process.env.CONTACT_FROM_EMAIL?.trim();
+  if (!resendApiKey || !fromEmail) {
+    return NextResponse.json(
+      {
+        error:
+          'Email delivery is not configured yet.',
+      },
+      { status: 503 }
+    );
+  }
+
+  const inquiryId = `SWD-${Date.now().toString(36).toUpperCase()}`;
+  const emailText = [
+    'New Project Quotation Request',
+    '',
+    `Inquiry ID: ${inquiryId}`,
+    `Client: ${fullNameValue}`,
+    `Email: ${emailValue}`,
+    `Company: ${companyValue || 'Not provided'}`,
+    `Service: ${projectTypeValue}`,
+    `Estimated investment (INR): ${budgetValue}`,
+    `Timeline: ${timelineValue}`,
+    `Reference URL: ${referenceUrlValue || 'Not provided'}`,
+    '',
+    'Project description:',
+    descriptionValue,
+    '',
+    'Additional notes:',
+    additionalRequirementsValue || 'None',
+    '',
+    'Submitted via https://shivamwebdesigns.devs.li/start-project',
+  ].join('\n');
+
+  let emailResponse: Response;
+
+  try {
+    emailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${resendApiKey}`,
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [recipientEmail],
+        reply_to: emailValue,
+        subject: `[Project Quotation Request] ${inquiryId}`,
+        text: emailText,
+      }),
+    });
+  } catch (error) {
+    console.error('[SWD_INQUIRY_EMAIL_NETWORK_ERROR]', {
+      inquiryId,
+      message: error instanceof Error ? error.message : 'Unknown network error',
+    });
+    return deliveryError(502);
+  }
+
+  if (!emailResponse.ok) {
+    console.error('[SWD_INQUIRY_EMAIL_PROVIDER_ERROR]', {
+      inquiryId,
+      status: emailResponse.status,
+    });
+    return deliveryError(502);
+  }
+
+  console.info('[SWD_INQUIRY_EMAIL_SENT]', { inquiryId });
+
+  return NextResponse.json({
+    success: true,
+    inquiryId,
+    message: 'Your project brief was emailed to the studio for quotation review.',
+  });
 }

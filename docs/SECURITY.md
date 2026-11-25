@@ -12,14 +12,9 @@
 - Environment Variables: Handled securely via Vercel platform dashboard if serverless extensions are added.
 
 ## 3. Input Validation & XSS Prevention
-- Form Input Sanitization: All inputs in the Project Brief dialog are handled with explicit text encoding before inclusion in mailto links or clipboard payloads:
-  ```javascript
-  function sanitize(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-  ```
+- Project inquiry inputs are validated on the server and included only in plain-text email content.
+- Project inquiry requests are validated on the server before dispatch. Inquiry field values are not written to application logs.
+- Resend API credentials are stored in server environment variables and are never exposed to client code.
 - No Dangerous DOM APIs: Disallow `eval()`, `document.write()`, and unvalidated `innerHTML`. Use `textContent` and `createElement` for DOM updates.
 
 ## 4. Content Security & Headers
@@ -37,7 +32,7 @@
 
 ## 6. Security Checklist
 - [x] No API keys or private secrets in frontend repository.
-- [x] All user inputs validated and sanitized client-side.
+- [x] Project inquiry inputs validated server-side and sent as plain text.
 - [x] Zero sensitive data logged to `console.log`.
 - [x] No administrative routes or debug endpoints exposed.
 - [x] HTTPS enforced globally on `shivamwebdesigns.devs.li`.

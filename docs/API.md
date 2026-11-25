@@ -26,22 +26,33 @@
 - Payload Schema: RFC 2426 vCard v3.0
 
 ## 4. Protocol 2: Project Brief Dispatch Schema
+- Endpoint: `POST /api/inquiry`
 - Target Recipient: `shivamwebdesigns23@gmail.com`
-- Subject Line: `New Project Inquiry: [Company Name] via Shivam Web Designs`
+- Delivery: Resend; requires `RESEND_API_KEY` and a Resend-verified `CONTACT_FROM_EMAIL`
+- Reply-To: The inquiring client's validated email address
+- Budget: INR-denominated ranges
+- Success: Returned only after Resend accepts the message
+- Delivery Errors: `503` when email configuration is missing; `502` when Resend delivery fails
+- Subject Line: `[Project Quotation Request] [Inquiry ID]`
 - Body Structure:
   ```
-  PROJECT BRIEF INQUIRY
-  ======================
+  New Project Quotation Request
+  Inquiry ID: [Inquiry ID]
   Client: [Name]
   Email: [Email]
   Company: [Company Name]
+  Service: [Selected Service]
+  Estimated investment (INR): [Selected Budget]
   Timeline: [Selected Timeline]
-  Budget Tier: [Selected Budget]
+  Reference URL: [Optional URL]
 
-  SCOPE & SUMMARY:
-  [User Project Scope Details]
+  Project description:
+  [User's project description]
 
-  Generated via https://shivamwebdesigns.devs.li
+  Additional notes:
+  [Optional notes]
+
+  Submitted via https://shivamwebdesigns.devs.li/start-project
   ```
 
 ## 5. Protocol 3: Schema.org JSON-LD Knowledge Graph
