@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 import { sendEmailNotification } from '@/lib/email-notifications';
+import {
+  getFirebaseAdminConfigStatus,
+  getFirebaseErrorCode,
+} from '@/lib/firebase/admin';
 import { saveInquiry, updateInquiryEmailStatus } from '@/lib/inquiry-store';
 
 export const runtime = 'nodejs';
@@ -94,6 +98,8 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('[SWD_CONTACT_STORAGE_ERROR]', {
       name: error instanceof Error ? error.name : 'UnknownError',
+      code: getFirebaseErrorCode(error),
+      ...getFirebaseAdminConfigStatus(),
     });
     return NextResponse.json(
       { error: 'We could not save your message right now. Please try again.' },
@@ -113,6 +119,7 @@ export async function POST(request: Request) {
     console.error('[SWD_CONTACT_STATUS_UPDATE_ERROR]', {
       inquiryId,
       name: error instanceof Error ? error.name : 'UnknownError',
+      code: getFirebaseErrorCode(error),
     });
   }
 

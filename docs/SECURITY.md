@@ -15,7 +15,7 @@
 
 ## 3. Input Validation & XSS Prevention
 - Project and contact inputs are validated on the server and saved to Firestore before notification dispatch.
-- Inquiry field values are not written to application logs. Logs may contain status codes and non-sensitive document IDs only.
+- Inquiry field values and secret values are not written to application logs. Firebase diagnostics may include error codes and boolean configuration-presence indicators only.
 - Resend API credentials are stored in server environment variables and are never exposed to client code.
 - Inquiry API reads require a verified Firebase ID token and exact owner email match; responses are private and non-cacheable.
 - Firestore rules deny all browser reads and writes. The Firebase Admin SDK bypasses those rules and is used only in server routes.

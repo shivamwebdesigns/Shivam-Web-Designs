@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { getFirebaseAdminAuth, getFirebaseAdminDb } from '@/lib/firebase/admin';
+import {
+  getFirebaseAdminAuth,
+  getFirebaseAdminConfigStatus,
+  getFirebaseAdminDb,
+  getFirebaseErrorCode,
+} from '@/lib/firebase/admin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -26,13 +31,22 @@ export async function GET(request: Request) {
 
   const adminEmail = process.env.FIREBASE_ADMIN_EMAIL?.trim().toLowerCase();
   if (!adminEmail) {
+    console.error('[SWD_ADMIN_CONFIG_ERROR]', {
+      reason: 'missing_admin_email',
+      ...getFirebaseAdminConfigStatus(),
+    });
     return unavailable();
   }
 
   let firebaseAuth;
   try {
     firebaseAuth = getFirebaseAdminAuth();
-  } catch {
+  } catch (error) {
+    console.error('[SWD_ADMIN_FIREBASE_INIT_ERROR]', {
+      name: error instanceof Error ? error.name : 'UnknownError',
+      code: getFirebaseErrorCode(error),
+      ...getFirebaseAdminConfigStatus(),
+    });
     return unavailable();
   }
 
@@ -110,6 +124,8 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error('[SWD_ADMIN_INQUIRIES_READ_ERROR]', {
       name: error instanceof Error ? error.name : 'UnknownError',
+      code: getFirebaseErrorCode(error),
+      ...getFirebaseAdminConfigStatus(),
     });
     return unavailable();
   }
