@@ -798,4 +798,283 @@ ${details}
       });
     });
   }
+
+  /* ==========================================================================
+     10. Interactive 3D Business Card Spatial Engine
+     ========================================================================== */
+  const cardStage = document.getElementById('card-stage');
+  const cardObject = document.getElementById('business-card-3d');
+  const cardFaceLabel = document.getElementById('card-face-label');
+  const cardFlipBtn = document.getElementById('card-flip-btn');
+  const flipBtnText = document.getElementById('flip-btn-text');
+  const cardOrbitBtn = document.getElementById('card-orbit-btn');
+  const orbitBtnText = document.getElementById('orbit-btn-text');
+  const cardResetBtn = document.getElementById('card-reset-btn');
+  const downloadVcfBtn = document.getElementById('card-download-vcf');
+  const cardShareBtn = document.getElementById('card-share-btn');
+
+  if (cardStage && cardObject) {
+    let isFlipped = false;
+    let isDragging = false;
+    let isOrbiting = false;
+    let startX = 0, startY = 0;
+    let dragDist = 0;
+    let currentRotX = 0, currentRotY = 0;
+    let targetRotX = 0, targetRotY = 0;
+    let flipAngle = 0, targetFlipAngle = 0;
+    let orbitTime = 0;
+    let isHovering = false;
+
+    // Toggle Flip Face (0deg <-> 180deg)
+    function toggleCardFlip() {
+      isFlipped = !isFlipped;
+      targetFlipAngle = isFlipped ? 180 : 0;
+      cardObject.setAttribute('data-flipped', isFlipped ? 'true' : 'false');
+
+      if (cardFaceLabel) {
+        cardFaceLabel.textContent = isFlipped
+          ? 'Back Face • Direct Links Active'
+          : 'Front Face • Drag to Rotate 3D';
+      }
+
+      if (flipBtnText) {
+        flipBtnText.textContent = isFlipped ? 'Flip to Front' : 'Flip to Back';
+      }
+
+      showToast(isFlipped ? '3D Card: Back Side (Links Active)' : '3D Card: Front Side');
+    }
+
+    // Reset Card Angle
+    function resetCardView() {
+      targetRotX = 0;
+      targetRotY = 0;
+      isOrbiting = false;
+      if (cardOrbitBtn) cardOrbitBtn.setAttribute('aria-pressed', 'false');
+      if (orbitBtnText) orbitBtnText.textContent = 'Auto Orbit: Off';
+      showToast('3D Card: View Angle Reset');
+    }
+
+    // Toggle Auto Orbiting Animation
+    function toggleOrbit() {
+      isOrbiting = !isOrbiting;
+      if (cardOrbitBtn) {
+        cardOrbitBtn.setAttribute('aria-pressed', isOrbiting ? 'true' : 'false');
+      }
+      if (orbitBtnText) {
+        orbitBtnText.textContent = isOrbiting ? 'Auto Orbit: On' : 'Auto Orbit: Off';
+      }
+      showToast(isOrbiting ? '3D Card: Auto Orbiting Active' : '3D Card: Auto Orbiting Paused');
+    }
+
+    // Pointer Hover Tilt
+    cardStage.addEventListener('mouseenter', () => {
+      isHovering = true;
+    });
+
+    cardStage.addEventListener('mouseleave', () => {
+      isHovering = false;
+      if (!isDragging && !isOrbiting) {
+        targetRotX = 0;
+        targetRotY = 0;
+      }
+    });
+
+    cardStage.addEventListener('mousemove', (e) => {
+      if (isDragging || isOrbiting) return;
+      const rect = cardStage.getBoundingClientRect();
+      const normX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      const normY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+
+      targetRotY = normX * 24;
+      targetRotX = -normY * 18;
+
+      const shineX = (normX * 0.5 + 0.5) * 100;
+      const shineY = (normY * 0.5 + 0.5) * 100;
+      cardObject.style.setProperty('--shine-x', `${shineX.toFixed(1)}%`);
+      cardObject.style.setProperty('--shine-y', `${shineY.toFixed(1)}%`);
+    });
+
+    // Pointer Drag (Mouse / Touch 360 Rotation)
+    cardStage.addEventListener('pointerdown', (e) => {
+      // Don't drag if clicking directly on a hotspot link
+      if (e.target.closest('.card-hotspot')) return;
+
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      dragDist = 0;
+      cardStage.setPointerCapture(e.pointerId);
+      cardObject.classList.add('is-dragging');
+    });
+
+    cardStage.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      dragDist += Math.hypot(dx, dy);
+      startX = e.clientX;
+      startY = e.clientY;
+
+      // Adjust rotation with sensitivity
+      targetRotY += dx * 0.65;
+      targetRotX = Math.max(-80, Math.min(80, targetRotX - dy * 0.65));
+
+      const rect = cardStage.getBoundingClientRect();
+      const normX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      const normY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      const shineX = Math.max(0, Math.min(100, (normX * 0.5 + 0.5) * 100));
+      const shineY = Math.max(0, Math.min(100, (normY * 0.5 + 0.5) * 100));
+      cardObject.style.setProperty('--shine-x', `${shineX.toFixed(1)}%`);
+      cardObject.style.setProperty('--shine-y', `${shineY.toFixed(1)}%`);
+    });
+
+    function finishDrag(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      cardObject.classList.remove('is-dragging');
+      try {
+        cardStage.releasePointerCapture(e.pointerId);
+      } catch (err) {
+        // ignore
+      }
+
+      // If moved less than 8px, treat as a click to flip
+      if (dragDist < 8) {
+        toggleCardFlip();
+      }
+      dragDist = 0;
+    }
+
+    cardStage.addEventListener('pointerup', finishDrag);
+    cardStage.addEventListener('pointercancel', finishDrag);
+
+    // Keyboard Accessibility (Space / Enter / Arrows)
+    cardStage.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        toggleCardFlip();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        targetRotY -= 15;
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        targetRotY += 15;
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        targetRotX = Math.min(80, targetRotX + 15);
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        targetRotX = Math.max(-80, targetRotX - 15);
+      }
+    });
+
+    // Button Listeners
+    if (cardFlipBtn) {
+      cardFlipBtn.addEventListener('click', toggleCardFlip);
+    }
+
+    if (cardOrbitBtn) {
+      cardOrbitBtn.addEventListener('click', toggleOrbit);
+    }
+
+    if (cardResetBtn) {
+      cardResetBtn.addEventListener('click', resetCardView);
+    }
+
+    // Download vCard (.vcf)
+    if (downloadVcfBtn) {
+      downloadVcfBtn.addEventListener('click', () => {
+        const vcardData = [
+          'BEGIN:VCARD',
+          'VERSION:3.0',
+          'FN:Shivam WebDesigns',
+          'N:WebDesigns;Shivam;;;',
+          'ORG:Shivam Web Designs',
+          'TITLE:Digital Design & 3D Web Engineering Studio',
+          'EMAIL;TYPE=INTERNET,WORK:shivam@shivamwebdesigns.com',
+          'URL:https://shivamwebdesigns.devs.li',
+          'URL;TYPE=GitHub:https://github.com/shivamwebdesigns',
+          'URL;TYPE=LinkedIn:https://linkedin.com/company/shivamwebdesigns',
+          'URL;TYPE=Instagram:https://instagram.com/shivamwebdesigns',
+          'NOTE:Designing and building modern websites with a focus on UI/UX, creativity and performance.',
+          'REV:2026-11-25T12:00:00Z',
+          'END:VCARD'
+        ].join('\r\n');
+
+        const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Shivam_WebDesigns.vcf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast('vCard downloaded! Open file to save to Contacts.');
+      });
+    }
+
+    // Share Digital Card
+    if (cardShareBtn) {
+      cardShareBtn.addEventListener('click', async () => {
+        const shareUrl = `${window.location.origin}/website/index.html#card`;
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Shivam Web Designs — Interactive 3D Business Card',
+              text: 'Designing and building modern websites with a focus on UI/UX, creativity and performance.',
+              url: shareUrl
+            });
+            showToast('Card shared successfully!');
+            return;
+          } catch (err) {
+            if (err.name !== 'AbortError') {
+              console.log('Share dismissed');
+            }
+          }
+        }
+
+        // Fallback: Clipboard copy
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            showToast('3D Card link copied to clipboard!');
+            return;
+          } catch (err) {
+            // fallback
+          }
+        }
+        showToast(`Share URL: ${shareUrl}`);
+      });
+    }
+
+    // Smooth 60fps Render Loop
+    function renderCardPhysics() {
+      if (isOrbiting) {
+        orbitTime += 0.022;
+        targetRotY = Math.sin(orbitTime) * 22;
+        targetRotX = Math.cos(orbitTime * 0.7) * 14;
+
+        const shineX = (Math.sin(orbitTime) * 0.45 + 0.5) * 100;
+        const shineY = (Math.cos(orbitTime * 0.7) * 0.45 + 0.5) * 100;
+        cardObject.style.setProperty('--shine-x', `${shineX.toFixed(1)}%`);
+        cardObject.style.setProperty('--shine-y', `${shineY.toFixed(1)}%`);
+      }
+
+      // Lerp interpolation
+      const lerpFactor = isDragging ? 0.35 : 0.12;
+      currentRotX += (targetRotX - currentRotX) * lerpFactor;
+      currentRotY += (targetRotY - currentRotY) * lerpFactor;
+      flipAngle += (targetFlipAngle - flipAngle) * 0.14;
+
+      cardObject.style.setProperty('--card-rx', `${currentRotX.toFixed(2)}deg`);
+      cardObject.style.setProperty('--card-ry', `${currentRotY.toFixed(2)}deg`);
+      cardObject.style.setProperty('--card-flip', `${flipAngle.toFixed(2)}deg`);
+
+      requestAnimationFrame(renderCardPhysics);
+    }
+
+    renderCardPhysics();
+  }
 });

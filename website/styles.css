@@ -2176,6 +2176,538 @@ button, input, select, textarea {
   }
 }
 
+/* ==========================================================================
+   Navigation Spark Indicator & Pill
+   ========================================================================== */
+.nav-link-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-spark {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+  display: inline-block;
+  animation: pulse-spark 2.2s infinite ease-in-out;
+}
+
+@keyframes pulse-spark {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ==========================================================================
+   Section 04: Interactive 3D Business Card
+   ========================================================================== */
+.card-section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--surface-subtle) 50%, var(--bg) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.card-stage-container {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.25);
+}
+
+.card-stage-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.card-stage-header {
+  inline-size: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-block-end: 1rem;
+  z-index: 2;
+}
+
+.card-stage-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.live-pulse {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-full);
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulse-live 2s infinite ease-in-out;
+}
+
+@keyframes pulse-live {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+.card-gyro-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+}
+
+/* 3D Perspective Stage & Card Object */
+.card-perspective-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  inline-size: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-block: clamp(1.5rem, 4vw, 3rem);
+  outline: none;
+  cursor: grab;
+  position: relative;
+  z-index: 2;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.card-perspective-stage:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
+}
+
+.business-card-3d {
+  inline-size: min(100%, 480px);
+  aspect-ratio: 1.75 / 1;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--card-rx, 0deg)) rotateY(calc(var(--card-ry, 0deg) + var(--card-flip, 0deg))) translateZ(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.business-card-3d.is-dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+.business-card-3d.is-animating {
+  transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+/* Card Faces */
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.45),
+    0 10px 20px -8px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+  background: #09090b;
+  transform-style: preserve-3d;
+}
+
+.card-face-front {
+  transform: rotateY(0deg) translateZ(1px);
+}
+
+.card-face-back {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.card-img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Holographic / Specular Foil Sheen */
+.card-foil-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    circle at var(--shine-x, 50%) var(--shine-y, 50%),
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.3) 25%,
+    rgba(240, 210, 130, 0.2) 45%,
+    rgba(59, 130, 246, 0.15) 65%,
+    transparent 85%
+  );
+  opacity: var(--shine-opacity, 0.85);
+  transition: opacity 0.3s ease;
+}
+
+.card-grain-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 0);
+  background-size: 4px 4px;
+}
+
+/* Clickable Back Hotspots */
+.card-back-hotspots {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 8% 8%;
+  gap: 0.4rem;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.card-hotspot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(9, 9, 11, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.6rem, 1.4vw, 0.72rem);
+  font-weight: 500;
+  color: #f4f4f5;
+  text-decoration: none;
+  transition: all var(--transition);
+  opacity: 0.9;
+}
+
+.card-hotspot:hover,
+.card-hotspot:focus-visible {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  transform: translateX(4px) scale(1.02);
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.hotspot-ping {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  box-shadow: 0 0 6px var(--primary);
+}
+
+.card-hotspot:hover .hotspot-ping {
+  background: #ffffff;
+  box-shadow: 0 0 8px #ffffff;
+}
+
+/* 3D Card Stage Controls Bar */
+.card-controls-bar {
+  inline-size: 100%;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  margin-block-start: 1rem;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.card-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.card-ctrl-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.card-ctrl-btn.active {
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  color: var(--primary);
+}
+
+/* Card Information & Executive Details Panel */
+.card-info-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  margin-block-end: 1rem;
+}
+
+.badge-dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.card-info-title {
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-block-end: 1rem;
+}
+
+.card-info-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-block-end: 2rem;
+}
+
+.card-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem 1.5rem;
+  margin-block-end: 2rem;
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--border);
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.spec-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.spec-val {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.spec-val a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.card-action-cluster {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-block-end: 2rem;
+}
+
+.card-social-direct-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.social-list-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.channel-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.channel-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--surface-card);
+  color: var(--text-main);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.channel-pill:hover {
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.channel-dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+}
+
+/* ==========================================================================
+   Studio Editorial Billboard Banner
+   ========================================================================== */
+.banner-section {
+  padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+.studio-billboard-wrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 48px -15px rgba(0, 0, 0, 0.4);
+  background: #000000;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+}
+
+.studio-billboard-wrap:hover {
+  box-shadow: 0 32px 64px -18px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.studio-billboard-img {
+  inline-size: 100%;
+  block-size: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.studio-billboard-wrap:hover .studio-billboard-img {
+  transform: scale(1.012);
+}
+
+.billboard-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+}
+
+.billboard-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-block-start: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.caption-tag {
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.05em;
+}
+
+.caption-text {
+  color: var(--text-muted);
+}
+
+@media (max-width: 992px) {
+  .card-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-stage-container {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .card-spec-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .business-card-3d {
+    inline-size: 100%;
+  }
+
+  .card-back-hotspots {
+    padding: 6% 6%;
+    gap: 0.25rem;
+  }
+
+  .card-hotspot {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.65rem;
+  }
+}
+
 @media (max-width: 768px) {
   .main-nav {
     display: none;

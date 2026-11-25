@@ -8,6 +8,11 @@
     { "source": "/script.js", "destination": "/website/script.js" },
     { "source": "/Brand Logo.PNG", "destination": "/website/Brand Logo.PNG" },
     { "source": "/Brand%20Logo.PNG", "destination": "/website/Brand Logo.PNG" },
+    { "source": "/business-card-front.png", "destination": "/website/business-card-front.png" },
+    { "source": "/business-card-back.png", "destination": "/website/business-card-back.png" },
+    { "source": "/banner-wide.png", "destination": "/website/banner-wide.png" },
+    { "source": "/banner-balanced.png", "destination": "/website/banner-balanced.png" },
+    { "source": "/Business_Card_Print_Front_Back.pdf", "destination": "/website/Business_Card_Print_Front_Back.pdf" },
     { "source": "/((?!website/).*)", "destination": "/website/$1" }
   ]
 }
