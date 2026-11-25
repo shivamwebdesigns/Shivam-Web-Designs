@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, Mail, MapPin, MessageSquare, Phone, Send, AlertCircle } from 'lucide-react';
+import { CheckCircle2, MapPin, Send, AlertCircle } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 export default function ContactPage() {
@@ -79,7 +79,7 @@ export default function ContactPage() {
               Let&apos;s start a conversation.
             </h1>
             <p className="text-lg text-neutral-400 font-light leading-relaxed">
-              Have a question, need a consultation, or want to discuss a prospective partnership? Reach out directly to our team. We respond within 24 business hours.
+              Have a question, need a consultation, or want to discuss a prospective partnership? Send us a message using the form below. We respond within 24 business hours.
             </p>
           </div>
         </div>
@@ -104,52 +104,7 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              {/* Direct Channels */}
               <div className="space-y-6">
-                <a
-                  href={`mailto:${siteConfig.contact.email}`}
-                  className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
-                >
-                  <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-300 group-hover:border-white group-hover:text-white transition-colors">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                      Direct Email
-                    </div>
-                    <div className="text-sm font-medium text-white group-hover:underline">
-                      {siteConfig.contact.email}
-                    </div>
-                    <div className="text-xs text-neutral-400 mt-1">
-                      Guaranteed reply within 24 hours
-                    </div>
-                  </div>
-                </a>
-
-                {siteConfig.social.whatsapp && (
-                  <a
-                    href={siteConfig.social.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
-                  >
-                    <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 transition-colors">
-                      <MessageSquare className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                        WhatsApp Quick Chat
-                      </div>
-                      <div className="text-sm font-medium text-white group-hover:underline">
-                        WhatsApp: {siteConfig.contact.phone}
-                      </div>
-                      <div className="text-xs text-neutral-400 mt-1">
-                        Direct link to founder chat
-                      </div>
-                    </div>
-                  </a>
-                )}
-
                 <div className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900">
                   <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400">
                     <MapPin className="w-4 h-4" />
