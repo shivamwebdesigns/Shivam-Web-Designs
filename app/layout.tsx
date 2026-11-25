@@ -80,8 +80,8 @@ export const metadata: Metadata = {
     creator: '@shivamwebdesigns',
   },
   icons: {
-    icon: [{ url: siteConfig.assets.logoPng, type: 'image/png' }],
-    apple: [{ url: siteConfig.assets.logoPng }],
+    icon: [{ url: siteConfig.assets.favicon, sizes: '512x512', type: 'image/png' }],
+    apple: [{ url: siteConfig.assets.favicon, sizes: '512x512', type: 'image/png' }],
   },
   manifest: '/site.webmanifest',
 };
