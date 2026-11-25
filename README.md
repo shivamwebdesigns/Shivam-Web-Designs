@@ -53,12 +53,12 @@ Project quotation emails are sent through Resend. Configure `RESEND_API_KEY` and
 
 ## Admin Dashboard Setup
 
-The private inquiry dashboard is available at `/admin`. It requires Google sign-in and a four-digit PIN. Configure these server-only variables in `.env.local` for local development and in the Vercel project settings for production:
+The private inquiry dashboard is available at `/admin`. It requires Google sign-in and an admin password of at least 12 characters. Configure these server-only variables in `.env.local` for local development and in the Vercel project settings for production:
 
-- `ADMIN_PIN`: exactly four digits. Choose a PIN that has not been shared publicly.
-- `ADMIN_PIN_SESSION_SECRET`: a randomly generated secret of at least 32 bytes. Generate one locally with `openssl rand -base64 32`.
+- `ADMIN_PASSWORD`: the admin password (12–128 characters).
+- `ADMIN_PASSWORD_SESSION_SECRET`: a randomly generated secret of at least 32 bytes. Generate one locally with `openssl rand -base64 32`.
 
-The dashboard also requires the Firebase client and Admin configuration, an authorized `FIREBASE_ADMIN_EMAIL`, and Google sign-in enabled in Firebase Authentication. Never commit environment files or share secret values. In Vercel, scope the variables to Production and redeploy after changing them; environment variable changes do not update deployments that are already running.
+The dashboard also requires the Firebase client and Admin configuration, an authorized `FIREBASE_ADMIN_EMAIL`, and Google sign-in enabled in Firebase Authentication. Remove the obsolete `ADMIN_PIN` and `ADMIN_PIN_SESSION_SECRET` variables; they are no longer used. Never commit environment files or share secret values. In Vercel, scope the new variables to Production and redeploy after changing them; environment variable changes do not update deployments that are already running.
 
 ## Project Documents
 

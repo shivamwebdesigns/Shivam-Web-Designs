@@ -54,7 +54,7 @@
 ## Flow 9: Owner Inquiry Dashboard
 1. The studio owner opens `/admin` (not linked in public navigation).
 2. The owner signs in with Google; Firebase Authentication returns an ID token.
-3. The owner enters the four-digit admin PIN; five incorrect attempts temporarily lock PIN checks for 15 minutes.
-4. The dashboard sends the ID token and PIN to `POST /api/admin/unlock`; the server verifies the owner account and sets a 30-minute HttpOnly PIN session.
-5. The dashboard sends the ID token and PIN session to `GET /api/admin/inquiries`; the server returns paginated records only when both checks pass.
+3. The owner enters the admin password; five incorrect attempts temporarily lock password checks for 15 minutes.
+4. The dashboard sends the ID token and password to `POST /api/admin/unlock`; the server verifies the owner account and sets a 30-minute HttpOnly password session.
+5. The dashboard sends the ID token and password session to `GET /api/admin/inquiries`; the server returns paginated records only when both checks pass.
 6. Each inquiry shows its creation time and whether its separate email notification was sent, failed, or not configured.

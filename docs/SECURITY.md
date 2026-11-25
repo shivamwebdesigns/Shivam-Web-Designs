@@ -4,8 +4,8 @@
 ## 1. Authentication & Authorization
 - Public Access: All studio portfolio pages and business card features are accessible publicly without login barriers.
 - Admin Protection: `/admin` is a private owner dashboard, unlinked from public navigation and marked `noindex`; obscurity is not an access control.
-- Authorization: The server verifies Firebase ID tokens and allows only the configured owner email (`shivamwebdesigns23@gmail.com`), then requires a server-verified admin PIN session before returning inquiry data. Client-side state never grants access to inquiry data.
-- Admin PIN: `ADMIN_PIN` is a four-digit server-only environment variable; `ADMIN_PIN_SESSION_SECRET` is a separate random secret of at least 32 bytes. The PIN is never stored in source control or sent to logs. Five incorrect PIN attempts lock the owner account for 15 minutes, with the attempt counter stored in Firestore. Successful verification creates an HttpOnly, Secure-in-production, SameSite=Strict cookie valid for 30 minutes.
+- Authorization: The server verifies Firebase ID tokens and allows only the configured owner email (`shivamwebdesigns23@gmail.com`), then requires a server-verified admin password session before returning inquiry data. Client-side state never grants access to inquiry data.
+- Admin password: `ADMIN_PASSWORD` is a 12–128-character server-only environment variable; `ADMIN_PASSWORD_SESSION_SECRET` is a separate random secret of at least 32 bytes. The password is never stored in source control or sent to logs. Five incorrect password attempts lock the owner account for 15 minutes, with the attempt counter stored in Firestore. Successful verification creates an HttpOnly, Secure-in-production, SameSite=Strict cookie valid for 30 minutes.
 - Data Access: Admin SDK reads and writes run server-side. Firestore client rules deny all direct client reads and writes.
 
 ## 2. Secrets Management
@@ -41,7 +41,7 @@
 - [x] Project inquiry inputs validated server-side and sent as plain text.
 - [x] Zero sensitive data logged to `console.log`.
 - [x] Admin inquiry API requires server-side Firebase authentication and owner allowlist authorization.
-- [x] Admin inquiry API also requires a short-lived PIN session; PIN attempts are rate-limited persistently in Firestore.
+- [x] Admin inquiry API also requires a short-lived password session; password attempts are rate-limited persistently in Firestore.
 - [x] Firestore client rules deny direct browser access.
 - [x] HTTPS enforced globally on `shivamwebdesigns.devs.li`.
 - [x] Error handling displays user-friendly notices without leaking stack traces.

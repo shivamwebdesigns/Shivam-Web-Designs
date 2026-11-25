@@ -64,21 +64,21 @@
 
 ## 6. Protocol 4: Private Inquiry Read API
 - Endpoint: `GET /api/admin/inquiries`
-- Authentication: `Authorization: Bearer <Firebase ID token>` and the HttpOnly PIN session cookie set by `POST /api/admin/unlock`
-- Authorization: Server verifies the token and requires a verified email matching `FIREBASE_ADMIN_EMAIL` (configured as `shivamwebdesigns23@gmail.com`), then verifies the PIN session
+- Authentication: `Authorization: Bearer <Firebase ID token>` and the HttpOnly password session cookie set by `POST /api/admin/unlock`
+- Authorization: Server verifies the token and requires a verified email matching `FIREBASE_ADMIN_EMAIL` (configured as `shivamwebdesigns23@gmail.com`), then verifies the password session
 - Pagination: 50 newest records per request; pass the returned `nextCursor` as `?cursor=...`
 - Cache: `Cache-Control: private, no-store`
-- Errors: `401` missing/invalid token or PIN session, `403` unauthorized account, `400` invalid cursor, `503` missing Firebase/PIN configuration or storage failure
+- Errors: `401` missing/invalid token or password session, `403` unauthorized account, `400` invalid cursor, `503` missing Firebase/password configuration or storage failure
 
-## 7. Protocol 5: Admin PIN Unlock
+## 7. Protocol 5: Admin Password Unlock
 - Endpoint: `POST /api/admin/unlock`
-- Authentication: `Authorization: Bearer <Firebase ID token>`; only the configured owner account can submit a PIN
-- Body: `{ "pin": "<four digits>" }`
+- Authentication: `Authorization: Bearer <Firebase ID token>`; only the configured owner account can submit a password
+- Body: `{ "password": "<12–128 characters>" }`
 - Rate limit: Five incorrect attempts per owner account; further attempts receive `429` for 15 minutes. The counter is stored in Firestore so it persists across serverless instances.
 - Success: Sets an HttpOnly, SameSite=Strict cookie with a 30-minute lifetime. In production the cookie is Secure.
-- Sign-out: `DELETE /api/admin/unlock` clears the PIN session cookie.
-- Configuration: Set `ADMIN_PIN` and `ADMIN_PIN_SESSION_SECRET` only in server environment settings; use a different PIN if it was shared in chat. The session secret must be at least 32 bytes.
-- Errors: `400` invalid PIN format, `401` incorrect PIN or invalid token, `403` non-owner account, `429` temporarily locked, `503` missing configuration or storage failure
+- Sign-out: `DELETE /api/admin/unlock` clears the password session cookie.
+- Configuration: Set `ADMIN_PASSWORD` and `ADMIN_PASSWORD_SESSION_SECRET` only in server environment settings. The password must be 12–128 characters and the session secret must be at least 32 bytes.
+- Errors: `400` invalid password format, `401` incorrect password or invalid token, `403` non-owner account, `429` temporarily locked, `503` missing configuration or storage failure
 
 ## 8. Protocol 6: Schema.org JSON-LD Knowledge Graph
 - Location: `<script type="application/ld+json">` in `index.html`

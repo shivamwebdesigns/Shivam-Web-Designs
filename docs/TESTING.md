@@ -12,7 +12,7 @@
 - 3D Business Card: Drag to rotate 360°, tap to flip, click Front/Back buttons, toggle Portrait/Landscape mode, and verify vCard download.
 - Project Brief Form: Submit valid details and verify Firestore persistence; verify the user is not told that email was sent unless Resend accepts it.
 - Contact Form: Submit valid details and verify Firestore persistence; verify the server no longer logs message contents.
-- Admin Dashboard: Verify the owner Google account can load inquiries, a different account receives `403`, and missing/invalid tokens receive `401`.
+- Admin Dashboard: Verify the owner Google account can unlock with the configured password and load inquiries, invalid passwords receive `401`, five failed attempts receive `429`, a different account receives `403`, and missing/invalid tokens receive `401`.
 - Firestore Rules: Verify browser clients cannot directly read or write inquiry documents.
 - Case Study Inspector: Open each case study modal, verify dynamic content population and responsive layout.
 

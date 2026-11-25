@@ -1,48 +1,49 @@
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import { getFirebaseAdminDb } from '@/lib/firebase/admin';
+import { isAdminPasswordLengthValid } from '@/lib/admin-password-policy';
 
-export const adminPinCookieName = 'swd_admin_pin_session';
-export const adminPinSessionDurationSeconds = 30 * 60;
+export const adminPasswordCookieName = 'swd_admin_password_session';
+export const adminPasswordSessionDurationSeconds = 30 * 60;
 
 const attemptWindowMs = 15 * 60 * 1000;
 const attemptLimit = 5;
 
-interface AdminPinConfig {
-  pin: string;
+interface AdminPasswordConfig {
+  password: string;
   sessionSecret: string;
 }
 
-type PinAttemptResult =
+type PasswordAttemptResult =
   | { kind: 'accepted' }
   | { kind: 'invalid' }
   | { kind: 'locked'; retryAfterSeconds: number };
 
-export function getAdminPinConfig(): AdminPinConfig {
-  const pin = process.env.ADMIN_PIN?.trim();
-  const sessionSecret = process.env.ADMIN_PIN_SESSION_SECRET?.trim();
+export function getAdminPasswordConfig(): AdminPasswordConfig {
+  const password = process.env.ADMIN_PASSWORD;
+  const sessionSecret = process.env.ADMIN_PASSWORD_SESSION_SECRET?.trim();
 
   if (
-    !pin ||
-    !/^\d{4}$/.test(pin) ||
+    !password ||
+    !isAdminPasswordLengthValid(password) ||
     !sessionSecret ||
     Buffer.byteLength(sessionSecret) < 32
   ) {
-    const error = new Error('Admin PIN configuration is invalid.');
-    error.name = 'AdminPinConfigurationError';
+    const error = new Error('Admin password configuration is invalid.');
+    error.name = 'AdminPasswordConfigurationError';
     throw error;
   }
 
-  return { pin, sessionSecret };
+  return { password, sessionSecret };
 }
 
-export async function checkAdminPin(
+export async function checkAdminPassword(
   uid: string,
-  submittedPin: string,
-  expectedPin: string
-): Promise<PinAttemptResult> {
-  const pinMatches = timingSafeEqual(
-    Buffer.from(submittedPin, 'ascii'),
-    Buffer.from(expectedPin, 'ascii')
+  submittedPassword: string,
+  expectedPassword: string
+): Promise<PasswordAttemptResult> {
+  const passwordMatches = timingSafeEqual(
+    createHash('sha256').update(submittedPassword).digest(),
+    createHash('sha256').update(expectedPassword).digest()
   );
   const attemptId = createHash('sha256').update(uid).digest('hex');
   const db = getFirebaseAdminDb();
@@ -72,7 +73,7 @@ export async function checkAdminPin(
         ? 0
         : attemptData.attempts;
 
-    if (pinMatches) {
+    if (passwordMatches) {
       transaction.delete(attemptRef);
       return { kind: 'accepted' };
     }
@@ -96,21 +97,21 @@ export async function checkAdminPin(
   });
 }
 
-function signPinSession(uid: string, expiresAt: number, secret: string): string {
+function signPasswordSession(uid: string, expiresAt: number, secret: string): string {
   return createHmac('sha256', secret)
     .update(`${uid}.${expiresAt}`)
     .digest('hex');
 }
 
-export function createAdminPinSession(
+export function createAdminPasswordSession(
   uid: string,
   sessionSecret: string
 ): string {
-  const expiresAt = Date.now() + adminPinSessionDurationSeconds * 1000;
-  return `${expiresAt}.${signPinSession(uid, expiresAt, sessionSecret)}`;
+  const expiresAt = Date.now() + adminPasswordSessionDurationSeconds * 1000;
+  return `${expiresAt}.${signPasswordSession(uid, expiresAt, sessionSecret)}`;
 }
 
-export function isValidAdminPinSession(
+export function isValidAdminPasswordSession(
   uid: string,
   value: string | undefined,
   sessionSecret: string
@@ -130,7 +131,7 @@ export function isValidAdminPinSession(
   }
 
   const expectedSignature = Buffer.from(
-    signPinSession(uid, expiresAt, sessionSecret),
+    signPasswordSession(uid, expiresAt, sessionSecret),
     'hex'
   );
   const actualSignature = Buffer.from(match[2], 'hex');

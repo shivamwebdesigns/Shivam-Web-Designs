@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  adminPinCookieName,
-  adminPinSessionDurationSeconds,
-  checkAdminPin,
-  createAdminPinSession,
-  getAdminPinConfig,
-} from '@/lib/admin-pin';
+  adminPasswordCookieName,
+  adminPasswordSessionDurationSeconds,
+  checkAdminPassword,
+  createAdminPasswordSession,
+  getAdminPasswordConfig,
+} from '@/lib/admin-password';
+import { isAdminPasswordLengthValid } from '@/lib/admin-password-policy';
 import { verifyAdminIdToken } from '@/lib/admin-auth';
 import {
   getFirebaseAdminConfigStatus,
@@ -21,7 +22,7 @@ function unauthorized() {
 
 function unavailable() {
   return NextResponse.json(
-    { error: 'The admin PIN is not configured on this deployment.' },
+    { error: 'The admin password is not configured on this deployment.' },
     { status: 503 }
   );
 }
@@ -62,12 +63,12 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let pinConfig;
+  let passwordConfig;
   try {
-    pinConfig = getAdminPinConfig();
+    passwordConfig = getAdminPasswordConfig();
   } catch {
-    console.error('[SWD_ADMIN_PIN_CONFIG_ERROR]', {
-      reason: 'invalid_or_missing_pin_configuration',
+    console.error('[SWD_ADMIN_PASSWORD_CONFIG_ERROR]', {
+      reason: 'invalid_or_missing_password_configuration',
     });
     return unavailable();
   }
@@ -76,35 +77,42 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Enter your four-digit PIN.' }, { status: 400 });
+    return NextResponse.json({ error: 'Enter a valid password.' }, { status: 400 });
   }
 
-  const submittedPin =
-    typeof body === 'object' && body !== null && 'pin' in body
-      ? body.pin
+  const submittedPassword =
+    typeof body === 'object' && body !== null && 'password' in body
+      ? body.password
       : undefined;
-  if (typeof submittedPin !== 'string' || !/^\d{4}$/.test(submittedPin)) {
-    return NextResponse.json({ error: 'Enter your four-digit PIN.' }, { status: 400 });
+  if (
+    typeof submittedPassword !== 'string' ||
+    !isAdminPasswordLengthValid(submittedPassword)
+  ) {
+    return NextResponse.json({ error: 'Enter a valid password.' }, { status: 400 });
   }
 
   let result;
   try {
-    result = await checkAdminPin(identity.uid, submittedPin, pinConfig.pin);
+    result = await checkAdminPassword(
+      identity.uid,
+      submittedPassword,
+      passwordConfig.password
+    );
   } catch (error) {
-    console.error('[SWD_ADMIN_PIN_CHECK_ERROR]', {
+    console.error('[SWD_ADMIN_PASSWORD_CHECK_ERROR]', {
       name: error instanceof Error ? error.name : 'UnknownError',
       code: getFirebaseErrorCode(error),
       ...getFirebaseAdminConfigStatus(),
     });
     return NextResponse.json(
-      { error: 'The admin PIN service is temporarily unavailable.' },
+      { error: 'The admin password service is temporarily unavailable.' },
       { status: 503 }
     );
   }
 
   if (result.kind === 'locked') {
     return NextResponse.json(
-      { error: 'Too many incorrect PIN attempts. Try again later.' },
+      { error: 'Too many incorrect password attempts. Try again later.' },
       {
         status: 429,
         headers: {
@@ -116,7 +124,7 @@ export async function POST(request: NextRequest) {
   }
   if (result.kind === 'invalid') {
     return NextResponse.json(
-      { error: 'Incorrect PIN.' },
+      { error: 'Incorrect password.' },
       { status: 401, headers: { 'Cache-Control': 'private, no-store' } }
     );
   }
@@ -126,14 +134,14 @@ export async function POST(request: NextRequest) {
     { headers: { 'Cache-Control': 'private, no-store' } }
   );
   response.cookies.set(
-    adminPinCookieName,
-    createAdminPinSession(identity.uid, pinConfig.sessionSecret),
+    adminPasswordCookieName,
+    createAdminPasswordSession(identity.uid, passwordConfig.sessionSecret),
     {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/api/admin',
-      maxAge: adminPinSessionDurationSeconds,
+      maxAge: adminPasswordSessionDurationSeconds,
     }
   );
   return response;
@@ -144,7 +152,7 @@ export async function DELETE() {
     { success: true },
     { headers: { 'Cache-Control': 'private, no-store' } }
   );
-  response.cookies.set(adminPinCookieName, '', {
+  response.cookies.set(adminPasswordCookieName, '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
