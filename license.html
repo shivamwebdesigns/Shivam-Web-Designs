@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>License | ShivamWebDesigns</title>
+  <meta name="description" content="Open source MIT License terms and studio policies for ShivamWebDesigns.">
+  <link rel="canonical" href="https://shivamwebdesigns.devs.li/license">
+  <link rel="shortcut icon" href="/favicon.ico?v=4">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=4">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000000;
+      --card-bg: #0a0a0a;
+      --text: #ededed;
+      --text-muted: #888888;
+      --border: #1f1f1f;
+      --border-hover: #333333;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px;
+    }
+    .shell {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 60px 0 100px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-family: ui-monospace, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 32px;
+      padding: 8px 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #0a0a0a;
+      transition: all 0.2s ease;
+    }
+    .back-btn:hover { color: #fff; border-color: var(--border-hover); }
+    .tabs {
+      display: inline-flex;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 36px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: #fff; }
+    .tab-btn.active { background: #fff; color: #000; font-weight: 600; }
+    .header {
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .header p {
+      font-size: 0.875rem;
+      font-family: ui-monospace, Menlo, monospace;
+      color: var(--text-muted);
+    }
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadeIn 0.2s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    .card h2 { font-size: 1.125rem; font-weight: 600; color: #fff; margin-bottom: 12px; }
+    .card p { font-size: 0.9375rem; color: var(--text-muted); line-height: 1.6; }
+    pre {
+      background: #050505;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.8125rem;
+      color: #ccc;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+      user-select: all;
+    }
+    .sec { margin-bottom: 32px; }
+    .sec h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    .sec p { font-size: 0.9375rem; color: var(--text-muted); margin-bottom: 12px; }
+    .sec ul { list-style: disc; padding-left: 20px; color: var(--text-muted); font-size: 0.9375rem; }
+    .sec li { margin-bottom: 8px; }
+    .sec strong { color: #fff; }
+    .footer-bar {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+    .footer-bar a { color: #fff; text-decoration: none; font-family: ui-monospace, Menlo, monospace; }
+    .footer-bar a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <a href="/" class="back-btn">&larr; Return to Studio</a>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="license">MIT License</button>
+      <button class="tab-btn" data-tab="privacy">Privacy Policy</button>
+      <button class="tab-btn" data-tab="terms">Terms of Service</button>
+    </div>
+
+    <div class="header">
+      <h1 id="tab-title">Open Source License</h1>
+      <p>ShivamWebDesigns &bull; Effective 2026 &bull; Clear, human terms with zero ambiguity</p>
+    </div>
+
+    <!-- Panel 1: License -->
+    <div id="panel-license" class="panel active">
+      <div class="card">
+        <h2>Software License Agreement</h2>
+        <p>The original software code powering this web application is open source under the MIT License. You are free to inspect, learn from, fork, and adapt the underlying technical architecture.</p>
+        <p style="margin-top:10px; font-size: 0.8125rem;"><strong>Note on Brand Assets:</strong> All studio trademarks, logos, client case study assets, photography, and proprietary brand graphics are strictly reserved under studio ownership.</p>
+      </div>
+
+      <pre>MIT License
+
+Copyright (c) 2026 Shivam Purohit
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+    </div>
+
+    <!-- Panel 2: Privacy -->
+    <div id="panel-privacy" class="panel">
+      <div class="sec">
+        <h2>1. Minimal, Honest Data Collection</h2>
+        <p>We collect only what is strictly necessary to communicate and deliver client work. We do not sell your personal data, and we do not use invasive third-party tracking pixels or cross-site advertising networks.</p>
+        <ul>
+          <li><strong>Inquiry Data:</strong> Your name, email, project brief, and budget tier submitted through our forms.</li>
+          <li><strong>Technical Logs:</strong> Standard web server access logs managed by Vercel for DDoS prevention and reliability.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <h2>2. How We Store &amp; Use Data</h2>
+        <p>Project inquiries are securely stored in our encrypted Google Firebase Firestore database and forwarded to our studio inbox via Resend. Information is used solely to respond to your request, draft proposals, and fulfill project agreements.</p>
+      </div>
+
+      <div class="sec">
+        <h2>3. Your Rights &amp; Data Control</h2>
+        <p>In compliance with the Digital Personal Data Protection (DPDP) Act 2023 and GDPR standards, you retain full ownership of your personal information. You can request immediate inspection, correction, or permanent deletion of your inquiry records at any time.</p>
+      </div>
+
+      <div class="sec">
+        <h2>4. Studio Privacy Contact</h2>
+        <p>For any privacy requests or data inquiries, contact Shivam Purohit directly at <a href="mailto:shivamwebdesigns23@gmail.com" style="color:#fff;">shivamwebdesigns23@gmail.com</a>.</p>
+      </div>
+    </div>
+
+    <!-- Panel 3: Terms -->
+    <div id="panel-terms" class="panel">
+      <div class="sec">
+        <h2>1. Studio Engagements &amp; Proposals</h2>
+        <p>Every project begins with a clear Statement of Work (SOW) outlining specifications, milestone schedules, deliverables, and fixed fees. Work proceeds through formal milestones so expectations remain transparent at every stage.</p>
+      </div>
+
+      <div class="sec">
+        <h2>2. 100% Intellectual Property Transfer</h2>
+        <p>Upon settlement of the final project invoice, all custom design files, frontend source code, 3D assets, and deliverables transfer 100% to you. ShivamWebDesigns reserves the right to showcase the completed work in its studio portfolio unless a non-disclosure agreement (NDA) is executed.</p>
+      </div>
+
+      <div class="sec">
+        <h2>3. Milestone Structure &amp; Invoices</h2>
+        <p>Payments are typically structured around milestones (e.g. 50% kickoff deposit, 25% design sign-off, and 25% prior to production deployment). Invoices are payable within 14 days of issue.</p>
+      </div>
+
+      <div class="sec">
+        <h2>4. 30-Day Post-Launch Warranty</h2>
+        <p>Every bespoke flagship website includes a 30-day post-launch warranty period at zero extra charge. Any browser rendering bugs or defects matching the agreed scope are remediated immediately.</p>
+      </div>
+
+      <div class="sec">
+        <h2>5. Governing Law</h2>
+        <p>These terms are governed by the laws of India. Both parties agree to resolve any disagreements in good faith through direct consultation prior to formal legal proceedings.</p>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>Questions regarding our policies or open source code?</span>
+      <a href="mailto:shivamwebdesigns23@gmail.com">shivamwebdesigns23@gmail.com &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = {
+      license: document.getElementById('panel-license'),
+      privacy: document.getElementById('panel-privacy'),
+      terms: document.getElementById('panel-terms')
+    };
+    const titles = {
+      license: 'Open Source License',
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Service'
+    };
+    const pageTitles = {
+      license: 'License | ShivamWebDesigns',
+      privacy: 'Privacy Policy | ShivamWebDesigns',
+      terms: 'Terms of Service | ShivamWebDesigns'
+    };
+
+    function setTab(name) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+      Object.keys(panels).forEach(k => panels[k].classList.toggle('active', k === name));
+      document.getElementById('tab-title').textContent = titles[name];
+      document.title = pageTitles[name];
+    }
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = btn.dataset.tab;
+        setTab(t);
+        history.replaceState(null, '', '#' + t);
+      });
+    });
+
+    const hash = window.location.hash.replace('#', '');
+    if (hash && panels[hash]) {
+      setTab(hash);
+    }
+  </script>
+</body>
+</html>

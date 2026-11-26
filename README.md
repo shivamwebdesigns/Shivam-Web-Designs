@@ -58,8 +58,9 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 | **`/contact`** | `app/contact/page.tsx` | **Client Inquiries:** Studio communication coordinates, encrypted response expectations, and structured contact form. |
 | **`/start-project`** | `app/start-project/page.tsx` | **Project Configurator:** Multi-step sprint planner with interactive pills for service type, budget tier, and delivery timeline. |
 | **`/businesscard`** | `public/businesscard.html` | **Spatial 3D Digital Business Card:** Gyroscope- and drag-enabled 3D physical card simulation, vCard 3.0 generation, Web Share API, and QR download. |
-| **`/privacy`** | `app/privacy/page.tsx` | **Privacy Policy:** Native dark mode legal architecture with DPDP Act, GDPR, CCPA compliance badges, and Data Protection Officer coordinates. |
-| **`/terms`** | `app/terms/page.tsx` | **Terms of Service:** Native dark mode engagement terms, IP transfer milestones, 30-day warranty policy, and dispute resolution guidelines. |
+| **`/license`** | `app/license/page.tsx` | **Legal & License Hub:** Consolidated, un-slopped dark mode legal architecture combining the **MIT License**, **Privacy Policy**, and **Terms of Service** with interactive tab switching. |
+| **`/privacy`** | `app/privacy/page.tsx` | **Privacy Policy:** Transparent, minimal data collection terms with zero ad trackers, DPDP Act 2023, and GDPR compliance. |
+| **`/terms`** | `app/terms/page.tsx` | **Terms of Service:** Direct studio engagement terms, milestone delivery schedule, 100% IP transfer upon settlement, and 30-day warranty. |
 | **`/admin`** | `app/admin/page.tsx` | **Private Dashboard:** Google OAuth verified intake management for studio leads. |
 
 ---

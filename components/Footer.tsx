@@ -177,11 +177,8 @@ export function Footer() {
         <div className="mt-14 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-400 gap-4">
           <p>&copy; {currentYear} {siteConfig.name}. All rights reserved.</p>
           <div className="flex items-center space-x-6">
-            <Link href="/privacy" className="hover:text-neutral-300 transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-neutral-300 transition-colors">
-              Terms of Service
+            <Link href="/license" className="hover:text-neutral-300 transition-colors">
+              License
             </Link>
             <Link href="/start-project" className="text-white hover:underline font-medium">
               Start a Project &rarr;
