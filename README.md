@@ -73,7 +73,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - Multi-resolution `favicon.ico` containing 16×16, 32×32, 48×48, and 256×256 layers.
   - Dedicated PNG favicons (`16x16`, `32x32`, `48x48`, `180x180`, `512x512`) with active cache-busting queries (`?v=4`).
   - Native Next.js App Router icon routes: `/icon.png` and `/apple-icon.png`.
-- **Spatial 3D Business Card:** Pure CSS 3D transform matrix with interactive flip, lighting highlights, and icon-only back navigation.
+- **Spatial 3D Business Card & Premium Sharing:** Pure CSS 3D transform matrix with interactive flip, lighting highlights, icon-only back navigation, and upgraded **Share Card** functionality delivering a high-resolution vertical portrait PNG combining both card sides (front at top, back at bottom) on matte black, with Web Share API file sharing, download fallback, and formatted invitation message.
 
 ---
 

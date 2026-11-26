@@ -123,6 +123,9 @@ dialog pre{margin:0 0 16px;white-space:pre-wrap;word-break:break-all;font:13px/1
 .qr-img{width:200px;height:200px;display:block}
 .qr-url{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#222;margin-top:10px;letter-spacing:.02em;word-break:break-all;text-align:center}
 .modal-actions{display:flex;gap:10px;width:100%}
+.share-preview-container{display:flex;justify-content:center;align-items:center;padding:12px;background:#050505;border:1px solid #222;border-radius:14px;margin:12px 0 14px;max-height:220px;overflow:hidden}
+.share-preview-img{max-height:196px;width:auto;object-fit:contain;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.7)}
+.share-msg-preview{background:#060606;border:1px solid #222;border-radius:10px;padding:10px 12px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#bbb;line-height:1.45;white-space:pre-wrap;max-height:92px;overflow-y:auto;margin-bottom:14px;user-select:text;-webkit-user-select:text}
 .modal-btn{flex:1;min-height:44px;font-size:14px;font-weight:500;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .2s}
 .modal-btn.primary{background:#fff;color:#000;border:1px solid #fff}
 .modal-btn.primary:hover{background:#e5e5e5}
@@ -178,6 +181,35 @@ dialog pre{margin:0 0 16px;white-space:pre-wrap;word-break:break-all;font:13px/1
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         <span>Copy Link</span>
       </button>
+    </div>
+  </div>
+</dialog>
+<dialog id="share-dlg" class="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Share Business Card</h2>
+      <button class="close-x" id="share-close" aria-label="Close Share Modal">&times;</button>
+    </div>
+    <p class="modal-sub">Single portrait image containing both sides of our digital business card.</p>
+    <div class="share-preview-container">
+      <img src="/assets/businesscard-share.png" alt="ShivamWebDesigns Digital Business Card — Both Sides" class="share-preview-img" id="share-preview-img" />
+    </div>
+    <div class="share-msg-preview" id="share-msg-preview"></div>
+    <div class="modal-actions" style="flex-direction:column; gap:8px;">
+      <button id="share-dl" class="modal-btn primary" style="width:100%;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Download Combined Card (PNG)</span>
+      </button>
+      <div style="display:flex; gap:8px; width:100%;">
+        <button id="share-copy-msg" class="modal-btn secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Message</span>
+        </button>
+        <button id="share-copy-link" class="modal-btn secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span>Copy Link</span>
+        </button>
+      </div>
     </div>
   </div>
 </dialog>
@@ -255,26 +287,199 @@ function showToast(msg){
   clearTimeout(t._tm);
   t._tm=setTimeout(()=>t.classList.remove('show'),2400);
 }
-$('share-btn').onclick=async()=>{
-  const shareData={
-    title:'ShivamWebDesigns — Digital Business Card',
-    text:'Connect with ShivamWebDesigns — Digital Web Design & Development Studio.\nExplore our digital business card:\nhttps://shivamwebdesigns.devs.li/businesscard',
-    url:'https://shivamwebdesigns.devs.li/businesscard'
-  };
-  if(navigator.share){
-    try{
-      await navigator.share(shareData);
-      return;
-    }catch(err){
-      if(err.name==='AbortError')return;
+const SHARE_MESSAGE = `Hello!
+
+I'd like to introduce you to Shivam Web Designs (SWD).
+
+We create modern websites and digital experiences with a focus on creativity, design and technology.
+
+Explore my digital business card:
+https://shivamwebdesigns.devs.li/businesscard
+
+Visit our official website:
+https://shivamwebdesigns.devs.li
+
+Shivam Web Designs
+Where Design Meets Digital Excellence.`;
+
+let cachedShareBlob = null;
+
+async function getCombinedCardBlob() {
+  if (cachedShareBlob) return cachedShareBlob;
+  try {
+    const res = await fetch('/assets/businesscard-share.png');
+    if (res.ok) {
+      cachedShareBlob = await res.blob();
+      return cachedShareBlob;
     }
+  } catch (_) {}
+
+  return new Promise((resolve, reject) => {
+    const frontImg = new Image();
+    const backImg = new Image();
+    let loaded = 0;
+    const checkDone = () => {
+      loaded++;
+      if (loaded === 2) {
+        try {
+          const cardW = 1400, cardH = 800, marginX = 120, marginY = 140, gap = 90, r = 20;
+          const canvas = document.createElement('canvas');
+          canvas.width = cardW + marginX * 2;
+          canvas.height = marginY * 2 + cardH * 2 + gap;
+          const ctx = canvas.getContext('2d');
+
+          ctx.fillStyle = '#080808';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          function drawCard(img, y) {
+            const x = marginX;
+            ctx.save();
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.75)';
+            ctx.shadowBlur = 32;
+            ctx.shadowOffsetY = 12;
+            ctx.fillStyle = '#0d0d0d';
+            ctx.beginPath();
+            if (ctx.roundRect) {
+              ctx.roundRect(x, y, cardW, cardH, r);
+            } else {
+              ctx.rect(x, y, cardW, cardH);
+            }
+            ctx.fill();
+            ctx.restore();
+
+            ctx.save();
+            ctx.beginPath();
+            if (ctx.roundRect) {
+              ctx.roundRect(x, y, cardW, cardH, r);
+            } else {
+              ctx.rect(x, y, cardW, cardH);
+            }
+            ctx.clip();
+            ctx.drawImage(img, x, y, cardW, cardH);
+            ctx.restore();
+
+            ctx.save();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            if (ctx.roundRect) {
+              ctx.roundRect(x, y, cardW, cardH, r);
+            } else {
+              ctx.rect(x, y, cardW, cardH);
+            }
+            ctx.stroke();
+            ctx.restore();
+          }
+
+          drawCard(frontImg, marginY);
+          drawCard(backImg, marginY + cardH + gap);
+
+          canvas.toBlob(b => {
+            if (b) {
+              cachedShareBlob = b;
+              resolve(b);
+            } else {
+              reject(new Error('Canvas blob failed'));
+            }
+          }, 'image/png');
+        } catch (err) {
+          reject(err);
+        }
+      }
+    };
+    frontImg.onload = checkDone;
+    backImg.onload = checkDone;
+    frontImg.onerror = reject;
+    backImg.onerror = reject;
+
+    const frontEl = document.querySelector('.front.l');
+    const backEl = document.querySelector('.back.l');
+    const getBg = el => {
+      if (!el) return null;
+      const s = window.getComputedStyle(el);
+      const m = s.backgroundImage.match(/url\(["']?(data:image\/[^"')]+)["']?\)/);
+      return m ? m[1] : null;
+    };
+    frontImg.src = getBg(frontEl) || '/assets/businesscard-share.png';
+    backImg.src = getBg(backEl) || '/assets/businesscard-share.png';
+  });
+}
+
+function openShareDialog() {
+  const dlg = $('share-dlg');
+  if (!dlg) return;
+  const p = $('share-msg-preview');
+  if (p) p.textContent = SHARE_MESSAGE;
+  dlg.showModal();
+}
+
+$('share-btn').onclick = async () => {
+  showToast('Preparing card image...');
+  try {
+    const blob = await getCombinedCardBlob();
+    const file = new File([blob], 'ShivamWebDesigns-BusinessCard.png', { type: 'image/png' });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          title: 'Shivam Web Designs (SWD)',
+          text: SHARE_MESSAGE,
+          files: [file]
+        });
+        showToast('Shared successfully!');
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.warn('Native file share failed:', err);
+      }
+    }
+  } catch (err) {
+    console.warn('Image share preparation failed:', err);
   }
-  try{
-    await navigator.clipboard.writeText(shareData.url);
-    showToast('Business card link copied to clipboard!');
-  }catch(_){
-    showToast('URL: '+shareData.url);
+
+  openShareDialog();
+};
+
+$('share-close').onclick = () => $('share-dlg').close();
+$('share-dlg').addEventListener('click', e => { if (e.target === $('share-dlg')) $('share-dlg').close(); });
+
+$('share-dl').onclick = async () => {
+  try {
+    const blob = await getCombinedCardBlob();
+    const u = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = u;
+    a.download = 'ShivamWebDesigns-BusinessCard.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(u), 4000);
+    showToast('Combined card PNG downloaded!');
+  } catch (_) {
+    const a = document.createElement('a');
+    a.href = '/assets/businesscard-share.png';
+    a.download = 'ShivamWebDesigns-BusinessCard.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast('Combined card PNG downloaded!');
   }
+};
+
+$('share-copy-msg').onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(SHARE_MESSAGE);
+    showToast('Share message copied to clipboard!');
+  } catch (_) {
+    showToast('Copy failed');
+  }
+};
+
+$('share-copy-link').onclick = async () => {
+  try {
+    await navigator.clipboard.writeText('https://shivamwebdesigns.devs.li/businesscard');
+    showToast('Card link copied to clipboard!');
+  } catch (_) {}
 };
 $('qr-btn').onclick=()=>$('qr-dlg').showModal();
 $('qr-close').onclick=()=>$('qr-dlg').close();
