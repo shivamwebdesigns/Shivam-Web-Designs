@@ -97,6 +97,9 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/site.webmanifest',
+  verification: {
+    google: 'google5fefb455a4f252a7.html',
+  },
 };
 
 export default function RootLayout({
