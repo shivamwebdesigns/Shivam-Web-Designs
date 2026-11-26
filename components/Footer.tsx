@@ -31,9 +31,9 @@ export function Footer() {
 
           {/* Quick Navigation */}
           <div>
-            <h4 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
+            <h3 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
               Navigation
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/" className="hover:text-white transition-colors">
@@ -71,9 +71,9 @@ export function Footer() {
 
           {/* Core Services */}
           <div>
-            <h4 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
+            <h3 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
               Services
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/services#website-design" className="hover:text-white transition-colors">
@@ -110,9 +110,9 @@ export function Footer() {
 
           {/* Channels & Inquiries */}
           <div>
-            <h4 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
+            <h3 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
               Connect
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <a
@@ -174,7 +174,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-14 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
+        <div className="mt-14 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-400 gap-4">
           <p>&copy; {currentYear} {siteConfig.name}. All rights reserved.</p>
           <div className="flex items-center space-x-6">
             <Link href="/privacy" className="hover:text-neutral-300 transition-colors">

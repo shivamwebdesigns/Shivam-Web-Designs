@@ -65,7 +65,7 @@ export function MobileDock() {
               >
                 <Icon className="w-4 h-4" />
               </div>
-              <span className={`text-[10px] font-mono tracking-tight mt-1 ${isActive ? 'text-white' : 'text-neutral-500'}`}>
+              <span className={`text-[10px] font-mono tracking-tight mt-1 ${isActive ? 'text-white font-medium' : 'text-neutral-400'}`}>
                 {item.label}
               </span>
             </Link>

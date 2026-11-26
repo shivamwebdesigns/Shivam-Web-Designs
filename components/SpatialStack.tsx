@@ -125,20 +125,20 @@ export function SpatialStack() {
               key={layer.index}
               id={`stack-card-${layer.index}`}
               style={{
-                top: `calc(100px + ${(layer.index - 1) * 28}px)`,
+                top: `calc(76px + ${(layer.index - 1) * 22}px)`,
                 zIndex: layer.index,
               }}
-              className="sticky bg-neutral-950 border border-neutral-800/90 rounded-2xl p-6 sm:p-10 shadow-2xl shadow-black/80 transition-all duration-300 group hover:border-neutral-700"
+              className="sticky bg-neutral-950/95 backdrop-blur-xl border border-neutral-800/90 rounded-2xl p-5 sm:p-8 lg:p-10 shadow-2xl shadow-black/80 transition-all duration-300 group hover:border-neutral-700 transform-gpu will-change-transform"
             >
               {/* Subtle top edge glow highlight */}
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
               {/* Card Header Bar */}
-              <div className="flex flex-wrap items-center justify-between pb-6 mb-8 border-b border-neutral-800/70 gap-4">
+              <div className="flex flex-wrap items-center justify-between pb-4 sm:pb-6 mb-6 sm:mb-8 border-b border-neutral-800/70 gap-3">
                 <span className="text-xs font-mono font-bold tracking-widest text-neutral-300">
                   {layer.badge}
                 </span>
-                <span className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
+                <span className="text-xs font-mono text-neutral-400 uppercase tracking-wider">
                   SWD STUDIO CORE // LAYER 0{layer.index}
                 </span>
               </div>
@@ -186,7 +186,7 @@ export function SpatialStack() {
                   <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
                     {layer.previewType === '3d-card' && (
                       <div className="flex flex-col justify-between h-full">
-                        <div className="flex items-center justify-between text-xs font-mono text-neutral-500">
+                        <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
                           <span>CSS 3D TRANSFORM</span>
                           <span>ROTATION: [R_x, R_y]</span>
                         </div>
@@ -212,16 +212,16 @@ export function SpatialStack() {
                           <span className="w-2 h-2 rounded-full bg-neutral-700" />
                           <span className="w-2 h-2 rounded-full bg-neutral-700" />
                           <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                          <span className="ml-2 text-[10px] text-neutral-500">architecture.ts</span>
+                          <span className="ml-2 text-[10px] text-neutral-400">architecture.ts</span>
                         </div>
                         <div className="space-y-1 text-[11px] text-neutral-300 py-3">
-                          <p><span className="text-neutral-500">export const</span> <span className="text-white">stack</span> = &#123;</p>
+                          <p><span className="text-neutral-400">export const</span> <span className="text-white">stack</span> = &#123;</p>
                           <p className="pl-4">framework: <span className="text-neutral-400">&apos;Next.js 15&apos;</span>,</p>
                           <p className="pl-4">rendering: <span className="text-neutral-400">&apos;RSC + Static SSG&apos;</span>,</p>
                           <p className="pl-4">performance: <span className="text-emerald-400">&apos;100/100&apos;</span>,</p>
                           <p>&#125;;</p>
                         </div>
-                        <div className="text-[10px] text-neutral-500 pt-2 border-t border-neutral-800 flex justify-between">
+                        <div className="text-[10px] text-neutral-400 pt-2 border-t border-neutral-800 flex justify-between">
                           <span>TypeScript 5.7</span>
                           <span>Zero Bloat</span>
                         </div>
@@ -230,7 +230,7 @@ export function SpatialStack() {
 
                     {layer.previewType === 'typography' && (
                       <div className="flex flex-col justify-between h-full">
-                        <div className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                        <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
                           International Style // Baseline
                         </div>
                         <div className="space-y-1.5 py-2">
@@ -241,7 +241,7 @@ export function SpatialStack() {
                             Inter • JetBrains Mono
                           </div>
                           <div className="h-px bg-neutral-800 my-2" />
-                          <div className="text-[11px] text-neutral-500 leading-relaxed font-light">
+                          <div className="text-[11px] text-neutral-400 leading-relaxed font-light">
                             Strict horizontal alignment, modular column grids &amp; zero superficial decor.
                           </div>
                         </div>
@@ -253,29 +253,29 @@ export function SpatialStack() {
 
                     {layer.previewType === 'performance' && (
                       <div className="flex flex-col justify-between h-full">
-                        <div className="flex items-center justify-between text-xs font-mono text-neutral-500">
+                        <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
                           <span>AUDIT SCORES</span>
                           <span className="text-emerald-400">VERIFIED PASS</span>
                         </div>
                         <div className="grid grid-cols-2 gap-3 py-2 text-center">
                           <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
                             <div className="text-xl font-bold font-mono text-white">100</div>
-                            <div className="text-[9px] font-mono text-neutral-500 uppercase">Performance</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">Performance</div>
                           </div>
                           <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
                             <div className="text-xl font-bold font-mono text-white">100</div>
-                            <div className="text-[9px] font-mono text-neutral-500 uppercase">Accessibility</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">Accessibility</div>
                           </div>
                           <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
                             <div className="text-xl font-bold font-mono text-white">&lt; 0.8s</div>
-                            <div className="text-[9px] font-mono text-neutral-500 uppercase">LCP Speed</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">LCP Speed</div>
                           </div>
                           <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
                             <div className="text-xl font-bold font-mono text-white">0.000</div>
-                            <div className="text-[9px] font-mono text-neutral-500 uppercase">CLS Shift</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">CLS Shift</div>
                           </div>
                         </div>
-                        <div className="text-center text-[10px] font-mono text-neutral-500">
+                        <div className="text-center text-[10px] font-mono text-neutral-400">
                           Vercel Global Edge Network
                         </div>
                       </div>
