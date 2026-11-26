@@ -3,7 +3,10 @@
 import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, AlertCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, AlertCircle, Send } from 'lucide-react';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import { SplitText } from '@/components/ui/SplitText';
+import { ShinyText } from '@/components/ui/ShinyText';
 
 function StartProjectForm() {
   const searchParams = useSearchParams();
@@ -115,17 +118,15 @@ function StartProjectForm() {
   return (
     <div className="flex flex-col">
       {/* Header */}
-      <section className="pt-32 pb-10 border-b border-neutral-900 bg-neutral-950/60">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="pt-32 pb-12 border-b border-neutral-900 bg-neutral-950/60 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                Client Intake System
-              </span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <ShinyText>PROJECT SPECIFICATION // CLIENT INTAKE</ShinyText>
             </div>
-            <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white mb-6 leading-tight">
-              Initiate a Project Brief
+            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-6 leading-tight">
+              <SplitText text="Initiate a Project Brief" wordMode delay={35} />
             </h1>
             <p className="text-lg text-neutral-400 font-light leading-relaxed">
               Complete the intake specification below. Shivam personally reviews every brief, conducts preliminary technical feasibility research, and delivers a tailored proposal within 24 to 48 hours.
@@ -135,10 +136,10 @@ function StartProjectForm() {
       </section>
 
       {/* Main Intake Section */}
-      <section className="pt-10 pb-24 border-b border-neutral-900 bg-black min-h-screen">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="pt-12 pb-24 border-b border-neutral-900 bg-black min-h-screen">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {status === 'success' ? (
-            <div className="p-10 md:p-16 border border-neutral-800 bg-neutral-950 text-center space-y-6">
+            <SpotlightCard className="p-10 md:p-16 text-center space-y-6">
               <div className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center mx-auto shadow-2xl">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
@@ -147,10 +148,10 @@ function StartProjectForm() {
                 <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
                   Inquiry Saved
                 </span>
-                <h2 className="text-3xl font-light text-white tracking-tight mt-1">
+                <h2 className="text-3xl font-bold text-white tracking-tight mt-1">
                   Brief Received
                 </h2>
-                <div className="mt-3 inline-block px-4 py-1.5 bg-neutral-900 border border-neutral-800 text-xs font-mono text-neutral-300">
+                <div className="mt-3 inline-block px-4 py-1.5 bg-neutral-900 border border-neutral-800 rounded-full text-xs font-mono text-neutral-300">
                   Tracking ID: {inquiryId}
                 </div>
               </div>
@@ -173,174 +174,169 @@ function StartProjectForm() {
               <div className="pt-6 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/"
-                  className="px-6 py-3 bg-white text-black hover:bg-neutral-200 transition-colors text-xs font-mono uppercase tracking-wider font-semibold"
+                  className="px-6 py-3 bg-white text-black hover:bg-neutral-200 transition-colors text-xs font-mono uppercase tracking-wider font-semibold rounded-md"
                 >
                   Return to Homepage
                 </Link>
                 <Link
                   href="/projects"
-                  className="px-6 py-3 border border-neutral-800 text-white hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider"
+                  className="px-6 py-3 border border-neutral-800 text-white hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider rounded-md"
                 >
                   Browse Case Studies
                 </Link>
               </div>
-            </div>
+            </SpotlightCard>
           ) : (
-            <form onSubmit={handleSubmit} className="border border-neutral-900 bg-neutral-950/40 p-8 md:p-12 space-y-12">
-              {/* Honeypot field */}
-              <div className="hidden" aria-hidden="true">
-                <label htmlFor="intake_hp">Do not fill this field</label>
-                <input
-                  id="intake_hp"
-                  type="text"
-                  value={formData.honeypot}
-                  onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-              </div>
-
-              {status === 'error' && (
-                <div className="p-4 bg-red-950/30 border border-red-900/60 text-red-300 text-xs font-mono flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                  <span>
-                    {errorMessage}{' '}
-                    <Link
-                      href="/contact"
-                      className="text-white underline underline-offset-2"
-                    >
-                      Contact us
-                    </Link>
-                    .
-                  </span>
-                </div>
-              )}
-
-              {/* 1. Identity */}
-              <div className="space-y-6">
-                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
-                  <span>01</span>
-                  <span className="text-neutral-600">//</span>
-                  <span>Contact Information</span>
+            <SpotlightCard className="p-8 md:p-12">
+              <form onSubmit={handleSubmit} className="space-y-12">
+                {/* Honeypot field */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="intake_hp">Do not fill this field</label>
+                  <input
+                    id="intake_hp"
+                    type="text"
+                    value={formData.honeypot}
+                    onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {status === 'error' && (
+                  <div className="p-4 bg-red-950/30 border border-red-900/60 text-red-300 text-xs font-mono flex items-start gap-2 rounded-lg">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span>
+                      {errorMessage}{' '}
+                      <Link
+                        href="/contact"
+                        className="text-white underline underline-offset-2"
+                      >
+                        Contact us directly
+                      </Link>
+                      .
+                    </span>
+                  </div>
+                )}
+
+                {/* 1. Identity */}
+                <div className="space-y-6">
+                  <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
+                    <span>01</span>
+                    <span className="text-neutral-600">//</span>
+                    <span>Contact Information</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                        Full Name <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.fullName}
+                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                        placeholder="Your full name"
+                        className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                        Email Address <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="you@example.com"
+                        className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                      Full Name <span className="text-red-400">*</span>
+                      Company or Brand Name <span className="text-neutral-500">(Optional)</span>
                     </label>
                     <input
                       type="text"
-                      required
-                      value={formData.fullName}
-                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      placeholder="Your full name"
-                      className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                      Email Address <span className="text-red-400">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="you@example.com"
-                      className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      placeholder="Your company or brand"
+                      className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                    Company or Brand Name <span className="text-neutral-500">(Optional)</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    placeholder="Your company or brand"
-                    className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* 2. Scope & Project Type */}
-              <div className="space-y-6 pt-6 border-t border-neutral-900">
-                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
-                  <span>02</span>
-                  <span className="text-neutral-600">//</span>
-                  <span>Project Classification</span>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
-                    Primary Service Needed <span className="text-red-400">*</span>
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                    {projectTypes.map((type) => (
-                      <button
-                        type="button"
-                        key={type}
-                        onClick={() => setFormData({ ...formData, projectType: type })}
-                        className={`p-3 text-xs font-mono uppercase tracking-wider text-left transition-all border ${
-                          formData.projectType === type
-                            ? 'bg-white text-black border-white font-semibold'
-                            : 'bg-black text-neutral-400 border-neutral-800 hover:border-neutral-700 hover:text-white'
-                        }`}
-                      >
-                        {type}
-                      </button>
-                    ))}
+                {/* 2. Scope & Project Type */}
+                <div className="space-y-6 pt-6 border-t border-neutral-900">
+                  <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
+                    <span>02</span>
+                    <span className="text-neutral-600">//</span>
+                    <span>Project Classification</span>
                   </div>
-                  {formData.projectType === 'Other / Custom' && (
-                    <div className="mt-4">
-                      <label
-                        htmlFor="custom-project-type"
-                        className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2"
-                      >
-                        Describe the service or project type <span className="text-red-400">*</span>
-                      </label>
-                      <input
-                        id="custom-project-type"
-                        type="text"
-                        required
-                        maxLength={80}
-                        value={formData.customProjectType}
-                        onChange={(e) =>
-                          setFormData({ ...formData, customProjectType: e.target.value })
-                        }
-                        placeholder="What would you like to build?"
-                        className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
 
-              {/* 3. Budget & Timeline */}
-              <div className="space-y-6 pt-6 border-t border-neutral-900">
-                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
-                  <span>03</span>
-                  <span className="text-neutral-600">//</span>
-                  <span>Parameters & Investment</span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   <div>
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
-                      Estimated Investment Budget (INR)
+                      Primary Service Needed <span className="text-red-400">*</span>
                     </label>
-                    <div className="space-y-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                      {projectTypes.map((type) => (
+                        <button
+                          type="button"
+                          key={type}
+                          onClick={() => setFormData({ ...formData, projectType: type })}
+                          className={`p-3 text-xs font-mono uppercase tracking-wider text-left transition-all rounded-lg border ${
+                            formData.projectType === type
+                              ? 'bg-white text-black border-white font-semibold shadow-lg shadow-white/5'
+                              : 'bg-black text-neutral-400 border-neutral-800 hover:border-neutral-700 hover:text-white'
+                          }`}
+                        >
+                          {type}
+                        </button>
+                      ))}
+                    </div>
+                    {formData.projectType === 'Other / Custom' && (
+                      <div className="mt-4">
+                        <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                          Describe Custom Service Needed <span className="text-red-400">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.customProjectType}
+                          onChange={(e) =>
+                            setFormData({ ...formData, customProjectType: e.target.value })
+                          }
+                          placeholder="e.g., Spatial 3D Experience, Custom API Integration"
+                          className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 3. Budget & Timeline */}
+                <div className="space-y-6 pt-6 border-t border-neutral-900">
+                  <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
+                    <span>03</span>
+                    <span className="text-neutral-600">//</span>
+                    <span>Investment &amp; Scheduling</span>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
+                      Estimated Budget Range
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                       {budgetTiers.map((tier) => (
                         <button
                           type="button"
                           key={tier}
                           onClick={() => setFormData({ ...formData, budget: tier })}
-                          className={`w-full p-3 text-xs font-mono uppercase tracking-wider text-left transition-all border ${
+                          className={`p-3 text-xs font-mono text-center transition-all rounded-lg border ${
                             formData.budget === tier
                               ? 'bg-white text-black border-white font-semibold'
                               : 'bg-black text-neutral-400 border-neutral-800 hover:border-neutral-700 hover:text-white'
@@ -356,13 +352,13 @@ function StartProjectForm() {
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
                       Expected Timeline
                     </label>
-                    <div className="space-y-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                       {timelines.map((time) => (
                         <button
                           type="button"
                           key={time}
                           onClick={() => setFormData({ ...formData, timeline: time })}
-                          className={`w-full p-3 text-xs font-mono uppercase tracking-wider text-left transition-all border ${
+                          className={`p-3 text-xs font-mono text-center transition-all rounded-lg border ${
                             formData.timeline === time
                               ? 'bg-white text-black border-white font-semibold'
                               : 'bg-black text-neutral-400 border-neutral-800 hover:border-neutral-700 hover:text-white'
@@ -374,31 +370,29 @@ function StartProjectForm() {
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* 4. Details & References */}
-              <div className="space-y-6 pt-6 border-t border-neutral-900">
-                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
-                  <span>04</span>
-                  <span className="text-neutral-600">//</span>
-                  <span>Project Specification</span>
-                </div>
+                {/* 4. Project Details */}
+                <div className="space-y-6 pt-6 border-t border-neutral-900">
+                  <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
+                    <span>04</span>
+                    <span className="text-neutral-600">//</span>
+                    <span>Project Description &amp; Scope</span>
+                  </div>
 
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                    Project Description & Objectives <span className="text-red-400">*</span>
-                  </label>
-                  <textarea
-                    required
-                    rows={6}
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder="Tell us about what you want to build, the key problems to solve, target audience, and primary objectives..."
-                    className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors resize-none"
-                  />
-                </div>
+                  <div>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                      Tell us about your project <span className="text-red-400">*</span>
+                    </label>
+                    <textarea
+                      required
+                      rows={5}
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      placeholder="What is your business goal? What are the key problems your current website has? What are your must-have features?"
+                      className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                    />
+                  </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                       Reference Website <span className="text-neutral-500">(Optional)</span>
@@ -408,48 +402,44 @@ function StartProjectForm() {
                       value={formData.referenceUrl}
                       onChange={(e) => setFormData({ ...formData, referenceUrl: e.target.value })}
                       placeholder="https://example.com"
-                      className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                      className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                      Additional Notes <span className="text-neutral-500">(Optional)</span>
+                      Additional Requirements / Notes <span className="text-neutral-500">(Optional)</span>
                     </label>
                     <input
                       type="text"
                       value={formData.additionalRequirements}
-                      onChange={(e) => setFormData({ ...formData, additionalRequirements: e.target.value })}
-                      placeholder="e.g. Existing brand assets available"
-                      className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                      onChange={(e) =>
+                        setFormData({ ...formData, additionalRequirements: e.target.value })
+                      }
+                      placeholder="e.g., Domain already registered, brand assets ready in Figma"
+                      className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                     />
                   </div>
                 </div>
-              </div>
 
-              {/* Submit CTA */}
-              <div className="pt-6 border-t border-neutral-900 space-y-4">
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black hover:bg-neutral-200 transition-colors text-xs font-mono uppercase tracking-wider font-semibold disabled:opacity-50 shadow-2xl"
-                >
-                  {status === 'loading' ? (
-                    <span>Sending Brief for Quotation...</span>
-                  ) : (
-                    <>
-                      <span>Send Brief for Quotation</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-
-                <div className="flex items-center justify-center gap-2 text-xs font-mono text-neutral-500">
-                  <ShieldCheck className="w-3.5 h-3.5 text-neutral-400" />
-                  <span>Strict Confidentiality • No Spam • Direct Founder Review</span>
+                {/* Submit Action */}
+                <div className="pt-6 border-t border-neutral-900">
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="w-full py-4 px-8 bg-white text-black font-semibold text-xs font-mono uppercase tracking-wider hover:bg-neutral-200 transition-all rounded-lg active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2 shadow-2xl"
+                  >
+                    <span>
+                      {status === 'loading' ? 'Transmitting Brief...' : 'Submit Project Brief'}
+                    </span>
+                    <Send className="w-4 h-4" />
+                  </button>
+                  <p className="text-[11px] font-mono text-neutral-500 text-center mt-3">
+                    Reviewed personally by Shivam Purohit • Response within 24 to 48 hours
+                  </p>
                 </div>
-              </div>
-            </form>
+              </form>
+            </SpotlightCard>
           )}
         </div>
       </section>
@@ -459,7 +449,13 @@ function StartProjectForm() {
 
 export default function StartProjectPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen pt-32 text-center text-xs font-mono text-neutral-500">Loading intake form...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-black flex items-center justify-center text-xs font-mono text-neutral-500">
+          Loading Intake System...
+        </div>
+      }
+    >
       <StartProjectForm />
     </Suspense>
   );

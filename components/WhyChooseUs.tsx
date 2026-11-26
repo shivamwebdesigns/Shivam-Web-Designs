@@ -1,7 +1,12 @@
+'use client';
+
 import React from 'react';
 import { Shield, Zap, Sparkles, UserCheck } from 'lucide-react';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import { PerformanceChart } from '@/components/ui/PerformanceChart';
+import { ShinyText } from '@/components/ui/ShinyText';
 
-export const WhyChooseUs: React.FC = () => {
+export function WhyChooseUs() {
   const pillars = [
     {
       icon: Sparkles,
@@ -38,63 +43,66 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 border-b border-neutral-900 bg-black">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-24 border-t border-neutral-900 bg-neutral-950 relative" id="why-swd">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-2xl mb-16">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-white"></span>
-            <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-              The Agency Advantage
-            </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-white" />
+            <ShinyText>04 // THE AGENCY ADVANTAGE</ShinyText>
           </div>
-          <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
-            Why Work With SWD
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+            Why Work With ShivamWebDesigns
           </h2>
-          <p className="text-base text-neutral-400 leading-relaxed">
-            In an era of cookie-cutter templates and bloated page builders, ShivamWebDesigns takes the opposing path: disciplined craftsmanship, direct founder ownership, and technical excellence.
+          <p className="text-base text-neutral-400 leading-relaxed font-light">
+            In an era of cookie-cutter templates and bloated page builders, ShivamWebDesigns takes the opposing path: disciplined craftsmanship, direct founder ownership, and quantified technical superiority.
           </p>
         </div>
 
+        {/* Top Feature: Interactive Apache ECharts Performance Benchmark */}
+        <div className="mb-12">
+          <PerformanceChart />
+        </div>
+
         {/* Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-900 border border-neutral-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {pillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
-              <div
+              <SpotlightCard
                 key={pillar.number}
-                className="bg-black p-8 flex flex-col justify-between hover:bg-neutral-950/80 transition-colors"
+                className="flex flex-col justify-between hover:-translate-y-1 transition-all duration-300"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center justify-between mb-6">
                     <span className="text-xs font-mono text-neutral-500">
-                      {pillar.number}
+                      {pillar.number} //
                     </span>
-                    <div className="w-9 h-9 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-300">
+                    <div className="w-8 h-8 rounded-full border border-neutral-800 bg-neutral-900/60 flex items-center justify-center text-white">
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-light text-white mb-2 tracking-tight">
+                  <h3 className="text-lg font-bold text-white mb-1 tracking-tight">
                     {pillar.title}
                   </h3>
-                  <div className="text-xs font-mono uppercase tracking-wider text-neutral-400 mb-4">
+                  <div className="text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
                     {pillar.subtitle}
                   </div>
-                  <p className="text-sm text-neutral-400 leading-relaxed">
+                  <p className="text-xs text-neutral-400 leading-relaxed font-light">
                     {pillar.description}
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-neutral-900 flex items-center justify-between text-xs font-mono text-neutral-600">
+                <div className="mt-6 pt-4 border-t border-neutral-900 flex items-center justify-between text-[11px] font-mono text-neutral-500">
                   <span>SWD STANDARD</span>
-                  <span>VERIFIED</span>
+                  <span className="text-white">VERIFIED</span>
                 </div>
-              </div>
+              </SpotlightCard>
             );
           })}
         </div>
       </div>
     </section>
   );
-};
+}

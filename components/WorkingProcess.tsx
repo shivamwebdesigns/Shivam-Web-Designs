@@ -1,6 +1,10 @@
-import React from 'react';
+'use client';
 
-export const WorkingProcess: React.FC = () => {
+import React from 'react';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import { ShinyText } from '@/components/ui/ShinyText';
+
+export function WorkingProcess() {
   const steps = [
     {
       step: '01',
@@ -37,55 +41,53 @@ export const WorkingProcess: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 border-b border-neutral-900 bg-neutral-950/60">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-24 border-t border-neutral-900 bg-black relative" id="process">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                Methodology
-              </span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <ShinyText>05 // METHODOLOGY &amp; SPRINTS</ShinyText>
             </div>
-            <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-2">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-2">
               Our Working Process
             </h2>
-            <p className="text-neutral-400 text-sm max-w-xl">
-              A transparent, disciplined four-stage engineering cycle designed to deliver excellence without delays or surprises.
+            <p className="text-neutral-400 text-sm max-w-xl font-light">
+              A transparent, disciplined four-stage engineering cycle designed to deliver digital excellence on fixed timelines.
             </p>
           </div>
-          <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest border border-neutral-800 px-3 py-1.5 self-start md:self-auto">
+          <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest border border-neutral-800 bg-neutral-950 px-3.5 py-2 rounded-full self-start md:self-auto">
             Sprint-Driven • Fixed Timeline
           </div>
         </div>
 
-        {/* Process Steps */}
+        {/* Process Steps with SpotlightCards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((item) => (
-            <div
+            <SpotlightCard
               key={item.step}
-              className="border border-neutral-900 bg-black p-8 flex flex-col justify-between hover:border-neutral-800 transition-colors relative"
+              className="flex flex-col justify-between hover:-translate-y-1 transition-all duration-300"
             >
               <div>
                 <div className="flex items-baseline justify-between mb-6">
                   <span className="text-3xl font-light font-mono text-white">
                     {item.step}
                   </span>
-                  <span className="text-[11px] font-mono text-neutral-500 bg-neutral-900 px-2 py-0.5 border border-neutral-800">
+                  <span className="text-[11px] font-mono text-neutral-400 bg-black px-2.5 py-1 rounded-full border border-neutral-800">
                     {item.timeline}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-light text-white mb-3 tracking-tight">
+                <h3 className="text-lg font-bold text-white mb-2 tracking-tight">
                   {item.title}
                 </h3>
-                <p className="text-xs text-neutral-400 leading-relaxed mb-6">
+                <p className="text-xs text-neutral-400 leading-relaxed mb-6 font-light">
                   {item.summary}
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-neutral-900">
+              <div className="pt-5 border-t border-neutral-900">
                 <div className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 mb-3">
                   Key Deliverables
                 </div>
@@ -101,10 +103,10 @@ export const WorkingProcess: React.FC = () => {
                   ))}
                 </ul>
               </div>
-            </div>
+            </SpotlightCard>
           ))}
         </div>
       </div>
     </section>
   );
-};
+}

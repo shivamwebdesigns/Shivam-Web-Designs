@@ -2,8 +2,11 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle2, Mail, MapPin, MessageSquare, Send, AlertCircle } from 'lucide-react';
+import { CheckCircle2, Mail, MapPin, MessageSquare, Send, AlertCircle, ArrowUpRight } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import { SplitText } from '@/components/ui/SplitText';
+import { ShinyText } from '@/components/ui/ShinyText';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -67,20 +70,18 @@ export default function ContactPage() {
   return (
     <div className="flex flex-col">
       {/* Header */}
-      <section className="pt-32 pb-20 border-b border-neutral-900 bg-neutral-950/60">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="pt-32 pb-20 border-b border-neutral-900 bg-neutral-950/60 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                Direct Communication
-              </span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <ShinyText>DIRECT COMMUNICATION // CHANNELS</ShinyText>
             </div>
-            <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white mb-6 leading-tight">
-              Let&apos;s start a conversation.
+            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-6 leading-tight">
+              <SplitText text="Let's start a conversation." wordMode delay={35} />
             </h1>
             <p className="text-lg text-neutral-400 font-light leading-relaxed">
-              Have a question, need a consultation, or want to discuss a prospective partnership? Send us a message using the form below. We respond within 24 business hours.
+              Have a question, need an architectural consultation, or want to discuss a prospective digital flagship? Reach out below. We respond within 24 business hours.
             </p>
           </div>
         </div>
@@ -88,117 +89,122 @@ export default function ContactPage() {
 
       {/* Main Content */}
       <section className="py-24 border-b border-neutral-900 bg-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Contact Channels Column */}
-            <div className="lg:col-span-5 space-y-12">
+            <div className="lg:col-span-5 space-y-8">
               <div>
-                <h2 className="text-2xl font-light text-white mb-2 tracking-tight">
+                <h2 className="text-2xl font-bold text-white mb-2 tracking-tight">
                   Agency Coordinates
                 </h2>
                 <p className="text-sm text-neutral-400 font-light">
-                  For formal project inquiries with budget and timeline, please use our{' '}
-                  <Link href="/start-project" className="text-white underline hover:text-neutral-300">
-                    Project Inquiry System
+                  For formal project inquiries with budget and timeline specifications, please use our{' '}
+                  <Link href="/start-project" className="text-white underline hover:text-neutral-300 font-medium">
+                    Project Intake Funnel
                   </Link>
                   .
                 </p>
               </div>
 
-              <div className="space-y-6">
-                <a
-                  href={`mailto:${siteConfig.contact.email}`}
-                  className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
-                >
-                  <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-300 group-hover:border-white group-hover:text-white transition-colors">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                      Direct Email
-                    </div>
-                    <div className="text-sm font-medium text-white group-hover:underline">
-                      Contact us directly
-                    </div>
-                    <div className="text-xs text-neutral-400 mt-1">
-                      Guaranteed reply within 24 hours
-                    </div>
-                  </div>
-                </a>
-
-                {siteConfig.social.whatsapp && (
+              <div className="space-y-4">
+                <SpotlightCard className="p-5">
                   <a
-                    href={siteConfig.social.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900 hover:border-neutral-800 transition-colors group"
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="flex items-start gap-4 group"
                   >
-                    <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 transition-colors">
-                      <MessageSquare className="w-4 h-4" />
+                    <div className="w-10 h-10 rounded-full border border-neutral-800 bg-black flex items-center justify-center text-neutral-300 group-hover:border-white group-hover:text-white transition-colors">
+                      <Mail className="w-4 h-4" />
                     </div>
                     <div>
                       <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                        WhatsApp Quick Chat
+                        Direct Agency Email
                       </div>
                       <div className="text-sm font-medium text-white group-hover:underline">
-                        Message the founder directly
+                        {siteConfig.contact.email}
                       </div>
                       <div className="text-xs text-neutral-400 mt-1">
-                        Direct link to founder chat
+                        Guaranteed response within 24 hours
                       </div>
                     </div>
                   </a>
+                </SpotlightCard>
+
+                {siteConfig.social.whatsapp && (
+                  <SpotlightCard className="p-5">
+                    <a
+                      href={siteConfig.social.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 group"
+                    >
+                      <div className="w-10 h-10 rounded-full border border-neutral-800 bg-black flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 transition-colors">
+                        <MessageSquare className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
+                          WhatsApp Priority Channel
+                        </div>
+                        <div className="text-sm font-medium text-white group-hover:underline">
+                          Message the studio directly
+                        </div>
+                        <div className="text-xs text-neutral-400 mt-1">
+                          Direct real-time WhatsApp connection
+                        </div>
+                      </div>
+                    </a>
+                  </SpotlightCard>
                 )}
 
-                <div className="flex items-start gap-4 p-5 bg-neutral-950 border border-neutral-900">
-                  <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400">
-                    <MapPin className="w-4 h-4" />
+                <SpotlightCard className="p-5">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full border border-neutral-800 bg-black flex items-center justify-center text-neutral-400">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
+                        Location &amp; Reach
+                      </div>
+                      <div className="text-sm font-medium text-white">
+                        {siteConfig.contact.location}
+                      </div>
+                      <div className="text-xs text-neutral-400 mt-1">
+                        Serving ambitious brands globally
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                      Location & Reach
-                    </div>
-                    <div className="text-sm font-medium text-white">
-                      {siteConfig.contact.location}
-                    </div>
-                    <div className="text-xs text-neutral-400 mt-1">
-                      Operating in IST (UTC+5:30) with global overlap
-                    </div>
-                  </div>
-                </div>
-
+                </SpotlightCard>
               </div>
             </div>
 
             {/* Contact Form Column */}
             <div className="lg:col-span-7">
-              <div className="p-8 md:p-12 border border-neutral-900 bg-neutral-950/40">
+              <SpotlightCard className="p-8 md:p-12">
                 <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
                   Send a Message
                 </div>
-                <h2 className="text-2xl font-light text-white mb-8 tracking-tight">
-                  General Contact & Inquiries
+                <h2 className="text-2xl font-bold text-white mb-8 tracking-tight">
+                  General Contact &amp; Inquiries
                 </h2>
 
                 {status === 'success' ? (
-                  <div className="p-8 bg-black border border-neutral-800 text-center space-y-4">
+                  <div className="p-8 bg-black border border-neutral-800 text-center space-y-4 rounded-xl">
                     <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center mx-auto">
                       <CheckCircle2 className="w-6 h-6" />
                     </div>
-                    <h3 className="text-xl font-light text-white">Message Received</h3>
-                    <p className="text-sm text-neutral-400 max-w-md mx-auto">
-                      Thank you for contacting ShivamWebDesigns. Your message has been saved for review. You can expect a response within 24 business hours.
+                    <h3 className="text-xl font-bold text-white">Message Received</h3>
+                    <p className="text-sm text-neutral-400 max-w-md mx-auto font-light">
+                      Thank you for contacting ShivamWebDesigns. Your message has been saved for review. We will respond within 24 business hours.
                     </p>
                     <button
                       onClick={() => setStatus('idle')}
-                      className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-900 border border-neutral-800 text-xs font-mono uppercase tracking-wider text-neutral-300 hover:text-white"
+                      className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-900 border border-neutral-800 text-xs font-mono uppercase tracking-wider text-neutral-300 hover:text-white rounded-md transition-colors"
                     >
                       Send Another Message
                     </button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Honeypot anti-spam */}
+                    {/* Honeypot */}
                     <div className="hidden" aria-hidden="true">
                       <label htmlFor="website_hp">Do not fill this</label>
                       <input
@@ -212,7 +218,7 @@ export default function ContactPage() {
                     </div>
 
                     {status === 'error' && (
-                      <div className="p-4 bg-red-950/30 border border-red-900/60 text-red-300 text-xs font-mono flex items-start gap-2">
+                      <div className="p-4 bg-red-950/30 border border-red-900/60 text-red-300 text-xs font-mono flex items-start gap-2 rounded-lg">
                         <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                         <span>{errorMessage}</span>
                       </div>
@@ -229,7 +235,7 @@ export default function ContactPage() {
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="Your Name"
-                          className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                          className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                         />
                       </div>
 
@@ -243,7 +249,7 @@ export default function ContactPage() {
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder="you@example.com"
-                          className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                          className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                         />
                       </div>
                     </div>
@@ -256,8 +262,8 @@ export default function ContactPage() {
                         type="text"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        placeholder="e.g. Design consultation / Partnership inquiry"
-                        className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
+                        placeholder="Project Consultation, Partnership, etc."
+                        className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                       />
                     </div>
 
@@ -270,28 +276,22 @@ export default function ContactPage() {
                         rows={5}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Describe your question, goals, or what you'd like to explore..."
-                        className="w-full px-4 py-3 bg-black border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors resize-none"
+                        placeholder="Tell us about your brand, timeline, or inquiry..."
+                        className="w-full px-4 py-3 bg-black border border-neutral-800 rounded-lg text-white placeholder-neutral-600 focus:outline-none focus:border-white text-sm transition-colors"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={status === 'loading'}
-                      className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black hover:bg-neutral-200 transition-colors text-xs font-mono uppercase tracking-wider font-semibold disabled:opacity-50"
+                      className="w-full py-4 px-6 bg-white text-black font-semibold text-xs font-mono uppercase tracking-wider hover:bg-neutral-200 transition-all rounded-lg active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2"
                     >
-                      {status === 'loading' ? (
-                        <span>Transmitting Message...</span>
-                      ) : (
-                        <>
-                          <span>Transmit Message</span>
-                          <Send className="w-3.5 h-3.5" />
-                        </>
-                      )}
+                      <span>{status === 'loading' ? 'Dispatching...' : 'Send Message'}</span>
+                      <Send className="w-4 h-4" />
                     </button>
                   </form>
                 )}
-              </div>
+              </SpotlightCard>
             </div>
           </div>
         </div>

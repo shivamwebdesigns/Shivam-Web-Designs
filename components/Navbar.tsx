@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/data/siteConfig';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { SlideTextButton } from '@/components/ui/SlideTextButton';
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -75,13 +76,12 @@ export function Navbar() {
 
           {/* Right Action Cluster */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link
+            <SlideTextButton
               href="/start-project"
-              className="inline-flex items-center justify-center px-4 py-2 text-xs uppercase tracking-wider font-semibold text-black bg-white hover:bg-neutral-200 rounded-md transition-all duration-200 shadow-sm active:scale-95"
-            >
-              Start a Project
-              <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
-            </Link>
+              primaryText="Start a Project"
+              secondaryText="Let's Talk"
+              variant="primary"
+            />
           </div>
 
           {/* Mobile Hamburger Button */}
