@@ -95,20 +95,20 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico?v=4', sizes: 'any' },
-      { url: '/favicon-16x16.png?v=4', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png?v=4', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-48x48.png?v=4', sizes: '48x48', type: 'image/png' },
-      { url: '/assets/favicon-192.png?v=4', sizes: '192x192', type: 'image/png' },
-      { url: `${siteConfig.assets.favicon}?v=4`, sizes: '512x512', type: 'image/png' },
+      { url: '/favicon.ico?v=5', sizes: 'any' },
+      { url: '/favicon-16x16.png?v=5', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png?v=5', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48x48.png?v=5', sizes: '48x48', type: 'image/png' },
+      { url: '/assets/favicon-192.png?v=5', sizes: '192x192', type: 'image/png' },
+      { url: `${siteConfig.assets.favicon}?v=5`, sizes: '512x512', type: 'image/png' },
     ],
     shortcut: [
-      { url: '/favicon.ico?v=4', sizes: 'any' },
-      { url: '/favicon-32x32.png?v=4', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico?v=5', sizes: 'any' },
+      { url: '/favicon-32x32.png?v=5', sizes: '32x32', type: 'image/png' },
     ],
     apple: [
-      { url: '/apple-touch-icon.png?v=4', sizes: '180x180', type: 'image/png' },
-      { url: `${siteConfig.assets.favicon}?v=4`, sizes: '512x512', type: 'image/png' },
+      { url: '/apple-touch-icon.png?v=5', sizes: '180x180', type: 'image/png' },
+      { url: `${siteConfig.assets.favicon}?v=5`, sizes: '512x512', type: 'image/png' },
     ],
   },
   manifest: '/site.webmanifest',
@@ -126,11 +126,11 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth dark`}>
       <head>
         {/* Favicon & Apple Web App Link Declarations for Safari and Taskbars */}
-        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=4" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=4" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=4" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=4" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=5" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=5" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=5" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=5" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=5" />
         <meta name="apple-mobile-web-app-title" content="ShivamWebDesigns" />
         <meta name="application-name" content="ShivamWebDesigns" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

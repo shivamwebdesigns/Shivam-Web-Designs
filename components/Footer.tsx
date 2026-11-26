@@ -178,7 +178,7 @@ export function Footer() {
           <p>&copy; {currentYear} {siteConfig.name}. All rights reserved.</p>
           <div className="flex items-center space-x-6">
             <Link href="/license" className="hover:text-neutral-300 transition-colors">
-              License
+              Legal Documentation
             </Link>
             <Link href="/start-project" className="text-white hover:underline font-medium">
               Start a Project &rarr;

@@ -27,7 +27,7 @@ export function LegalHub({ initialTab }: LegalHubProps) {
     const tabTitles: Record<LegalTab, string> = {
       privacy: `Privacy Policy | ${siteConfig.name}`,
       terms: `Terms of Service | ${siteConfig.name}`,
-      license: `License | ${siteConfig.name}`,
+      license: `Legal Documentation | ${siteConfig.name}`,
     };
     document.title = tabTitles[tab];
   };

@@ -3,9 +3,9 @@ import { LegalHub } from '@/components/LegalHub';
 import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
-  title: 'License',
+  title: 'Legal Documentation',
   description:
-    'Open source MIT License terms and conditions for ShivamWebDesigns software source code.',
+    'Studio legal documentation, licensing terms (MIT), privacy policy, and terms of service for ShivamWebDesigns.',
   alternates: {
     canonical: `${siteConfig.url}/license`,
   },
