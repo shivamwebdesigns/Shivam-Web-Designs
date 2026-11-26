@@ -4,7 +4,8 @@
 <title>ShivamWebDesigns — 3D Business Card | Independent Web Studio</title>
 <meta name="description" content="Interactive 3D business card for ShivamWebDesigns (SWD). Rotate 360°, flip, toggle portrait/landscape, scan QR, and download direct contact details (.vcf). Designed & engineered by Shivam Purohit.">
 <link rel="canonical" href="https://shivamwebdesigns.devs.li/businesscard">
-<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="icon" type="image/png" href="/assets/logo-trimmed.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <!-- Open Graph -->
 <meta property="og:title" content="ShivamWebDesigns — 3D Business Card">
@@ -30,13 +31,19 @@
     "@type": "Organization",
     "name": "ShivamWebDesigns",
     "url": "https://shivamwebdesigns.devs.li",
-    "logo": "https://shivamwebdesigns.devs.li/assets/logo.png"
+    "logo": "https://shivamwebdesigns.devs.li/assets/logo-trimmed.png",
+    "sameAs": [
+      "https://www.linkedin.com/company/shivamwebdesigns/",
+      "https://github.com/shivamwebdesigns",
+      "https://www.instagram.com/shivamwebdesigns/"
+    ]
   },
-  "url": "https://shivamwebdesigns.devs.li",
+  "url": "https://shivamwebdesigns.devs.li/founder",
   "sameAs": [
-    "https://www.linkedin.com/company/shivamwebdesigns/",
-    "https://github.com/shivamwebdesigns",
-    "https://www.instagram.com/shivamwebdesigns/"
+    "https://www.linkedin.com/in/purohit-bhagyesh-193766413/",
+    "https://github.com/PurohitBhagyesh",
+    "https://www.instagram.com/purohitshivam23/",
+    "https://wa.me/917861965480"
   ]
 }
 </script>
@@ -87,23 +94,93 @@ dialog h2{margin:0 0 4px;font-size:20px;font-weight:600}
 dialog p{margin:0 0 14px;color:var(--mute);font-size:14px;line-height:1.5}
 dialog pre{margin:0 0 16px;white-space:pre-wrap;word-break:break-all;font:13px/1.6 ui-monospace,Menlo,monospace;background:#0a0a0a;border:1px solid #262626;border-radius:12px;padding:14px;max-height:34vh;overflow:auto}
 .row{display:flex;gap:10px}.row button{flex:1}
+.top-nav{position:fixed;top:16px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 24px;z-index:90;pointer-events:none}
+.top-nav *{pointer-events:auto}
+.back-link{font-size:13px;letter-spacing:.02em;color:#e5e5e5;background:rgba(18,18,18,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid #333;border-radius:999px;padding:9px 18px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 6px 18px rgba(0,0,0,.6)}
+.back-link:hover{background:#222;border-color:#666;color:#fff;transform:translateX(-2px)}
+.brand-pill{font-size:11px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:#888;background:rgba(18,18,18,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid #262626;border-radius:999px;padding:7px 16px}
+@media(max-width:540px){.top-nav{top:12px;padding:0 14px}.brand-pill{display:none}}
+.action-grid{display:flex;flex-direction:column;align-items:center;gap:10px;width:min(420px,92vw)}
+.sub-actions{display:flex;gap:10px;width:100%}
+.action-btn{flex:1;background:#141414;color:#e5e5e5;border:1px solid #333;font-size:14px;font-weight:500;min-height:46px;border-radius:999px;padding:10px 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .2s}
+.action-btn:hover{background:#222;border-color:#555;color:#fff}
+.action-btn:active{transform:scale(.97)}
+.modal{background:#0e0e0e;color:var(--ink);border:1px solid #2b2b2b;border-radius:20px;padding:24px;width:min(440px,92vw);box-shadow:0 24px 60px rgba(0,0,0,.9);-webkit-user-select:text;user-select:text}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.close-x{background:transparent;border:none;color:#888;font-size:24px;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px;transition:color .2s}
+.close-x:hover{color:#fff}
+.modal-sub{color:var(--mute);font-size:13px;line-height:1.45;margin:0 0 14px}
+.qr-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:#fff;border-radius:14px;margin:14px 0 16px}
+.qr-img{width:200px;height:200px;display:block}
+.qr-url{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#222;margin-top:10px;letter-spacing:.02em;word-break:break-all;text-align:center}
+.modal-actions{display:flex;gap:10px;width:100%}
+.modal-btn{flex:1;min-height:44px;font-size:14px;font-weight:500;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .2s}
+.modal-btn.primary{background:#fff;color:#000;border:1px solid #fff}
+.modal-btn.primary:hover{background:#e5e5e5}
+.modal-btn.secondary{background:#1a1a1a;color:#fff;border:1px solid #333}
+.modal-btn.secondary:hover{background:#262626}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);background:#fff;color:#000;font-size:13px;font-weight:600;padding:10px 22px;border-radius:999px;box-shadow:0 12px 30px rgba(0,0,0,.8);opacity:0;pointer-events:none;transition:all .25s ease-out;z-index:9999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (max-width:480px){.bar a{padding:12px 15px}.ctl button{padding:12px 18px}body{gap:28px}}
 @media (max-height:480px) and (orientation:landscape){body{display:grid;grid-template-columns:auto minmax(0,1fr);align-content:center;justify-items:center;gap:14px 28px;padding:12px 22px}.wrap{grid-row:1/span 3;margin:0}.hint{display:none}.stage[data-mode="land"]{--cw:min(56vw,calc((100dvh - 44px) * 1.75))}.stage[data-mode="port"]{--ch:calc(100dvh - 44px)}.save{width:100%}.bar{grid-column:2}}
 @media (prefers-reduced-motion:reduce){.wrap{animation:none}*{transition:none!important}}
 </style></head><body>
+<header class="top-nav">
+  <a href="/" class="back-link" aria-label="Back to ShivamWebDesigns Homepage">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    <span>Back to Website</span>
+  </a>
+  <span class="brand-pill">SWD • Digital Flagship</span>
+</header>
 <div class="wrap"><div class="swapper" id="swp"><div class="stage" id="stage" data-mode="land" tabindex="0" role="group" aria-label="3D business card. Swipe or drag to turn it; arrow keys also work.">
 <div class="card" id="card">
 <div class="face front l"></div><div class="face back l"><a class="hot" href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" aria-label="Website" style="left:46.19%;top:21.83%;width:49.52%;height:11.00%"></a><a class="hot" href="https://www.linkedin.com/company/shivamwebdesigns/" target="_blank" rel="noopener" aria-label="LinkedIn" style="left:46.19%;top:37.67%;width:49.52%;height:11.00%"></a><a class="hot" href="https://github.com/shivamwebdesigns" target="_blank" rel="noopener" aria-label="GitHub" style="left:46.19%;top:53.50%;width:49.52%;height:11.00%"></a><a class="hot" href="https://www.instagram.com/shivamwebdesigns/" target="_blank" rel="noopener" aria-label="Instagram" style="left:46.19%;top:69.33%;width:49.52%;height:11.00%"></a><a class="hot" href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" aria-label="QR code: open website" style="left:15.24%;top:53.33%;width:15.24%;height:26.67%"></a></div><div class="face front p"></div><div class="face back p"><a class="hot" href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" aria-label="Website" style="left:8.33%;top:58.38%;width:83.33%;height:6.29%"></a><a class="hot" href="https://www.linkedin.com/company/shivamwebdesigns/" target="_blank" rel="noopener" aria-label="LinkedIn" style="left:8.33%;top:66.48%;width:83.33%;height:6.29%"></a><a class="hot" href="https://github.com/shivamwebdesigns" target="_blank" rel="noopener" aria-label="GitHub" style="left:8.33%;top:74.57%;width:83.33%;height:6.29%"></a><a class="hot" href="https://www.instagram.com/shivamwebdesigns/" target="_blank" rel="noopener" aria-label="Instagram" style="left:8.33%;top:82.67%;width:83.33%;height:6.29%"></a><a class="hot" href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener" aria-label="QR code: open website" style="left:31.67%;top:26.67%;width:36.67%;height:20.95%"></a></div>
 <div class="side sl"></div><div class="side sr"></div><div class="side st"></div><div class="side sb"></div>
 </div></div></div><div class="shadow" id="shadow"></div></div>
 <div class="ctl"><button id="fl">Flip</button><button id="rot"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg><span id="rl">Portrait view</span></button></div>
+<div class="action-grid">
 <button class="save" id="save"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Add to Contacts</button>
+<div class="sub-actions">
+  <button class="action-btn" id="share-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    <span>Share Card</span>
+  </button>
+  <button class="action-btn" id="qr-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span>QR Code</span>
+  </button>
+</div>
+</div>
+<dialog id="qr-dlg" class="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Scan Digital Business Card</h2>
+      <button class="close-x" id="qr-close" aria-label="Close QR Modal">&times;</button>
+    </div>
+    <p class="modal-sub">Scan on another mobile phone to open and save this digital business card directly.</p>
+    <div class="qr-container">
+      <img src="/assets/businesscard-qr.png" alt="ShivamWebDesigns Digital Business Card QR Code" width="200" height="200" class="qr-img" />
+      <span class="qr-url">shivamwebdesigns.devs.li/businesscard</span>
+    </div>
+    <div class="modal-actions">
+      <button id="qr-dl" class="modal-btn primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Download PNG</span>
+      </button>
+      <button id="qr-copy" class="modal-btn secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>Copy Link</span>
+      </button>
+    </div>
+  </div>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 <p class="hint">Swipe the card to turn it. Use Rotate to switch between landscape and portrait. On the back, tap a link or scan the QR code.</p>
 <nav class="bar" aria-label="Links"><a href="https://shivamwebdesigns.devs.li" target="_blank" rel="noopener"><svg aria-hidden="true" width="22" height="22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M351.9 280l-190.9 0c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zM160.9 232l190.9 0C349 167.5 334.7 108.1 314.4 64.6 303 40.2 290.7 22.8 279.3 12.2 268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4zm-48 0C116.4 146.4 138.5 66.9 170.8 14.7 78.7 47.3 10.9 131.2 1.5 232l111.4 0zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3L1.5 280zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3l-111.4 0zm111.4-48C501.9 131.2 434.1 47.3 342 14.7 374.3 66.9 396.4 146.4 399.9 232l111.4 0z"/></svg><span>Website</span></a><a href="https://www.linkedin.com/company/shivamwebdesigns/" target="_blank" rel="noopener"><svg aria-hidden="true" width="22" height="22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z"/></svg><span>LinkedIn</span></a><a href="https://github.com/shivamwebdesigns" target="_blank" rel="noopener"><svg aria-hidden="true" width="22" height="22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5l0 52C323 491.5 335.5 500 350.5 494 441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5l0-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21z"/></svg><span>GitHub</span></a><a href="https://www.instagram.com/shivamwebdesigns/" target="_blank" rel="noopener"><svg aria-hidden="true" width="22" height="22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg><span>Instagram</span></a></nav>
 <dialog id="dlg"><h2>Contact details</h2><p>Copy these into your contacts. On the live site this button saves the contact straight to your phone.</p><pre id="txt"></pre><div class="row"><button id="cp">Copy details</button><button id="cl">Close</button></div></dialog>
 <script>
 /* ---- EDIT YOUR DETAILS HERE (leave phone / email empty to hide them) ---- */
-const CONTACT={name:"ShivamWebDesigns",org:"ShivamWebDesigns",title:"Web Design & Development",phone:"",email:"",note:"UI/UX | Frontend | Website Redesign"};
+const CONTACT={name:"ShivamWebDesigns",org:"ShivamWebDesigns",title:"Web Design & Development Studio",phone:"+91 78619 65480",email:"shivamwebdesigns23@gmail.com",note:"UI/UX Architecture | Frontend Engineering | Website Redesign"};
 const LINKS={"Website": "https://shivamwebdesigns.devs.li", "LinkedIn": "https://www.linkedin.com/company/shivamwebdesigns/", "GitHub": "https://github.com/shivamwebdesigns", "Instagram": "https://www.instagram.com/shivamwebdesigns/"};
 /* ------------------------------------------------------------------------ */
 const $=id=>document.getElementById(id),card=$('card'),stage=$('stage');
@@ -163,4 +240,51 @@ $('save').onclick=()=>{
 $('cl').onclick=()=>$('dlg').close();
 $('cp').onclick=async()=>{try{await navigator.clipboard.writeText(plain());$('cp').textContent='Copied ✓'}catch(_){const r=document.createRange();r.selectNodeContents($('txt'));getSelection().removeAllRanges();getSelection().addRange(r);$('cp').textContent='Selected – press copy'}setTimeout(()=>$('cp').textContent='Copy details',2000)};
 $('dlg').addEventListener('click',e=>{if(e.target===$('dlg'))$('dlg').close()});
+function showToast(msg){
+  const t=$('toast');
+  if(!t)return;
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(t._tm);
+  t._tm=setTimeout(()=>t.classList.remove('show'),2400);
+}
+$('share-btn').onclick=async()=>{
+  const shareData={
+    title:'ShivamWebDesigns — Digital Business Card',
+    text:'Connect with ShivamWebDesigns — Digital Web Design & Development Studio.\nExplore our digital business card:\nhttps://shivamwebdesigns.devs.li/businesscard',
+    url:'https://shivamwebdesigns.devs.li/businesscard'
+  };
+  if(navigator.share){
+    try{
+      await navigator.share(shareData);
+      return;
+    }catch(err){
+      if(err.name==='AbortError')return;
+    }
+  }
+  try{
+    await navigator.clipboard.writeText(shareData.url);
+    showToast('Business card link copied to clipboard!');
+  }catch(_){
+    showToast('URL: '+shareData.url);
+  }
+};
+$('qr-btn').onclick=()=>$('qr-dlg').showModal();
+$('qr-close').onclick=()=>$('qr-dlg').close();
+$('qr-dlg').addEventListener('click',e=>{if(e.target===$('qr-dlg'))$('qr-dlg').close()});
+$('qr-copy').onclick=async()=>{
+  try{
+    await navigator.clipboard.writeText('https://shivamwebdesigns.devs.li/businesscard');
+    showToast('Card link copied to clipboard!');
+  }catch(_){}
+};
+$('qr-dl').onclick=()=>{
+  const a=document.createElement('a');
+  a.href='/assets/businesscard-qr.png';
+  a.download='ShivamWebDesigns-BusinessCard-QR.png';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showToast('QR code downloaded!');
+};
 </script></body></html>

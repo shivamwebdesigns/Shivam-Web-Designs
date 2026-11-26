@@ -14,13 +14,13 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-5">
             <Link href="/" className="inline-block" aria-label="ShivamWebDesigns Home">
-              <div className="relative h-12 w-[74px] overflow-hidden sm:h-14 sm:w-[86px]">
+              <div className="relative flex items-center">
                 <Image
                   src={siteConfig.assets.logoPng}
                   alt="Shivam Web Designs"
-                  fill
-                  sizes="(max-width: 640px) 74px, 86px"
-                  className="scale-[2.1] object-cover"
+                  width={84}
+                  height={56}
+                  className="h-12 sm:h-14 w-auto object-contain transition-opacity duration-200 hover:opacity-90"
                 />
               </div>
             </Link>

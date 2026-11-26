@@ -19,17 +19,8 @@ yarn-error.log*
 .DS_Store
 *.pem
 
-# Vercel
-.vercel
-node_modules
-
-# Environment variables
-.env*.local
-.env
-
-# OS Files
-.DS_Store
-*.pem
+# IDE
+.vscode/
 
 # Vercel
 .vercel

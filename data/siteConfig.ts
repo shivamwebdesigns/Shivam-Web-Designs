@@ -48,7 +48,7 @@ export const siteConfig: SiteConfig = {
     'ShivamWebDesigns is a web design and development studio based in India, creating custom websites, considered UI/UX, and digital experiences for businesses.',
   url: 'https://shivamwebdesigns.devs.li',
   assets: {
-    logoPng: '/assets/logo.png',
+    logoPng: '/assets/logo-trimmed.png',
     favicon: '/assets/favicon-512.png',
     bannerDesktop: '/assets/banner-desktop.png',
     bannerMobile: '/assets/banner-mobile.png',
@@ -63,7 +63,7 @@ export const siteConfig: SiteConfig = {
   social: {
     website: 'https://shivamwebdesigns.devs.li',
     linkedin: 'https://www.linkedin.com/company/shivamwebdesigns/',
-    github: 'https://github.com/shivamwebdesigns/Shivam-Web-Designs',
+    github: 'https://github.com/shivamwebdesigns',
     instagram: 'https://www.instagram.com/shivamwebdesigns/',
     whatsapp: 'https://wa.me/917861965480?s=p',
     email: 'mailto:shivamwebdesigns23@gmail.com',

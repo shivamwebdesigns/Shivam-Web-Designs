@@ -1,12 +1,17 @@
 {
   "name": "ShivamWebDesigns",
   "short_name": "SWD",
-  "description": "Independent Web Design & Development Agency",
+  "description": "ShivamWebDesigns is an independent web design and development studio creating modern, responsive and professional websites for individuals, creators and businesses.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
     {
       "src": "/assets/favicon-192.png",
       "sizes": "192x192",

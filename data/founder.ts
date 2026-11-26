@@ -30,6 +30,7 @@ export interface FounderProfile {
     github: string;
     instagram: string;
     email: string;
+    whatsapp: string;
     businessCard: string;
   };
 }
@@ -125,10 +126,11 @@ export const founderData: FounderProfile = {
     signoff: 'Shivam Purohit — Founder & CEO, ShivamWebDesigns',
   },
   social: {
-    linkedin: 'https://www.linkedin.com/company/shivamwebdesigns/',
-    github: 'https://github.com/shivamwebdesigns/Shivam-Web-Designs',
-    instagram: 'https://www.instagram.com/shivamwebdesigns/',
-    email: 'shivamwebdesigns23@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/purohit-bhagyesh-193766413/',
+    github: 'https://github.com/PurohitBhagyesh',
+    instagram: 'https://www.instagram.com/purohitshivam23/',
+    email: 'purohitunofficialbhagyesh@gmail.com',
+    whatsapp: 'https://wa.me/917861965480',
     businessCard: '/businesscard',
   },
 };

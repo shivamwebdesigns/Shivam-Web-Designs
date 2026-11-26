@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, CreditCard, Github, Instagram, Linkedin, Mail, Sparkles } from 'lucide-react';
+import { ArrowRight, CreditCard, Github, Instagram, Linkedin, Mail, MessageCircle, Sparkles } from 'lucide-react';
 import { founderData } from '@/data/founder';
 import { siteConfig } from '@/data/siteConfig';
 
@@ -272,6 +272,16 @@ export default function FounderPage() {
             >
               <Instagram className="w-4 h-4 text-neutral-400" />
               <span>Instagram</span>
+            </a>
+
+            <a
+              href={founderData.social.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-neutral-950 border border-neutral-800 text-white hover:border-neutral-700 hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider"
+            >
+              <MessageCircle className="w-4 h-4 text-neutral-400" />
+              <span>WhatsApp</span>
             </a>
 
             <a

@@ -41,13 +41,13 @@ export function Navbar() {
             className="flex items-center group transition-transform duration-200 active:scale-95"
             aria-label="ShivamWebDesigns Home"
           >
-            <div className="relative h-10 w-[62px] overflow-hidden sm:h-12 sm:w-[74px]">
+            <div className="relative flex items-center">
               <Image
                 src={siteConfig.assets.logoPng}
                 alt="Shivam Web Designs"
-                fill
-                sizes="(max-width: 640px) 62px, 74px"
-                className="scale-[2.1] object-cover transition-opacity duration-200 group-hover:opacity-90"
+                width={72}
+                height={48}
+                className="h-10 sm:h-12 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
                 priority
               />
             </div>

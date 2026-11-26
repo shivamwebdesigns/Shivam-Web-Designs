@@ -4,7 +4,10 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { MobileDock } from '@/components/MobileDock';
+import { IOSInstallPrompt } from '@/components/IOSInstallPrompt';
+import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister';
 import { siteConfig } from '@/data/siteConfig';
+import { founderData } from '@/data/founder';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,10 +31,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    default: 'ShivamWebDesigns | Website Design & Development Agency',
     template: `%s | ${siteConfig.name}`,
   },
-  description: siteConfig.description,
+  description:
+    'ShivamWebDesigns is an independent web design and development studio creating modern, responsive and professional websites for individuals, creators and businesses.',
   keywords: [
     'ShivamWebDesigns',
     'SWD',
@@ -60,8 +64,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteConfig.url,
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
+    title: 'ShivamWebDesigns | Website Design & Development Agency',
+    description:
+      'ShivamWebDesigns is an independent web design and development studio creating modern, responsive and professional websites for individuals, creators and businesses.',
     siteName: siteConfig.name,
     images: [
       {
@@ -74,8 +79,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
+    title: 'ShivamWebDesigns | Website Design & Development Agency',
+    description:
+      'ShivamWebDesigns is an independent web design and development studio creating modern, responsive and professional websites for individuals, creators and businesses.',
     images: [siteConfig.assets.bannerDesktop],
     creator: '@shivamwebdesigns',
   },
@@ -85,7 +91,10 @@ export const metadata: Metadata = {
       { url: siteConfig.assets.favicon, sizes: '512x512', type: 'image/png' },
     ],
     shortcut: '/favicon.ico',
-    apple: [{ url: siteConfig.assets.favicon, sizes: '512x512', type: 'image/png' }],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: siteConfig.assets.favicon, sizes: '512x512', type: 'image/png' },
+    ],
   },
   manifest: '/site.webmanifest',
 };
@@ -119,6 +128,12 @@ export default function RootLayout({
                 name: 'Shivam Purohit',
                 jobTitle: 'Founder & CEO',
                 image: `${siteConfig.url}${siteConfig.assets.founderImage}`,
+                sameAs: [
+                  founderData.social.linkedin,
+                  founderData.social.github,
+                  founderData.social.instagram,
+                  founderData.social.whatsapp,
+                ],
               },
               sameAs: [
                 siteConfig.social.linkedin,
@@ -137,6 +152,8 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileDock />
+        <IOSInstallPrompt />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
