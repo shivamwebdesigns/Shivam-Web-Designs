@@ -7,7 +7,7 @@ import { founderData } from '@/data/founder';
 import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
-  title: `Founder Profile — ${founderData.name}`,
+  title: 'Founder',
   description: `${founderData.name}, ${founderData.role} of ${founderData.company}. Discover his story, design philosophy, technical skills, and vision for the modern web.`,
   openGraph: {
     title: `${founderData.name} — Founder & CEO, ${founderData.company}`,

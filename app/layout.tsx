@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'ShivamWebDesigns (SWD) | High-Performance Web Design & 3D Development Agency',
+    default: 'Home | ShivamWebDesigns',
     template: `%s | ${siteConfig.name}`,
   },
   description:
@@ -128,11 +128,11 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth dark`}>
       <head>
         {/* Favicon & Apple Web App Link Declarations for Safari and Taskbars */}
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=3" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
         <meta name="apple-mobile-web-app-title" content="ShivamWebDesigns" />
         <meta name="application-name" content="ShivamWebDesigns" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Projects | Updating Soon',
+  title: 'Projects',
   description: 'The ShivamWebDesigns project portfolio is being updated. Check back soon for selected work.',
   alternates: { canonical: '/projects' },
 };
