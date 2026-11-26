@@ -31,11 +31,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'ShivamWebDesigns | Website Design & Development Agency',
+    default: 'ShivamWebDesigns (SWD) | High-Performance Web Design & 3D Development Agency',
     template: `%s | ${siteConfig.name}`,
   },
   description:
-    'ShivamWebDesigns is an independent web design and development studio creating modern, responsive and professional websites for individuals, creators and businesses.',
+    'ShivamWebDesigns is an independent web design and development studio. We build bespoke digital flagships, 3D interactive web experiences, and high-performance websites for founders, brands, and businesses worldwide.',
   keywords: [
     'ShivamWebDesigns',
     'SWD',
@@ -45,10 +45,18 @@ export const metadata: Metadata = {
     'website development',
     'UI/UX design',
     'frontend development',
+    'Next.js 15 developer',
+    '3D web design',
+    'high performance web design',
+    'creative agency India',
   ],
   authors: [{ name: 'Shivam Purohit', url: siteConfig.url }],
   creator: 'Shivam Purohit',
   publisher: siteConfig.name,
+  applicationName: 'ShivamWebDesigns',
+  alternates: {
+    canonical: siteConfig.url,
+  },
   robots: {
     index: true,
     follow: true,
@@ -64,9 +72,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteConfig.url,
-    title: 'ShivamWebDesigns | Website Design & Development Agency',
+    title: 'ShivamWebDesigns (SWD) | High-Performance Web Design & 3D Development Agency',
     description:
-      'ShivamWebDesigns is an independent web design and development studio creating modern, responsive and professional websites for individuals, creators and businesses.',
+      'ShivamWebDesigns is an independent web design and development studio creating bespoke digital flagships, 3D interactive web experiences, and high-performance websites.',
     siteName: siteConfig.name,
     images: [
       {
@@ -74,23 +82,32 @@ export const metadata: Metadata = {
         width: 1920,
         height: 640,
         alt: `${siteConfig.name} — Digital Agency Banner`,
+        type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ShivamWebDesigns | Website Design & Development Agency',
-    description:
-      'ShivamWebDesigns is an independent web design and development studio creating modern, responsive and professional websites for individuals, creators and businesses.',
-    images: [siteConfig.assets.bannerDesktop],
+    site: '@shivamwebdesigns',
     creator: '@shivamwebdesigns',
+    title: 'ShivamWebDesigns (SWD) | High-Performance Web Design & 3D Development Agency',
+    description:
+      'ShivamWebDesigns is an independent web design and development studio creating bespoke digital flagships, 3D interactive web experiences, and high-performance websites.',
+    images: [siteConfig.assets.bannerDesktop],
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: '256x256', type: 'image/x-icon' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/assets/favicon-192.png', sizes: '192x192', type: 'image/png' },
       { url: siteConfig.assets.favicon, sizes: '512x512', type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
       { url: siteConfig.assets.favicon, sizes: '512x512', type: 'image/png' },
@@ -110,39 +127,92 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth dark`}>
       <head>
-        {/* Structured JSON-LD Schema */}
+        {/* Favicon & Apple Web App Link Declarations for Safari and Taskbars */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="ShivamWebDesigns" />
+        <meta name="application-name" content="ShivamWebDesigns" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        {/* Structured JSON-LD Knowledge Graph Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'ProfessionalService',
-              name: siteConfig.name,
-              image: `${siteConfig.url}${siteConfig.assets.logoPng}`,
-              url: siteConfig.url,
-              telephone: siteConfig.contact.phone,
-              email: siteConfig.contact.email,
-              address: {
-                '@type': 'PostalAddress',
-                addressCountry: 'IN',
-              },
-              founder: {
-                '@type': 'Person',
-                name: 'Shivam Purohit',
-                jobTitle: 'Founder & CEO',
-                image: `${siteConfig.url}${siteConfig.assets.founderImage}`,
-                sameAs: [
-                  founderData.social.linkedin,
-                  founderData.social.github,
-                  founderData.social.instagram,
-                  founderData.social.whatsapp,
-                ],
-              },
-              sameAs: [
-                siteConfig.social.linkedin,
-                siteConfig.social.github,
-                siteConfig.social.instagram,
-                siteConfig.contact.whatsapp,
+              '@graph': [
+                {
+                  '@type': 'WebSite',
+                  '@id': `${siteConfig.url}/#website`,
+                  url: siteConfig.url,
+                  name: siteConfig.name,
+                  alternateName: siteConfig.shortName,
+                  description: siteConfig.description,
+                  publisher: {
+                    '@id': `${siteConfig.url}/#organization`,
+                  },
+                  inLanguage: 'en-US',
+                },
+                {
+                  '@type': 'ProfessionalService',
+                  '@id': `${siteConfig.url}/#organization`,
+                  name: siteConfig.name,
+                  alternateName: [siteConfig.shortName, 'Shivam Web Designs'],
+                  url: siteConfig.url,
+                  logo: `${siteConfig.url}${siteConfig.assets.logoPng}`,
+                  image: `${siteConfig.url}${siteConfig.assets.bannerDesktop}`,
+                  telephone: siteConfig.contact.phone,
+                  email: siteConfig.contact.email,
+                  priceRange: '$$',
+                  currenciesAccepted: 'USD, INR, EUR, GBP',
+                  paymentAccepted: 'Bank Transfer, UPI, Credit Card, Stripe, PayPal',
+                  address: {
+                    '@type': 'PostalAddress',
+                    addressCountry: 'IN',
+                  },
+                  areaServed: {
+                    '@type': 'Country',
+                    name: 'Worldwide',
+                  },
+                  founder: {
+                    '@id': `${siteConfig.url}/#founder`,
+                  },
+                  sameAs: [
+                    siteConfig.social.linkedin,
+                    siteConfig.social.github,
+                    siteConfig.social.instagram,
+                    siteConfig.contact.whatsapp,
+                  ],
+                },
+                {
+                  '@type': 'Person',
+                  '@id': `${siteConfig.url}/#founder`,
+                  name: 'Shivam Purohit',
+                  jobTitle: 'Founder & Creative Director',
+                  worksFor: {
+                    '@id': `${siteConfig.url}/#organization`,
+                  },
+                  image: `${siteConfig.url}${siteConfig.assets.founderImage}`,
+                  knowsAbout: [
+                    'Website Design',
+                    'Website Development',
+                    'UI/UX Architecture',
+                    'Next.js Engineering',
+                    'Spatial 3D Web Interfaces',
+                    'Core Web Vitals Optimization',
+                    'Search Engine Optimization (SEO)',
+                  ],
+                  sameAs: [
+                    founderData.social.linkedin,
+                    founderData.social.github,
+                    founderData.social.instagram,
+                    founderData.social.whatsapp,
+                  ],
+                },
               ],
             }),
           }}
