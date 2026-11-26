@@ -19,6 +19,14 @@ export interface SiteConfig {
   headline: string;
   supportingText: string;
   description: string;
+  seo: {
+    title: string;
+    description: string;
+    ogTitle: string;
+    ogDescription: string;
+    twitterTitle: string;
+    twitterDescription: string;
+  };
   url: string;
   assets: {
     logoPng: string;
@@ -45,7 +53,18 @@ export const siteConfig: SiteConfig = {
   supportingText:
     'We design and develop thoughtful digital experiences that help individuals, brands and businesses establish a stronger online presence.',
   description:
-    'ShivamWebDesigns is a web design and development studio based in India, creating custom websites, considered UI/UX, and digital experiences for businesses.',
+    'We craft premium websites and immersive digital experiences that elevate brands and bring ideas to life.',
+  seo: {
+    title: 'Shivam Web Designs | Digital Experiences, Crafted with Precision',
+    description:
+      'We craft premium websites and immersive digital experiences that elevate brands and bring ideas to life.',
+    ogTitle: 'Shivam Web Designs | Where Design Meets Digital Excellence.',
+    ogDescription:
+      'Thoughtfully designed websites, seamless digital experiences and creative web solutions built to elevate your brand.',
+    twitterTitle: 'Shivam Web Designs | Digital Design & Development',
+    twitterDescription:
+      'Crafting exceptional digital experiences through design, innovation and technology.',
+  },
   url: 'https://shivamwebdesigns.devs.li',
   assets: {
     logoPng: '/assets/logo-trimmed.png',

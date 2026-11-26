@@ -32,11 +32,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'Home | ShivamWebDesigns',
+    default: siteConfig.seo.title,
     template: `%s | ${siteConfig.name}`,
   },
-  description:
-    'ShivamWebDesigns is an independent web design and development studio. We build bespoke digital flagships, 3D interactive web experiences, and high-performance websites for founders, brands, and businesses worldwide.',
+  description: siteConfig.seo.description,
   keywords: [
     'ShivamWebDesigns',
     'SWD',
@@ -73,9 +72,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteConfig.url,
-    title: 'ShivamWebDesigns (SWD) | High-Performance Web Design & 3D Development Agency',
-    description:
-      'ShivamWebDesigns is an independent web design and development studio creating bespoke digital flagships, 3D interactive web experiences, and high-performance websites.',
+    title: siteConfig.seo.ogTitle,
+    description: siteConfig.seo.ogDescription,
     siteName: siteConfig.name,
     images: [
       {
@@ -91,9 +89,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@shivamwebdesigns',
     creator: '@shivamwebdesigns',
-    title: 'ShivamWebDesigns (SWD) | High-Performance Web Design & 3D Development Agency',
-    description:
-      'ShivamWebDesigns is an independent web design and development studio creating bespoke digital flagships, 3D interactive web experiences, and high-performance websites.',
+    title: siteConfig.seo.twitterTitle,
+    description: siteConfig.seo.twitterDescription,
     images: [siteConfig.assets.bannerDesktop],
   },
   icons: {
