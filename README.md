@@ -58,13 +58,25 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 | **`/contact`** | `app/contact/page.tsx` | **Client Inquiries:** Studio communication coordinates, encrypted response expectations, and structured contact form. |
 | **`/start-project`** | `app/start-project/page.tsx` | **Project Configurator:** Multi-step sprint planner with interactive pills for service type, budget tier, and delivery timeline. |
 | **`/businesscard`** | `public/businesscard.html` | **Spatial 3D Digital Business Card:** Gyroscope- and drag-enabled 3D physical card simulation, vCard 3.0 generation, Web Share API, and QR download. |
-| **`/privacy`** | `app/privacy/page.tsx` | **Privacy Policy:** Comprehensive GDPR, CCPA, and DPDP compliant legal disclosures. |
-| **`/terms`** | `app/terms/page.tsx` | **Terms of Service:** Studio engagement, intellectual property, and service terms. |
+| **`/privacy`** | `app/privacy/page.tsx` | **Privacy Policy:** Native dark mode legal architecture with DPDP Act, GDPR, CCPA compliance badges, and Data Protection Officer coordinates. |
+| **`/terms`** | `app/terms/page.tsx` | **Terms of Service:** Native dark mode engagement terms, IP transfer milestones, 30-day warranty policy, and dispute resolution guidelines. |
 | **`/admin`** | `app/admin/page.tsx` | **Private Dashboard:** Google OAuth verified intake management for studio leads. |
 
 ---
 
-## 4. Strict Identity Separation Protocol
+## 4. UI Components & Interaction Features
+
+- **Global Back-to-Top Button (`components/BackToTop.tsx`):** Unobtrusive floating control with passive scroll detection (`scrollY > 300`), smooth window scrolling, frosted dark glass styling (`bg-neutral-900/90 backdrop-blur-md`), and mobile dock offset.
+- **Browser Tab & Taskbar Branding:**
+  - Simplified titles: `Page | ShivamWebDesigns` (`Home | ShivamWebDesigns`, etc.).
+  - Multi-resolution `favicon.ico` containing 16×16, 32×32, 48×48, and 256×256 layers.
+  - Dedicated PNG favicons (`16x16`, `32x32`, `48x48`, `180x180`, `512x512`) with active cache-busting queries (`?v=4`).
+  - Native Next.js App Router icon routes: `/icon.png` and `/apple-icon.png`.
+- **Spatial 3D Business Card:** Pure CSS 3D transform matrix with interactive flip, lighting highlights, and icon-only back navigation.
+
+---
+
+## 5. Strict Identity Separation Protocol
 
 To preserve operational professionalism, company channels and personal founder credentials are strictly separated:
 
@@ -87,7 +99,7 @@ To preserve operational professionalism, company channels and personal founder c
 
 ---
 
-## 5. Technology Stack
+## 6. Technology Stack
 
 - **Framework:** [Next.js 15](https://nextjs.org/) (App Router, React Server Components)
 - **UI Library:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
@@ -103,7 +115,7 @@ To preserve operational professionalism, company channels and personal founder c
 
 ---
 
-## 6. Local Development
+## 7. Local Development
 
 ### Prerequisites
 - Node.js 18.18.0 or newer
@@ -137,7 +149,7 @@ npm run build
 
 ---
 
-## 7. License & Intellectual Property
+## 8. License & Intellectual Property
 
 - **Source Code:** Distributed under the [MIT License](LICENSE).
 - **Brand Assets & Media:** All logos, trademarks, studio photography, and proprietary brand graphics are protected under [ASSET_RIGHTS.md](ASSET_RIGHTS.md) and may not be reproduced without written consent.

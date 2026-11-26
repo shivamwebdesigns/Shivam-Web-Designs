@@ -2,17 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Shivam Web Designs</title>
-  <meta name="description" content="Privacy Policy for Shivam Web Designs. Transparent, minimal data collection, zero third-party tracking, and DPDP Act / GDPR compliance.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <title>Privacy Policy | ShivamWebDesigns</title>
+  <meta name="description" content="Privacy Policy for ShivamWebDesigns. Transparent, minimal data collection, zero third-party tracking, and DPDP Act / GDPR compliance.">
   <link rel="canonical" href="https://shivamwebdesigns.devs.li/privacy">
-  <link rel="icon" type="image/png" href="Brand Logo.PNG">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="shortcut icon" href="/favicon.ico?v=4">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=4">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4">
   <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050505;
+      --card-bg: #0d0d0d;
+      --text: #f5f5f5;
+      --text-muted: #a3a3a3;
+      --text-faint: #737373;
+      --border: #222222;
+      --border-hover: #444444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px;
+    }
     .legal-page {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto;
-      padding: 120px 24px 80px;
+      padding: 60px 0 100px;
     }
     .legal-back-nav {
       display: inline-flex;
@@ -20,41 +44,62 @@
       gap: 8px;
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
+      font-family: ui-monospace, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       margin-bottom: 32px;
-      padding: 8px 16px;
+      padding: 8px 18px;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: var(--surface);
+      background: rgba(18, 18, 18, 0.7);
+      backdrop-filter: blur(12px);
       transition: all 0.2s ease;
     }
     .legal-back-nav:hover {
-      color: var(--text);
+      color: #fff;
       border-color: var(--border-hover);
-      transform: translateY(-1px);
+      transform: translateX(-2px);
+    }
+    .legal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(20, 20, 20, 0.6);
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.75rem;
+      color: #e5e5e5;
+      margin-bottom: 12px;
     }
     .legal-title {
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 700;
       letter-spacing: -0.03em;
       margin-bottom: 12px;
-      color: var(--text);
+      color: #ffffff;
     }
     .legal-meta {
-      font-size: 0.875rem;
-      color: var(--text-faint);
+      font-size: 0.8125rem;
+      font-family: ui-monospace, Menlo, monospace;
+      color: var(--text-muted);
       margin-bottom: 40px;
       display: flex;
-      gap: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
       align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
     }
     .legal-content h2 {
       font-size: 1.35rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: -0.02em;
-      margin-top: 36px;
+      margin-top: 40px;
       margin-bottom: 14px;
-      color: var(--text);
+      color: #ffffff;
       border-bottom: 1px solid var(--border);
       padding-bottom: 8px;
     }
@@ -64,36 +109,82 @@
       color: var(--text-muted);
       margin-bottom: 16px;
     }
+    .legal-content strong { color: #ffffff; }
     .legal-content ul {
       padding-left: 20px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
     .legal-content li {
       margin-bottom: 8px;
     }
     .legal-highlight-box {
-      background: rgba(59, 130, 246, 0.06);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      border-radius: 12px;
-      padding: 20px 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
       margin: 28px 0;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
     .legal-highlight-box p {
-      color: var(--text);
+      color: #d4d4d4;
       margin-bottom: 0;
+    }
+    .legal-highlight-box strong { color: #fff; }
+    .legal-contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-top: 36px;
     }
     .legal-contact-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--primary);
-      color: #fff;
-      padding: 10px 20px;
+      background: #ffffff;
+      color: #000000;
+      padding: 10px 22px;
       border-radius: 8px;
       text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-top: 12px;
+      font-size: 0.8125rem;
+      font-family: ui-monospace, Menlo, monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 16px;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .legal-contact-btn:hover {
+      background: #e5e5e5;
+      transform: translateY(-1px);
+    }
+    .back-to-top-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid var(--border);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      z-index: 99;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+    }
+    .back-to-top-btn.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .back-to-top-btn:hover {
+      background: #262626;
+      border-color: #555;
     }
   </style>
 </head>
@@ -103,13 +194,17 @@
       &larr; Return to Studio Flagship
     </a>
 
+    <div class="legal-badge">
+      <span>LEGAL &amp; COMPLIANCE // DPDP ACT &amp; GDPR</span>
+    </div>
+
     <h1 class="legal-title">Privacy Policy</h1>
     <div class="legal-meta">
       <span>Effective Date: January 1, 2026</span>
       <span>&bull;</span>
       <span>Last Updated: November 25, 2026</span>
       <span>&bull;</span>
-      <span>Shivam Web Designs</span>
+      <span>ShivamWebDesigns</span>
     </div>
 
     <div class="legal-highlight-box">
@@ -118,7 +213,7 @@
 
     <div class="legal-content">
       <h2>1. Information We Collect</h2>
-      <p>Shivam Web Designs collects only the minimal information required to deliver high-quality digital design, 3D web engineering, and client communication:</p>
+      <p>ShivamWebDesigns collects only the minimal information required to deliver high-quality digital design, 3D web engineering, and client communication:</p>
       <ul>
         <li><strong>Voluntary Contact Information:</strong> Name, email address, company name, project brief details, budget and timeline selections, and contact message contents submitted through our forms or sent directly to us.</li>
         <li><strong>Technical &amp; Telemetry Data:</strong> Standard server access logs (IP address, browser user-agent, operating system) collected automatically by our hosting platform (Vercel) for DDoS protection, traffic security, and uptime monitoring.</li>
@@ -132,7 +227,7 @@
         <li>Communicate with you regarding active contracts, milestones, and deliverables.</li>
         <li>Maintain the security, integrity, and performance of our web infrastructure.</li>
       </ul>
-      <p>When you submit a project brief or contact message, its details are stored in our Firebase Firestore database so the studio can review and respond. If email notifications are configured, a copy is sent through Resend to our studio inbox. Firebase and Resend process this information under their own privacy and security terms. Email delivery is separate from database storage.</p>
+      <p>When you submit a project brief or contact message, its details are stored in our secure Firebase Firestore database so the studio can review and respond. If email notifications are configured, a copy is routed through Resend under strict encryption.</p>
 
       <h2>3. Legal Bases for Processing &amp; DPDP Act Compliance</h2>
       <p>We process personal data in compliance with applicable global data privacy regulations, including the Digital Personal Data Protection (DPDP) Act 2023 of India and General Data Protection Regulation (GDPR) standards. Our processing relies on:</p>
@@ -143,23 +238,41 @@
       </ul>
 
       <h2>4. Data Retention &amp; Storage</h2>
-      <p>Inquiry records in Firestore and any notification emails are retained only as long as needed to review and respond, maintain a client relationship, or meet legal and accounting obligations. Records are deleted when they are no longer needed. Firestore encrypts stored data and access is restricted to the authorized studio owner. Resend may separately process or retain notification data under its own policies.</p>
+      <p>Inquiry records in Firestore and any notification emails are retained only as long as needed to review and respond, maintain a client relationship, or meet legal and accounting obligations. Stored data is encrypted at rest and in transit.</p>
 
       <h2>5. Your Rights</h2>
       <p>You have the right to request access to the personal data we hold about you, request corrections or updates, or request complete deletion of your contact records. To exercise any of these rights, email us directly.</p>
 
       <h2>6. Contact &amp; Grievance Officer</h2>
-      <p>If you have any questions, requests, or privacy concerns regarding this policy, contact our studio lead directly:</p>
-      <p><strong>Shivam Purohit</strong><br>
-      Creative Director &amp; Data Officer<br>
-      Shivam Web Designs<br>
-      Email: <a href="mailto:shivamwebdesigns23@gmail.com" style="color: var(--primary);">shivamwebdesigns23@gmail.com</a><br>
-      Website: <a href="https://shivamwebdesigns.devs.li" style="color: var(--primary);">https://shivamwebdesigns.devs.li</a></p>
+      <div class="legal-contact-card">
+        <p>If you have any questions, requests, or privacy concerns regarding this policy, contact our studio lead directly:</p>
+        <p style="margin-top:12px;"><strong>Shivam Purohit</strong><br>
+        Creative Director &amp; Data Officer<br>
+        ShivamWebDesigns<br>
+        Email: <a href="mailto:shivamwebdesigns23@gmail.com" style="color: #fff; text-decoration: underline;">shivamwebdesigns23@gmail.com</a><br>
+        Website: <a href="https://shivamwebdesigns.devs.li" style="color: #fff; text-decoration: underline;">https://shivamwebdesigns.devs.li</a></p>
 
-      <a href="mailto:shivamwebdesigns23@gmail.com" class="legal-contact-btn">
-        Contact Privacy Officer &rarr;
-      </a>
+        <a href="mailto:shivamwebdesigns23@gmail.com" class="legal-contact-btn">
+          Contact Privacy Officer &rarr;
+        </a>
+      </div>
     </div>
   </div>
+
+  <button class="back-to-top-btn" id="btt" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+  </button>
+
+  <script>
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        btt.classList.add('visible');
+      } else {
+        btt.classList.remove('visible');
+      }
+    }, { passive: true });
+    btt.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  </script>
 </body>
 </html>
