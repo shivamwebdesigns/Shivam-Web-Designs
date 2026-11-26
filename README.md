@@ -95,7 +95,10 @@ To preserve operational professionalism, company channels and personal founder c
 - **Iconography:** Hand-crafted inline SVG icons & Lucide React
 - **Email Dispatch:** [Resend](https://resend.com/) API integration
 - **Hosting & Edge Routing:** [Vercel](https://vercel.com/) with edge caching and static prerendering
-- **PWA & Offline:** Service Worker (`sw.js`) and Web Manifest (`site.webmanifest`)
+- **PWA & Offline:** Dual PWA Web Manifest architecture:
+  - Studio Website (`site.webmanifest`): Standalone mobile web application with name `ShivamWebDesigns` (`SWD`) and crisp 512×512 / 180×180 maskable icons.
+  - Digital Business Card (`businesscard.webmanifest`): Dedicated standalone card launcher named `SWD Card` with direct start URL `/businesscard` and custom icon set.
+  - Offline Service Worker (`sw.js`) and cross-platform "Add to Home Screen" prompts (`IOSInstallPrompt.tsx`).
 - **SEO & Search Console:** Pre-configured `google5fefb455a4f252a7.html` verification and JSON-LD structured schemas
 
 ---
