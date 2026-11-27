@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
 import { ServicesSection } from '@/components/ServicesSection';
+import { PackagesSection } from '@/components/PackagesSection';
 import { SpatialStack } from '@/components/SpatialStack';
 import { FeaturedProjects } from '@/components/FeaturedProjects';
 import { WhyChooseUs } from '@/components/WhyChooseUs';
@@ -44,6 +45,7 @@ export default function HomePage() {
     <div className="flex flex-col">
       <Hero />
       <ServicesSection />
+      <PackagesSection />
       <SpatialStack />
       <FeaturedProjects />
       <WhyChooseUs />

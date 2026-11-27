@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Layers, Briefcase, CreditCard, MessageSquare, Zap } from 'lucide-react';
+import { Home, ShoppingBag, Briefcase, CreditCard, MessageSquare, Zap } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 export function MobileDock() {
@@ -11,7 +11,7 @@ export function MobileDock() {
 
   const navItems = [
     { label: 'Studio', href: '/', icon: Home, isExternal: false },
-    { label: '3D Stack', href: '/#3d-stack', icon: Layers, isExternal: false },
+    { label: 'Packages', href: '/packages', icon: ShoppingBag, isExternal: false },
     { label: 'Projects', href: '/projects', icon: Briefcase, isExternal: false },
     { label: '3D Card', href: '/businesscard', icon: CreditCard, isExternal: false },
     { label: 'WhatsApp', href: siteConfig.contact.whatsapp, icon: MessageSquare, isExternal: true },

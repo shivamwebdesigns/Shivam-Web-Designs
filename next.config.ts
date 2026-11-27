@@ -23,12 +23,8 @@ const nextConfig: NextConfig = {
         destination: '/businesscard.html',
       },
       {
-        source: '/packages',
-        destination: '/packages.html',
-      },
-      {
         source: '/pricing',
-        destination: '/packages.html',
+        destination: '/packages',
       },
     ];
   },

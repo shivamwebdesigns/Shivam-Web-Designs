@@ -50,15 +50,10 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 | Route | File Location | Purpose & Features |
 | :--- | :--- | :--- |
-| **`/`** | `app/page.tsx` | **Agency Flagship Home:** Animated hero, hallmark metrics, services overview, featured projects, 3D architecture stack, and inquiry intake. |
+| **`/`** | `app/page.tsx` | **Agency Flagship Home:** Animated hero, hallmark metrics, services overview, transparent packages configurator, featured projects, 3D architecture stack, and inquiry intake. |
+| **`/packages`** | `app/packages/page.tsx` &amp; `public/packages.html` | **Packages &amp; Pricing:** Native Next.js App Router &amp; static mirror with fixed-price tiers (Starter ₹499, Growth ₹999, Pro ₹1,500), architecture stack pills ribbon, modular add-ons with category filters, explicit arithmetic cart breakdown, existing site link input, and dual dispatch to WhatsApp and studio admin panel. |
+| **`/pricing`** | `app/packages/page.tsx` | Native rewrite alias to `/packages`. |
 | **`/about`** | `app/about/page.tsx` | **About the Studio:** Origin narrative, mission/vision bento grid, operating principles, and studio background. |
-| **`/services`** | `app/services/page.tsx` | **Service Suite:** 6 comprehensive service modules (Design, Development, UI/UX, Redesign, Landing Pages, Maintenance) with deliverables. |
-| **`/projects`** | `app/projects/page.tsx` | **Interactive Portfolio:** Studio showcases with category filter pills, verified metrics, and tech stacks. |
-| **`/founder`** | `app/founder/page.tsx` | **Founder Profile:** Editorial profile of Shivam Purohit with high-definition portrait, personal journey, and direct links. |
-| **`/contact`** | `app/contact/page.tsx` | **Client Inquiries:** Studio communication coordinates, encrypted response expectations, and structured contact form. |
-| **`/start-project`** | `app/start-project/page.tsx` | **Project Configurator:** Multi-step sprint planner with interactive pills for service type, budget tier, and delivery timeline. |
-| **`/packages`** | `public/packages.html` | **Packages & Pricing:** Fixed-price tiers (Starter ₹499, Growth ₹999, Pro ₹1,500), modular add-ons (subdomain setup from ₹149, logo design for ₹99), existing site link input, and dual dispatch to WhatsApp and studio admin panel. |
-| **`/pricing`** | `public/packages.html` | Alias redirect to `/packages`. |
 | **`/businesscard`** | `public/businesscard.html` | **Spatial 3D Digital Business Card:** Gyroscope- and drag-enabled 3D physical card simulation, vCard 3.0 generation, Web Share API, and QR download. |
 | **`/license`** | `app/license/page.tsx` | **Legal Documentation & License Hub:** Consolidated, un-slopped dark mode legal architecture combining the **MIT License**, **Privacy Policy**, and **Terms of Service** with interactive tab switching. Linked in global footer as **Legal Documentation**. |
 | **`/privacy`** | `app/privacy/page.tsx` | **Privacy Policy:** Transparent, minimal data collection terms with zero ad trackers, DPDP Act 2023, and GDPR compliance. |
@@ -69,11 +64,14 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 ## 4. UI Components & Interaction Features
 
-- **Packages & Fixed Pricing Architecture (`/packages`, `/pricing`):**
+- **Packages & Fixed Pricing Architecture (`/packages`, `/pricing`, & Embedded on `/`):**
   - **Fixed-Price Tiers:** Starter (₹499 &bull; digital profile page), Growth (₹999 &bull; one-page website with inquiry form and basic SEO), Pro (₹1,500 &bull; multi-page architecture up to 3 pages with analytics, speed tuning, and glowing white highlights).
-  - **Modular Add-ons:** Free subdomain and setup (from ₹149), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month). Standalone add-on purchases fully supported.
+  - **Core Architecture Stack Pills:** Prominent ribbon showcasing `Next.js 15` &bull; `React 19` &bull; `TypeScript` &bull; `Tailwind CSS` &bull; `Spatial 3D Matrix` &bull; `PWA Ready` directly across the Packages hero, package cards, and studio flagship hero.
+  - **Modular Add-ons & Category Filtering:** Interactive filter tabs (`All`, `Branding & Setup`, `Content & Scope`, `Maintenance`) for Subdomain setup (from ₹149 &bull; free with Pro), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month).
+  - **Explicit Arithmetic Cart Math:** Order summary clearly breaks down `Package` + `+ Add-ons (X items)` − `Offers applied` = `Total Amount`, with real-time numeric spring animations.
   - **Existing Website Link Integration:** Direct input field inside the interactive cart allowing clients to paste their existing website link (`Already have a website?`) so the studio immediately understands their current setup.
   - **Dual-Dispatch Cart Submissions:** Cart orders are dispatched simultaneously to WhatsApp (`+91 78619 65480`) and automatically recorded in the studio's Firestore admin panel (`/admin`) via background API synchronization with instant email dispatch.
+  - **Full Layout Parity:** Packages is now a native App Router page (`app/packages/page.tsx`) with the unified `<Navbar />`, `<Footer />`, and `<MobileDock />`, perfectly matching the rest of the studio.
   - **Enhanced FAQ Accordion:** Clean, accessible disclosure cards with smooth rotation indicators and zero clutter.
 - **Global Back-to-Top Button (`components/BackToTop.tsx`):** Unobtrusive floating control with passive scroll detection (`scrollY > 300`), smooth window scrolling, frosted dark glass styling (`bg-neutral-900/90 backdrop-blur-md`), and mobile dock offset.
 - **Browser Tab & Taskbar Branding:**
