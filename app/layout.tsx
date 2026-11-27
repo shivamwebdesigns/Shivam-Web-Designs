@@ -125,6 +125,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth dark`}>
       <head>
+        {/* Preconnect & DNS-Prefetch for Fast Third-Party Dispatch */}
+        <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="preconnect" href="https://wa.me" crossOrigin="anonymous" />
+
         {/* Favicon & Apple Web App Link Declarations for Safari and Taskbars */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico?v=5" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=5" />

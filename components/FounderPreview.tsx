@@ -19,7 +19,7 @@ export const FounderPreview: React.FC = () => {
                   fill
                   className="object-cover transition-transform duration-500 hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  priority
+                  loading="lazy"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />
                 

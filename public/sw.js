@@ -1,18 +1,12 @@
-const CACHE_NAME = 'swd-cache-v1';
+const CACHE_NAME = 'swd-cache-v2';
 const PRECACHE_ASSETS = [
   '/',
-  '/about',
-  '/services',
-  '/projects',
-  '/founder',
-  '/contact',
-  '/businesscard',
+  '/packages',
   '/site.webmanifest',
   '/favicon.ico',
   '/apple-touch-icon.png',
   '/assets/logo-trimmed.png',
   '/assets/favicon-192.png',
-  '/assets/favicon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
