@@ -7,6 +7,7 @@ import { MobileDock } from '@/components/MobileDock';
 import { BackToTop } from '@/components/BackToTop';
 import { IOSInstallPrompt } from '@/components/IOSInstallPrompt';
 import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister';
+import { OrderSuccessToast } from '@/components/OrderSuccessToast';
 import { siteConfig } from '@/data/siteConfig';
 import { founderData } from '@/data/founder';
 
@@ -228,6 +229,7 @@ export default function RootLayout({
         <Footer />
         <MobileDock />
         <BackToTop />
+        <OrderSuccessToast />
         <IOSInstallPrompt />
         <ServiceWorkerRegister />
       </body>

@@ -18,6 +18,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
+import { OrderStatusModal } from '@/components/OrderStatusModal';
 
 export interface PackageTier {
   id: 'starter' | 'growth' | 'pro';
@@ -194,7 +195,9 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
   const [existingSite, setExistingSite] = useState('');
   const [isCartHidden, setIsCartHidden] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const [syncStatus, setSyncStatus] = useState('');
+  const [orderModalOpen, setOrderModalOpen] = useState(false);
+  const [orderModalStatus, setOrderModalStatus] = useState<'loading' | 'success' | 'cancelled'>('loading');
+  const [waOrderUrl, setWaOrderUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -372,9 +375,14 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     if (calc.itemCount === 0 || isSubmitting) return;
 
     setIsSubmitting(true);
-    setSyncStatus('Recording in studio admin…');
-
     const orderText = buildOrderMessage();
+    const waUrl = `https://wa.me/917861965480?text=${encodeURIComponent(orderText)}`;
+    setWaOrderUrl(waUrl);
+
+    // Immediately open the animated order status modal in loading state
+    setOrderModalStatus('loading');
+    setOrderModalOpen(true);
+    setCartOpen(false);
 
     // 1. Post to internal /api/contact for Firestore & Admin review
     try {
@@ -392,18 +400,20 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           }`,
         }),
       });
-      setSyncStatus('✓ Saved to studio admin. Opening WhatsApp…');
     } catch (e) {
       console.warn('Order sync notice:', e);
     }
 
-    // 2. Open WhatsApp with prefilled order
-    const waUrl = `https://wa.me/917861965480?text=${encodeURIComponent(orderText)}`;
+    // 2. Attempt WhatsApp dispatch and transition to success view
     setTimeout(() => {
-      window.open(waUrl, '_blank', 'noopener,noreferrer');
+      try {
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      } catch (err) {
+        console.warn('Popup notice:', err);
+      }
       setIsSubmitting(false);
-      setTimeout(() => setSyncStatus(''), 4000);
-    }, 300);
+      setOrderModalStatus('success');
+    }, 700);
   };
 
   return (
@@ -895,12 +905,6 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   <MessageSquare className="w-4 h-4" />
                   <span>Send Cart on WhatsApp</span>
                 </button>
-
-                {syncStatus && (
-                  <p className="text-[11px] font-mono text-center text-emerald-400 animate-pulse">
-                    {syncStatus}
-                  </p>
-                )}
               </div>
             </aside>
           </div>
@@ -1127,6 +1131,25 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           </div>
         </div>
       )}
+
+      {/* Order Status & Confirmation Modal */}
+      <OrderStatusModal
+        isOpen={orderModalOpen}
+        status={orderModalStatus}
+        waUrl={waOrderUrl}
+        onClose={() => setOrderModalOpen(false)}
+        onBuyAgain={() => {
+          setSelectedPkg(null);
+          setAddons({});
+          setExistingSite('');
+          setOrderModalOpen(false);
+        }}
+        onCancelOrder={() => setOrderModalStatus('cancelled')}
+        onResumeCart={() => {
+          setOrderModalOpen(false);
+          setCartOpen(true);
+        }}
+      />
     </section>
   );
 }
