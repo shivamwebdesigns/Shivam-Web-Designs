@@ -83,7 +83,7 @@ export default function PackagesPage() {
           description:
             'A high-performance multi-page website up to 3 pages with Next.js 15 architecture, analytics, and speed optimization.',
         },
-        price: '1500',
+        price: '1499',
         priceCurrency: 'INR',
       },
       {

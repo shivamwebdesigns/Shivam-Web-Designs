@@ -49,7 +49,6 @@ const PACKAGES: PackageTier[] = [
     name: 'Starter',
     tagline: 'A digital profile page & quick identity launch',
     price: 499,
-    badge: 'Essential',
     scope: '1 scrolling page',
     delivery: '1–2 days',
     stackTags: ['HTML5 Semantic', 'Mobile First', 'Free Subdomain', 'Fast CDN'],
@@ -68,7 +67,7 @@ const PACKAGES: PackageTier[] = [
     name: 'Growth',
     tagline: 'A complete one-page business flagship',
     price: 999,
-    badge: 'Most Chosen',
+    badge: 'Popular Package',
     recommended: true,
     scope: '1 page, 4–5 sections',
     delivery: '3–5 days',
@@ -87,8 +86,7 @@ const PACKAGES: PackageTier[] = [
     id: 'pro',
     name: 'Pro',
     tagline: 'A high-performance multi-page digital flagship',
-    price: 1500,
-    badge: 'Pro Architecture',
+    price: 1499,
     scope: 'Up to 3 full pages',
     delivery: '5–7 days',
     stackTags: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'Spatial 3D Matrix', 'PWA Ready'],
@@ -407,7 +405,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     const trimmedPhone = clientPhone.trim();
 
     if (!trimmedName || !trimmedEmail || !trimmedPhone) {
-      setContactError('Name, Email, and Phone are mandatory to proceed.');
+      setContactError('Please enter your Name, Email, and Phone number to proceed.');
       return;
     }
 
@@ -868,11 +866,10 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                 )}
               </div>
 
-              {/* Mandatory Client Contact Info */}
+              {/* Client Contact Info */}
               <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800/90 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold text-white">Your Contact Details</span>
-                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Mandatory *</span>
                 </div>
 
                 <div className="space-y-2">
@@ -884,7 +881,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                       setClientName(e.target.value);
                       if (contactError) setContactError('');
                     }}
-                    placeholder="Full Name *"
+                    placeholder="Full Name"
                     className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
                   />
                   <input
@@ -895,7 +892,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                       setClientEmail(e.target.value);
                       if (contactError) setContactError('');
                     }}
-                    placeholder="Email Address *"
+                    placeholder="Email Address"
                     className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
                   />
                   <input
@@ -906,14 +903,14 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                       setClientPhone(e.target.value);
                       if (contactError) setContactError('');
                     }}
-                    placeholder="Phone / WhatsApp Number *"
+                    placeholder="Phone / WhatsApp Number"
                     className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
 
                 {contactError && (
                   <p className="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-900/50 rounded-md p-1.5 leading-tight">
-                    ⚠ {contactError}
+                    {contactError}
                   </p>
                 )}
               </div>
@@ -1174,11 +1171,10 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               )}
             </div>
 
-            {/* Mandatory Contact in Mobile */}
+            {/* Contact in Mobile */}
             <div className="p-3 rounded-xl bg-neutral-900 border border-neutral-800 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-white">Your Contact Details</span>
-                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Mandatory *</span>
               </div>
               <input
                 type="text"
@@ -1188,7 +1184,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   setClientName(e.target.value);
                   if (contactError) setContactError('');
                 }}
-                placeholder="Full Name *"
+                placeholder="Full Name"
                 className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
               />
               <input
@@ -1199,7 +1195,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   setClientEmail(e.target.value);
                   if (contactError) setContactError('');
                 }}
-                placeholder="Email Address *"
+                placeholder="Email Address"
                 className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
               />
               <input
@@ -1210,12 +1206,12 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   setClientPhone(e.target.value);
                   if (contactError) setContactError('');
                 }}
-                placeholder="Phone / WhatsApp Number *"
+                placeholder="Phone / WhatsApp Number"
                 className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
               />
               {contactError && (
                 <p className="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-900/50 rounded-md p-1.5 leading-tight">
-                  ⚠ {contactError}
+                  {contactError}
                 </p>
               )}
             </div>

@@ -86,9 +86,9 @@ export function SpatialStack() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
-            <span>02 // THE 3D ARCHITECTURE STACK</span>
-          </div>
+          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-4">
+            02 // THE 3D ARCHITECTURE STACK
+          </p>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
             Four Layers of Engineering Precision
           </h2>

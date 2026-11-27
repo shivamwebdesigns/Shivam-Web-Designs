@@ -1173,7 +1173,6 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
       <section class="grid" aria-label="Packages">
         <!-- Starter Package (Glowing White Architecture) -->
         <article class="card rv starter-card" style="--d:0.00s">
-          <span class="badge starter-badge">Essential</span>
           <h2>Starter</h2>
           <p class="tag">A digital profile page</p>
           <p class="mono mute up">Starting at</p>
@@ -1196,9 +1195,9 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
           <button class="wa" data-act="wa" data-id="starter">Ask on WhatsApp</button>
         </article>
 
-        <!-- Growth Package (Most Chosen) -->
+        <!-- Growth Package (Popular Package) -->
         <article class="card rv pop" style="--d:0.11s">
-          <span class="badge">Most chosen</span>
+          <span class="badge">Popular package</span>
           <h2>Growth</h2>
           <p class="tag">A complete one-page website</p>
           <p class="mono mute up">Starting at</p>
@@ -1223,11 +1222,10 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 
         <!-- Pro Package (Enhanced Glowing White Architecture) -->
         <article class="card rv pro-card" style="--d:0.22s">
-          <span class="badge pro-badge">Pro Architecture</span>
           <h2>Pro</h2>
           <p class="tag">A high-performance multi-page website</p>
           <p class="mono mute up">Starting at</p>
-          <p class="price">₹1,500</p>
+          <p class="price">₹1,499</p>
           <p class="small mute">Domain billed separately</p>
           <dl>
             <div><dt>Scope</dt><dd>Up to 3 full pages</dd></div>
@@ -1361,17 +1359,16 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
         <ul class="citems" id="citems"></ul>
         <div class="cempty" id="cempty">Your cart is empty. Pick a package or choose any add-ons to get started.</div>
 
-        <!-- Mandatory Client Contact Details -->
+        <!-- Client Contact Details -->
         <div class="site-box" id="contactBox" style="margin-top:14px;">
           <div class="site-box-title">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <span>Your Contact Details</span>
-            <span style="font-size:10px;font-family:monospace;color:#a3a3a3;text-transform:uppercase;margin-left:auto;">Mandatory *</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
-            <input type="text" id="clientNameInput" class="site-input" placeholder="Full Name *" spellcheck="false" autocomplete="name" required />
-            <input type="email" id="clientEmailInput" class="site-input" placeholder="Email Address *" spellcheck="false" autocomplete="email" required />
-            <input type="tel" id="clientPhoneInput" class="site-input" placeholder="Phone / WhatsApp Number *" spellcheck="false" autocomplete="tel" required />
+            <input type="text" id="clientNameInput" class="site-input" placeholder="Full Name" spellcheck="false" autocomplete="name" required />
+            <input type="email" id="clientEmailInput" class="site-input" placeholder="Email Address" spellcheck="false" autocomplete="email" required />
+            <input type="tel" id="clientPhoneInput" class="site-input" placeholder="Phone / WhatsApp Number" spellcheck="false" autocomplete="tel" required />
           </div>
           <div id="contactErrorAlert" style="display:none;color:#f87171;font-size:11px;font-family:monospace;background:rgba(127,29,29,0.3);border:1px solid rgba(185,28,28,0.5);border-radius:6px;padding:6px 8px;margin-top:8px;"></div>
         </div>
@@ -1647,7 +1644,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
         "id": "pro",
         "name": "Pro",
         "tag": "A small multi-page website",
-        "price": 1500,
+        "price": 1499,
         "time": "5–7 days",
         "scope": "Up to 3 pages",
         "service": "website-development",
@@ -2053,7 +2050,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 
     if (!nameVal || !emailVal || !phoneVal) {
       if (errAlert) {
-        errAlert.textContent = '⚠ Name, Email, and Phone are mandatory to proceed.';
+        errAlert.textContent = 'Please enter your Name, Email, and Phone to proceed.';
         errAlert.style.display = 'block';
       }
       return;
