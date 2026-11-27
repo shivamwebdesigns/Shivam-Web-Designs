@@ -74,6 +74,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - Dedicated PNG favicons (`16x16`, `32x32`, `48x48`, `180x180`, `512x512`) with active cache-busting queries (`?v=5`).
   - Native Next.js App Router icon routes: `/icon.png` and `/apple-icon.png`.
 - **Spatial 3D Business Card & Premium Sharing:** Pure CSS 3D transform matrix with interactive flip, lighting highlights, icon-only back navigation, and upgraded **Share Card** functionality delivering a high-resolution vertical portrait PNG combining both card sides (front at top, back at bottom) on matte black, with Web Share API file sharing, clean domain text links (`shivamwebdesigns.devs.li/businesscard` and `shivamwebdesigns.devs.li`) engineered to prevent duplicate chat rich preview bubbles (guaranteeing exactly one image attachment at the top of the shared message), download fallback, and formatted invitation message.
+- **GitHub Repository Social Media Preview:** Dedicated 1280×640px custom social preview asset at [public/assets/github-social-preview.png](public/assets/github-social-preview.png) matching GitHub's recommended 2:1 aspect ratio, featuring the SWD monogram mark, monochrome Swiss framing, live tech stack badges, and automated regeneration via `node scripts/generate-social-preview.mjs`.
 
 ---
 

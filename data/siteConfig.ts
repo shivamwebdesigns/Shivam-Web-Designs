@@ -34,6 +34,7 @@ export interface SiteConfig {
     bannerDesktop: string;
     bannerMobile: string;
     founderImage: string;
+    socialPreview: string;
   };
   contact: {
     email: string;
@@ -72,6 +73,7 @@ export const siteConfig: SiteConfig = {
     bannerDesktop: '/assets/banner-desktop.png',
     bannerMobile: '/assets/banner-mobile.png',
     founderImage: '/assets/founder-hd.jpg',
+    socialPreview: '/assets/github-social-preview.png',
   },
   contact: {
     email: 'shivamwebdesigns23@gmail.com',
