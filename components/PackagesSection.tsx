@@ -1024,7 +1024,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
             aria-label="View Cart"
           >
             <ShoppingCart className="w-3.5 h-3.5 text-black" />
-            <span>View Cart &gt;</span>
+            <span>View Cart</span>
             <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-bold">
               {calc.itemCount}
             </span>
@@ -1056,7 +1056,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                 </div>
               </div>
               <span className="text-xs font-mono font-semibold text-white group-hover:underline flex items-center gap-1">
-                View Cart &gt;
+                View Cart
               </span>
             </button>
 
@@ -1069,7 +1069,6 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               title="Hide Cart"
             >
               <span>Hide Cart</span>
-              <span className="font-bold">&gt;</span>
             </button>
           </div>
         </div>
@@ -1100,7 +1099,6 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   className="h-11 px-3 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300 hover:text-white hover:border-neutral-600 flex items-center gap-1 transition-colors"
                 >
                   <span>Hide Cart</span>
-                  <span className="font-bold">&gt;</span>
                 </button>
                 <button
                   type="button"
