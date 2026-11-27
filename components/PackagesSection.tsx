@@ -247,6 +247,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           clientPhone,
         })
       );
+      window.dispatchEvent(new Event('swd-cart-change'));
     } catch (_) {}
   }, [selectedPkg, addons, existingSite, clientName, clientEmail, clientPhone]);
 
