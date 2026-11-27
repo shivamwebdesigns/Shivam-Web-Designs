@@ -79,7 +79,7 @@ export const siteConfig: SiteConfig = {
     email: 'shivamwebdesigns23@gmail.com',
     phone: '+91 78619 65480',
     whatsapp: 'https://wa.me/917861965480?s=p',
-    location: 'India • Serving Clients Worldwide',
+    location: 'India — Serving Clients Worldwide',
   },
   social: {
     website: 'https://shivamwebdesigns.devs.li',

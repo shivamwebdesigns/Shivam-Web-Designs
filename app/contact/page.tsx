@@ -149,14 +149,14 @@ export default function ContactPage() {
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                      Location & Reach
+                    <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-1">
+                      Location &amp; Global Delivery
                     </div>
                     <div className="text-sm font-medium text-white">
                       {siteConfig.contact.location}
                     </div>
                     <div className="text-xs text-neutral-400 mt-1">
-                      Operating in IST (UTC+5:30) with global overlap
+                      Operating in IST (UTC+5:30) with seamless overlap for US, UK, European &amp; APAC clients
                     </div>
                   </div>
                 </div>

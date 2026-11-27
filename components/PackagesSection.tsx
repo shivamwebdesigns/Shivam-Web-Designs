@@ -467,24 +467,28 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     <section
       id="packages"
       className={`relative bg-black text-white ${
-        isPage ? 'pt-4 pb-16 sm:pt-6 sm:pb-20' : 'py-14 sm:py-20 border-t border-neutral-900'
+        isPage ? 'pt-24 pb-16 sm:pt-28 sm:pb-24' : 'py-14 sm:py-20 border-t border-neutral-900'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header (Rendered on Home or as Subhead on Packages) */}
-        {!isPage && (
-          <div className="max-w-3xl mb-12 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
-              <span>PACKAGES // FIXED PRICES</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+        {/* Section Header: Placed directly upon packages, no pill badge bg */}
+        <div className="max-w-3xl mb-10 sm:mb-14">
+          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">
+            PACKAGES // FIXED PRICES
+          </p>
+          {isPage ? (
+            <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
+              Websites price starts from ₹499
+            </h1>
+          ) : (
+            <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
               Websites price starts from ₹499
             </h2>
-            <p className="text-base sm:text-lg text-neutral-400 leading-relaxed">
-              Choose your favourite packages below. Mix and match modular add-ons or order standalone for your existing website. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.
-            </p>
-          </div>
-        )}
+          )}
+          <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
+            Choose your favourite packages below. Mix and match modular add-ons or order standalone for your existing website. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.
+          </p>
+        </div>
 
         {/* Main Layout Grid: Packages & Add-ons on Left, Sticky Cart on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">

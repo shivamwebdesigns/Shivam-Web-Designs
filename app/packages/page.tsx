@@ -116,23 +116,6 @@ export default function PackagesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="flex flex-col min-h-screen">
-        {/* Packages Dedicated Hero */}
-        <section className="pt-28 pb-10 sm:pt-32 sm:pb-12 border-b border-neutral-900 bg-neutral-950/60">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-neutral-800 bg-neutral-900/80 text-xs font-mono text-neutral-300 mb-4">
-                <span>PACKAGES // FIXED PRICES</span>
-              </div>
-              <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
-                Websites price starts from ₹499
-              </h1>
-              <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
-                Choose your favourite packages below. Mix and match modular add-ons or order standalone for your existing website. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.
-              </p>
-            </div>
-          </div>
-        </section>
-
         <PackagesSection isPage={true} />
       </main>
     </>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, CreditCard, Sparkles } from 'lucide-react';
+import { ArrowRight, CreditCard } from 'lucide-react';
 import { founderData } from '@/data/founder';
 
 export const FounderPreview: React.FC = () => {
@@ -61,29 +61,6 @@ export const FounderPreview: React.FC = () => {
             <p className="text-sm text-neutral-400 leading-relaxed mb-8">
               Shivam established ShivamWebDesigns to dismantle agency bloat. Instead of dealing with intermediaries, you collaborate directly with the architect who designs the visual language and writes the production code.
             </p>
-
-            {/* Principles Pills */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-              <div className="p-3 bg-neutral-950 border border-neutral-900">
-                <div className="text-xs font-mono text-white mb-1 flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-neutral-400" />
-                  Purposeful Aesthetics
-                </div>
-                <div className="text-xs text-neutral-400">
-                  Every pixel and whitespace unit serves a deliberate brand function.
-                </div>
-              </div>
-
-              <div className="p-3 bg-neutral-950 border border-neutral-900">
-                <div className="text-xs font-mono text-white mb-1 flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-neutral-400" />
-                  Uncompromising Speed
-                </div>
-                <div className="text-xs text-neutral-400">
-                  Lean engineering that renders sub-second on real mobile devices.
-                </div>
-              </div>
-            </div>
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4">
