@@ -779,7 +779,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               </div>
 
               {/* Items List */}
-              <div className="space-y-3 max-h-[340px] overflow-y-auto pr-1">
+              <div className="space-y-3 pr-1">
                 {calc.itemCount === 0 ? (
                   <div className="text-center py-8 px-4 border border-dashed border-neutral-800 rounded-xl text-neutral-400 text-xs leading-relaxed">
                     Your cart is currently empty.

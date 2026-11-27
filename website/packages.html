@@ -637,7 +637,6 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 .cart {
   position: sticky;
   top: calc(env(safe-area-inset-top, 0px) + 84px);
-  max-height: calc(100dvh - 108px);
   background: #0a0a0a;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -678,11 +677,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   display: flex;
   flex-direction: column;
   gap: 16px;
-  overflow-y: auto;
-  min-height: 0;
-  flex: 1 1 auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
   padding-right: 4px;
 }
 .citems { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
@@ -1056,6 +1051,12 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
     transform: none;
     visibility: visible;
     transition: transform .55s var(--ease), visibility 0s;
+  }
+  .cscroll {
+    overflow-y: auto;
+    min-height: 0;
+    flex: 1 1 auto;
+    scrollbar-width: thin;
   }
   .cart::before {
     content: "";
