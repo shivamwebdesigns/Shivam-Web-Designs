@@ -75,10 +75,10 @@ export function OrderStatusModal({
 
             <div className="space-y-2">
               <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-                Recording in Studio Admin…
+                Reviewing Your Order…
               </h3>
               <p className="text-sm text-neutral-400 max-w-sm mx-auto leading-relaxed">
-                Saving your package specifications to our private database and preparing direct WhatsApp dispatch.
+                Preparing your package configuration and opening WhatsApp for direct founder kickoff.
               </p>
             </div>
 
@@ -102,13 +102,13 @@ export function OrderStatusModal({
 
             <div className="space-y-1.5">
               <span className="text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-semibold">
-                Recorded &amp; Confirmed
+                Order Placed Successfully
               </span>
               <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Your Order is Successful
+                Your Order was Placed Successfully
               </h3>
               <p className="text-xs sm:text-sm text-neutral-400 max-w-sm mx-auto">
-                Thank you for choosing ShivamWebDesigns! Your package brief is registered in our studio admin.
+                Thank you for choosing ShivamWebDesigns! Wait for 24–48 hours, we&apos;ll be reaching out soon.
               </p>
             </div>
 

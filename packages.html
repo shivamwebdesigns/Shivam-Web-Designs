@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://shivamwebdesigns.devs.li/packages">
 <meta name="twitter:title" content="Website Packages & Pricing | Shivam Web Designs">
-<meta name="twitter:description" content="Transparent website packages from ₹499. Starter, Growth, Pro, and modular add-ons with zero hidden fees.">
+<meta name="twitter:description" content="Websites price starts from ₹499. Starter, Growth, Pro, and modular add-ons with zero hidden fees.">
 <meta name="twitter:image" content="https://shivamwebdesigns.devs.li/assets/github-social-preview.png">
 
 <!-- Favicon Suite -->
@@ -1163,8 +1163,8 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   <div class="wrap">
     <section class="hero">
       <p class="mono mute rv">PACKAGES // FIXED PRICES</p>
-      <h1 class="rv" style="--d:.1s">Websites from ₹499.</h1>
-      <p class="lead rv" style="--d:.2s">Pick a package, add only what you need, or choose add-ons for your existing website. Sent directly to WhatsApp &amp; our studio admin panel.</p>
+      <h1 class="rv" style="--d:.1s">Websites price starts from ₹499</h1>
+      <p class="lead rv" style="--d:.2s">Choose your favourite packages below. Mix and match modular add-ons or order standalone for your current site. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.</p>
     </section>
   </div>
 
@@ -1453,8 +1453,8 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
     <!-- LOADING VIEW -->
     <div id="modalViewLoading" style="display:none; text-align:center; padding: 24px 8px;">
       <div class="modal-spinner"></div>
-      <h3 style="margin: 16px 0 6px; font-size: 20px;">Recording in Studio Admin…</h3>
-      <p class="mute small" style="max-width: 34ch; margin: 0 auto 16px;">Saving your package brief to our private database and preparing direct WhatsApp dispatch.</p>
+      <h3 style="margin: 16px 0 6px; font-size: 20px;">Reviewing Your Order…</h3>
+      <p class="mute small" style="max-width: 34ch; margin: 0 auto 16px;">Preparing your package configuration and opening WhatsApp for direct founder kickoff.</p>
       <button class="modal-cancel-link" data-act="modal-cancel">Cancel request</button>
     </div>
 
@@ -1463,9 +1463,9 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
       <div class="modal-tick-circle">
         <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       </div>
-      <p class="mono small" style="color: #34d399; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600;">Recorded &amp; Confirmed</p>
-      <h3 style="margin: 0 0 6px; font-size: 24px; font-weight: 700;">Your Order is Successful</h3>
-      <p class="mute small" style="max-width: 38ch; margin: 0 auto 16px;">Thank you for choosing ShivamWebDesigns! Your package brief is registered in our studio admin.</p>
+      <p class="mono small" style="color: #34d399; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600;">Order Placed Successfully</p>
+      <h3 style="margin: 0 0 6px; font-size: 24px; font-weight: 700;">Your Order was Placed Successfully</h3>
+      <p class="mute small" style="max-width: 38ch; margin: 0 auto 16px;">Thank you for choosing ShivamWebDesigns! Wait for 24–48 hours, we'll be reaching out soon.</p>
 
       <div class="modal-notice-box">
         <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px; font-weight:600; font-size:12px;">
@@ -2164,7 +2164,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
     if (mcan) { showOrderModal("cancelled"); return; }
     var mba = e.target.closest("[data-act=\"buy-again\"]");
     if (mba) {
-      S = { p: null, add: {}, existingSite: "" };
+      S = { pkg: null, add: {}, existingSite: "", clientName: S.clientName || "", clientEmail: S.clientEmail || "", clientPhone: S.clientPhone || "" };
       save();
       render();
       hideOrderModal();
@@ -2273,6 +2273,17 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   });
 
   render();
+
+  try {
+    var pms = new URLSearchParams(window.location.search);
+    if (pms.get('order') === 'success') {
+      showOrderModal('success');
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (pms.get('order') === 'cancel' || pms.get('order') === 'cancelled') {
+      showOrderModal('cancelled');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  } catch(_) {}
 
   var els = $$('.rv');
   function show(el){

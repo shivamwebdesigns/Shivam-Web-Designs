@@ -4,9 +4,9 @@ import { PackagesSection } from '@/components/PackagesSection';
 import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
-  title: 'Website Packages & Pricing | Transparent Web Design & Development',
+  title: 'Websites Price Starts From ₹499 | Shivam Web Designs',
   description:
-    'Explore transparent, fixed-price website packages from ₹499. Starter, Growth, and Pro tiers with custom add-ons, free subdomain setup from ₹149, logo design for ₹99, and zero hidden costs.',
+    'Websites price starts from ₹499. Choose your favourite packages and modular add-ons. Direct founder execution with guaranteed sub-second speed.',
   keywords: [
     'website packages',
     'web design pricing',
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     canonical: '/packages',
   },
   openGraph: {
-    title: 'Website Packages & Pricing | Shivam Web Designs',
+    title: 'Websites Price Starts From ₹499 | Shivam Web Designs',
     description:
-      'Transparent website packages from ₹499. Starter, Growth, Pro, and modular add-ons with zero hidden fees. Built with Next.js 15, React 19, and sub-second edge performance.',
+      'Websites price starts from ₹499. Choose your favourite packages and modular add-ons. Direct founder execution with guaranteed sub-second speed.',
     url: `${siteConfig.url}/packages`,
     siteName: siteConfig.name,
     images: [
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Website Packages & Pricing | Shivam Web Designs',
+    title: 'Websites Price Starts From ₹499 | Shivam Web Designs',
     description:
-      'Transparent website packages from ₹499. Starter, Growth, Pro, and modular add-ons with zero hidden fees.',
+      'Websites price starts from ₹499. Choose your favourite packages and modular add-ons with zero hidden fees.',
     images: [`${siteConfig.url}/assets/github-social-preview.png`],
   },
 };
@@ -124,10 +124,10 @@ export default function PackagesPage() {
                 <span>PACKAGES // FIXED PRICES</span>
               </div>
               <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
-                Transparent Website Packages. Zero Hidden Fees.
+                Websites price starts from ₹499
               </h1>
               <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
-                Choose a production-ready package engineered for your stage, or curate a bespoke build with modular unbundled add-ons. Direct founder execution with guaranteed sub-second speed.
+                Choose your favourite packages below. Mix and match modular add-ons or order standalone for your existing website. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.
               </p>
             </div>
           </div>

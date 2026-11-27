@@ -480,11 +480,10 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               <span>PACKAGES // FIXED PRICES</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
-              Websites from ₹499. Zero Hidden Fees.
+              Websites price starts from ₹499
             </h2>
             <p className="text-base sm:text-lg text-neutral-400 leading-relaxed">
-              Pick a package, add only what you need, or choose add-ons standalone for your existing website.
-              Every order is dispatched directly to WhatsApp &amp; recorded in our studio admin.
+              Choose your favourite packages below. Mix and match modular add-ons or order standalone for your existing website. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.
             </p>
           </div>
         )}
