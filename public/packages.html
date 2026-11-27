@@ -1035,7 +1035,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   .layout { grid-template-columns: 1fr; }
   body { padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)); }
   footer { padding-bottom: 60px; }
-  .fbar-wrap { display: flex; }
+  .fbar-wrap { display: none; }
   .cart {
     position: fixed;
     left: 0;
@@ -1963,6 +1963,21 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
     $('#fbtxt').textContent = n ? (n + ' item' + (n > 1 ? 's' : '')) : 'Cart is empty';
     if (n) tween($('#fbtot'), c.total); else { cur.fbtot = 0; $('#fbtot').textContent = ''; }
 
+    // Floating cart bar only shows when user adds items (n > 0)
+    var wrap = $('#fbarWrap');
+    var min = $('#fbarMinBtn');
+    if (n > 0) {
+      if (min && min.style.display === 'inline-flex') {
+        if (wrap) wrap.style.display = 'none';
+      } else {
+        if (wrap) wrap.style.display = 'flex';
+        if (min) min.style.display = 'none';
+      }
+    } else {
+      if (wrap) wrap.style.display = 'none';
+      if (min) min.style.display = 'none';
+    }
+
     $('#cwa').disabled = !n;
     $('#cwa').style.opacity = n ? '1' : '.45';
     last = null;
@@ -2216,11 +2231,18 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 
     if (a === 'pkg') {
       S.pkg = S.pkg === id ? null : id;
-      if (S.pkg) { fly(b); last = 'p'; }
+      if (S.pkg) {
+        fly(b);
+        last = 'p';
+        var min = document.getElementById("fbarMinBtn");
+        if (min) min.style.display = "none";
+      }
     } else if (a === 'sel') {
       S.pkg = id;
       fly(b);
       last = 'p';
+      var min = document.getElementById("fbarMinBtn");
+      if (min) min.style.display = "none";
     } else if (a === 'add') {
       if (S.add[id] && b.classList.contains('mini') && b.closest('.add')) {
         leave('a' + id, function(){ delete S.add[id]; commit(); });
@@ -2229,6 +2251,8 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
       S.add[id] = (S.add[id] || 0) + 1;
       fly(b);
       last = 'a' + id;
+      var min = document.getElementById("fbarMinBtn");
+      if (min) min.style.display = "none";
     } else if (a === 'inc') {
       S.add[id] = Math.min(9, (S.add[id] || 0) + 1);
     } else if (a === 'dec') {

@@ -298,11 +298,16 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
 
   // Toggle package in cart
   const togglePackage = (pkgId: 'starter' | 'growth' | 'pro') => {
-    setSelectedPkg((prev) => (prev === pkgId ? null : pkgId));
+    setSelectedPkg((prev) => {
+      const next = prev === pkgId ? null : pkgId;
+      if (next) setIsCartHidden(false);
+      return next;
+    });
   };
 
   // Add / increment addon
   const addAddon = (id: string) => {
+    setIsCartHidden(false);
     setAddons((prev) => ({
       ...prev,
       [id]: (prev[id] || 0) + 1,
@@ -1009,9 +1014,9 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         </div>
       </div>
 
-      {/* Minimized Floating Pill when Cart is Hidden on Mobile */}
-      {isCartHidden && (
-        <div className="lg:hidden fixed bottom-16 right-4 z-40">
+      {/* Minimized Floating Pill when Cart is Hidden on Mobile - ONLY if items in cart */}
+      {calc.itemCount > 0 && isCartHidden && (
+        <div className="lg:hidden fixed bottom-16 right-4 z-40 animate-fade-in">
           <button
             type="button"
             onClick={() => {
@@ -1023,18 +1028,16 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           >
             <ShoppingCart className="w-3.5 h-3.5 text-black" />
             <span>View Cart &gt;</span>
-            {calc.itemCount > 0 && (
-              <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-bold">
-                {calc.itemCount}
-              </span>
-            )}
+            <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-bold">
+              {calc.itemCount}
+            </span>
           </button>
         </div>
       )}
 
-      {/* Floating Bottom Bar on Mobile Devices (Expanded) */}
-      {!isCartHidden && (
-        <div className="lg:hidden fixed bottom-16 left-4 right-4 z-40">
+      {/* Floating Bottom Bar on Mobile Devices (Expanded) - ONLY if items in cart */}
+      {calc.itemCount > 0 && !isCartHidden && (
+        <div className="lg:hidden fixed bottom-16 left-4 right-4 z-40 max-w-lg mx-auto animate-fade-in">
           <div className="w-full h-14 bg-neutral-950/95 backdrop-blur-md border border-neutral-800 rounded-full px-4 py-2 flex items-center justify-between shadow-2xl shadow-black/95">
             <button
               type="button"
@@ -1048,7 +1051,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
-                    {calc.itemCount === 0 ? 'Empty' : `${calc.itemCount} item${calc.itemCount > 1 ? 's' : ''}`}
+                    {calc.itemCount} item{calc.itemCount > 1 ? 's' : ''}
                   </span>
                   <span className="text-xs font-mono font-bold text-white">
                     {fmt(calc.totalOneTime)}
