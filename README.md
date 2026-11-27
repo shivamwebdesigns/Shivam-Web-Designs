@@ -81,8 +81,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - **Full Layout Parity:** Packages is now a native App Router page (`app/packages/page.tsx`) with the unified `<Navbar />`, `<Footer />`, and `<MobileDock />`, perfectly matching the rest of the studio.
   - **Enhanced FAQ Accordion:** Clean, accessible disclosure cards with smooth rotation indicators and zero clutter.
 - **Projects Architecture (`/projects` & Homepage):**
-  - **Typographic Projects Label:** The Projects page and homepage feature share the same compact label pattern as the packages section, with the headline and introduction first, followed by `PROJECTS // SELECTED WORK` in clean monospace type above the project content.
-  - **Selected Works Updating Soon:** Transparent, professional notice detailing that client case studies and digital flagships are undergoing strict documentation and clearance.
+  - **Projects Updating Soon:** The Projects page and homepage feature clearly state “Projects are updating soon!” with transparent notice text about client case studies and digital flagships undergoing strict documentation and clearance.
   - **Streamlined Layout & Engineering Standards:** Clean presentation showcasing core engineering guarantees (100% Bespoke Code, < 1.2s Core Web Vitals, Direct Founder Access, and Transparent Milestones) paired with direct project brief kickoff CTAs.
 - **Inquiry CTA Trust Bar (`components/InquiryCTA.tsx`):**
   - Responsive inline trust pillars (`Direct Founder Access / Zero Outsourcing / Fixed Price Sprints / Sub-Second Performance`) with responsive separators avoiding awkward line wrapping on mobile.

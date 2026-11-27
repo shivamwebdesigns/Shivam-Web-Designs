@@ -7,15 +7,12 @@ export const FeaturedProjects: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
           <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4">
-            Updating soon
+            Projects are updating soon!
           </h2>
           <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
             Our production client builds and flagship case studies are currently undergoing NDA clearance and documentation. We publish detailed architecture audits, performance benchmarks, and interactive source code breakdowns as releases are cleared.
           </p>
-          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mt-4 mb-8">
-            PROJECTS // SELECTED WORK
-          </p>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3 mt-8">
             <Link
               href="/start-project"
               className="px-6 py-3 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-md active:scale-95"
