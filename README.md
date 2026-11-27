@@ -109,6 +109,7 @@ To preserve operational professionalism, company channels and personal founder c
 - **Email:** `shivamwebdesigns23@gmail.com`
 
 ### Founder Channels (Shivam Purohit)
+- **Public Title:** Founder &amp; CEO of ShivamWebDesigns
 - **LinkedIn:** [https://www.linkedin.com/in/purohit-bhagyesh-193766413/](https://www.linkedin.com/in/purohit-bhagyesh-193766413/)
 - **GitHub:** [https://github.com/PurohitBhagyesh](https://github.com/PurohitBhagyesh)
 - **Instagram:** [https://www.instagram.com/purohitshivam23/](https://www.instagram.com/purohitshivam23/)

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Founder',
   description: `${founderData.name}, ${founderData.role} of ${founderData.company}. Discover his story, design philosophy, technical skills, and vision for the modern web.`,
   openGraph: {
-    title: `${founderData.name} — Founder & CEO, ${founderData.company}`,
+    title: `${founderData.name} — Founder & CEO of ${founderData.company}`,
     description: founderData.intro,
     images: [{ url: founderData.image }],
   },
@@ -56,7 +56,7 @@ export default function FounderPage() {
                 {founderData.name}
               </h1>
               <div className="text-sm font-mono text-neutral-400 uppercase tracking-widest mb-6">
-                {founderData.role} • {founderData.company}
+                {founderData.role} of {founderData.company}
               </div>
 
               <p className="text-lg md:text-xl text-neutral-300 font-light leading-relaxed mb-8">
