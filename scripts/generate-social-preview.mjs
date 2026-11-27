@@ -36,226 +36,333 @@ const htmlContent = `<!DOCTYPE html>
   }
 
   /* Ambient background glows & micro-grid */
-  .bg-glow-1 {
+  .bg-glow {
     position: absolute;
-    top: -80px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 720px;
-    height: 480px;
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 45%, transparent 70%);
+    top: -60px;
+    left: 20%;
+    width: 600px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 50%, transparent 70%);
     pointer-events: none;
   }
   .bg-grid {
     position: absolute;
     inset: 0;
     background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-    background-size: 28px 28px;
-    opacity: 0.55;
+    background-size: 32px 32px;
+    opacity: 0.45;
     pointer-events: none;
   }
 
-  /* Outer Framed Container */
-  .card-frame {
+  /* Main Container */
+  .main-container {
     position: relative;
-    width: 1204px;
+    width: 1200px;
     height: 564px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: linear-gradient(180deg, rgba(16, 16, 20, 0.88) 0%, rgba(9, 9, 12, 0.96) 100%);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, rgba(14, 14, 18, 0.92) 0%, rgba(8, 8, 10, 0.98) 100%);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 38px 46px;
+    padding: 44px 48px;
+    gap: 48px;
     z-index: 2;
   }
 
-  /* Header Row */
-  .header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .repo-badge {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 15px;
-    color: #a1a1aa;
-    letter-spacing: 0.02em;
-    background: rgba(255, 255, 255, 0.04);
-    padding: 8px 18px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .repo-badge svg {
-    fill: #ffffff;
-    opacity: 0.95;
-  }
-  .repo-badge .org { color: #d4d4d8; font-weight: 500; }
-  .repo-badge .slash { color: #52525b; margin: 0 2px; }
-  .repo-badge .repo { color: #ffffff; font-weight: 600; }
-
-  .status-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: #e4e4e7;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 8px 16px;
-    border-radius: 999px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 10px #10b981;
-  }
-
-  /* Center Content */
-  .center-content {
+  /* Left Column: Brand & Identity */
+  .left-col {
+    flex: 1.05;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-top: -6px;
+    justify-content: space-between;
+    padding-right: 12px;
   }
-  .logo-wrap {
-    margin-bottom: 16px;
-    filter: drop-shadow(0 8px 24px rgba(255, 255, 255, 0.12));
+
+  .brand-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .logo-box {
+    margin-bottom: 20px;
+    filter: drop-shadow(0 6px 18px rgba(255, 255, 255, 0.1));
   }
   .logo-img {
-    height: 98px;
+    height: 68px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: screen;
   }
-  .title-brand {
-    font-size: 48px;
+  .studio-name {
+    font-size: 40px;
     font-weight: 700;
     letter-spacing: -0.03em;
     color: #ffffff;
     line-height: 1.1;
     margin-bottom: 8px;
   }
-  .tagline {
-    font-size: 20px;
+  .studio-tagline {
+    font-size: 19px;
     font-style: italic;
     color: #e4e4e7;
     font-family: Georgia, Cambria, "Times New Roman", serif;
-    letter-spacing: 0.02em;
-    margin-bottom: 12px;
+    letter-spacing: 0.015em;
+    margin-bottom: 16px;
   }
-  .desc {
-    font-size: 15px;
+  .studio-bio {
+    font-size: 14.5px;
     color: #a1a1aa;
-    max-width: 820px;
-    line-height: 1.5;
+    line-height: 1.6;
     letter-spacing: 0.01em;
+    max-width: 440px;
   }
 
-  /* Bottom Row */
-  .bottom-row {
+  .left-footer {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 20px;
+    flex-direction: column;
+    gap: 12px;
   }
-  .tech-pills {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .pill {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 12px;
-    color: #d4d4d8;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 6px 14px;
-    border-radius: 999px;
-    letter-spacing: 0.03em;
-  }
-  .domain-pill {
-    display: flex;
+  .meta-tag {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #a1a1aa;
+  }
+  .meta-tag .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+  }
+
+  .domain-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 13px;
     font-weight: 600;
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 7px 18px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 8px 18px;
     border-radius: 999px;
     letter-spacing: 0.02em;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
   .domain-pill svg {
     stroke: #ffffff;
   }
+
+  /* Vertical Divider */
+  .col-divider {
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.12) 20%, rgba(255, 255, 255, 0.12) 80%, transparent 100%);
+  }
+
+  /* Right Column: Studio Services Bento */
+  .right-col {
+    flex: 1.35;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #71717a;
+  }
+  .section-badge {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    color: #a1a1aa;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+
+  /* 2x2 Services Grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    flex: 1;
+  }
+  .service-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+  }
+  .card-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    color: #52525b;
+  }
+  .card-desc {
+    font-size: 12.5px;
+    color: #a1a1aa;
+    line-height: 1.55;
+    letter-spacing: 0.005em;
+    margin-bottom: 12px;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 10.5px;
+    color: #d4d4d8;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+  }
 </style>
 </head>
 <body>
-  <div class="bg-glow-1"></div>
+  <div class="bg-glow"></div>
   <div class="bg-grid"></div>
 
-  <div class="card-frame">
-    <!-- Top Row -->
-    <div class="header-row">
-      <div class="repo-badge">
-        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-        </svg>
-        <span class="org">shivamwebdesigns</span>
-        <span class="slash">/</span>
-        <span class="repo">Shivam-Web-Designs</span>
+  <div class="main-container">
+    <!-- Left Column: Studio Brand -->
+    <div class="left-col">
+      <div class="brand-header">
+        <div class="logo-box">
+          <img class="logo-img" src="data:image/png;base64,${logoBase64}" alt="SWD Monogram">
+        </div>
+        <h1 class="studio-name">Shivam Web Designs</h1>
+        <p class="studio-tagline">Where Design Meets Digital Excellence.</p>
+        <p class="studio-bio">
+          Independent design & engineering studio crafting tailored digital flagships, considered UI/UX, and sub-second web experiences.
+        </p>
       </div>
 
-      <div class="status-pill">
-        <div class="status-dot"></div>
-        <span>Production Studio &bull; Next.js 15</span>
+      <div class="left-footer">
+        <div class="meta-tag">
+          <div class="status-dot"></div>
+          <span>Accepting New Projects &bull; Worldwide</span>
+        </div>
+        <div class="domain-pill">
+          <span>shivamwebdesigns.devs.li</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </div>
       </div>
     </div>
 
-    <!-- Center Hero -->
-    <div class="center-content">
-      <div class="logo-wrap">
-        <img class="logo-img" src="data:image/png;base64,${logoBase64}" alt="SWD Monogram">
-      </div>
-      <h1 class="title-brand">Shivam Web Designs</h1>
-      <p class="tagline">Where Design Meets Digital Excellence.</p>
-      <p class="desc">Bespoke Web Design &bull; Spatial 3D Business Card &bull; UI/UX Architecture &bull; Next.js 15 App Router &bull; 100/100 Core Web Vitals</p>
-    </div>
+    <!-- Divider -->
+    <div class="col-divider"></div>
 
-    <!-- Bottom Features & Link -->
-    <div class="bottom-row">
-      <div class="tech-pills">
-        <span class="pill">Next.js 15</span>
-        <span class="pill">React 19</span>
-        <span class="pill">TypeScript</span>
-        <span class="pill">Tailwind CSS</span>
-        <span class="pill">Spatial 3D Matrix</span>
-        <span class="pill">PWA Ready</span>
+    <!-- Right Column: Core Services -->
+    <div class="right-col">
+      <div class="section-label">
+        <span class="section-title">Core Studio Capabilities</span>
+        <span class="section-badge">Client Deliverables</span>
       </div>
 
-      <div class="domain-pill">
-        <span>shivamwebdesigns.devs.li</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="7" y1="17" x2="17" y2="7"></line>
-          <polyline points="7 7 17 7 17 17"></polyline>
-        </svg>
+      <div class="services-grid">
+        <!-- 01: Website Design -->
+        <div class="service-card">
+          <div>
+            <div class="card-top">
+              <h3 class="card-title">Website Design</h3>
+              <span class="card-num">01</span>
+            </div>
+            <p class="card-desc">Bespoke visual identity, editorial Swiss typography, art direction & comprehensive design systems.</p>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Figma Prototyping</span>
+            <span class="tag">Design Systems</span>
+            <span class="tag">Art Direction</span>
+          </div>
+        </div>
+
+        <!-- 02: Frontend Development -->
+        <div class="service-card">
+          <div>
+            <div class="card-top">
+              <h3 class="card-title">Frontend Engineering</h3>
+              <span class="card-num">02</span>
+            </div>
+            <p class="card-desc">Modern web engineering, fluid 60fps animations, accessible semantic HTML, and zero bloat.</p>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Web Development</span>
+            <span class="tag">Clean Code</span>
+            <span class="tag">Interactive UI</span>
+          </div>
+        </div>
+
+        <!-- 03: UI/UX Architecture -->
+        <div class="service-card">
+          <div>
+            <div class="card-top">
+              <h3 class="card-title">UI/UX Architecture</h3>
+              <span class="card-num">03</span>
+            </div>
+            <p class="card-desc">Intuitive user journeys, conversion-focused wireframing, and streamlined product workflows.</p>
+          </div>
+          <div class="card-tags">
+            <span class="tag">User Flows</span>
+            <span class="tag">Wireframing</span>
+            <span class="tag">Conversion UX</span>
+          </div>
+        </div>
+
+        <!-- 04: Redesign & Spatial 3D -->
+        <div class="service-card">
+          <div>
+            <div class="card-top">
+              <h3 class="card-title">Redesign & Spatial 3D</h3>
+              <span class="card-num">04</span>
+            </div>
+            <p class="card-desc">Transforming legacy sites into modern flagships with 3D physical card simulation & 100 CWV.</p>
+          </div>
+          <div class="card-tags">
+            <span class="tag">Website Modernization</span>
+            <span class="tag">Spatial 3D</span>
+            <span class="tag">100/100 CWV</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -268,7 +375,7 @@ fs.writeFileSync(tempHtml, htmlContent);
 const outputPng = path.join(rootDir, 'public', 'assets', 'github-social-preview.png');
 const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
-console.log('Rendering 1280x640 GitHub Social Media Preview with Chrome Headless...');
+console.log('Rendering Un-slopped 1280x640 Services Social Media Preview...');
 execSync(`"${chromePath}" --headless --disable-gpu --screenshot="${outputPng}" --window-size=1280,640 --default-background-color=050507 "${tempHtml}"`);
 
 fs.unlinkSync(tempHtml);
@@ -288,4 +395,4 @@ for (const target of targets) {
   console.log('Mirrored to:', target);
 }
 
-console.log('Successfully generated and mirrored 1280x640 GitHub Social Media Preview!');
+console.log('Successfully generated and mirrored un-slopped services social preview!');
