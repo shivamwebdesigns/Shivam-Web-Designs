@@ -1077,15 +1077,15 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
 
       {/* Mobile Cart Sheet Drawer */}
       {cartOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex flex-col justify-end bg-black/80 backdrop-blur-sm animate-fade-in">
+        <div className="lg:hidden fixed inset-0 z-[60] flex flex-col justify-end bg-black/80 backdrop-blur-sm animate-fade-in">
           <div
-            className="bg-neutral-950 border-t border-neutral-800 rounded-t-3xl max-h-[85vh] flex flex-col p-6 space-y-4 shadow-2xl overflow-y-auto"
+            className="bg-neutral-950 border-t border-neutral-800 rounded-t-3xl max-h-[92dvh] flex flex-col p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] space-y-4 shadow-2xl overflow-y-auto overscroll-contain"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Cart Summary"
           >
             {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-900">
+            <div className="sticky top-[-1rem] z-10 -mx-4 px-4 py-3 bg-neutral-950/95 backdrop-blur-md flex items-center justify-between pb-3 border-b border-neutral-900">
               <div className="flex items-center gap-2">
                 <ShoppingCart className="w-5 h-5 text-white" />
                 <h3 className="text-base font-bold text-white">Your Cart ({calc.itemCount})</h3>
@@ -1097,7 +1097,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                     setCartOpen(false);
                     setIsCartHidden(true);
                   }}
-                  className="px-3 py-1 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300 hover:text-white hover:border-neutral-600 flex items-center gap-1 transition-colors"
+                  className="h-11 px-3 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300 hover:text-white hover:border-neutral-600 flex items-center gap-1 transition-colors"
                 >
                   <span>Hide Cart</span>
                   <span className="font-bold">&gt;</span>
@@ -1105,7 +1105,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                 <button
                   type="button"
                   onClick={() => setCartOpen(false)}
-                  className="w-8 h-8 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white"
+                  className="w-11 h-11 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white"
                   aria-label="Close cart"
                 >
                   <X className="w-4 h-4" />
@@ -1189,7 +1189,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   if (contactError) setContactError('');
                 }}
                 placeholder="Full Name"
-                className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+                className="w-full h-11 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
               />
               <input
                 type="email"
@@ -1200,7 +1200,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   if (contactError) setContactError('');
                 }}
                 placeholder="Email Address"
-                className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+                className="w-full h-11 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
               />
               <input
                 type="tel"
@@ -1211,7 +1211,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   if (contactError) setContactError('');
                 }}
                 placeholder="Phone / WhatsApp Number"
-                className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+                className="w-full h-11 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
               />
               {contactError && (
                 <p className="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-900/50 rounded-md p-1.5 leading-tight">
@@ -1230,7 +1230,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                 value={existingSite}
                 onChange={(e) => setExistingSite(e.target.value)}
                 placeholder="https://yourwebsite.com"
-                className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-400 focus:outline-none"
+                className="w-full h-11 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-400 focus:outline-none"
               />
             </div>
 
