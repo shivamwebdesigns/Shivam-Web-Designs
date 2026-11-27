@@ -56,6 +56,18 @@ export function Hero() {
               <p className="text-xs text-neutral-400 font-medium">Framework &amp; Plugin Bloat</p>
             </div>
           </div>
+
+          {/* Tech Stack & Standards Ribbon (Exact Pills matching user specification) */}
+          <div className="pt-8 sm:pt-10 border-t border-neutral-900/90 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'Spatial 3D Matrix', 'PWA Ready'].map((tech) => (
+              <span
+                key={tech}
+                className="px-3.5 py-1.5 rounded-full text-xs font-mono text-neutral-300 bg-neutral-900/60 border border-neutral-800 hover:border-neutral-700 hover:text-white transition-all duration-200 select-none cursor-default"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

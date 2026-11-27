@@ -332,6 +332,141 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .btn.solid:hover { background: #e5e5e5; }
 .btn.on, .btn.solid.on { background: rgba(255, 255, 255, .1); color: #fff; border-color: #fff; }
 
+/* Stack & Architecture Pills Ribbon */
+.stack-pills-bar {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.stack-pills-label {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  font: 500 12.5px "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color: #d4d4d8;
+  letter-spacing: .01em;
+  transition: all .25s var(--ease);
+  user-select: none;
+}
+.pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Card Tier Pills */
+.card-pills-block {
+  margin: 14px 0 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.card-pills-title {
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.card-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pill-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3.5px 9px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  font: 500 11px "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color: #a1a1aa;
+  transition: all .2s ease;
+}
+.card:hover .pill-tag {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #e4e4e7;
+}
+
+/* Add-on Filters Bar */
+.addon-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 20px;
+}
+.afilter {
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid #333;
+  background: #080808;
+  font: 500 12px "JetBrains Mono", monospace;
+  color: var(--mute);
+  cursor: pointer;
+  transition: all .2s var(--ease);
+}
+.afilter:hover {
+  border-color: #666;
+  color: #fff;
+}
+.afilter.on {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  font-weight: 600;
+}
+
+/* Add-on Pill Chip Badges */
+.pill-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 99px;
+  font: 600 10px "JetBrains Mono", monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #d1d1d6;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.pill-chip-free {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #34d399;
+}
+
+/* Website Status Pill */
+.site-status-pill {
+  font-size: 11px;
+  color: #34d399;
+  font-family: "JetBrains Mono", monospace;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
 .wa {
   display: block;
   text-decoration: none;
@@ -632,11 +767,33 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   padding-top: 14px;
   font-size: 14px;
 }
-.tot div { display: flex; justify-content: space-between; }
-.tot span { color: var(--mute); }
-.tot .grand { font-size: 20px; font-weight: 700; }
-.tot .grand span { color: #fff; }
-.tot p { margin: 0; font-size: 12px; color: var(--mute); }
+.tot-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 0;
+}
+.tot span { color: var(--mute); font-size: 13.5px; }
+.tot b.tot-val {
+  font-weight: 600;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+}
+.tot b.tot-plus { color: #ffffff; font-weight: 700; }
+.tot b.tot-minus { color: #10b981; }
+.tot-divider {
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+  margin: 6px 0 2px;
+}
+.tot .grand {
+  font-size: 20px;
+  font-weight: 700;
+  padding-top: 4px;
+}
+.tot .grand span { color: #fff; font-size: 15px; font-weight: 600; }
+.tot .grand b { font-size: 22px; color: #fff; }
+.tot .tot-mo { margin: 2px 0 0; font-size: 12px; color: var(--mute); line-height: 1.4; }
 
 .sync-status {
   font-size: 11px;
@@ -774,6 +931,19 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
       <p class="mono mute rv">Packages // Transparent Fixed Prices</p>
       <h1 class="rv" style="--d:.1s">Websites from ₹499.</h1>
       <p class="lead rv" style="--d:.2s">Pick a package, add only what you need, or choose add-ons for your existing website. Sent directly to WhatsApp &amp; our studio admin panel.</p>
+
+      <!-- Studio Core Architecture Ribbon (Matching user's pill tags) -->
+      <div class="stack-pills-bar rv" style="--d:.25s">
+        <span class="stack-pills-label mono">Studio Core Architecture //</span>
+        <div class="stack-pills">
+          <span class="pill">Next.js 15</span>
+          <span class="pill">React 19</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">Tailwind CSS</span>
+          <span class="pill">Spatial 3D Matrix</span>
+          <span class="pill">PWA Ready</span>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -792,6 +962,15 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
             <div><dt>Scope</dt><dd>1 scrolling page</dd></div>
             <div><dt>Delivery</dt><dd>1–2 days</dd></div>
           </dl>
+          <div class="card-pills-block">
+            <span class="card-pills-title mono">Starter Stack:</span>
+            <div class="card-pills">
+              <span class="pill-tag">HTML5 Semantic</span>
+              <span class="pill-tag">Mobile First</span>
+              <span class="pill-tag">Free Subdomain</span>
+              <span class="pill-tag">Fast CDN</span>
+            </div>
+          </div>
           <ul>
             <li><span aria-hidden="true">✓</span><span>Mobile-first custom design</span></li>
             <li><span aria-hidden="true">✓</span><span>Your logo, photos and links</span></li>
@@ -817,6 +996,15 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
             <div><dt>Scope</dt><dd>1 page, 4–5 sections</dd></div>
             <div><dt>Delivery</dt><dd>3–5 days</dd></div>
           </dl>
+          <div class="card-pills-block">
+            <span class="card-pills-title mono">Growth Stack:</span>
+            <div class="card-pills">
+              <span class="pill-tag">Flagship UI</span>
+              <span class="pill-tag">Lead Engine</span>
+              <span class="pill-tag">Custom Domain</span>
+              <span class="pill-tag">SEO Standard</span>
+            </div>
+          </div>
           <ul>
             <li><span aria-hidden="true">✓</span><span>Everything in Starter</span></li>
             <li><span aria-hidden="true">✓</span><span>About, services, gallery and contact</span></li>
@@ -842,6 +1030,17 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
             <div><dt>Scope</dt><dd>Up to 3 full pages</dd></div>
             <div><dt>Delivery</dt><dd>5–7 days</dd></div>
           </dl>
+          <div class="card-pills-block">
+            <span class="card-pills-title mono">Pro Architecture Stack:</span>
+            <div class="card-pills">
+              <span class="pill-tag">Next.js 15</span>
+              <span class="pill-tag">React 19</span>
+              <span class="pill-tag">TypeScript</span>
+              <span class="pill-tag">Tailwind CSS</span>
+              <span class="pill-tag">Spatial 3D Matrix</span>
+              <span class="pill-tag">PWA Ready</span>
+            </div>
+          </div>
           <ul>
             <li><span aria-hidden="true">✓</span><span>Everything in Growth</span></li>
             <li><span aria-hidden="true">✓</span><span>Up to 3 bespoke pages</span></li>
@@ -856,58 +1055,67 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
         </article>
       </section>
 
-      <!-- Modular Add-ons -->
+      <!-- Modular Add-ons with Smoother Category Options -->
       <div class="rv" style="margin-top: 36px;">
         <h3>Modular Add-ons</h3>
-        <p class="mute" style="margin-bottom: 16px; font-size: 14px;">Select any add-on with a package, or order add-ons standalone for your existing website.</p>
-        <ul class="add">
-          <li>
+        <p class="mute" style="margin-bottom: 14px; font-size: 14px;">Select any add-on with a package, or order add-ons standalone for your existing website.</p>
+
+        <!-- Filter Pills Bar -->
+        <div class="addon-filters" role="tablist" aria-label="Filter Add-ons">
+          <button type="button" class="afilter on" data-cat="all">All Add-ons</button>
+          <button type="button" class="afilter" data-cat="branding">Branding &amp; Setup</button>
+          <button type="button" class="afilter" data-cat="content">Content &amp; Scope</button>
+          <button type="button" class="afilter" data-cat="maintenance">Maintenance</button>
+        </div>
+
+        <ul class="add" id="addonList">
+          <li data-cat="branding">
             <div>
-              <b>Free subdomain and setup</b>
+              <b>Free subdomain and setup <span class="pill-chip pill-chip-free">Free with Pro</span></b>
               <small>We configure and launch your site on a free subdomain</small>
             </div>
             <span class="mono mute">₹149</span>
-            <button class="mini" data-act="add" data-id="subdomain">Add</button>
+            <button class="mini" data-act="add" data-id="subdomain">+ Add</button>
           </li>
-          <li>
+          <li data-cat="branding">
             <div>
-              <b>Logo design</b>
+              <b>Logo design <span class="pill-chip">From ₹99</span></b>
               <small>A clean, modern brand logo for your business</small>
             </div>
             <span class="mono mute">₹99</span>
-            <button class="mini" data-act="add" data-id="logo">Add</button>
+            <button class="mini" data-act="add" data-id="logo">+ Add</button>
           </li>
-          <li>
+          <li data-cat="content">
             <div>
               <b>Copywriting, per page</b>
               <small>Compelling, professional marketing copy for one page</small>
             </div>
             <span class="mono mute">₹199</span>
-            <button class="mini" data-act="add" data-id="copy">Add</button>
+            <button class="mini" data-act="add" data-id="copy">+ Add</button>
           </li>
-          <li>
+          <li data-cat="content">
             <div>
               <b>Extra revisions</b>
               <small>3 rounds included free, then per additional round</small>
             </div>
             <span class="mono mute">₹199</span>
-            <button class="mini" data-act="add" data-id="rev">Add</button>
+            <button class="mini" data-act="add" data-id="rev">+ Add</button>
           </li>
-          <li>
+          <li data-cat="content">
             <div>
               <b>Extra page</b>
               <small>Add another responsive custom page to your site</small>
             </div>
             <span class="mono mute">₹299</span>
-            <button class="mini" data-act="add" data-id="page">Add</button>
+            <button class="mini" data-act="add" data-id="page">+ Add</button>
           </li>
-          <li>
+          <li data-cat="maintenance">
             <div>
-              <b>Monthly maintenance</b>
+              <b>Monthly maintenance <span class="pill-chip">Ongoing</span></b>
               <small>Continuous security updates, backups, and bug fixes</small>
             </div>
             <span class="mono mute">₹299 / month</span>
-            <button class="mini" data-act="add" data-id="maint">Add</button>
+            <button class="mini" data-act="add" data-id="maint">+ Add</button>
           </li>
         </ul>
       </div>
@@ -974,6 +1182,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
           <div class="site-box-title">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
             <span>Already have a website?</span>
+            <span class="site-status-pill" id="siteStatusPill">✓ Link saved</span>
           </div>
           <p>Paste your link so we can review your existing site for add-ons or updates:</p>
           <div class="site-input-wrap">
@@ -992,11 +1201,34 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
         </div>
       </div>
 
-      <div class="tot">
-        <div><span>Subtotal</span><b id="tsub">₹0</b></div>
-        <div id="trowd"><span>Offers applied</span><b id="tdis">−₹0</b></div>
-        <div class="grand"><span>Total</span><b id="ttot" aria-live="polite">₹0</b></div>
-        <p id="tmo"></p>
+      <!-- Structured Math Breakdown: Package + Add-ons − Discounts = Total -->
+      <div class="tot" id="totContainer">
+        <!-- Package Base Row -->
+        <div id="trow-pkg" class="tot-row" style="display:none;">
+          <span>Package (<b id="tpkgnm">Starter</b>)</span>
+          <b id="tpkg" class="tot-val">₹0</b>
+        </div>
+
+        <!-- Add-ons with explicit "+" thing added to rupees item -->
+        <div id="trow-add" class="tot-row" style="display:none;">
+          <span id="taddlbl">+ Add-ons (0 items)</span>
+          <b id="tadd" class="tot-val tot-plus">+₹0</b>
+        </div>
+
+        <!-- Offers / Discounts with explicit "−" -->
+        <div id="trowd" class="tot-row tot-discount" style="display:none;">
+          <span id="tdislbl">− Offers applied</span>
+          <b id="tdis" class="tot-val tot-minus">−₹0</b>
+        </div>
+
+        <div class="tot-divider" id="tdiv"></div>
+
+        <!-- Grand Total of all -->
+        <div class="grand tot-row">
+          <span>Total Amount</span>
+          <b id="ttot" class="tot-val" aria-live="polite">₹0</b>
+        </div>
+        <p id="tmo" class="tot-mo"></p>
       </div>
 
       <button class="btn solid" data-act="wa" id="cwa">Send cart on WhatsApp</button>
@@ -1188,18 +1420,19 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   }
 
   function tween(el, to, pre) {
+    if (!el) return;
     pre = pre || '';
-    var from = cur[el.id] || 0;
+    var from = typeof cur[el.id] === 'number' ? cur[el.id] : 0;
     cur[el.id] = to;
-    if (reduce || from === to) {
-      el.textContent = pre + fmt(to);
+    if (reduce || Math.abs(from - to) < 1) {
+      el.textContent = (to === 0 && pre !== '') ? fmt(0) : pre + fmt(to);
       return;
     }
     var t0 = performance.now();
     (function f(t){
-      var k = Math.min(1, (t - t0) / 450);
+      var k = Math.min(1, (t - t0) / 400);
       var v = from + (to - from) * (1 - Math.pow(1 - k, 3));
-      el.textContent = pre + fmt(v);
+      el.textContent = (to === 0 && pre !== '') ? fmt(0) : pre + fmt(v);
       if (k < 1) requestAnimationFrame(f);
     })(t0);
   }
@@ -1320,14 +1553,51 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 
     // Synchronize Existing Website Input
     var siteInput = $('#siteUrlInput');
+    var sitePill = $('#siteStatusPill');
     if (siteInput && document.activeElement !== siteInput) {
       siteInput.value = S.existingSite || '';
     }
+    if (sitePill) {
+      sitePill.style.display = (S.existingSite && S.existingSite.length > 3) ? 'inline-flex' : 'none';
+    }
 
-    tween($('#tsub'), c.sub);
-    tween($('#tdis'), c.free + c.bundle, '−');
+    // Dynamic Breakdown Math: Base Package + Add-ons − Discounts = Total of All
+    var trowPkg = $('#trow-pkg');
+    if (c.p) {
+      trowPkg.style.display = 'flex';
+      $('#tpkgnm').textContent = c.p.name;
+      tween($('#tpkg'), c.p.price);
+    } else {
+      trowPkg.style.display = 'none';
+    }
+
+    var trowAdd = $('#trow-add');
+    if (c.addSub > 0) {
+      trowAdd.style.display = 'flex';
+      $('#taddlbl').textContent = '+ Add-ons (' + c.qAll + ' item' + (c.qAll > 1 ? 's' : '') + ')';
+      tween($('#tadd'), c.addSub, '+');
+    } else {
+      trowAdd.style.display = 'none';
+    }
+
+    var trowDis = $('#trowd');
+    var discount = c.free + c.bundle;
+    if (discount > 0) {
+      trowDis.style.display = 'flex';
+      $('#tdislbl').textContent = '− Offers applied';
+      tween($('#tdis'), discount, '−');
+    } else {
+      trowDis.style.display = 'none';
+    }
+
+    // Divider line visibility
+    var tdiv = $('#tdiv');
+    if (tdiv) {
+      tdiv.style.display = (c.p || c.addSub > 0 || discount > 0) ? 'block' : 'none';
+    }
+
+    // Grand total of all
     tween($('#ttot'), c.total);
-    $('#trowd').style.display = (c.free + c.bundle) ? 'flex' : 'none';
     $('#tmo').textContent = c.monthly ? 'Plus ' + fmt(c.monthly) + ' / month for maintenance.' : '';
 
     $('#cbadge').textContent = n;
@@ -1436,8 +1706,27 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   document.addEventListener('input', function(e){
     if (e.target && e.target.id === 'siteUrlInput') {
       S.existingSite = e.target.value.trim();
+      var sitePill = $('#siteStatusPill');
+      if (sitePill) {
+        sitePill.style.display = (S.existingSite && S.existingSite.length > 3) ? 'inline-flex' : 'none';
+      }
       save();
     }
+  });
+
+  // Add-on Category Filter
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.afilter');
+    if (!btn) return;
+    var cat = btn.dataset.cat;
+    $$('.afilter').forEach(function(b){ b.classList.toggle('on', b === btn); });
+    $$('#addonList li').forEach(function(li){
+      if (cat === 'all' || li.dataset.cat === cat) {
+        li.style.display = 'flex';
+      } else {
+        li.style.display = 'none';
+      }
+    });
   });
 
   document.addEventListener('click', function(e){
