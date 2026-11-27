@@ -91,6 +91,7 @@ export const siteConfig: SiteConfig = {
   },
   navigation: [
     { label: 'Home', href: '/' },
+    { label: 'Packages', href: '/packages' },
     { label: 'About', href: '/about' },
     { label: 'Services', href: '/services' },
     { label: 'Projects', href: '/projects' },

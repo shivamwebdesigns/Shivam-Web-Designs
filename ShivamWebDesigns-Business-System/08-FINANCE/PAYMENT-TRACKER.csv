@@ -1,0 +1,6 @@
+Invoice Number,Client Name,Project Name,Milestone,Amount,Currency,Date Issued,Date Due,Date Paid,Payment Method,Transaction Ref UTR,Status,Notes
+INV-2026-0001,Acme Corporation,Corporate Redesign,50% Kickoff Deposit,50000,INR,2026-11-01,2026-11-08,2026-11-03,Bank Transfer,UTR9876543210,Paid,Sprint 1 commenced immediately
+INV-2026-0002,Acme Corporation,Corporate Redesign,25% Staging Review,25000,INR,2026-11-15,2026-11-22,2026-11-18,Bank Transfer,UTR9876543211,Paid,Design prototype approved
+INV-2026-0003,Acme Corporation,Corporate Redesign,25% Final Handover,25000,INR,2026-11-28,2026-12-05,,Bank Transfer,,Pending,Awaiting DNS cutover
+INV-2026-0004,Zenith Studio,Custom Portfolio,50% Kickoff Deposit,1200,USD,2026-11-10,2026-11-17,2026-11-11,International Wire,TXN-INTL-4412,Paid,Wire confirmed
+INV-2026-0005,Zenith Studio,Custom Portfolio,50% Final Handover,1200,USD,2026-11-25,2026-12-02,,International Wire,,Pending,Code packaged for delivery

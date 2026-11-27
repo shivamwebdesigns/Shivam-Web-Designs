@@ -57,6 +57,8 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 | **`/founder`** | `app/founder/page.tsx` | **Founder Profile:** Editorial profile of Shivam Purohit with high-definition portrait, personal journey, and direct links. |
 | **`/contact`** | `app/contact/page.tsx` | **Client Inquiries:** Studio communication coordinates, encrypted response expectations, and structured contact form. |
 | **`/start-project`** | `app/start-project/page.tsx` | **Project Configurator:** Multi-step sprint planner with interactive pills for service type, budget tier, and delivery timeline. |
+| **`/packages`** | `public/packages.html` | **Packages & Pricing:** Fixed-price tiers (Starter ₹499, Growth ₹999, Pro ₹1,500), modular add-ons (subdomain setup from ₹149, logo design for ₹99), existing site link input, and dual dispatch to WhatsApp and studio admin panel. |
+| **`/pricing`** | `public/packages.html` | Alias redirect to `/packages`. |
 | **`/businesscard`** | `public/businesscard.html` | **Spatial 3D Digital Business Card:** Gyroscope- and drag-enabled 3D physical card simulation, vCard 3.0 generation, Web Share API, and QR download. |
 | **`/license`** | `app/license/page.tsx` | **Legal Documentation & License Hub:** Consolidated, un-slopped dark mode legal architecture combining the **MIT License**, **Privacy Policy**, and **Terms of Service** with interactive tab switching. Linked in global footer as **Legal Documentation**. |
 | **`/privacy`** | `app/privacy/page.tsx` | **Privacy Policy:** Transparent, minimal data collection terms with zero ad trackers, DPDP Act 2023, and GDPR compliance. |
@@ -67,6 +69,12 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 ## 4. UI Components & Interaction Features
 
+- **Packages & Fixed Pricing Architecture (`/packages`, `/pricing`):**
+  - **Fixed-Price Tiers:** Starter (₹499 &bull; digital profile page), Growth (₹999 &bull; one-page website with inquiry form and basic SEO), Pro (₹1,500 &bull; multi-page architecture up to 3 pages with analytics, speed tuning, and glowing white highlights).
+  - **Modular Add-ons:** Free subdomain and setup (from ₹149), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month). Standalone add-on purchases fully supported.
+  - **Existing Website Link Integration:** Direct input field inside the interactive cart allowing clients to paste their existing website link (`Already have a website?`) so the studio immediately understands their current setup.
+  - **Dual-Dispatch Cart Submissions:** Cart orders are dispatched simultaneously to WhatsApp (`+91 78619 65480`) and automatically recorded in the studio's Firestore admin panel (`/admin`) via background API synchronization with instant email dispatch.
+  - **Enhanced FAQ Accordion:** Clean, accessible disclosure cards with smooth rotation indicators and zero clutter.
 - **Global Back-to-Top Button (`components/BackToTop.tsx`):** Unobtrusive floating control with passive scroll detection (`scrollY > 300`), smooth window scrolling, frosted dark glass styling (`bg-neutral-900/90 backdrop-blur-md`), and mobile dock offset.
 - **Browser Tab & Taskbar Branding:**
   - Simplified titles: `Page | ShivamWebDesigns` (`Home | ShivamWebDesigns`, etc.).

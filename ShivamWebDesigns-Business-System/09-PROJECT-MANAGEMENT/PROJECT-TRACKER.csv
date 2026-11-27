@@ -1,0 +1,5 @@
+Project ID,Client Name,Tier Package,Sprint Phase,Kickoff Date,Target Launch,Staging URL,Production URL,Revisions Used,Payment Status,Status,Notes
+SWD-2026-01,Acme Corporation,Tier 2 - Custom Multi-Page,Sprint 4: Testing & QA,2026-11-01,2026-12-05,https://acme.staging.devs.li,https://acme.com,1 of 2,75% Paid,In Progress,Final DNS cutover scheduled for Dec 5
+SWD-2026-02,Zenith Architecture,Tier 1 - Bespoke Single-Page,Sprint 5: Handover,2026-11-10,2026-11-28,https://zenith.staging.devs.li,https://zenitharch.in,2 of 2,100% Paid,Completed,Launched successfully; 14-day warranty active
+SWD-2026-03,Vanguard Logistics,Tier 3 - Redesign & Performance,Sprint 2: Architecture & Wireframe,2026-11-20,2026-12-22,https://vanguard.staging.devs.li,,0 of 2,50% Paid,In Progress,Wireframes submitted for client review
+SWD-2026-04,Elysian Jewelry,Tier 1 - Showcase Landing,Sprint 1: Discovery,2026-11-25,2026-12-15,,,0 of 2,50% Paid,In Progress,Collecting brand imagery and typography
