@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Lock, ArrowRight, MessageSquare, ShieldCheck, Zap, UserCheck, Layers } from 'lucide-react';
+import { ShieldCheck, Zap, UserCheck, Layers } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
@@ -49,44 +49,6 @@ export default function ProjectsPage() {
       {/* Main Content Area */}
       <section className="py-12 sm:py-16 bg-black flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
-          {/* Private Previews & NDA Notice */}
-          <div className="p-6 sm:p-10 rounded-2xl bg-neutral-950/80 border border-neutral-850 space-y-6 shadow-xl">
-            <div className="flex items-center gap-2 text-xs font-mono text-neutral-300 font-semibold uppercase tracking-wider">
-              <Lock className="w-4 h-4 text-neutral-400" />
-              <span>Private Architectural Walkthroughs Available</span>
-            </div>
-
-            <div className="space-y-3 max-w-3xl">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Client Work Under Strict Confidentiality
-              </h2>
-              <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
-                Because our enterprise and venture clients operate in highly competitive industries, many live web applications and conversion funnel designs remain confidential.
-              </p>
-              <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                If you are evaluating ShivamWebDesigns for an upcoming project, we are happy to share relevant private codebases, architecture walkthroughs, and client references directly under NDA.
-              </p>
-            </div>
-
-            <div className="pt-2 flex flex-wrap items-center gap-3">
-              <Link
-                href="/start-project"
-                className="px-6 py-3 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-md active:scale-95"
-              >
-                Request Private Brief
-              </Link>
-              <a
-                href={siteConfig.contact.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-700 text-white text-xs font-mono font-semibold uppercase tracking-wider transition-all active:scale-95 flex items-center gap-2"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>Talk with Founder</span>
-              </a>
-            </div>
-          </div>
-
           {/* Engineering Standards We Guarantee */}
           <div className="space-y-6">
             <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">

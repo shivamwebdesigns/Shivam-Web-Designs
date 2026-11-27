@@ -79,9 +79,9 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
     - `/?order=cancel`: Shows a sleek crimson-red notification banner stating *"Your order was cancelled successfully"* with a **See Your Cart** button.
   - **Full Layout Parity:** Packages is now a native App Router page (`app/packages/page.tsx`) with the unified `<Navbar />`, `<Footer />`, and `<MobileDock />`, perfectly matching the rest of the studio.
   - **Enhanced FAQ Accordion:** Clean, accessible disclosure cards with smooth rotation indicators and zero clutter.
-- **Projects & Confidentiality Architecture (`/projects` & Homepage):**
-  - **Selected Works Updating Soon:** Transparent, professional notice detailing that client case studies and digital flagships are undergoing strict NDA clearance and client review.
-  - **Private Architectural Previews:** Prospective clients can directly request private walkthroughs of codebases, design systems, and technical architectures under NDA.
+- **Projects Architecture (`/projects` & Homepage):**
+  - **Selected Works Updating Soon:** Transparent, professional notice detailing that client case studies and digital flagships are undergoing strict documentation and clearance.
+  - **Streamlined Layout & Engineering Standards:** Clean presentation showcasing core engineering guarantees (100% Bespoke Code, < 1.2s Core Web Vitals, Direct Founder Access, and Transparent Milestones) paired with direct project brief kickoff CTAs.
 - **Inquiry CTA Trust Bar (`components/InquiryCTA.tsx`):**
   - Responsive inline trust pillars (`Direct Founder Access / Zero Outsourcing / Fixed Price Sprints / Sub-Second Performance`) with responsive separators avoiding awkward line wrapping on mobile.
 - **Global Back-to-Top Button (`components/BackToTop.tsx`):** Unobtrusive floating control with passive scroll detection (`scrollY > 300`), smooth window scrolling, frosted dark glass styling (`bg-neutral-900/90 backdrop-blur-md`), and mobile dock offset.
