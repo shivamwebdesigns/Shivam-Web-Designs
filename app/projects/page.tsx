@@ -33,14 +33,14 @@ export default function ProjectsPage() {
       <section className="pt-28 pb-10 sm:pt-32 sm:pb-14 border-b border-neutral-900 bg-neutral-950/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">
-              PROJECTS
-            </p>
             <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white mb-4 leading-tight">
               Updating soon
             </h1>
             <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
               Our production client builds and flagship case studies are currently undergoing NDA clearance and documentation. We publish detailed architecture audits, Core Web Vitals reports, and production case studies as each client agreement permits.
+            </p>
+            <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mt-4">
+              PROJECTS // SELECTED WORK
             </p>
           </div>
         </div>
