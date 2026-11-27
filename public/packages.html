@@ -1361,6 +1361,21 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
         <ul class="citems" id="citems"></ul>
         <div class="cempty" id="cempty">Your cart is empty. Pick a package or choose any add-ons to get started.</div>
 
+        <!-- Mandatory Client Contact Details -->
+        <div class="site-box" id="contactBox" style="margin-top:14px;">
+          <div class="site-box-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Your Contact Details</span>
+            <span style="font-size:10px;font-family:monospace;color:#a3a3a3;text-transform:uppercase;margin-left:auto;">Mandatory *</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+            <input type="text" id="clientNameInput" class="site-input" placeholder="Full Name *" spellcheck="false" autocomplete="name" required />
+            <input type="email" id="clientEmailInput" class="site-input" placeholder="Email Address *" spellcheck="false" autocomplete="email" required />
+            <input type="tel" id="clientPhoneInput" class="site-input" placeholder="Phone / WhatsApp Number *" spellcheck="false" autocomplete="tel" required />
+          </div>
+          <div id="contactErrorAlert" style="display:none;color:#f87171;font-size:11px;font-family:monospace;background:rgba(127,29,29,0.3);border:1px solid rgba(185,28,28,0.5);border-radius:6px;padding:6px 8px;margin-top:8px;"></div>
+        </div>
+
         <!-- Already Have a Website Input Option -->
         <div class="site-box" id="siteBox">
           <div class="site-box-title">
@@ -1702,13 +1717,16 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   var pk = function(id){ return PK.filter(function(p){ return p.id === id; })[0]; };
   var ad = function(id){ return AD.filter(function(a){ return a.id === id; })[0]; };
 
-  var S = { pkg: null, add: {}, existingSite: '' }, last = null, cur = {};
+  var S = { pkg: null, add: {}, existingSite: '', clientName: '', clientEmail: '', clientPhone: '' }, last = null, cur = {};
 
   try {
     var r = JSON.parse(localStorage.getItem('swd-cart') || 'null');
     if (r && typeof r === 'object') {
       if (r.pkg && pk(r.pkg)) S.pkg = r.pkg;
       if (typeof r.existingSite === 'string') S.existingSite = r.existingSite;
+      if (typeof r.clientName === 'string') S.clientName = r.clientName;
+      if (typeof r.clientEmail === 'string') S.clientEmail = r.clientEmail;
+      if (typeof r.clientPhone === 'string') S.clientPhone = r.clientPhone;
       for (var k in (r.add || {})) {
         if (ad(k) && r.add[k] > 0) S.add[k] = Math.min(9, r.add[k] | 0);
       }
@@ -1817,6 +1835,13 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
       L.push('• ' + a.name + (q > 1 ? ' × ' + q : '') + ' – ' + fmt(a.price * q) + (a.monthly ? ' / month' : ''));
     });
 
+    if (S.clientName || S.clientEmail || S.clientPhone) {
+      L.push('', '*Client Contact Details:*');
+      if (S.clientName) L.push('• Name: ' + S.clientName);
+      if (S.clientEmail) L.push('• Email: ' + S.clientEmail);
+      if (S.clientPhone) L.push('• Phone: ' + S.clientPhone);
+    }
+
     if (S.existingSite && S.existingSite.trim()) {
       L.push('', '• Existing website link: ' + S.existingSite.trim());
     }
@@ -1878,6 +1903,14 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
       return '<div class="sg"><div><b>' + s.l + '</b><small>' + s.s + '</small></div><button class="mini" data-act="' + s.a + '" data-id="' + s.id + '">+ Add</button></div>';
     }).join('');
     $('#csugb').style.display = sg.length ? 'block' : 'none';
+
+    // Synchronize Client Contact Inputs
+    var nameInput = $('#clientNameInput');
+    var emailInput = $('#clientEmailInput');
+    var phoneInput = $('#clientPhoneInput');
+    if (nameInput && document.activeElement !== nameInput) nameInput.value = S.clientName || '';
+    if (emailInput && document.activeElement !== emailInput) emailInput.value = S.clientEmail || '';
+    if (phoneInput && document.activeElement !== phoneInput) phoneInput.value = S.clientPhone || '';
 
     // Synchronize Existing Website Input
     var siteInput = $('#siteUrlInput');
@@ -2008,8 +2041,48 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 
   // Dual Dispatch: WhatsApp + Admin Panel API
   function dispatchOrder(fid) {
-    var orderText = msg(fid);
     var c = calc();
+    var nameInput = $('#clientNameInput');
+    var emailInput = $('#clientEmailInput');
+    var phoneInput = $('#clientPhoneInput');
+    var errAlert = $('#contactErrorAlert');
+
+    var nameVal = (nameInput ? nameInput.value : S.clientName || '').trim();
+    var emailVal = (emailInput ? emailInput.value : S.clientEmail || '').trim();
+    var phoneVal = (phoneInput ? phoneInput.value : S.clientPhone || '').trim();
+
+    if (!nameVal || !emailVal || !phoneVal) {
+      if (errAlert) {
+        errAlert.textContent = '⚠ Name, Email, and Phone are mandatory to proceed.';
+        errAlert.style.display = 'block';
+      }
+      return;
+    }
+
+    if (emailVal.indexOf('@') === -1 || emailVal.indexOf('.') === -1) {
+      if (errAlert) {
+        errAlert.textContent = '⚠ Please enter a valid email address.';
+        errAlert.style.display = 'block';
+      }
+      return;
+    }
+
+    if (phoneVal.replace(/\D/g, '').length < 8) {
+      if (errAlert) {
+        errAlert.textContent = '⚠ Please enter a valid phone or WhatsApp number.';
+        errAlert.style.display = 'block';
+      }
+      return;
+    }
+
+    if (errAlert) errAlert.style.display = 'none';
+
+    S.clientName = nameVal;
+    S.clientEmail = emailVal;
+    S.clientPhone = phoneVal;
+    save();
+
+    var orderText = msg(fid);
     var waUrl = "https://wa.me/" + WA + "?text=" + encodeURIComponent(orderText);
 
     // Open Modal in Loading State immediately
@@ -2022,9 +2095,10 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: "Packages Cart Client" + (S.existingSite ? " [" + S.existingSite + "]" : ""),
-          email: "cart-order@shivamwebdesigns.devs.li",
-          subject: "[Package Order] " + (c.p ? c.p.name + " Package" : "Add-ons Only") + " (" + fmt(c.total) + ")",
+          name: nameVal,
+          email: emailVal,
+          phone: phoneVal,
+          subject: "[Package Order] " + (c.p ? c.p.name + " Package" : "Add-ons Only") + " (" + fmt(c.total) + ") - " + nameVal,
           message: orderText + (S.existingSite ? "\n\nClient Existing Website:\n" + S.existingSite : ""),
         })
       }).catch(function(err){ console.warn("Admin record sync notice:", err); });
@@ -2039,14 +2113,27 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
     }, 700);
   }
 
-  // Listen for existing website input changes
+  // Listen for client contact and website input changes
   document.addEventListener('input', function(e){
-    if (e.target && e.target.id === 'siteUrlInput') {
+    if (!e.target) return;
+    if (e.target.id === 'siteUrlInput') {
       S.existingSite = e.target.value.trim();
       var sitePill = $('#siteStatusPill');
       if (sitePill) {
         sitePill.style.display = (S.existingSite && S.existingSite.length > 3) ? 'inline-flex' : 'none';
       }
+      save();
+    } else if (e.target.id === 'clientNameInput') {
+      S.clientName = e.target.value;
+      var err = $('#contactErrorAlert'); if (err) err.style.display = 'none';
+      save();
+    } else if (e.target.id === 'clientEmailInput') {
+      S.clientEmail = e.target.value;
+      var err = $('#contactErrorAlert'); if (err) err.style.display = 'none';
+      save();
+    } else if (e.target.id === 'clientPhoneInput') {
+      S.clientPhone = e.target.value;
+      var err = $('#contactErrorAlert'); if (err) err.style.display = 'none';
       save();
     }
   });

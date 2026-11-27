@@ -38,12 +38,11 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 border-b border-neutral-900 bg-black">
+    <section className="py-14 sm:py-20 border-b border-neutral-900 bg-black">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="max-w-2xl mb-16">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-white"></span>
+          <div className="mb-3">
             <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
               The Agency Advantage
             </span>

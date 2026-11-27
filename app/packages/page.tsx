@@ -117,17 +117,16 @@ export default function PackagesPage() {
       />
       <main className="flex flex-col min-h-screen">
         {/* Packages Dedicated Hero */}
-        <section className="pt-32 pb-16 sm:pt-40 sm:pb-20 border-b border-neutral-900 bg-neutral-950/60">
+        <section className="pt-28 pb-10 sm:pt-32 sm:pb-12 border-b border-neutral-900 bg-neutral-950/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-neutral-800 bg-neutral-900/80 text-xs font-mono text-neutral-300 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-neutral-800 bg-neutral-900/80 text-xs font-mono text-neutral-300 mb-4">
                 <span>PACKAGES // FIXED PRICES</span>
               </div>
-              <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
                 Transparent Website Packages. Zero Hidden Fees.
               </h1>
-              <p className="text-lg text-neutral-400 font-light leading-relaxed">
+              <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
                 Choose a production-ready package engineered for your stage, or curate a bespoke build with modular unbundled add-ons. Direct founder execution with guaranteed sub-second speed.
               </p>
             </div>

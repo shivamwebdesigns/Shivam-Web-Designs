@@ -82,12 +82,11 @@ export function SpatialStack() {
   };
 
   return (
-    <section id="3d-stack" className="py-24 bg-black border-t border-neutral-900 scroll-mt-20">
+    <section id="3d-stack" className="py-14 sm:py-20 bg-black border-t border-neutral-900 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-white" />
             <span>02 // THE 3D ARCHITECTURE STACK</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">

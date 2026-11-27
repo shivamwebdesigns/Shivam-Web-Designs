@@ -38,8 +38,7 @@ export const FounderPreview: React.FC = () => {
 
           {/* Bio & Philosophy Column */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
+            <div className="mb-3">
               <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
                 Leadership & Philosophy
               </span>

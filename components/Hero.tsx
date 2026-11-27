@@ -5,21 +5,21 @@ import { siteConfig } from '@/data/siteConfig';
 
 export function Hero() {
   return (
-    <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-44 lg:pb-36 overflow-hidden">
+    <section className="relative pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+        <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
           {/* Suggested Hero Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] text-balance">
             {siteConfig.headline}
           </h1>
 
           {/* Supporting Text */}
-          <p className="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed text-balance">
+          <p className="text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed text-balance">
             {siteConfig.supportingText}
           </p>
 
           {/* Dual CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 sm:pt-4">
             <Link
               href="/start-project"
               className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 text-sm uppercase tracking-wider font-semibold text-black bg-white hover:bg-neutral-200 rounded-md transition-all duration-200 shadow-lg shadow-white/5 active:scale-95"
@@ -38,7 +38,7 @@ export function Hero() {
           </div>
 
           {/* Studio Hallmarks / Proof Badges */}
-          <div className="pt-12 sm:pt-16 border-t border-neutral-900 grid grid-cols-2 sm:grid-cols-4 gap-6 text-left">
+          <div className="pt-8 sm:pt-12 border-t border-neutral-900 grid grid-cols-2 sm:grid-cols-4 gap-6 text-left">
             <div className="space-y-1">
               <span className="text-2xl font-bold font-mono text-white tracking-tight">100%</span>
               <p className="text-xs text-neutral-400 font-medium">Bespoke Design &amp; Code</p>

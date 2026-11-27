@@ -193,6 +193,10 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
   const [selectedPkg, setSelectedPkg] = useState<'starter' | 'growth' | 'pro' | null>(null);
   const [addons, setAddons] = useState<{ [id: string]: number }>({});
   const [existingSite, setExistingSite] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
+  const [contactError, setContactError] = useState('');
   const [isCartHidden, setIsCartHidden] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
@@ -203,7 +207,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
 
   const cartContainerRef = useRef<HTMLDivElement>(null);
 
-  // Restore cart from localStorage
+  // Restore cart and contact from localStorage
   useEffect(() => {
     try {
       const saved = localStorage.getItem('swd-cart');
@@ -218,19 +222,35 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         if (parsed.add && typeof parsed.add === 'object') {
           setAddons(parsed.add);
         }
+        if (parsed.clientName && typeof parsed.clientName === 'string') {
+          setClientName(parsed.clientName);
+        }
+        if (parsed.clientEmail && typeof parsed.clientEmail === 'string') {
+          setClientEmail(parsed.clientEmail);
+        }
+        if (parsed.clientPhone && typeof parsed.clientPhone === 'string') {
+          setClientPhone(parsed.clientPhone);
+        }
       }
     } catch (_) {}
   }, []);
 
-  // Save cart to localStorage
+  // Save cart and contact to localStorage
   useEffect(() => {
     try {
       localStorage.setItem(
         'swd-cart',
-        JSON.stringify({ pkg: selectedPkg, add: addons, existingSite })
+        JSON.stringify({
+          pkg: selectedPkg,
+          add: addons,
+          existingSite,
+          clientName,
+          clientEmail,
+          clientPhone,
+        })
       );
     } catch (_) {}
-  }, [selectedPkg, addons, existingSite]);
+  }, [selectedPkg, addons, existingSite, clientName, clientEmail, clientPhone]);
 
   // Pricing calculations
   const calc = useMemo(() => {
@@ -318,6 +338,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     setSelectedPkg(null);
     setAddons({});
     setExistingSite('');
+    setContactError('');
   };
 
   // Build formatted order message
@@ -344,6 +365,13 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         }`
       );
     });
+
+    if (clientName.trim() || clientEmail.trim() || clientPhone.trim()) {
+      lines.push('', '*Client Contact Details:*');
+      if (clientName.trim()) lines.push(`• Name: ${clientName.trim()}`);
+      if (clientEmail.trim()) lines.push(`• Email: ${clientEmail.trim()}`);
+      if (clientPhone.trim()) lines.push(`• Phone: ${clientPhone.trim()}`);
+    }
 
     if (existingSite.trim()) {
       lines.push('', `• Existing website: ${existingSite.trim()}`);
@@ -374,6 +402,26 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
   const handleDispatchOrder = async () => {
     if (calc.itemCount === 0 || isSubmitting) return;
 
+    const trimmedName = clientName.trim();
+    const trimmedEmail = clientEmail.trim();
+    const trimmedPhone = clientPhone.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedPhone) {
+      setContactError('Name, Email, and Phone are mandatory to proceed.');
+      return;
+    }
+
+    if (!trimmedEmail.includes('@') || !trimmedEmail.includes('.')) {
+      setContactError('Please enter a valid email address.');
+      return;
+    }
+
+    if (trimmedPhone.replace(/\D/g, '').length < 8) {
+      setContactError('Please enter a valid phone or WhatsApp number.');
+      return;
+    }
+
+    setContactError('');
     setIsSubmitting(true);
     const orderText = buildOrderMessage();
     const waUrl = `https://wa.me/917861965480?text=${encodeURIComponent(orderText)}`;
@@ -390,11 +438,12 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: `Packages Cart Client${existingSite ? ` [${existingSite}]` : ''}`,
-          email: 'cart-order@shivamwebdesigns.devs.li',
+          name: trimmedName,
+          email: trimmedEmail,
+          phone: trimmedPhone,
           subject: `[Package Order] ${
             calc.pkgItem ? `${calc.pkgItem.name} Package` : 'Add-ons Only'
-          } (${fmt(calc.totalOneTime)})`,
+          } (${fmt(calc.totalOneTime)}) - ${trimmedName}`,
           message: `${orderText}${
             existingSite ? `\n\nClient Existing Website:\n${existingSite}` : ''
           }`,
@@ -420,7 +469,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     <section
       id="packages"
       className={`relative bg-black text-white ${
-        isPage ? 'pt-8 pb-24 sm:pt-12 sm:pb-32' : 'py-24 sm:py-32 border-t border-neutral-900'
+        isPage ? 'pt-4 pb-16 sm:pt-6 sm:pb-20' : 'py-14 sm:py-20 border-t border-neutral-900'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -428,7 +477,6 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         {!isPage && (
           <div className="max-w-3xl mb-12 sm:mb-16">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
               <span>PACKAGES // FIXED PRICES</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
@@ -444,7 +492,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         {/* Main Layout Grid: Packages & Add-ons on Left, Sticky Cart on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* Left Column: Cards, Add-ons, FAQ */}
-          <div className="lg:col-span-8 space-y-16">
+          <div className="lg:col-span-8 space-y-10 sm:space-y-12">
             {/* Package Cards 3D Deck */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {PACKAGES.map((pkg) => {
@@ -509,7 +557,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                     </div>
 
                     {/* Features List */}
-                    <ul className="space-y-2.5 text-xs text-neutral-300 flex-1 my-6">
+                    <ul className="space-y-2 text-xs text-neutral-300 flex-1 my-4">
                       {pkg.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-2">
                           <Check className="w-3.5 h-3.5 text-white flex-shrink-0 mt-0.5" />
@@ -597,7 +645,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-neutral-400 max-w-lg leading-relaxed">
+                        <p className="text-[11px] sm:text-xs text-neutral-400 max-w-lg leading-relaxed">
                           {item.desc}
                         </p>
                       </div>
@@ -818,6 +866,56 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                       );
                     })}
                   </>
+                )}
+              </div>
+
+              {/* Mandatory Client Contact Info */}
+              <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800/90 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-white">Your Contact Details</span>
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Mandatory *</span>
+                </div>
+
+                <div className="space-y-2">
+                  <input
+                    type="text"
+                    required
+                    value={clientName}
+                    onChange={(e) => {
+                      setClientName(e.target.value);
+                      if (contactError) setContactError('');
+                    }}
+                    placeholder="Full Name *"
+                    className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
+                  />
+                  <input
+                    type="email"
+                    required
+                    value={clientEmail}
+                    onChange={(e) => {
+                      setClientEmail(e.target.value);
+                      if (contactError) setContactError('');
+                    }}
+                    placeholder="Email Address *"
+                    className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
+                  />
+                  <input
+                    type="tel"
+                    required
+                    value={clientPhone}
+                    onChange={(e) => {
+                      setClientPhone(e.target.value);
+                      if (contactError) setContactError('');
+                    }}
+                    placeholder="Phone / WhatsApp Number *"
+                    className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
+                  />
+                </div>
+
+                {contactError && (
+                  <p className="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-900/50 rounded-md p-1.5 leading-tight">
+                    ⚠ {contactError}
+                  </p>
                 )}
               </div>
 
@@ -1074,6 +1172,52 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                     );
                   })}
                 </>
+              )}
+            </div>
+
+            {/* Mandatory Contact in Mobile */}
+            <div className="p-3 rounded-xl bg-neutral-900 border border-neutral-800 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-white">Your Contact Details</span>
+                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Mandatory *</span>
+              </div>
+              <input
+                type="text"
+                required
+                value={clientName}
+                onChange={(e) => {
+                  setClientName(e.target.value);
+                  if (contactError) setContactError('');
+                }}
+                placeholder="Full Name *"
+                className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+              />
+              <input
+                type="email"
+                required
+                value={clientEmail}
+                onChange={(e) => {
+                  setClientEmail(e.target.value);
+                  if (contactError) setContactError('');
+                }}
+                placeholder="Email Address *"
+                className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+              />
+              <input
+                type="tel"
+                required
+                value={clientPhone}
+                onChange={(e) => {
+                  setClientPhone(e.target.value);
+                  if (contactError) setContactError('');
+                }}
+                placeholder="Phone / WhatsApp Number *"
+                className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+              />
+              {contactError && (
+                <p className="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-900/50 rounded-md p-1.5 leading-tight">
+                  ⚠ {contactError}
+                </p>
               )}
             </div>
 

@@ -118,8 +118,7 @@ function StartProjectForm() {
       <section className="pt-32 pb-10 border-b border-neutral-900 bg-neutral-950/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
+            <div className="mb-4">
               <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
                 Client Intake System
               </span>

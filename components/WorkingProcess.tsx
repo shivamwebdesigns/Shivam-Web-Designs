@@ -37,13 +37,12 @@ export const WorkingProcess: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 border-b border-neutral-900 bg-neutral-950/60">
+    <section className="py-14 sm:py-20 border-b border-neutral-900 bg-neutral-950/60">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
+            <div className="mb-3">
               <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
                 Methodology
               </span>
