@@ -1,19 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, ExternalLink, ArrowUpRight, Zap, Layers, Sparkles } from 'lucide-react';
-import { projectsData } from '@/data/projects';
+import { Lock, ArrowRight, MessageSquare, ShieldCheck, Zap, UserCheck, Layers } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
-  title: 'Selected Works & Case Studies | ShivamWebDesigns',
+  title: 'Projects | ShivamWebDesigns',
   description:
-    'Explore featured web applications, spatial 3D interfaces, and digital editorial systems engineered by ShivamWebDesigns. Built with Next.js 15, sub-second speed, and Swiss typography.',
+    'Production client builds and digital flagships engineered by ShivamWebDesigns. Case studies currently updating under NDA clearance.',
   alternates: { canonical: '/projects' },
   openGraph: {
-    title: 'Selected Works & Case Studies | ShivamWebDesigns',
+    title: 'Projects | ShivamWebDesigns',
     description:
-      'Explore featured web applications, spatial 3D interfaces, and digital editorial systems engineered by ShivamWebDesigns.',
+      'Production client builds and digital flagships engineered by ShivamWebDesigns. Case studies currently updating under NDA clearance.',
     url: `${siteConfig.url}/projects`,
     siteName: siteConfig.name,
     images: [
@@ -21,7 +20,7 @@ export const metadata: Metadata = {
         url: `${siteConfig.url}/assets/github-social-preview.png`,
         width: 1280,
         height: 640,
-        alt: 'ShivamWebDesigns Projects Portfolio',
+        alt: 'ShivamWebDesigns Projects',
       },
     ],
   },
@@ -31,117 +30,111 @@ export default function ProjectsPage() {
   return (
     <main className="flex flex-col min-h-screen">
       {/* Header Section */}
-      <section className="pt-28 pb-12 sm:pt-32 sm:pb-16 border-b border-neutral-900 bg-neutral-950/60">
+      <section className="pt-28 pb-10 sm:pt-32 sm:pb-14 border-b border-neutral-900 bg-neutral-950/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
+            <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">
+              PROJECTS
+            </p>
             <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white mb-4 leading-tight">
-              Selected Works &amp; Architecture.
+              Updating soon
             </h1>
             <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
-              A curated record of production web flagships, interactive 3D spatial engines, and editorial design systems engineered with Next.js 15, strict Swiss typography, and zero framework bloat.
+              Our production client builds and flagship case studies are currently undergoing NDA clearance and documentation. We publish detailed architecture audits, Core Web Vitals reports, and production case studies as each client agreement permits.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Projects Showcase Grid */}
-      <section className="py-12 sm:py-16 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-12 sm:space-y-16">
-            {projectsData.map((project, idx) => (
-              <article
-                key={project.id}
-                className="p-6 sm:p-10 border border-neutral-900 hover:border-neutral-700 bg-neutral-950/70 rounded-3xl transition-all duration-300 shadow-xl shadow-black/80 space-y-6"
+      {/* Main Content Area */}
+      <section className="py-12 sm:py-16 bg-black flex-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
+          {/* Private Previews & NDA Notice */}
+          <div className="p-6 sm:p-10 rounded-2xl bg-neutral-950/80 border border-neutral-850 space-y-6 shadow-xl">
+            <div className="flex items-center gap-2 text-xs font-mono text-neutral-300 font-semibold uppercase tracking-wider">
+              <Lock className="w-4 h-4 text-neutral-400" />
+              <span>Private Architectural Walkthroughs Available</span>
+            </div>
+
+            <div className="space-y-3 max-w-3xl">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Client Work Under Strict Confidentiality
+              </h2>
+              <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
+                Because our enterprise and venture clients operate in highly competitive industries, many live web applications and conversion funnel designs remain confidential.
+              </p>
+              <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                If you are evaluating ShivamWebDesigns for an upcoming project, we are happy to share relevant private codebases, architecture walkthroughs, and client references directly under NDA.
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <Link
+                href="/start-project"
+                className="px-6 py-3 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-md active:scale-95"
               >
-                {/* Meta Row */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-neutral-900">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-neutral-900 text-white border border-neutral-800">
-                      {project.category}
-                    </span>
-                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono text-neutral-400 bg-neutral-900/60 border border-neutral-800/80">
-                      {project.badge}
-                    </span>
-                  </div>
-                  <span className="text-xs font-mono text-neutral-500">
-                    {project.year} • {project.role}
-                  </span>
-                </div>
-
-                {/* Title & Narrative */}
-                <div className="space-y-2">
-                  <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
-                    {project.title}
-                  </h2>
-                  <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-light">
-                    {project.subtitle}
-                  </p>
-                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed pt-1">
-                    {project.summary}
-                  </p>
-                </div>
-
-                {/* Key Technical Metrics */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                  {project.metrics.map((metric) => (
-                    <div
-                      key={metric.label}
-                      className="p-3.5 rounded-2xl bg-neutral-900/60 border border-neutral-800/80 space-y-1 text-left"
-                    >
-                      <span className="text-base sm:text-lg font-bold font-mono text-white block">
-                        {metric.value}
-                      </span>
-                      <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
-                        {metric.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tech Stack Pills */}
-                <div className="space-y-2 pt-2">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 block">
-                    Core Disciplines &amp; Stack:
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 rounded-full text-xs font-mono text-neutral-300 bg-neutral-900 border border-neutral-800"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action Row */}
-                <div className="pt-4 border-t border-neutral-900 flex flex-wrap items-center justify-between gap-4">
-                  <div className="text-xs font-mono text-neutral-400">
-                    Status: <span className="text-emerald-400 font-semibold">Production Verified</span>
-                  </div>
-
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-mono font-bold transition-all shadow-md active:scale-95"
-                  >
-                    <span>Launch Live Experience</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </article>
-            ))}
+                Request Private Brief
+              </Link>
+              <a
+                href={siteConfig.contact.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-700 text-white text-xs font-mono font-semibold uppercase tracking-wider transition-all active:scale-95 flex items-center gap-2"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Talk with Founder</span>
+              </a>
+            </div>
           </div>
 
-          {/* Project Intake CTA */}
-          <div className="mt-16 p-8 sm:p-12 rounded-3xl border border-neutral-800 bg-neutral-950 text-center space-y-6">
-            <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
-              Ready to engineer your digital flagship?
+          {/* Engineering Standards We Guarantee */}
+          <div className="space-y-6">
+            <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+              Standard Across Every Build
             </h3>
-            <p className="text-sm sm:text-base text-neutral-400 max-w-xl mx-auto leading-relaxed">
-              Explore our fixed-price transparent packages starting from ₹499 or initiate a tailored project brief.
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-5 rounded-xl bg-neutral-950 border border-neutral-900 space-y-2">
+                <Layers className="w-5 h-5 text-white mb-1" />
+                <span className="text-sm font-bold text-white block">100% Bespoke Code</span>
+                <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                  Handwritten semantic HTML5, Next.js 15, and Tailwind CSS. Never templates or site builder baggage.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl bg-neutral-950 border border-neutral-900 space-y-2">
+                <Zap className="w-5 h-5 text-white mb-1" />
+                <span className="text-sm font-bold text-white block">&lt; 1.2s Core Web Vitals</span>
+                <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                  Sub-second LCP and 100/100 performance scores tuned directly for Google indexation.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl bg-neutral-950 border border-neutral-900 space-y-2">
+                <UserCheck className="w-5 h-5 text-white mb-1" />
+                <span className="text-sm font-bold text-white block">Direct Founder Access</span>
+                <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                  Shivam Purohit personally engineers and directs your project without intermediary account managers.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl bg-neutral-950 border border-neutral-900 space-y-2">
+                <ShieldCheck className="w-5 h-5 text-white mb-1" />
+                <span className="text-sm font-bold text-white block">Transparent Milestones</span>
+                <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                  Fixed pricing starting from ₹499 with clear deliverables, guaranteed timelines, and zero surprises.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Intake Call to Action */}
+          <div className="p-8 sm:p-12 rounded-2xl border border-neutral-900 bg-neutral-950 text-center space-y-4">
+            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Ready to engineer your website?
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-400 max-w-lg mx-auto leading-relaxed font-light">
+              Explore our fixed-price transparent packages starting from ₹499 or submit a custom project brief.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link

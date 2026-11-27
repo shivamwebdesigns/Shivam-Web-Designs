@@ -68,7 +68,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - **Fixed-Price Tiers:** Starter (₹499 &bull; digital profile page), Growth (₹999 &bull; one-page website with inquiry form and basic SEO), Pro (₹1,499 &bull; multi-page architecture up to 3 pages with analytics, speed tuning, and glowing white highlights).
   - **Dedicated Packages Hero & Clean Branding:** Dedicated hero section titled **"Websites price starts from ₹499"** with clean `PACKAGES // FIXED PRICES` badge, clear positioning ("Choose your favourite packages below"), and streamlined cards with unnecessary stack clutter removed.
   - **Unbundled Modular Add-ons:** Clean, direct add-on list for Subdomain setup (from ₹149 &bull; free with Pro), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month).
-  - **Mandatory Client Contact Verification:** Mandatory fields for Full Name, Email Address, and Phone / WhatsApp Number with real-time validation before dispatching orders.
+  - **Client Contact Form:** Clean, un-cluttered input fields for Full Name, Email Address, and Phone / WhatsApp Number with instant validation.
   - **Hide Cart & View Cart Toggle (`>`):** Mobile floating bar features an explicit `Hide Cart >` button that collapses the bar into a compact floating pill on demand, and expands back via `View Cart >`, giving users full reading clarity without interface obstruction.
   - **Enhanced Mobile Layout & Footer Spacing:** Extended padding across mobile footers guarantees all copyright information, legal links, and navigation items remain completely visible and scrollable above the mobile app dock.
   - **Explicit Arithmetic Cart Math:** Order summary clearly breaks down `Package` + `+ Add-ons (X items)` − `Offers applied` = `Total Amount`, with real-time numeric spring animations.
@@ -79,8 +79,11 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
     - `/?order=cancel`: Shows a sleek crimson-red notification banner stating *"Your order was cancelled successfully"* with a **See Your Cart** button.
   - **Full Layout Parity:** Packages is now a native App Router page (`app/packages/page.tsx`) with the unified `<Navbar />`, `<Footer />`, and `<MobileDock />`, perfectly matching the rest of the studio.
   - **Enhanced FAQ Accordion:** Clean, accessible disclosure cards with smooth rotation indicators and zero clutter.
-- **Curated Projects Showcase (`/projects`):**
-  - **Production Portfolio Flagships:** Complete curated showcase of live applications and spatial 3D engines (Dual-Aspect 3D Spatial Business Card, SWD Digital Flagship, Swiss Editorial Engine, Haute Horlogerie Concept) featuring real-world performance metrics, discipline tags, and verified production links.
+- **Projects & Confidentiality Architecture (`/projects` & Homepage):**
+  - **Selected Works Updating Soon:** Transparent, professional notice detailing that client case studies and digital flagships are undergoing strict NDA clearance and client review.
+  - **Private Architectural Previews:** Prospective clients can directly request private walkthroughs of codebases, design systems, and technical architectures under NDA.
+- **Inquiry CTA Trust Bar (`components/InquiryCTA.tsx`):**
+  - Responsive inline trust pillars (`Direct Founder Access / Zero Outsourcing / Fixed Price Sprints / Sub-Second Performance`) with responsive separators avoiding awkward line wrapping on mobile.
 - **Global Back-to-Top Button (`components/BackToTop.tsx`):** Unobtrusive floating control with passive scroll detection (`scrollY > 300`), smooth window scrolling, frosted dark glass styling (`bg-neutral-900/90 backdrop-blur-md`), and mobile dock offset.
 - **Browser Tab & Taskbar Branding:**
   - Simplified titles: `Page | ShivamWebDesigns` (`Home | ShivamWebDesigns`, etc.).

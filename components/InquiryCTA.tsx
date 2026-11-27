@@ -55,14 +55,14 @@ export const InquiryCTA: React.FC = () => {
           )}
         </div>
 
-        <div className="pt-8 border-t border-neutral-900 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-mono text-neutral-500">
-          <div>Direct Founder Access</div>
-          <div>•</div>
-          <div>Zero Outsourcing</div>
-          <div>•</div>
-          <div>Fixed Price Sprints</div>
-          <div>•</div>
-          <div>Sub-Second Performance</div>
+        <div className="pt-6 sm:pt-8 border-t border-neutral-900 flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-8 gap-y-2.5 text-xs font-mono text-neutral-400 text-center">
+          <span className="whitespace-nowrap">Direct Founder Access</span>
+          <span className="hidden sm:inline text-neutral-700 select-none">/</span>
+          <span className="whitespace-nowrap">Zero Outsourcing</span>
+          <span className="hidden sm:inline text-neutral-700 select-none">/</span>
+          <span className="whitespace-nowrap">Fixed Price Sprints</span>
+          <span className="hidden sm:inline text-neutral-700 select-none">/</span>
+          <span className="whitespace-nowrap">Sub-Second Performance</span>
         </div>
       </div>
     </section>
