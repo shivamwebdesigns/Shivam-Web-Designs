@@ -192,7 +192,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
   const [selectedPkg, setSelectedPkg] = useState<'starter' | 'growth' | 'pro' | null>(null);
   const [addons, setAddons] = useState<{ [id: string]: number }>({});
   const [existingSite, setExistingSite] = useState('');
-  const [activeFilter, setActiveFilter] = useState<'all' | 'branding' | 'content' | 'maintenance'>('all');
+  const [isCartHidden, setIsCartHidden] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [syncStatus, setSyncStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -406,57 +406,30 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     }, 300);
   };
 
-  const filteredAddons = useMemo(() => {
-    if (activeFilter === 'all') return ADDONS;
-    return ADDONS.filter((a) => a.category === activeFilter);
-  }, [activeFilter]);
-
   return (
     <section
       id="packages"
       className={`relative bg-black text-white ${
-        isPage ? 'pt-32 pb-24 sm:pt-40 sm:pb-32' : 'py-24 sm:py-32 border-t border-neutral-900'
+        isPage ? 'pt-8 pb-24 sm:pt-12 sm:pb-32' : 'py-24 sm:py-32 border-t border-neutral-900'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-            <span>TRANSPARENT FIXED PACKAGES</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
-            Websites from ₹499. Zero Hidden Fees.
-          </h2>
-          <p className="text-base sm:text-lg text-neutral-400 leading-relaxed">
-            Pick a package, add only what you need, or choose add-ons standalone for your existing website.
-            Every order is dispatched directly to WhatsApp &amp; recorded in our studio admin.
-          </p>
-
-          {/* Studio Core Architecture Ribbon (Matching User's Uploaded Specification) */}
-          <div className="mt-8 pt-6 border-t border-neutral-900/90 flex flex-col gap-3">
-            <span className="text-[11px] font-mono tracking-widest uppercase text-neutral-400">
-              Studio Core Architecture //
-            </span>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-              {[
-                'Next.js 15',
-                'React 19',
-                'TypeScript',
-                'Tailwind CSS',
-                'Spatial 3D Matrix',
-                'PWA Ready',
-              ].map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3.5 py-1.5 rounded-full text-xs font-mono text-neutral-200 bg-neutral-900/70 border border-neutral-800/90 hover:border-neutral-700 hover:text-white transition-all select-none"
-                >
-                  {tech}
-                </span>
-              ))}
+        {/* Section Header (Rendered on Home or as Subhead on Packages) */}
+        {!isPage && (
+          <div className="max-w-3xl mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-neutral-800 bg-neutral-900/60 text-xs font-mono text-neutral-300 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              <span>PACKAGES // FIXED PRICES</span>
             </div>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+              Websites from ₹499. Zero Hidden Fees.
+            </h2>
+            <p className="text-base sm:text-lg text-neutral-400 leading-relaxed">
+              Pick a package, add only what you need, or choose add-ons standalone for your existing website.
+              Every order is dispatched directly to WhatsApp &amp; recorded in our studio admin.
+            </p>
           </div>
-        </div>
+        )}
 
         {/* Main Layout Grid: Packages & Add-ons on Left, Sticky Cart on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
@@ -525,25 +498,8 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                       </div>
                     </div>
 
-                    {/* Tech Stack Pills inside Card */}
-                    <div className="my-4">
-                      <span className="text-[10px] font-mono tracking-widest uppercase text-neutral-400 block mb-1.5">
-                        {pkg.name} Stack:
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {pkg.stackTags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 rounded-full text-[10px] font-mono text-neutral-300 bg-neutral-900 border border-neutral-800"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
                     {/* Features List */}
-                    <ul className="space-y-2.5 text-xs text-neutral-300 flex-1 mb-6">
+                    <ul className="space-y-2.5 text-xs text-neutral-300 flex-1 my-6">
                       {pkg.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-2">
                           <Check className="w-3.5 h-3.5 text-white flex-shrink-0 mt-0.5" />
@@ -595,51 +551,18 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               })}
             </div>
 
-            {/* Modular Add-ons with Category Filter */}
+            {/* Modular Add-ons */}
             <div className="pt-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                <div>
-                  <h3 className="text-2xl font-bold tracking-tight text-white">Modular Add-ons</h3>
-                  <p className="text-xs sm:text-sm text-neutral-400 mt-1">
-                    Select any add-on with a package, or order add-ons standalone for your current site.
-                  </p>
-                </div>
-
-                {/* Filter Pills */}
-                <div
-                  className="flex flex-wrap gap-1.5 p-1 bg-neutral-950 border border-neutral-800 rounded-full text-xs font-mono"
-                  role="tablist"
-                  aria-label="Filter add-ons"
-                >
-                  {(
-                    [
-                      { key: 'all', label: 'All Add-ons' },
-                      { key: 'branding', label: 'Branding & Setup' },
-                      { key: 'content', label: 'Content & Scope' },
-                      { key: 'maintenance', label: 'Maintenance' },
-                    ] as const
-                  ).map((filter) => (
-                    <button
-                      key={filter.key}
-                      type="button"
-                      role="tab"
-                      aria-selected={activeFilter === filter.key}
-                      onClick={() => setActiveFilter(filter.key)}
-                      className={`px-3 py-1 rounded-full text-[11px] transition-all ${
-                        activeFilter === filter.key
-                          ? 'bg-white text-black font-semibold shadow-sm'
-                          : 'text-neutral-400 hover:text-white'
-                      }`}
-                    >
-                      {filter.label}
-                    </button>
-                  ))}
-                </div>
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold tracking-tight text-white">Modular Add-ons</h3>
+                <p className="text-xs sm:text-sm text-neutral-400 mt-1">
+                  Select any add-on with a package, or order add-ons standalone for your current site.
+                </p>
               </div>
 
               {/* Add-on Items List */}
               <div className="divide-y divide-neutral-900 border-y border-neutral-900">
-                {filteredAddons.map((item) => {
+                {ADDONS.map((item) => {
                   const qty = addons[item.id] || 0;
                   const isAdded = qty > 0;
                   const isFreePro = selectedPkg === 'pro' && item.id === 'subdomain';
@@ -984,30 +907,71 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         </div>
       </div>
 
-      {/* Floating Bottom Bar on Mobile Devices */}
-      <div className="lg:hidden fixed bottom-14 left-4 right-4 z-40">
-        <button
-          type="button"
-          onClick={() => setCartOpen(true)}
-          className="w-full h-14 bg-white text-black rounded-full px-5 flex items-center justify-between shadow-2xl shadow-black/90 active:scale-98 transition-transform"
-          aria-label="Open Cart Summary"
-        >
-          <div className="flex items-center gap-2.5">
-            <ShoppingCart className="w-4 h-4 text-black" />
-            <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-black text-white">
-              {calc.itemCount}
-            </span>
-            <span className="text-xs font-semibold">
-              {calc.itemCount === 0 ? 'Cart is empty' : `${calc.itemCount} in Cart`}
-            </span>
-          </div>
+      {/* Minimized Floating Pill when Cart is Hidden on Mobile */}
+      {isCartHidden && (
+        <div className="lg:hidden fixed bottom-16 right-4 z-40">
+          <button
+            type="button"
+            onClick={() => {
+              setIsCartHidden(false);
+              setCartOpen(true);
+            }}
+            className="h-10 px-4 bg-white text-black rounded-full shadow-2xl shadow-black flex items-center gap-2 font-mono text-xs font-bold transition-all active:scale-95 border border-neutral-300"
+            aria-label="View Cart"
+          >
+            <ShoppingCart className="w-3.5 h-3.5 text-black" />
+            <span>View Cart &gt;</span>
+            {calc.itemCount > 0 && (
+              <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-bold">
+                {calc.itemCount}
+              </span>
+            )}
+          </button>
+        </div>
+      )}
 
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-sm font-extrabold">{fmt(calc.totalOneTime)}</span>
-            <span className="text-xs font-mono">View ›</span>
+      {/* Floating Bottom Bar on Mobile Devices (Expanded) */}
+      {!isCartHidden && (
+        <div className="lg:hidden fixed bottom-16 left-4 right-4 z-40">
+          <div className="w-full h-14 bg-neutral-950/95 backdrop-blur-md border border-neutral-800 rounded-full px-4 py-2 flex items-center justify-between shadow-2xl shadow-black/95">
+            <button
+              type="button"
+              onClick={() => setCartOpen(true)}
+              className="flex-1 flex items-center justify-between pr-3 group text-left"
+              aria-label="View Cart Summary"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs">
+                  {calc.itemCount}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
+                    {calc.itemCount === 0 ? 'Empty' : `${calc.itemCount} item${calc.itemCount > 1 ? 's' : ''}`}
+                  </span>
+                  <span className="text-xs font-mono font-bold text-white">
+                    {fmt(calc.totalOneTime)}
+                  </span>
+                </div>
+              </div>
+              <span className="text-xs font-mono font-semibold text-white group-hover:underline flex items-center gap-1">
+                View Cart &gt;
+              </span>
+            </button>
+
+            {/* Dedicated Hide Cart Button */}
+            <button
+              type="button"
+              onClick={() => setIsCartHidden(true)}
+              className="px-3 py-1.5 rounded-full bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 text-[11px] font-mono flex items-center gap-1 transition-colors border border-neutral-800 active:scale-95 flex-shrink-0"
+              aria-label="Hide Cart"
+              title="Hide Cart"
+            >
+              <span>Hide Cart</span>
+              <span className="font-bold">&gt;</span>
+            </button>
           </div>
-        </button>
-      </div>
+        </div>
+      )}
 
       {/* Mobile Cart Sheet Drawer */}
       {cartOpen && (
@@ -1024,14 +988,27 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                 <ShoppingCart className="w-5 h-5 text-white" />
                 <h3 className="text-base font-bold text-white">Your Cart ({calc.itemCount})</h3>
               </div>
-              <button
-                type="button"
-                onClick={() => setCartOpen(false)}
-                className="w-8 h-8 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white"
-                aria-label="Close cart"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCartOpen(false);
+                    setIsCartHidden(true);
+                  }}
+                  className="px-3 py-1 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300 hover:text-white hover:border-neutral-600 flex items-center gap-1 transition-colors"
+                >
+                  <span>Hide Cart</span>
+                  <span className="font-bold">&gt;</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCartOpen(false)}
+                  className="w-8 h-8 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white"
+                  aria-label="Close cart"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Mobile Items List */}

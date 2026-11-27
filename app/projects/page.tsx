@@ -12,9 +12,6 @@ export default function ProjectsPage() {
       <section className="pt-32 pb-20 border-b border-neutral-900 bg-neutral-950/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
-            <p className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-4">
-              ShivamWebDesigns
-            </p>
             <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-tight">
               Projects are updating soon.
             </h1>

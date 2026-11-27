@@ -52,13 +52,6 @@ export default function FounderPage() {
 
             {/* Intro Column */}
             <div className="lg:col-span-7 flex flex-col justify-center">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-white"></span>
-                <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                  Executive Profile
-                </span>
-              </div>
-
               <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white mb-4 leading-tight">
                 {founderData.name}
               </h1>

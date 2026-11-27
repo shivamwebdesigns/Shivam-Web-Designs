@@ -222,7 +222,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-black text-white font-sans antialiased selection:bg-white selection:text-black flex flex-col">
         <Navbar />
-        <main className="flex-1 pb-16 md:pb-0">
+        <main className="flex-1 pb-20 md:pb-0">
           {children}
         </main>
         <Footer />

@@ -819,6 +819,57 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   min-height: 16px;
 }
 
+
+.fbar-wrap {
+  display: none;
+  position: fixed;
+  left: 14px;
+  right: 14px;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+  align-items: center;
+  gap: 8px;
+}
+.fbar-wrap .fbar {
+  flex: 1;
+  position: static;
+  display: flex;
+  margin: 0;
+}
+.fbar-hide-btn {
+  height: 58px;
+  padding: 0 16px;
+  border-radius: 99px;
+  background: #141416;
+  border: 1px solid #27272a;
+  color: #d4d4d8;
+  font: 600 12px "JetBrains Mono", monospace;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .2s;
+  box-shadow: 0 8px 30px rgba(0,0,0,.6);
+}
+.fbar-hide-btn:hover { background: #27272a; color: #fff; }
+.fbar-min-btn {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 99px;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #e4e4e7;
+  font: 700 12px "JetBrains Mono", monospace;
+  box-shadow: 0 10px 30px rgba(0,0,0,.8);
+  cursor: pointer;
+  align-items: center;
+  gap: 8px;
+  transition: all .2s;
+}
+.fbar-min-btn:hover { background: #f4f4f5; transform: translateY(-1px); }
+
 /* Floating Mobile Bar */
 .fbar {
   display: none;
@@ -881,8 +932,9 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 
 @media (max-width: 1099px) {
   .layout { grid-template-columns: 1fr; }
-  body { padding-bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
-  .fbar { display: flex; }
+  body { padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)); }
+  footer { padding-bottom: 60px; }
+  .fbar-wrap { display: flex; }
   .cart {
     position: fixed;
     left: 0;
@@ -1009,22 +1061,9 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
 <main id="top">
   <div class="wrap">
     <section class="hero">
-      <p class="mono mute rv">Packages // Transparent Fixed Prices</p>
+      <p class="mono mute rv">PACKAGES // FIXED PRICES</p>
       <h1 class="rv" style="--d:.1s">Websites from ₹499.</h1>
       <p class="lead rv" style="--d:.2s">Pick a package, add only what you need, or choose add-ons for your existing website. Sent directly to WhatsApp &amp; our studio admin panel.</p>
-
-      <!-- Studio Core Architecture Ribbon (Matching user's pill tags) -->
-      <div class="stack-pills-bar rv" style="--d:.25s">
-        <span class="stack-pills-label mono">Studio Core Architecture //</span>
-        <div class="stack-pills">
-          <span class="pill">Next.js 15</span>
-          <span class="pill">React 19</span>
-          <span class="pill">TypeScript</span>
-          <span class="pill">Tailwind CSS</span>
-          <span class="pill">Spatial 3D Matrix</span>
-          <span class="pill">PWA Ready</span>
-        </div>
-      </div>
     </section>
   </div>
 
@@ -1043,15 +1082,6 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
             <div><dt>Scope</dt><dd>1 scrolling page</dd></div>
             <div><dt>Delivery</dt><dd>1–2 days</dd></div>
           </dl>
-          <div class="card-pills-block">
-            <span class="card-pills-title mono">Starter Stack:</span>
-            <div class="card-pills">
-              <span class="pill-tag">HTML5 Semantic</span>
-              <span class="pill-tag">Mobile First</span>
-              <span class="pill-tag">Free Subdomain</span>
-              <span class="pill-tag">Fast CDN</span>
-            </div>
-          </div>
           <ul>
             <li><span aria-hidden="true">✓</span><span>Mobile-first custom design</span></li>
             <li><span aria-hidden="true">✓</span><span>Your logo, photos and links</span></li>
@@ -1077,15 +1107,6 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
             <div><dt>Scope</dt><dd>1 page, 4–5 sections</dd></div>
             <div><dt>Delivery</dt><dd>3–5 days</dd></div>
           </dl>
-          <div class="card-pills-block">
-            <span class="card-pills-title mono">Growth Stack:</span>
-            <div class="card-pills">
-              <span class="pill-tag">Flagship UI</span>
-              <span class="pill-tag">Lead Engine</span>
-              <span class="pill-tag">Custom Domain</span>
-              <span class="pill-tag">SEO Standard</span>
-            </div>
-          </div>
           <ul>
             <li><span aria-hidden="true">✓</span><span>Everything in Starter</span></li>
             <li><span aria-hidden="true">✓</span><span>About, services, gallery and contact</span></li>
@@ -1111,17 +1132,6 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
             <div><dt>Scope</dt><dd>Up to 3 full pages</dd></div>
             <div><dt>Delivery</dt><dd>5–7 days</dd></div>
           </dl>
-          <div class="card-pills-block">
-            <span class="card-pills-title mono">Pro Architecture Stack:</span>
-            <div class="card-pills">
-              <span class="pill-tag">Next.js 15</span>
-              <span class="pill-tag">React 19</span>
-              <span class="pill-tag">TypeScript</span>
-              <span class="pill-tag">Tailwind CSS</span>
-              <span class="pill-tag">Spatial 3D Matrix</span>
-              <span class="pill-tag">PWA Ready</span>
-            </div>
-          </div>
           <ul>
             <li><span aria-hidden="true">✓</span><span>Everything in Growth</span></li>
             <li><span aria-hidden="true">✓</span><span>Up to 3 bespoke pages</span></li>
@@ -1140,14 +1150,6 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
       <div class="rv" style="margin-top: 36px;">
         <h3>Modular Add-ons</h3>
         <p class="mute" style="margin-bottom: 14px; font-size: 14px;">Select any add-on with a package, or order add-ons standalone for your existing website.</p>
-
-        <!-- Filter Pills Bar -->
-        <div class="addon-filters" role="tablist" aria-label="Filter Add-ons">
-          <button type="button" class="afilter on" data-cat="all">All Add-ons</button>
-          <button type="button" class="afilter" data-cat="branding">Branding &amp; Setup</button>
-          <button type="button" class="afilter" data-cat="content">Content &amp; Scope</button>
-          <button type="button" class="afilter" data-cat="maintenance">Maintenance</button>
-        </div>
 
         <ul class="add" id="addonList">
           <li data-cat="branding">
@@ -1385,14 +1387,26 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   </div>
 </footer>
 
-<!-- Floating Mobile Bottom Bar -->
-<button class="fbar" id="fbar" data-act="open" aria-label="Open Cart">
-  <span class="l">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-    <span class="badge2" id="fbadge">0</span>
-    <span id="fbtxt">Cart is empty</span>
-  </span>
-  <span><b id="fbtot"></b> &nbsp;View ›</span>
+<!-- Floating Mobile Bottom Bar Wrap -->
+<div class="fbar-wrap" id="fbarWrap">
+  <button class="fbar" id="fbar" data-act="open" aria-label="View Cart">
+    <span class="l">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="badge2" id="fbadge">0</span>
+      <span id="fbtxt">Cart is empty</span>
+    </span>
+    <span><b id="fbtot"></b> &nbsp;View Cart &gt;</span>
+  </button>
+  <button class="fbar-hide-btn" id="fbarHideBtn" data-act="hide-fbar" title="Hide Cart" aria-label="Hide Cart">
+    Hide Cart &gt;
+  </button>
+</div>
+
+<!-- Minimized View Cart Button when Cart is Hidden -->
+<button class="fbar-min-btn" id="fbarMinBtn" data-act="show-fbar" style="display:none;" aria-label="View Cart">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+  <span>View Cart &gt;</span>
+  <span class="badge2" id="fbadgeMin">0</span>
 </button>
 
 <div class="scrim" id="scrim" data-act="close"></div>
@@ -1740,7 +1754,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
     $('#tmo').textContent = c.monthly ? 'Plus ' + fmt(c.monthly) + ' / month for maintenance.' : '';
 
     $('#cbadge').textContent = n;
-    $('#fbadge').textContent = n;
+    $('#fbadge').textContent = n; if($('#fbadgeMin')) $('#fbadgeMin').textContent = n;
     $('#fbtxt').textContent = n ? (n + ' item' + (n > 1 ? 's' : '')) : 'Cart is empty';
     if (n) tween($('#fbtot'), c.total); else { cur.fbtot = 0; $('#fbtot').textContent = ''; }
 
@@ -1854,6 +1868,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   });
 
   // Add-on Category Filter
+
   document.addEventListener('click', function(e){
     var btn = e.target.closest('.afilter');
     if (!btn) return;
@@ -1866,6 +1881,37 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
         li.style.display = 'none';
       }
     });
+  });
+
+
+  // Hide & Show Cart Bar Controls
+  document.addEventListener("click", function(e){
+    var hb = e.target.closest("[data-act=\"hide-fbar\"]");
+    if (hb) {
+      var wrap = document.getElementById("fbarWrap");
+      var min = document.getElementById("fbarMinBtn");
+      if (wrap) wrap.style.display = "none";
+      if (min) min.style.display = "inline-flex";
+      return;
+    }
+    var sb = e.target.closest("[data-act=\"show-fbar\"]");
+    if (sb) {
+      var wrap = document.getElementById("fbarWrap");
+      var min = document.getElementById("fbarMinBtn");
+      if (wrap) wrap.style.display = "flex";
+      if (min) min.style.display = "none";
+      openCart();
+      return;
+    }
+    var dh = e.target.closest("[data-act=\"drawer-hide\"]");
+    if (dh) {
+      closeCart();
+      var wrap = document.getElementById("fbarWrap");
+      var min = document.getElementById("fbarMinBtn");
+      if (wrap) wrap.style.display = "none";
+      if (min) min.style.display = "inline-flex";
+      return;
+    }
   });
 
   document.addEventListener('click', function(e){

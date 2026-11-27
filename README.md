@@ -51,7 +51,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 | Route | File Location | Purpose & Features |
 | :--- | :--- | :--- |
 | **`/`** | `app/page.tsx` | **Agency Flagship Home:** Animated hero, hallmark metrics, services overview, transparent packages configurator, featured projects, 3D architecture stack, and inquiry intake. |
-| **`/packages`** | `app/packages/page.tsx` &amp; `public/packages.html` | **Packages &amp; Pricing:** Native Next.js App Router &amp; static mirror with fixed-price tiers (Starter ₹499, Growth ₹999, Pro ₹1,500), architecture stack pills ribbon, modular add-ons with category filters, explicit arithmetic cart breakdown, existing site link input, and dual dispatch to WhatsApp and studio admin panel. |
+| **`/packages`** | `app/packages/page.tsx` &amp; `public/packages.html` | **Packages &amp; Pricing:** Native Next.js App Router &amp; static mirror with fixed-price tiers (Starter ₹499, Growth ₹999, Pro ₹1,500), dedicated hero section with `PACKAGES // FIXED PRICES` badge, unbundled modular add-ons, explicit arithmetic cart breakdown, hide/view cart toggle (`>`), existing site link input, and dual dispatch to WhatsApp and studio admin panel. |
 | **`/pricing`** | `app/packages/page.tsx` | Native rewrite alias to `/packages`. |
 | **`/about`** | `app/about/page.tsx` | **About the Studio:** Origin narrative, mission/vision bento grid, operating principles, and studio background. |
 | **`/businesscard`** | `public/businesscard.html` | **Spatial 3D Digital Business Card:** Gyroscope- and drag-enabled 3D physical card simulation, vCard 3.0 generation, Web Share API, and QR download. |
@@ -66,8 +66,10 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 - **Packages & Fixed Pricing Architecture (`/packages`, `/pricing`, & Embedded on `/`):**
   - **Fixed-Price Tiers:** Starter (₹499 &bull; digital profile page), Growth (₹999 &bull; one-page website with inquiry form and basic SEO), Pro (₹1,500 &bull; multi-page architecture up to 3 pages with analytics, speed tuning, and glowing white highlights).
-  - **Core Architecture Stack Pills:** Prominent ribbon showcasing `Next.js 15` &bull; `React 19` &bull; `TypeScript` &bull; `Tailwind CSS` &bull; `Spatial 3D Matrix` &bull; `PWA Ready` directly across the Packages hero, package cards, and studio flagship hero.
-  - **Modular Add-ons & Category Filtering:** Interactive filter tabs (`All`, `Branding & Setup`, `Content & Scope`, `Maintenance`) for Subdomain setup (from ₹149 &bull; free with Pro), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month).
+  - **Dedicated Packages Hero & Clean Branding:** Dedicated hero section with animated `PACKAGES // FIXED PRICES` badge, clear positioning, and streamlined cards with unnecessary stack clutter removed.
+  - **Unbundled Modular Add-ons:** Clean, direct add-on list for Subdomain setup (from ₹149 &bull; free with Pro), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month).
+  - **Hide Cart & View Cart Toggle (`>`):** Mobile floating bar features an explicit `Hide Cart >` button that collapses the bar into a compact floating pill on demand, and expands back via `View Cart >`, giving users full reading clarity without interface obstruction.
+  - **Enhanced Mobile Layout & Footer Spacing:** Extended padding (`pb-36`) across mobile footers guarantees all copyright information, legal links, and navigation items remain completely visible and scrollable above the mobile app dock.
   - **Explicit Arithmetic Cart Math:** Order summary clearly breaks down `Package` + `+ Add-ons (X items)` − `Offers applied` = `Total Amount`, with real-time numeric spring animations.
   - **Existing Website Link Integration:** Direct input field inside the interactive cart allowing clients to paste their existing website link (`Already have a website?`) so the studio immediately understands their current setup.
   - **Dual-Dispatch Cart Submissions:** Cart orders are dispatched simultaneously to WhatsApp (`+91 78619 65480`) and automatically recorded in the studio's Firestore admin panel (`/admin`) via background API synchronization with instant email dispatch.
