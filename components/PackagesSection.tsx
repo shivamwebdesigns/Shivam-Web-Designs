@@ -159,7 +159,7 @@ const FAQS = [
   },
   {
     q: 'Can I order just add-ons if I already have a website?',
-    a: 'Yes, absolutely! You can choose any add-ons (like Logo Design for ₹99, Copywriting, or Subdomain Setup) without selecting a package. Just paste your website link in the cart box so we can review your current site.',
+    a: 'Yes, absolutely! You can choose any add-ons (like Logo Design for ₹99, Copywriting, or Subdomain Setup) without selecting a package. Just paste your website link in the cart box so we can review your existing website.',
   },
   {
     q: 'How does payment and milestone billing work?',
@@ -476,11 +476,8 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header: Placed directly upon packages, no pill badge bg */}
+        {/* Section Header: Package label follows the introductory copy */}
         <div className="max-w-3xl mb-10 sm:mb-14">
-          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">
-            PACKAGES // FIXED PRICES
-          </p>
           {isPage ? (
             <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
               Websites price starts from ₹499
@@ -492,6 +489,9 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           )}
           <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
             Choose your favourite packages below. Mix and match modular add-ons or order standalone for your existing website. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.
+          </p>
+          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mt-4">
+            PACKAGES // FIXED PRICES
           </p>
         </div>
 
@@ -620,7 +620,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               <div className="mb-6">
                 <h3 className="text-2xl font-bold tracking-tight text-white">Modular Add-ons</h3>
                 <p className="text-xs sm:text-sm text-neutral-400 mt-1">
-                  Select any add-on with a package, or order add-ons standalone for your current site.
+                  Select any add-on with a package, or order add-ons standalone for your existing website.
                 </p>
               </div>
 

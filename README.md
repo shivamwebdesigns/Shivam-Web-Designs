@@ -51,7 +51,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 | Route | File Location | Purpose & Features |
 | :--- | :--- | :--- |
 | **`/`** | `app/page.tsx` | **Agency Flagship Home:** Animated hero, hallmark metrics, services overview, transparent packages configurator, featured projects, 3D architecture stack, and inquiry intake. |
-| **`/packages`** | `app/packages/page.tsx` &amp; `public/packages.html` | **Packages &amp; Pricing:** Native Next.js App Router &amp; static mirror with fixed-price tiers (Starter ₹499, Growth ₹999, Pro ₹1,499), pure typographic `PACKAGES // FIXED PRICES` eyebrow placed directly atop the deck without pill background containers, unbundled modular add-ons, explicit arithmetic cart breakdown, hide/view cart toggle (`>`), existing site link input, and dual dispatch to WhatsApp and studio admin panel. |
+| **`/packages`** | `app/packages/page.tsx` &amp; `public/packages.html` | **Packages &amp; Pricing:** Native Next.js App Router &amp; static mirror with fixed-price tiers (Starter ₹499, Growth ₹999, Pro ₹1,499), introductory package copy followed by the pure typographic `PACKAGES // FIXED PRICES` label without pill background containers, unbundled modular add-ons, explicit arithmetic cart breakdown, hide/view cart toggle (`>`), existing site link input, and dual dispatch to WhatsApp and studio admin panel. |
 | **`/pricing`** | `app/packages/page.tsx` | Native rewrite alias to `/packages`. |
 | **`/about`** | `app/about/page.tsx` | **About the Studio:** Origin narrative, mission/vision bento grid, operating principles, and studio background. |
 | **`/businesscard`** | `public/businesscard.html` | **Spatial 3D Digital Business Card:** Gyroscope- and drag-enabled 3D physical card simulation, vCard 3.0 generation, Web Share API, and QR download. |
@@ -66,7 +66,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 - **Packages & Fixed Pricing Architecture (`/packages`, `/pricing`, & Embedded on `/`):**
   - **Fixed-Price Tiers:** Starter (₹499 &bull; digital profile page), Growth (₹999 &bull; one-page website with inquiry form and basic SEO), Pro (₹1,499 &bull; multi-page architecture up to 3 pages with analytics, speed tuning, and glowing white highlights).
-  - **Typographic Placement Directly Atop Packages:** Pure uppercase monospace eyebrow `PACKAGES // FIXED PRICES` sits cleanly above the headline and package deck without any rounded pill background or border containers, creating a seamless, unified layout flow on both mobile and desktop.
+  - **Typographic Package Label:** The package introduction is followed by the pure uppercase monospace label `PACKAGES // FIXED PRICES` without any rounded pill background or border containers, creating a seamless layout flow above the package deck on both mobile and desktop.
   - **Unbundled Modular Add-ons:** Clean, direct add-on list for Subdomain setup (from ₹149 &bull; free with Pro), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month).
   - **Client Contact Form:** Clean, un-cluttered input fields for Full Name, Email Address, and Phone / WhatsApp Number with instant validation.
   - **Conditional Mobile Cart Bar (Shows Only on Add):** The mobile floating cart bar remains completely hidden when the cart is empty (`itemCount === 0`) for an unobstructed, distraction-free reading experience, and dynamically appears the moment a user adds a package or add-on. Includes dedicated `Hide Cart >` and `View Cart >` controls.
