@@ -217,64 +217,79 @@ h1 {
   padding-top: 24px;
 }
 
-/* Card Styling & Glowing Effects */
+/* Card Styling & Glowing Effects Across All Packages */
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 30px -12px rgba(255, 255, 255, 0.12);
   border-radius: 20px;
   padding: 26px;
   transition: transform .4s var(--ease), border-color .3s, box-shadow .4s var(--ease);
 }
 .card:hover {
   transform: translateY(-5px);
-  border-color: #666;
-  box-shadow: 0 20px 50px -20px rgba(255, 255, 255, .15);
+  border-color: #ffffff;
+  box-shadow: 0 20px 50px -15px rgba(255, 255, 255, 0.25);
 }
 
-/* Growth & Pro Glowing White Aesthetics */
+/* Starter Glowing White Light */
+.card.starter-card {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 35px -10px rgba(255, 255, 255, 0.2);
+}
+.card.starter-card:hover {
+  border-color: #ffffff;
+  box-shadow: 0 22px 60px -15px rgba(255, 255, 255, 0.32);
+}
+
+/* Growth Glowing White Light */
 .card.pop {
-  border-color: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 0 35px -12px rgba(255, 255, 255, .18);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 40px -10px rgba(255, 255, 255, 0.25);
 }
 .card.pop:hover {
-  border-color: #fff;
-  box-shadow: 0 22px 60px -15px rgba(255, 255, 255, .28);
+  border-color: #ffffff;
+  box-shadow: 0 24px 65px -12px rgba(255, 255, 255, 0.36);
 }
 
 /* Pro Card: Glowing White Architecture */
 .card.pro-card {
-  border-color: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 0 35px -10px rgba(255, 255, 255, .2);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 40px -10px rgba(255, 255, 255, 0.24);
 }
 .card.pro-card:hover {
   border-color: #ffffff;
-  box-shadow: 0 22px 60px -15px rgba(255, 255, 255, .32);
+  box-shadow: 0 24px 65px -12px rgba(255, 255, 255, 0.35);
 }
 
 .card.sel {
   border-color: #ffffff !important;
-  box-shadow: 0 0 40px -8px rgba(255, 255, 255, .35) !important;
+  box-shadow: 0 0 45px -6px rgba(255, 255, 255, 0.42) !important;
 }
 
 .badge {
   position: absolute;
   top: -12px;
   left: 24px;
-  background: #fff;
-  color: #000;
+  background: #ffffff;
+  color: #000000;
   border-radius: 99px;
   padding: 4px 12px;
   font: 700 10.5px "JetBrains Mono", monospace;
   letter-spacing: .12em;
   text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+.badge.starter-badge {
+  background: #ffffff;
+  color: #000000;
 }
 .badge.pro-badge {
   background: #ffffff;
   color: #000000;
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
 }
 
 .card h2 { margin: 0; font-size: 24px; font-weight: 600; }
@@ -765,8 +780,9 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
   <div class="wrap layout">
     <div class="main">
       <section class="grid" aria-label="Packages">
-        <!-- Starter Package -->
-        <article class="card rv" style="--d:0.00s">
+        <!-- Starter Package (Glowing White Architecture) -->
+        <article class="card rv starter-card" style="--d:0.00s">
+          <span class="badge starter-badge">Essential</span>
           <h2>Starter</h2>
           <p class="tag">A digital profile page</p>
           <p class="mono mute up">Starting at</p>
@@ -785,7 +801,7 @@ h3 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.01em; margin: 0 0 16px
             <li><span aria-hidden="true">✓</span><span>3 free revision rounds</span></li>
             <li><span aria-hidden="true">✓</span><span>7 days post-launch support</span></li>
           </ul>
-          <button class="btn" data-act="pkg" data-id="starter"><span>Add to cart</span></button>
+          <button class="btn solid" data-act="pkg" data-id="starter"><span>Add to cart</span></button>
           <button class="wa" data-act="wa" data-id="starter">Ask on WhatsApp</button>
         </article>
 
