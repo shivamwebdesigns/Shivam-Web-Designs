@@ -91,7 +91,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - **Widget Action Buttons:** Equipped with two high-contrast action triggers:
     1. **"View Cart"**: Opens the dedicated "Your Cart" window modal.
     2. **"Inquire"**: Direct checkout with contact validation and dual WhatsApp / studio API dispatch.
-  - **Dedicated "Your Cart" Window Modal:** Accessible from both the floating widget and the header navigation Cart button. Features an elegant frosted-glass modal overlay (`backdrop-blur-xl bg-black/80`), automatic background body-scroll lock (`document.body.style.overflow = 'hidden'`), and an internally scrollable container (`overflow-y-auto overscroll-contain max-h-[92dvh] sm:max-h-[88vh]`):
+  - **Dedicated "Your Cart" Window Modal:** Accessible from both the floating widget and the header navigation Cart button. Features an elegant right-side slide-in drawer panel (enters from the right edge, page background visible and interactive behind it), body-scroll lock (`document.body.style.overflow = 'hidden'`), and a tall full-height internally scrollable container (`overflow-y-auto overscroll-contain flex-1`):
     - **Header Controls:** Real-time item count pill, a prominent **"Clear Cart"** button (which discards all items, empties the local DB, closes the window, and removes the floating widget), and a close button.
     - **Itemized Breakdown:** Package card and individual modular add-on rows with active `+` / `−` quantity counters and `✕` delete buttons.
     - **Client Contact Form:** Name, Email, and Phone/WhatsApp fields with instant validation and persistent Local DB auto-saving (`swd-client-profile`).
