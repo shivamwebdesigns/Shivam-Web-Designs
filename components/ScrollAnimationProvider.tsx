@@ -47,6 +47,7 @@ export function ScrollAnimationProvider() {
       });
 
       lenisRef.current = lenis;
+      (window as unknown as { lenis?: Lenis | null }).lenis = lenis;
 
       const raf = (time: number) => {
         lenis.raf(time);
@@ -110,6 +111,7 @@ export function ScrollAnimationProvider() {
       if (rafId) cancelAnimationFrame(rafId);
       lenisRef.current?.destroy();
       lenisRef.current = null;
+      (window as unknown as { lenis?: Lenis | null }).lenis = null;
       window.removeEventListener('scroll', updateProgress);
       observer?.disconnect();
     };

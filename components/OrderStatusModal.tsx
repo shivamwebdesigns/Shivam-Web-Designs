@@ -25,6 +25,10 @@ function useScrollLock(locked: boolean) {
     const body = document.body;
     const scrollY = window.scrollY;
     const scrollbarWidth = window.innerWidth - html.clientWidth;
+    const isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+    const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+
+    lenis?.stop?.();
 
     const prev = {
       htmlOverflow: html.style.overflow,
@@ -39,23 +43,28 @@ function useScrollLock(locked: boolean) {
 
     html.style.overflow = 'hidden';
     body.style.overflow = 'hidden';
-    body.style.position = 'fixed';
-    body.style.top = `-${scrollY}px`;
-    body.style.left = '0';
-    body.style.right = '0';
-    body.style.width = '100%';
+    if (isTouch) {
+      body.style.position = 'fixed';
+      body.style.top = `-${scrollY}px`;
+      body.style.left = '0';
+      body.style.right = '0';
+      body.style.width = '100%';
+    }
     if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
 
     return () => {
       html.style.overflow = prev.htmlOverflow;
       body.style.overflow = prev.overflow;
-      body.style.position = prev.position;
-      body.style.top = prev.top;
-      body.style.left = prev.left;
-      body.style.right = prev.right;
-      body.style.width = prev.width;
+      if (isTouch) {
+        body.style.position = prev.position;
+        body.style.top = prev.top;
+        body.style.left = prev.left;
+        body.style.right = prev.right;
+        body.style.width = prev.width;
+        window.scrollTo({ top: scrollY, behavior: 'instant' as ScrollBehavior });
+      }
       body.style.paddingRight = prev.paddingRight;
-      window.scrollTo({ top: scrollY, behavior: 'instant' as ScrollBehavior });
+      lenis?.start?.();
     };
   }, [locked]);
 }

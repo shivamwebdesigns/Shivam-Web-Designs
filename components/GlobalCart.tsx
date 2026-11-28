@@ -89,6 +89,11 @@ export function GlobalCart() {
     const body = document.body;
     const scrollY = window.scrollY;
     const scrollbarWidth = window.innerWidth - html.clientWidth;
+    const isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+    const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+
+    // Pause Lenis smooth scrolling so wheel/trackpad events inside the drawer scroll natively
+    lenis?.stop?.();
 
     const prev = {
       htmlOverflow: html.style.overflow,
@@ -103,11 +108,16 @@ export function GlobalCart() {
 
     html.style.overflow = 'hidden';
     body.style.overflow = 'hidden';
-    body.style.position = 'fixed';
-    body.style.top = `-${scrollY}px`;
-    body.style.left = '0';
-    body.style.right = '0';
-    body.style.width = '100%';
+
+    // Only apply fixed position lock on touch devices to avoid rubber-banding.
+    // On desktop, position: fixed on body breaks Safari trackpad scroll-chaining for child dialogs!
+    if (isTouch) {
+      body.style.position = 'fixed';
+      body.style.top = `-${scrollY}px`;
+      body.style.left = '0';
+      body.style.right = '0';
+      body.style.width = '100%';
+    }
     if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
 
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setCartOpen(false); };
@@ -116,32 +126,19 @@ export function GlobalCart() {
     return () => {
       html.style.overflow = prev.htmlOverflow;
       body.style.overflow = prev.overflow;
-      body.style.position = prev.position;
-      body.style.top = prev.top;
-      body.style.left = prev.left;
-      body.style.right = prev.right;
-      body.style.width = prev.width;
+      if (isTouch) {
+        body.style.position = prev.position;
+        body.style.top = prev.top;
+        body.style.left = prev.left;
+        body.style.right = prev.right;
+        body.style.width = prev.width;
+        window.scrollTo({ top: scrollY, behavior: 'instant' as ScrollBehavior });
+      }
       body.style.paddingRight = prev.paddingRight;
-      window.scrollTo({ top: scrollY, behavior: 'instant' as ScrollBehavior });
       window.removeEventListener('keydown', onKey);
+      lenis?.start?.();
     };
   }, [cartOpen]);
-
-  /* ── Keep wheel/touch scrolling inside the drawer ──
-     Smooth-scroll libraries (e.g. Lenis) listen on window and block native
-     scrolling of inner elements. Stopping propagation here lets the drawer
-     scroll natively while the page behind stays locked. */
-  useEffect(() => {
-    const el = scrollBodyRef.current;
-    if (!el) return;
-    const stop = (e: Event) => e.stopPropagation();
-    el.addEventListener('wheel', stop, { passive: true });
-    el.addEventListener('touchmove', stop, { passive: true });
-    return () => {
-      el.removeEventListener('wheel', stop);
-      el.removeEventListener('touchmove', stop);
-    };
-  }, []);
 
   /* ── Calculations ── */
   const calc = useMemo(() => {
@@ -262,7 +259,8 @@ export function GlobalCart() {
 
       {/* ── Cart Drawer — slides in from RIGHT edge ── */}
       <div
-        className={`fixed top-0 right-0 w-full sm:w-[460px] z-[9999] bg-neutral-950 border-l border-neutral-800/80 flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        data-lenis-prevent
+        className={`fixed inset-y-0 right-0 w-full sm:w-[460px] z-[9999] bg-neutral-950 border-l border-neutral-800/80 flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           cartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{ height: '100dvh', maxHeight: '100dvh', boxShadow: '-24px 0 80px rgba(0,0,0,0.9)' }}
@@ -302,15 +300,9 @@ export function GlobalCart() {
         <div
           ref={scrollBodyRef}
           data-lenis-prevent
-          className="px-5 py-5 space-y-5"
+          className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 py-5 space-y-5 drawer-scrollbar overscroll-contain"
           style={{
-            touchAction: 'pan-y',
-            flex: '1 1 0%',
-            minHeight: 0,
-            overflowY: 'scroll',
-            overflowX: 'hidden',
             WebkitOverflowScrolling: 'touch',
-            overscrollBehavior: 'contain',
           }}
         >
 
@@ -450,8 +442,14 @@ export function GlobalCart() {
                       type={type}
                       value={value}
                       onChange={(e) => handleProfile(field, e.target.value)}
+                      onFocus={(e) => {
+                        // Ensure input is comfortably centered in the scroll view when tapped/focused
+                        setTimeout(() => {
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 50);
+                      }}
                       placeholder={placeholder}
-                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors"
                     />
                   </div>
                 ))}
@@ -469,8 +467,8 @@ export function GlobalCart() {
             </div>
           )}
 
-          {/* Bottom padding so last field clears the sticky footer */}
-          <div className="h-4" aria-hidden="true" />
+          {/* Generous bottom clearance so all inputs and status indicators clear the fixed footer */}
+          <div className="h-16" aria-hidden="true" />
         </div>
 
         {/* ── Drawer Footer — always visible ── */}

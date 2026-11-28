@@ -401,3 +401,24 @@ select,
 textarea {
   touch-action: manipulation;
 }
+
+/* Luxury minimal scrollbar for drawer panels (visible and interactive on desktop Safari & Chrome) */
+.drawer-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #525252 #0a0a0a;
+}
+.drawer-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.drawer-scrollbar::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  border-radius: 9999px;
+}
+.drawer-scrollbar::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.drawer-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #737373;
+}
