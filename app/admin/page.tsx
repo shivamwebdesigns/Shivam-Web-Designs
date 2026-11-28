@@ -168,7 +168,7 @@ export default function AdminPage() {
   const canLoadMore = Boolean(user && nextCursor && !listLoading);
 
   return (
-    <main className="min-h-screen bg-black px-5 py-12 text-white sm:px-8 sm:py-20">
+    <main className="min-h-screen bg-black px-5 pb-12 pt-36 text-white sm:px-8 sm:pb-20 sm:pt-44">
       <div className="mx-auto max-w-5xl">
         <header className="mb-6 flex flex-col gap-5 border-b border-neutral-800 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -227,136 +227,136 @@ export default function AdminPage() {
           </section>
         ) : (
           <section aria-label="Saved inquiries">
-                <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-                  <p className="text-sm text-neutral-400" aria-live="polite">
-                    {inquiries.length} {inquiries.length === 1 ? 'inquiry' : 'inquiries'} loaded
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => void loadInquiries(user)}
-                    disabled={listLoading}
-                    className="min-h-11 border border-neutral-700 px-4 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white disabled:cursor-wait disabled:opacity-50"
-                  >
-                    {listLoading ? 'Loading…' : 'Refresh'}
-                  </button>
-                </div>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+              <p className="text-sm text-neutral-400" aria-live="polite">
+                {inquiries.length} {inquiries.length === 1 ? 'inquiry' : 'inquiries'} loaded
+              </p>
+              <button
+                type="button"
+                onClick={() => void loadInquiries(user)}
+                disabled={listLoading}
+                className="min-h-11 border border-neutral-700 px-4 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white disabled:cursor-wait disabled:opacity-50"
+              >
+                {listLoading ? 'Loading…' : 'Refresh'}
+              </button>
+            </div>
 
-                {error && (
-                  <div
-                    className="mb-6 border border-red-900/70 bg-red-950/30 p-4 text-sm text-red-200"
-                    role="alert"
-                  >
-                    {error}
-                  </div>
-                )}
+            {error && (
+              <div
+                className="mb-6 border border-red-900/70 bg-red-950/30 p-4 text-sm text-red-200"
+                role="alert"
+              >
+                {error}
+              </div>
+            )}
 
-                {inquiries.length === 0 && !listLoading && !error ? (
-                  <div className="border border-neutral-800 bg-neutral-950 p-8 text-center">
-                    <h2 className="text-lg font-light">No inquiries saved yet</h2>
-                    <p className="mt-2 text-sm text-neutral-400">
-                      New project and contact form submissions will appear here.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {inquiries.map((inquiry) => (
-                      <article
-                        key={inquiry.id}
-                        className="border border-neutral-800 bg-neutral-950 p-5 sm:p-7"
+            {inquiries.length === 0 && !listLoading && !error ? (
+              <div className="border border-neutral-800 bg-neutral-950 p-8 text-center">
+                <h2 className="text-lg font-light">No inquiries saved yet</h2>
+                <p className="mt-2 text-sm text-neutral-400">
+                  New project and contact form submissions will appear here.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {inquiries.map((inquiry) => (
+                  <article
+                    key={inquiry.id}
+                    className="border border-neutral-800 bg-neutral-950 p-5 sm:p-7"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="font-mono text-xs uppercase tracking-wider text-white">
+                          {inquiry.kind === 'project' ? 'Project brief' : 'Contact message'}
+                        </span>
+                        <span className="border border-neutral-700 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                          {emailStatusLabels[inquiry.emailStatus] ?? 'Email status unknown'}
+                        </span>
+                      </div>
+                      <time
+                        className="text-xs text-neutral-400"
+                        dateTime={inquiry.createdAt ?? undefined}
                       >
-                        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
-                          <div className="flex flex-wrap items-center gap-3">
-                            <span className="font-mono text-xs uppercase tracking-wider text-white">
-                              {inquiry.kind === 'project' ? 'Project brief' : 'Contact message'}
-                            </span>
-                            <span className="border border-neutral-700 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
-                              {emailStatusLabels[inquiry.emailStatus] ?? 'Email status unknown'}
-                            </span>
-                          </div>
-                          <time
-                            className="text-xs text-neutral-400"
-                            dateTime={inquiry.createdAt ?? undefined}
-                          >
-                            {formatDate(inquiry.createdAt)}
-                          </time>
-                        </div>
+                        {formatDate(inquiry.createdAt)}
+                      </time>
+                    </div>
 
-                        <div className="mt-5 grid gap-5 sm:grid-cols-[1fr_auto]">
+                    <div className="mt-5 grid gap-5 sm:grid-cols-[1fr_auto]">
+                      <div>
+                        <h2 className="text-xl font-light">{inquiry.name}</h2>
+                        <a
+                          className="mt-1 inline-block break-all text-sm text-neutral-400 underline underline-offset-4 hover:text-white"
+                          href={`mailto:${inquiry.email}`}
+                        >
+                          {inquiry.email}
+                        </a>
+                      </div>
+                      <p className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                        Ref: {inquiry.id}
+                      </p>
+                    </div>
+
+                    {inquiry.kind === 'project' ? (
+                      <div className="mt-5 grid gap-4 border-t border-neutral-800 pt-5 sm:grid-cols-2">
+                        {inquiry.company && (
+                          <Info label="Company" value={inquiry.company} />
+                        )}
+                        <Info label="Service" value={inquiry.projectType} />
+                        <Info label="Budget" value={inquiry.budget} />
+                        <Info label="Timeline" value={inquiry.timeline} />
+                        <div className="sm:col-span-2">
+                          <Info label="Project description" value={inquiry.description} />
+                        </div>
+                        {inquiry.referenceUrl && (
                           <div>
-                            <h2 className="text-xl font-light">{inquiry.name}</h2>
+                            <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
+                              Reference
+                            </p>
                             <a
-                              className="mt-1 inline-block break-all text-sm text-neutral-400 underline underline-offset-4 hover:text-white"
-                              href={`mailto:${inquiry.email}`}
+                              className="break-all text-sm text-neutral-300 underline underline-offset-4 hover:text-white"
+                              href={inquiry.referenceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
                             >
-                              {inquiry.email}
+                              {inquiry.referenceUrl}
                             </a>
                           </div>
-                          <p className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
-                            Ref: {inquiry.id}
-                          </p>
-                        </div>
-
-                        {inquiry.kind === 'project' ? (
-                          <div className="mt-5 grid gap-4 border-t border-neutral-800 pt-5 sm:grid-cols-2">
-                            {inquiry.company && (
-                              <Info label="Company" value={inquiry.company} />
-                            )}
-                            <Info label="Service" value={inquiry.projectType} />
-                            <Info label="Budget" value={inquiry.budget} />
-                            <Info label="Timeline" value={inquiry.timeline} />
-                            <div className="sm:col-span-2">
-                              <Info label="Project description" value={inquiry.description} />
-                            </div>
-                            {inquiry.referenceUrl && (
-                              <div>
-                                <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
-                                  Reference
-                                </p>
-                                <a
-                                  className="break-all text-sm text-neutral-300 underline underline-offset-4 hover:text-white"
-                                  href={inquiry.referenceUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {inquiry.referenceUrl}
-                                </a>
-                              </div>
-                            )}
-                            {inquiry.additionalRequirements && (
-                              <div className="sm:col-span-2">
-                                <Info
-                                  label="Additional notes"
-                                  value={inquiry.additionalRequirements}
-                                />
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="mt-5 border-t border-neutral-800 pt-5">
-                            {inquiry.subject && <Info label="Subject" value={inquiry.subject} />}
-                            <div className="mt-4">
-                              <Info label="Message" value={inquiry.message} />
-                            </div>
+                        )}
+                        {inquiry.additionalRequirements && (
+                          <div className="sm:col-span-2">
+                            <Info
+                              label="Additional notes"
+                              value={inquiry.additionalRequirements}
+                            />
                           </div>
                         )}
-                      </article>
-                    ))}
-                  </div>
-                )}
-
-                {canLoadMore && (
-                  <div className="mt-6 text-center">
-                    <button
-                      type="button"
-                      onClick={() => void loadInquiries(user, nextCursor ?? undefined, true)}
-                      className="min-h-12 border border-neutral-700 px-6 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white"
-                    >
-                      Load more
-                    </button>
-                  </div>
-                )}
-              </section>
+                      </div>
+                    ) : (
+                      <div className="mt-5 border-t border-neutral-800 pt-5">
+                        {inquiry.subject && <Info label="Subject" value={inquiry.subject} />}
+                        <div className="mt-4">
+                          <Info label="Message" value={inquiry.message} />
+                        </div>
+                      </div>
+                    )}
+                  </article>
+                ))}
+              </div>
             )}
+
+            {canLoadMore && (
+              <div className="mt-6 text-center">
+                <button
+                  type="button"
+                  onClick={() => void loadInquiries(user, nextCursor ?? undefined, true)}
+                  className="min-h-12 border border-neutral-700 px-6 text-xs font-mono uppercase tracking-wider text-neutral-300 transition-colors hover:border-white hover:text-white"
+                >
+                  Load more
+                </button>
+              </div>
+            )}
+          </section>
+        )}
 
         {error && (!user || authLoading || !firebaseConfigured) && (
           <p className="mt-6 text-sm text-red-300" role="alert">
