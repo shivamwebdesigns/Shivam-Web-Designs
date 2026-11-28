@@ -324,13 +324,14 @@ export function GlobalCart() {
                 <p className="text-sm font-semibold text-neutral-400">Your cart is empty</p>
                 <p className="text-xs text-neutral-600 mt-1 font-mono">Add a package or add-ons to get started.</p>
               </div>
-              <button
-                type="button"
+              <Link
+                href="/packages"
                 onClick={() => setCartOpen(false)}
-                className="text-xs font-mono font-bold uppercase tracking-wider text-white border border-neutral-800 hover:border-neutral-700 rounded-xl px-4 py-2.5 transition-colors"
+                className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded-xl px-5 py-2.5 transition-all active:scale-95 shadow-md shadow-white/10"
               >
-                Browse Packages
-              </button>
+                <span>Browse Packages</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           )}
 

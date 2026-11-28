@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
   Check,
   Plus,
   Minus,
+  ArrowLeft,
 } from 'lucide-react';
 import { PACKAGES, ADDONS, FAQS } from '@/data/packages';
 
@@ -110,6 +112,20 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back Button for Standalone Web App & Subpage Navigation */}
+        {isPage && (
+          <div className="mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 text-xs font-mono font-medium text-neutral-300 hover:text-white transition-all active:scale-95 group shadow-sm w-fit"
+              aria-label="Back to Home"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5 text-neutral-400 group-hover:text-white" />
+              <span>Back to Home</span>
+            </Link>
+          </div>
+        )}
+
         {/* Section Header */}
         <div className="max-w-3xl mb-8 sm:mb-12">
           {isPage ? (

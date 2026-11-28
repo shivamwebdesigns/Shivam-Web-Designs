@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { siteConfig } from '@/data/siteConfig';
 import { PACKAGES, ADDONS } from '@/data/packages';
-import { Menu, X, ArrowUpRight, ShoppingCart } from 'lucide-react';
+import { Menu, X, ArrowUpRight, ShoppingCart, ArrowLeft } from 'lucide-react';
 
 const fmt = (num: number) =>
   new Intl.NumberFormat('en-IN', {
@@ -82,6 +82,14 @@ export function Navbar() {
     window.dispatchEvent(new CustomEvent('swd-open-cart'));
   };
 
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push('/');
+    }
+  };
+
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -97,31 +105,45 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Official Brand Identity: SWD Monogram Symbol + Type Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 group transition-transform duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 rounded-lg p-0.5"
-            aria-label="ShivamWebDesigns — Home"
-          >
-            <div className="relative flex items-center flex-shrink-0">
-              <Image
-                src={siteConfig.assets.logoPng}
-                alt="ShivamWebDesigns Bespoke Monogram"
-                width={66}
-                height={44}
-                className="h-8 sm:h-10 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
-                priority
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-xs sm:text-sm text-white tracking-tight leading-tight group-hover:text-neutral-200 transition-colors">
-                ShivamWebDesigns
-              </span>
-              <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-widest leading-none mt-0.5 hidden min-[360px]:block">
-                Digital Studio
-              </span>
-            </div>
-          </Link>
+          {/* Brand Identity & Mobile Back Button when on Subpages (e.g. /packages) */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+            {pathname !== '/' && (
+              <button
+                type="button"
+                onClick={handleBack}
+                className="w-9 h-9 inline-flex md:hidden items-center justify-center text-neutral-300 hover:text-white bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800/80 hover:border-neutral-700 rounded-lg transition-all active:scale-90 flex-shrink-0"
+                aria-label="Back to previous page"
+                title="Go Back"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+            )}
+
+            <Link
+              href="/"
+              className="flex items-center gap-2 sm:gap-2.5 group transition-transform duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 rounded-lg p-0.5 min-w-0"
+              aria-label="ShivamWebDesigns — Home"
+            >
+              <div className="relative flex items-center flex-shrink-0">
+                <Image
+                  src={siteConfig.assets.logoPng}
+                  alt="ShivamWebDesigns Bespoke Monogram"
+                  width={66}
+                  height={44}
+                  className="h-8 sm:h-10 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
+                  priority
+                />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="font-bold text-xs sm:text-sm text-white tracking-tight leading-tight group-hover:text-neutral-200 transition-colors truncate">
+                  ShivamWebDesigns
+                </span>
+                <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-widest leading-none mt-0.5 hidden min-[360px]:block">
+                  Digital Studio
+                </span>
+              </div>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Primary Navigation">
