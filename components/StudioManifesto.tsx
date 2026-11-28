@@ -90,7 +90,7 @@ export function StudioManifesto() {
           </div>
 
           {/* Scroll-Scrubbed Text Reveal */}
-          <h2 className="scroll-scrub-text text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-[1.22] sm:leading-[1.18] text-balance">
+          <h2 className="scroll-scrub-text text-2xl sm:text-4xl lg:text-5xl font-light tracking-tight leading-[1.25] sm:leading-[1.2] text-balance">
             {words.map((word, i) => {
               const wordStart = i / words.length;
               const wordEnd = (i + 1) / words.length;

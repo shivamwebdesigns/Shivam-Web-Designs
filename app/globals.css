@@ -18,11 +18,11 @@
     --space-16: 64px;
 
     /* Fluid Layout & Readability Tokens */
-    --section-py: clamp(2rem, 4vw, 3.5rem);             /* 32px to 56px balanced section padding */
-    --container-px: clamp(1rem, 5vw, 2.5rem);
-    --heading-p-gap: clamp(0.75rem, 2vw, 1.25rem);      /* 12px to 20px */
-    --paragraph-btn-gap: clamp(1.25rem, 2.5vw, 1.75rem);/* 20px to 28px */
-    --card-grid-gap: clamp(1rem, 2.5vw, 1.75rem);       /* 16px to 28px */
+    --section-py: clamp(2.5rem, 5vw, 4rem);              /* 40px to 64px balanced section padding */
+    --container-px: clamp(1rem, 4vw, 2rem);
+    --heading-p-gap: clamp(0.75rem, 1.5vw, 1.25rem);     /* 12px to 20px */
+    --paragraph-btn-gap: clamp(1.25rem, 2vw, 1.75rem);   /* 20px to 28px */
+    --card-grid-gap: clamp(1rem, 2.5vw, 1.75rem);        /* 16px to 28px */
   }
 
   * {
@@ -46,6 +46,7 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     max-width: 100vw;
+    width: 100%;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -74,31 +75,23 @@
     letter-spacing: -0.02em;
   }
 
-  /* Spacing between elements: heading to paragraph, paragraph to button */
+  /* Editorial header spacing */
   h1 + p,
   h2 + p,
   h3 + p {
     margin-top: var(--heading-p-gap);
   }
 
-  p + .flex,
-  p + div > .flex,
-  p + button,
-  p + a[class*="rounded"] {
-    margin-top: var(--paragraph-btn-gap);
-  }
-
-  /* Fluid balanced section padding: easily accessible navigation */
-  section:not(#hero) {
-    padding-top: var(--section-py) !important;
-    padding-bottom: var(--section-py) !important;
+  /* Fluid balanced section padding for regular content sections */
+  section:not(#hero):not([class*="pt-28"]):not([class*="pt-32"]):not([class*="pt-36"]) {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
     min-height: auto;
   }
 
   /* Hero section with comfortable, accessible viewport fit */
-  #hero,
-  main > section:first-of-type {
-    min-height: 85dvh;
+  #hero {
+    min-height: calc(100dvh - 3.5rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -106,12 +99,9 @@
     padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
   }
 
-  /* Side padding: clamp(1rem, 5vw, 3rem) so text never touches screen edges */
-  .max-w-7xl,
-  .max-w-6xl,
-  .max-w-5xl,
-  .max-w-4xl,
-  .max-w-3xl {
+  /* Container side padding applied to top-level section containers */
+  section > .max-w-7xl,
+  main > .max-w-7xl {
     padding-left: var(--container-px);
     padding-right: var(--container-px);
   }
@@ -292,16 +282,29 @@ html.lenis, html.lenis body {
 /* ==========================================================
    Section Reveals On Page Scroll (IntersectionObserver)
    ========================================================== */
-/* Headings: slide up from behind a mask, line by line, 90ms stagger */
-section[data-reveal-section] h1:not(.scroll-scrub-text),
-section[data-reveal-section] h2:not(.scroll-scrub-text),
-section[data-reveal-section] h3:not(.scroll-scrub-text) {
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-  clip-path: inset(0 0 -12% 0);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
+section[data-reveal-section] {
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Subtle entrance offset - content is never blank */
+section[data-reveal-section]:not([data-revealed="true"]) {
+  opacity: 0.35;
+  transform: translate3d(0, 14px, 0);
+}
+
+section[data-reveal-section][data-revealed="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Headings glide smoothly into place */
+section[data-reveal-section]:not([data-revealed="true"]) h1:not(.scroll-scrub-text),
+section[data-reveal-section]:not([data-revealed="true"]) h2:not(.scroll-scrub-text),
+section[data-reveal-section]:not([data-revealed="true"]) h3:not(.scroll-scrub-text) {
+  opacity: 0.4;
+  transform: translate3d(0, 10px, 0);
 }
 
 section[data-reveal-section][data-revealed="true"] h1:not(.scroll-scrub-text),
@@ -309,70 +312,18 @@ section[data-reveal-section][data-revealed="true"] h2:not(.scroll-scrub-text),
 section[data-reveal-section][data-revealed="true"] h3:not(.scroll-scrub-text) {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 section[data-reveal-section][data-revealed="true"] h1 {
-  transition-delay: 0.05s;
+  transition-delay: 0.04s;
 }
 section[data-reveal-section][data-revealed="true"] h2 {
-  transition-delay: 0.14s;
+  transition-delay: 0.08s;
 }
 section[data-reveal-section][data-revealed="true"] h3 {
-  transition-delay: 0.23s;
-}
-
-/* Paragraphs, cards, articles, and buttons: fade in and rise about 18px, staggered */
-section[data-reveal-section] p:not(.scroll-scrub-text),
-section[data-reveal-section] article,
-section[data-reveal-section] .grid > div,
-section[data-reveal-section] button,
-section[data-reveal-section] a[class*="rounded"] {
-  opacity: 0;
-  transform: translate3d(0, 18px, 0);
-  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-section[data-reveal-section][data-revealed="true"] p:not(.scroll-scrub-text),
-section[data-reveal-section][data-revealed="true"] article,
-section[data-reveal-section][data-revealed="true"] .grid > div,
-section[data-reveal-section][data-revealed="true"] button,
-section[data-reveal-section][data-revealed="true"] a[class*="rounded"] {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
-section[data-reveal-section][data-revealed="true"] p {
-  transition-delay: 0.16s;
-}
-section[data-reveal-section][data-revealed="true"] .grid > div:nth-child(1),
-section[data-reveal-section][data-revealed="true"] article:nth-child(1) {
-  transition-delay: 0.10s;
-}
-section[data-reveal-section][data-revealed="true"] .grid > div:nth-child(2),
-section[data-reveal-section][data-revealed="true"] article:nth-child(2) {
-  transition-delay: 0.19s;
-}
-section[data-reveal-section][data-revealed="true"] .grid > div:nth-child(3),
-section[data-reveal-section][data-revealed="true"] article:nth-child(3) {
-  transition-delay: 0.28s;
-}
-section[data-reveal-section][data-revealed="true"] .grid > div:nth-child(4),
-section[data-reveal-section][data-revealed="true"] article:nth-child(4) {
-  transition-delay: 0.37s;
-}
-section[data-reveal-section][data-revealed="true"] .grid > div:nth-child(5),
-section[data-reveal-section][data-revealed="true"] article:nth-child(5) {
-  transition-delay: 0.46s;
-}
-section[data-reveal-section][data-revealed="true"] .grid > div:nth-child(6),
-section[data-reveal-section][data-revealed="true"] article:nth-child(6) {
-  transition-delay: 0.55s;
-}
-section[data-reveal-section][data-revealed="true"] button,
-section[data-reveal-section][data-revealed="true"] a[class*="rounded"] {
-  transition-delay: 0.24s;
+  transition-delay: 0.12s;
 }
 
 @media (prefers-reduced-motion: reduce) {
