@@ -128,11 +128,11 @@ export function StudioManifesto() {
           </h2>
 
           {/* Bottom Indicator */}
-          <div className="pt-6 sm:pt-8 flex items-center text-xs font-mono text-neutral-400 uppercase tracking-widest">
-            <span className="flex items-center gap-1.5 text-white font-medium">
-              <span>SCROLL</span>
-              <span className="animate-bounce">↓</span>
-            </span>
+          <div className="pt-6 sm:pt-8 flex items-center gap-3 text-xs font-mono text-neutral-400 uppercase tracking-widest">
+            <span className="text-white font-medium">SCROLL</span>
+            <div className="scroll-indicator-line" aria-hidden="true">
+              <span className="scroll-indicator-highlight" />
+            </div>
           </div>
         </div>
       </div>
