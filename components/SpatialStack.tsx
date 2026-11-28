@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Box, Code2, Layers, Zap, Sparkles, Check } from 'lucide-react';
+import { ArrowUpRight, Box, Code2, Layers, Zap, Sparkles } from 'lucide-react';
+import { CoreWebVitalsCard } from '@/components/CoreWebVitalsCard';
 
 interface StackLayer {
   index: number;
@@ -68,19 +69,8 @@ const layers: StackLayer[] = [
   },
 ];
 
-const webVitalsChecks = [
-  { id: 1, title: 'Compress hero to WebP or AVIF', subtitle: 'right quality · srcset widths' },
-  { id: 2, title: 'Right image sizes + lazy loading', subtitle: 'width/height set · lazy below fold' },
-  { id: 3, title: 'Remove unused JavaScript', subtitle: 'split bundles · drop dead code' },
-  { id: 4, title: 'Preload fonts, stop layout shift', subtitle: 'font-display: swap · reserve space' },
-  { id: 5, title: 'Delay third-party scripts', subtitle: 'load after interaction or idle' },
-  { id: 6, title: 'Caching + CDN', subtitle: 'long cache headers on static files' },
-  { id: 7, title: 'Measure Core Web Vitals on mobile', subtitle: 'LCP · INP · CLS · real users', highlight: true },
-];
-
 export function SpatialStack() {
   const [activeTab, setActiveTab] = useState(1);
-  const [perfView, setPerfView] = useState<'checklist' | 'scores'>('checklist');
 
   const scrollToLayer = (idx: number) => {
     setActiveTab(idx);
@@ -192,169 +182,79 @@ export function SpatialStack() {
                 </div>
 
                 {/* Spatial Preview Column */}
-                <div className="lg:col-span-5">
-                  <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
-                    {layer.previewType === '3d-card' && (
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
-                          <span>CSS 3D TRANSFORM</span>
-                          <span>ROTATION: [R_x, R_y]</span>
-                        </div>
-                        {/* Interactive Visual Card Miniature */}
-                        <div className="relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between transform rotate-[-4deg] group-hover:rotate-[0deg] transition-transform duration-500">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-mono font-bold text-white tracking-widest">SWD</span>
-                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="lg:col-span-5 w-full">
+                  {layer.previewType === 'performance' ? (
+                    <CoreWebVitalsCard />
+                  ) : (
+                    <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
+                      {layer.previewType === '3d-card' && (
+                        <div className="flex flex-col justify-between h-full">
+                          <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
+                            <span>CSS 3D TRANSFORM</span>
+                            <span>ROTATION: [R_x, R_y]</span>
                           </div>
-                          <div className="text-[9px] font-mono text-neutral-400">
-                            3D Spatial Business Card Engine
-                          </div>
-                        </div>
-                        <div className="text-center text-[10px] font-mono text-neutral-400">
-                          60 FPS • Real-time Euler Math
-                        </div>
-                      </div>
-                    )}
-
-                    {layer.previewType === 'terminal' && (
-                      <div className="flex flex-col justify-between h-full font-mono text-xs">
-                        <div className="flex items-center gap-1.5 pb-2 border-b border-neutral-800">
-                          <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                          <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                          <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                          <span className="ml-2 text-[10px] text-neutral-400">architecture.ts</span>
-                        </div>
-                        <div className="space-y-1 text-[11px] text-neutral-300 py-3">
-                          <p><span className="text-neutral-400">export const</span> <span className="text-white">stack</span> = &#123;</p>
-                          <p className="pl-4">framework: <span className="text-neutral-400">&apos;Next.js 15&apos;</span>,</p>
-                          <p className="pl-4">rendering: <span className="text-neutral-400">&apos;RSC + Static SSG&apos;</span>,</p>
-                          <p className="pl-4">performance: <span className="text-emerald-400">&apos;100/100&apos;</span>,</p>
-                          <p>&#125;;</p>
-                        </div>
-                        <div className="text-[10px] text-neutral-400 pt-2 border-t border-neutral-800 flex justify-between">
-                          <span>TypeScript 5.7</span>
-                          <span>Zero Bloat</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {layer.previewType === 'typography' && (
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
-                          International Style // Baseline
-                        </div>
-                        <div className="space-y-1.5 py-2">
-                          <div className="text-3xl font-light tracking-tight text-white leading-none">
-                            Aa Bb Zz
-                          </div>
-                          <div className="text-xs font-mono text-neutral-400">
-                            Inter • JetBrains Mono
-                          </div>
-                          <div className="h-px bg-neutral-800 my-2" />
-                          <div className="text-[11px] text-neutral-400 leading-relaxed font-light">
-                            Strict horizontal alignment, modular column grids &amp; zero superficial decor.
-                          </div>
-                        </div>
-                        <div className="text-[10px] font-mono text-neutral-400">
-                          Pure Swiss Monochrome Palette
-                        </div>
-                      </div>
-                    )}
-
-                    {layer.previewType === 'performance' && (
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-800/80">
-                          <span className="text-[11px] font-mono text-neutral-300 font-semibold tracking-wider uppercase">
-                            Mobile Core Web Vitals
-                          </span>
-                          <div className="flex items-center gap-1">
-                            <button
-                              type="button"
-                              onClick={() => setPerfView('checklist')}
-                              className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
-                                perfView === 'checklist'
-                                  ? 'bg-white text-black font-semibold'
-                                  : 'text-neutral-400 hover:text-white'
-                              }`}
-                            >
-                              Protocol
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setPerfView('scores')}
-                              className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
-                                perfView === 'scores'
-                                  ? 'bg-white text-black font-semibold'
-                                  : 'text-neutral-400 hover:text-white'
-                              }`}
-                            >
-                              Scores
-                            </button>
-                          </div>
-                        </div>
-
-                        {perfView === 'checklist' ? (
-                          <div className="space-y-1.5 overflow-y-auto max-h-[220px] pr-1 py-1 animate-fade-in">
-                            {webVitalsChecks.map((item) => (
-                              <div
-                                key={item.id}
-                                className={`flex items-center gap-2.5 p-2 rounded-lg transition-all ${
-                                  item.highlight
-                                    ? 'bg-emerald-950/40 border border-emerald-500/40'
-                                    : 'hover:bg-neutral-900/60'
-                                }`}
-                              >
-                                {item.highlight ? (
-                                  <div className="w-5 h-5 rounded-full bg-white text-black font-mono font-bold text-[10px] flex items-center justify-center flex-shrink-0 shadow">
-                                    7
-                                  </div>
-                                ) : (
-                                  <div className="w-5 h-5 rounded-full bg-emerald-500 text-black flex items-center justify-center flex-shrink-0">
-                                    <Check className="w-3 h-3 text-black stroke-[3]" />
-                                  </div>
-                                )}
-                                <div className="min-w-0 flex-1">
-                                  <div className="text-xs font-semibold text-white truncate leading-tight">
-                                    {item.title}
-                                  </div>
-                                  <div
-                                    className={`text-[10px] font-mono truncate ${
-                                      item.highlight ? 'text-emerald-400 font-medium' : 'text-neutral-400'
-                                    }`}
-                                  >
-                                    {item.subtitle}
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="grid grid-cols-2 gap-3 py-2 text-center animate-fade-in">
-                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                              <div className="text-xl font-bold font-mono text-white">100</div>
-                              <div className="text-[9px] font-mono text-neutral-400 uppercase">Performance</div>
+                          {/* Interactive Visual Card Miniature */}
+                          <div className="relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between transform rotate-[-4deg] group-hover:rotate-[0deg] transition-transform duration-500">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] font-mono font-bold text-white tracking-widest">SWD</span>
+                              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                             </div>
-                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                              <div className="text-xl font-bold font-mono text-white">100</div>
-                              <div className="text-[9px] font-mono text-neutral-400 uppercase">Accessibility</div>
-                            </div>
-                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                              <div className="text-xl font-bold font-mono text-white">&lt; 0.8s</div>
-                              <div className="text-[9px] font-mono text-neutral-400 uppercase">LCP Speed</div>
-                            </div>
-                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                              <div className="text-xl font-bold font-mono text-white">0.000</div>
-                              <div className="text-[9px] font-mono text-neutral-400 uppercase">CLS Shift</div>
+                            <div className="text-[9px] font-mono text-neutral-400">
+                              3D Spatial Business Card Engine
                             </div>
                           </div>
-                        )}
-
-                        <div className="text-center text-[10px] font-mono text-neutral-400 pt-1 border-t border-neutral-800/60">
-                          Vercel Global Edge Network • Sub-Second Mobile
+                          <div className="text-center text-[10px] font-mono text-neutral-400">
+                            60 FPS • Real-time Euler Math
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+
+                      {layer.previewType === 'terminal' && (
+                        <div className="flex flex-col justify-between h-full font-mono text-xs">
+                          <div className="flex items-center gap-1.5 pb-2 border-b border-neutral-800">
+                            <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                            <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                            <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                            <span className="ml-2 text-[10px] text-neutral-400">architecture.ts</span>
+                          </div>
+                          <div className="space-y-1 text-[11px] text-neutral-300 py-3">
+                            <p><span className="text-neutral-400">export const</span> <span className="text-white">stack</span> = &#123;</p>
+                            <p className="pl-4">framework: <span className="text-neutral-400">&apos;Next.js 15&apos;</span>,</p>
+                            <p className="pl-4">rendering: <span className="text-neutral-400">&apos;RSC + Static SSG&apos;</span>,</p>
+                            <p className="pl-4">performance: <span className="text-emerald-400">&apos;100/100&apos;</span>,</p>
+                            <p>&#125;;</p>
+                          </div>
+                          <div className="text-[10px] text-neutral-400 pt-2 border-t border-neutral-800 flex justify-between">
+                            <span>TypeScript 5.7</span>
+                            <span>Zero Bloat</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {layer.previewType === 'typography' && (
+                        <div className="flex flex-col justify-between h-full">
+                          <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
+                            International Style // Baseline
+                          </div>
+                          <div className="space-y-1.5 py-2">
+                            <div className="text-3xl font-light tracking-tight text-white leading-none">
+                              Aa Bb Zz
+                            </div>
+                            <div className="text-xs font-mono text-neutral-400">
+                              Inter • JetBrains Mono
+                            </div>
+                            <div className="h-px bg-neutral-800 my-2" />
+                            <div className="text-[11px] text-neutral-400 leading-relaxed font-light">
+                              Strict horizontal alignment, modular column grids &amp; zero superficial decor.
+                            </div>
+                          </div>
+                          <div className="text-[10px] font-mono text-neutral-400">
+                            Pure Swiss Monochrome Palette
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </article>

@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ShieldCheck, Zap, UserCheck, Layers } from 'lucide-react';
+import { CoreWebVitalsCard } from '@/components/CoreWebVitalsCard';
 import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
@@ -84,6 +85,21 @@ export default function ProjectsPage() {
                   Fixed pricing starting from ₹499 with clear deliverables, guaranteed timelines, and zero surprises.
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* Live Mobile Core Web Vitals Audit Protocol */}
+          <div className="space-y-6 pt-4">
+            <div>
+              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block mb-2">
+                Audit Benchmark
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                Live 7-Step Mobile Core Web Vitals Protocol
+              </h3>
+            </div>
+            <div className="max-w-2xl">
+              <CoreWebVitalsCard />
             </div>
           </div>
 
