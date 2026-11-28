@@ -1,5 +1,4 @@
 import React from 'react';
-import { TextShimmer } from '@/components/ui/TextShimmer';
 
 export const WorkingProcess: React.FC = () => {
   const steps = [
@@ -45,7 +44,7 @@ export const WorkingProcess: React.FC = () => {
           <div>
             <div className="mb-3">
               <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                <TextShimmer>05 // METHODOLOGY &amp; SPRINT DISCIPLINE</TextShimmer>
+                Methodology
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-2">

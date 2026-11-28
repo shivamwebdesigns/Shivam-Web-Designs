@@ -1,6 +1,6 @@
 import React from 'react';
 import { Shield, Zap, Sparkles, UserCheck } from 'lucide-react';
-import { TextShimmer } from '@/components/ui/TextShimmer';
+import { ScrollTextReveal } from '@/components/ui/ScrollTextReveal';
 
 export const WhyChooseUs: React.FC = () => {
   const pillars = [
@@ -45,15 +45,16 @@ export const WhyChooseUs: React.FC = () => {
         <div className="max-w-2xl mb-16">
           <div className="mb-3">
             <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-              <TextShimmer>04 // THE AGENCY ADVANTAGE</TextShimmer>
+              The Agency Advantage
             </span>
           </div>
           <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
             Why Work With SWD
           </h2>
-          <p className="text-base text-neutral-400 leading-relaxed">
-            In an era of cookie-cutter templates and bloated page builders, ShivamWebDesigns takes the opposing path: disciplined craftsmanship, direct founder ownership, and technical excellence.
-          </p>
+          <ScrollTextReveal
+            text="In an era of cookie-cutter templates and bloated page builders, ShivamWebDesigns takes the opposing path: disciplined craftsmanship, direct founder ownership, and technical excellence."
+            className="text-base text-neutral-400 leading-relaxed"
+          />
         </div>
 
         {/* Pillars Grid */}

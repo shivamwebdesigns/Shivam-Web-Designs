@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import { servicesData } from '@/data/services';
 import { ArrowUpRight, Check } from 'lucide-react';
-import { TextShimmer } from '@/components/ui/TextShimmer';
 
 export function ServicesSection() {
   return (
@@ -12,7 +11,7 @@ export function ServicesSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="space-y-3 max-w-2xl">
             <span className="text-xs uppercase tracking-widest font-mono text-neutral-400">
-              <TextShimmer>01 // CAPABILITIES &amp; EXPERTISE</TextShimmer>
+              01 // CAPABILITIES &amp; EXPERTISE
             </span>
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
               End-to-End Digital Engineering Services

@@ -99,30 +99,6 @@
   }
 }
 
-@keyframes textShimmer {
-  0% {
-    background-position: 100% 0;
-  }
-  100% {
-    background-position: -100% 0;
-  }
-}
-
-.animate-text-shimmer {
-  background: linear-gradient(
-    110deg,
-    #a3a3a3 15%,
-    #ffffff 45%,
-    #ffffff 55%,
-    #a3a3a3 85%
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: textShimmer 3s ease-in-out infinite;
-}
-
 .animate-fade-in {
   animation: fadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

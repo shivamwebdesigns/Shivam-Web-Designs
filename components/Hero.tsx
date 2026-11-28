@@ -2,30 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
-import { TextMorph } from '@/components/ui/TextMorph';
-import { TextShimmer } from '@/components/ui/TextShimmer';
 
 export function Hero() {
   return (
     <section className="relative pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
-          {/* Eyebrow Status Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-800 bg-neutral-950/80 mb-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <TextShimmer className="text-xs font-mono tracking-wider uppercase">
-              STUDIO // DIRECT FOUNDER ACCESS
-            </TextShimmer>
-          </div>
-
-          {/* Suggested Hero Headline with TextMorph */}
+          {/* Suggested Hero Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-            Building Digital Experiences That Move{' '}
-            <TextMorph
-              words={['Businesses', 'Startups', 'Enterprises', 'Visionaries']}
-              className="text-white underline decoration-neutral-700 decoration-2 underline-offset-8"
-            />{' '}
-            Forward.
+            {siteConfig.headline}
           </h1>
 
           {/* Supporting Text */}
