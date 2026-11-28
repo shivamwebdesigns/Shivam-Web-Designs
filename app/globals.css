@@ -18,11 +18,11 @@
     --space-16: 64px;
 
     /* Fluid Layout & Readability Tokens */
-    --section-py: clamp(3rem, 8vw, 6rem);
-    --container-px: clamp(1rem, 5vw, 3rem);
-    --heading-p-gap: clamp(1rem, 2.5vw, 1.5rem);       /* 16px to 24px */
-    --paragraph-btn-gap: clamp(1.5rem, 3.5vw, 2rem);   /* 24px to 32px */
-    --card-grid-gap: clamp(1rem, 3vw, 2rem);           /* 16px to 32px */
+    --section-py: clamp(2rem, 4vw, 3.5rem);             /* 32px to 56px balanced section padding */
+    --container-px: clamp(1rem, 5vw, 2.5rem);
+    --heading-p-gap: clamp(0.75rem, 2vw, 1.25rem);      /* 12px to 20px */
+    --paragraph-btn-gap: clamp(1.25rem, 2.5vw, 1.75rem);/* 20px to 28px */
+    --card-grid-gap: clamp(1rem, 2.5vw, 1.75rem);       /* 16px to 28px */
   }
 
   * {
@@ -74,7 +74,7 @@
     letter-spacing: -0.02em;
   }
 
-  /* Spacing between elements: heading to paragraph (16-24px), paragraph to button (24-32px) */
+  /* Spacing between elements: heading to paragraph, paragraph to button */
   h1 + p,
   h2 + p,
   h3 + p {
@@ -88,22 +88,22 @@
     margin-top: var(--paragraph-btn-gap);
   }
 
-  /* Fluid section padding: clamp(3rem, 8vw, 6rem) top and bottom */
-  section:not(#hero):not(#manifesto):not(.h-screen):not([class*="h-[300vh]"]) {
+  /* Fluid balanced section padding: easily accessible navigation */
+  section:not(#hero) {
     padding-top: var(--section-py) !important;
     padding-bottom: var(--section-py) !important;
     min-height: auto;
   }
 
-  /* Hero full viewport height using mobile dvh and safe-area insets */
+  /* Hero section with comfortable, accessible viewport fit */
   #hero,
   main > section:first-of-type {
-    min-height: 100dvh;
+    min-height: 85dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: max(5.5rem, env(safe-area-inset-top));
-    padding-bottom: max(3rem, env(safe-area-inset-bottom));
+    padding-top: max(4.5rem, env(safe-area-inset-top));
+    padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
   }
 
   /* Side padding: clamp(1rem, 5vw, 3rem) so text never touches screen edges */

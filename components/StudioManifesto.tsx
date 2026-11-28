@@ -3,8 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * StudioManifesto - 300vh Scroll-Scrubbed Text Reveal
- * - Section is 300vh tall with sticky centered content.
+ * StudioManifesto - Fluid Scroll-Revealed Text
+ * - Balanced section padding allowing effortless navigation to adjacent sections.
  * - Words revealed one-by-one from opacity 0.15 + blur(6px) to opacity 1 + blur(0) with slight upward slide.
  * - Progress eased toward real scroll position with a 0.08 lerp loop.
  * - Key words highlighted in accent color.
@@ -34,11 +34,13 @@ export function StudioManifesto() {
 
     const handleScroll = () => {
       const rect = section.getBoundingClientRect();
-      const totalScrollable = rect.height - window.innerHeight;
-      if (totalScrollable <= 0) return;
+      const windowHeight = window.innerHeight;
 
-      const scrolled = -rect.top;
-      const rawProgress = scrolled / totalScrollable;
+      // Reveal smoothly as section scrolls into the active reading zone
+      const start = windowHeight * 0.88;
+      const end = windowHeight * 0.38;
+      const current = rect.top;
+      const rawProgress = (start - current) / (start - end);
       targetProgressRef.current = Math.min(Math.max(rawProgress, 0), 1);
     };
 
@@ -46,7 +48,7 @@ export function StudioManifesto() {
     window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
 
-    // Lerp update loop (0.08 factor for silky inertia ease)
+    // Lerp update loop (0.08 factor for silky ease)
     const updateLerp = () => {
       const target = targetProgressRef.current;
       const current = currentProgressRef.current;
@@ -76,65 +78,61 @@ export function StudioManifesto() {
     <section
       ref={sectionRef}
       id="manifesto"
-      className="relative h-[300vh] bg-black border-t border-neutral-900"
+      className="py-14 sm:py-20 lg:py-24 bg-black border-t border-neutral-900 relative overflow-hidden"
     >
-      <div className="sticky top-0 h-[100dvh] w-full flex items-center overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-4xl">
-            {/* Eyebrow */}
-            <div className="mb-6 sm:mb-8">
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block">
-                MANIFESTO // CODE WITH PURPOSE
-              </span>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-4xl">
+          {/* Eyebrow */}
+          <div className="mb-6 sm:mb-8">
+            <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block">
+              MANIFESTO // CODE WITH PURPOSE
+            </span>
+          </div>
 
-            {/* Scroll-Scrubbed Text Reveal */}
-            <h2 className="scroll-scrub-text text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-[1.22] sm:leading-[1.18] text-balance">
-              {words.map((word, i) => {
-                const wordStart = i / words.length;
-                const wordEnd = (i + 1) / words.length;
-                const wordProgress = Math.min(
-                  Math.max((displayProgress - wordStart) / (wordEnd - wordStart), 0),
-                  1
-                );
+          {/* Scroll-Scrubbed Text Reveal */}
+          <h2 className="scroll-scrub-text text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-[1.22] sm:leading-[1.18] text-balance">
+            {words.map((word, i) => {
+              const wordStart = i / words.length;
+              const wordEnd = (i + 1) / words.length;
+              const wordProgress = Math.min(
+                Math.max((displayProgress - wordStart) / (wordEnd - wordStart), 0),
+                1
+              );
 
-                const opacity = 0.15 + 0.85 * wordProgress;
-                const blur = 6 * (1 - wordProgress);
-                const translateY = 8 * (1 - wordProgress);
-                const isAccent =
-                  word.includes('hand-built') || word.includes('lightning-fast');
+              const opacity = 0.15 + 0.85 * wordProgress;
+              const blur = 6 * (1 - wordProgress);
+              const translateY = 8 * (1 - wordProgress);
+              const isAccent =
+                word.includes('hand-built') || word.includes('lightning-fast');
 
-                return (
-                  <span
-                    key={`${word}-${i}`}
-                    className={`scroll-scrub-word inline-block mr-[0.28em] transform-gpu will-change-[transform,opacity,filter] ${
-                      wordProgress > 0.55
-                        ? isAccent
-                          ? 'text-emerald-400 font-normal drop-shadow-[0_0_12px_rgba(52,211,153,0.3)]'
-                          : 'text-white'
-                        : 'text-neutral-500'
-                    }`}
-                    style={{
-                      opacity,
-                      filter: `blur(${blur.toFixed(2)}px)`,
-                      transform: `translate3d(0, ${translateY.toFixed(2)}px, 0)`,
-                    }}
-                  >
-                    {word}
-                  </span>
-                );
-              })}
-            </h2>
+              return (
+                <span
+                  key={`${word}-${i}`}
+                  className={`scroll-scrub-word inline-block mr-[0.28em] transform-gpu will-change-[transform,opacity,filter] ${
+                    wordProgress > 0.55
+                      ? isAccent
+                        ? 'text-emerald-400 font-normal drop-shadow-[0_0_12px_rgba(52,211,153,0.3)]'
+                        : 'text-white'
+                      : 'text-neutral-500'
+                  }`}
+                  style={{
+                    opacity,
+                    filter: `blur(${blur.toFixed(2)}px)`,
+                    transform: `translate3d(0, ${translateY.toFixed(2)}px, 0)`,
+                  }}
+                >
+                  {word}
+                </span>
+              );
+            })}
+          </h2>
 
-            {/* Bottom Indicator */}
-            <div className="pt-10 sm:pt-14 flex items-center gap-6 text-xs font-mono text-neutral-400 uppercase tracking-widest">
-              <span className="flex items-center gap-1.5 text-white font-medium">
-                <span>SCROLL</span>
-                <span className="animate-bounce">↓</span>
-              </span>
-              <span className="h-px w-12 bg-neutral-800" />
-              <span>&lt; 0.8s Mobile Standard</span>
-            </div>
+          {/* Bottom Indicator */}
+          <div className="pt-6 sm:pt-8 flex items-center text-xs font-mono text-neutral-400 uppercase tracking-widest">
+            <span className="flex items-center gap-1.5 text-white font-medium">
+              <span>SCROLL</span>
+              <span className="animate-bounce">↓</span>
+            </span>
           </div>
         </div>
       </div>
