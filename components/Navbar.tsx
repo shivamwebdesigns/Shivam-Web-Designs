@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/data/siteConfig';
 import { PACKAGES, ADDONS } from '@/data/packages';
-import { Menu, X, ArrowUpRight, ShoppingCart, ArrowLeft } from 'lucide-react';
+import { Menu, X, ArrowUpRight, ShoppingCart } from 'lucide-react';
 
 const fmt = (num: number) =>
   new Intl.NumberFormat('en-IN', {
@@ -21,7 +21,6 @@ export function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,14 +81,6 @@ export function Navbar() {
     window.dispatchEvent(new CustomEvent('swd-open-cart'));
   };
 
-  const handleBack = () => {
-    if (typeof window !== 'undefined' && window.history.length > 1) {
-      router.back();
-    } else {
-      router.push('/');
-    }
-  };
-
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -108,20 +99,8 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Brand Identity & Mobile Back Button when on Subpages (e.g. /packages) */}
+          {/* Brand Identity */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
-            {pathname !== '/' && (
-              <button
-                type="button"
-                onClick={handleBack}
-                className="w-9 h-9 inline-flex md:hidden items-center justify-center text-neutral-300 hover:text-white bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800/80 hover:border-neutral-700 rounded-lg transition-all active:scale-90 flex-shrink-0"
-                aria-label="Back to previous page"
-                title="Go Back"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </button>
-            )}
-
             <Link
               href="/"
               className="flex items-center gap-2 sm:gap-2.5 group transition-transform duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 rounded-lg p-0.5 min-w-0"
