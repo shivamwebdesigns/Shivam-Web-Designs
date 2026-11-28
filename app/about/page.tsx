@@ -54,7 +54,7 @@ export default function AboutPage() {
       </section>
 
       {/* Agency Story */}
-      <section className="py-24 border-b border-neutral-900 bg-black">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4">
@@ -81,7 +81,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-24 border-b border-neutral-900 bg-neutral-950/40">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950/40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="p-10 border border-neutral-900 bg-black flex flex-col justify-between">
@@ -144,7 +144,7 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section className="py-24 border-b border-neutral-900 bg-black">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
             <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
@@ -183,7 +183,7 @@ export default function AboutPage() {
       </section>
 
       {/* Founder Preview Section */}
-      <section className="py-24 border-b border-neutral-900 bg-neutral-950/60">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-4">

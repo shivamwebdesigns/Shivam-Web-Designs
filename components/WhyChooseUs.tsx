@@ -38,7 +38,7 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="py-14 sm:py-20 border-b border-neutral-900 bg-black">
+    <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="max-w-2xl mb-16">

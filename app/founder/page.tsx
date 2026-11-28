@@ -86,7 +86,7 @@ export default function FounderPage() {
       </section>
 
       {/* 2. My Story */}
-      <section className="py-24 border-b border-neutral-900 bg-black">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4">
@@ -107,7 +107,7 @@ export default function FounderPage() {
       </section>
 
       {/* 3. My Philosophy */}
-      <section className="py-24 border-b border-neutral-900 bg-neutral-950/40">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950/40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
             <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
@@ -143,7 +143,7 @@ export default function FounderPage() {
       </section>
 
       {/* 4. My Skills */}
-      <section className="py-24 border-b border-neutral-900 bg-black">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
             <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
@@ -189,7 +189,7 @@ export default function FounderPage() {
       </section>
 
       {/* 5. Founder Note */}
-      <section className="py-24 border-b border-neutral-900 bg-neutral-950/60">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950/60">
         <div className="max-w-4xl mx-auto px-6">
           <div className="p-10 md:p-16 border border-neutral-800 bg-black relative">
             <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-6 flex items-center gap-2">
@@ -222,7 +222,7 @@ export default function FounderPage() {
       </section>
 
       {/* 6. Connect With Me */}
-      <section className="py-24 border-b border-neutral-900 bg-black">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="max-w-2xl mx-auto mb-12">
             <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">

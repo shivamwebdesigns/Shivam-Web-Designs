@@ -5,7 +5,7 @@ import { siteConfig } from '@/data/siteConfig';
 
 export const InquiryCTA: React.FC = () => {
   return (
-    <section className="py-14 sm:py-20 border-b border-neutral-900 bg-neutral-950 relative overflow-hidden">
+    <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950 relative overflow-hidden">
       {/* Background Subtle Grid Texture */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
 

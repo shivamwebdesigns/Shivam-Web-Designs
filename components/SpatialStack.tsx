@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Box, Code2, Layers, Zap, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Box, Code2, Layers, Zap, Sparkles, Check } from 'lucide-react';
 
 interface StackLayer {
   index: number;
@@ -68,8 +68,19 @@ const layers: StackLayer[] = [
   },
 ];
 
+const webVitalsChecks = [
+  { id: 1, title: 'Compress hero to WebP or AVIF', subtitle: 'right quality · srcset widths' },
+  { id: 2, title: 'Right image sizes + lazy loading', subtitle: 'width/height set · lazy below fold' },
+  { id: 3, title: 'Remove unused JavaScript', subtitle: 'split bundles · drop dead code' },
+  { id: 4, title: 'Preload fonts, stop layout shift', subtitle: 'font-display: swap · reserve space' },
+  { id: 5, title: 'Delay third-party scripts', subtitle: 'load after interaction or idle' },
+  { id: 6, title: 'Caching + CDN', subtitle: 'long cache headers on static files' },
+  { id: 7, title: 'Measure Core Web Vitals on mobile', subtitle: 'LCP · INP · CLS · real users', highlight: true },
+];
+
 export function SpatialStack() {
   const [activeTab, setActiveTab] = useState(1);
+  const [perfView, setPerfView] = useState<'checklist' | 'scores'>('checklist');
 
   const scrollToLayer = (idx: number) => {
     setActiveTab(idx);
@@ -82,7 +93,7 @@ export function SpatialStack() {
   };
 
   return (
-    <section id="3d-stack" className="py-14 sm:py-20 bg-black border-t border-neutral-900 scroll-mt-20">
+    <section id="3d-stack" className="py-14 sm:py-20 lg:py-24 bg-black border-t border-neutral-900 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">
@@ -252,30 +263,94 @@ export function SpatialStack() {
 
                     {layer.previewType === 'performance' && (
                       <div className="flex flex-col justify-between h-full">
-                        <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
-                          <span>AUDIT SCORES</span>
-                          <span className="text-emerald-400">VERIFIED PASS</span>
+                        <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-800/80">
+                          <span className="text-[11px] font-mono text-neutral-300 font-semibold tracking-wider uppercase">
+                            Mobile Core Web Vitals
+                          </span>
+                          <div className="flex items-center gap-1">
+                            <button
+                              type="button"
+                              onClick={() => setPerfView('checklist')}
+                              className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
+                                perfView === 'checklist'
+                                  ? 'bg-white text-black font-semibold'
+                                  : 'text-neutral-400 hover:text-white'
+                              }`}
+                            >
+                              Protocol
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setPerfView('scores')}
+                              className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
+                                perfView === 'scores'
+                                  ? 'bg-white text-black font-semibold'
+                                  : 'text-neutral-400 hover:text-white'
+                              }`}
+                            >
+                              Scores
+                            </button>
+                          </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-3 py-2 text-center">
-                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                            <div className="text-xl font-bold font-mono text-white">100</div>
-                            <div className="text-[9px] font-mono text-neutral-400 uppercase">Performance</div>
+
+                        {perfView === 'checklist' ? (
+                          <div className="space-y-1.5 overflow-y-auto max-h-[220px] pr-1 py-1 animate-fade-in">
+                            {webVitalsChecks.map((item) => (
+                              <div
+                                key={item.id}
+                                className={`flex items-center gap-2.5 p-2 rounded-lg transition-all ${
+                                  item.highlight
+                                    ? 'bg-emerald-950/40 border border-emerald-500/40'
+                                    : 'hover:bg-neutral-900/60'
+                                }`}
+                              >
+                                {item.highlight ? (
+                                  <div className="w-5 h-5 rounded-full bg-white text-black font-mono font-bold text-[10px] flex items-center justify-center flex-shrink-0 shadow">
+                                    7
+                                  </div>
+                                ) : (
+                                  <div className="w-5 h-5 rounded-full bg-emerald-500 text-black flex items-center justify-center flex-shrink-0">
+                                    <Check className="w-3 h-3 text-black stroke-[3]" />
+                                  </div>
+                                )}
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-xs font-semibold text-white truncate leading-tight">
+                                    {item.title}
+                                  </div>
+                                  <div
+                                    className={`text-[10px] font-mono truncate ${
+                                      item.highlight ? 'text-emerald-400 font-medium' : 'text-neutral-400'
+                                    }`}
+                                  >
+                                    {item.subtitle}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                            <div className="text-xl font-bold font-mono text-white">100</div>
-                            <div className="text-[9px] font-mono text-neutral-400 uppercase">Accessibility</div>
+                        ) : (
+                          <div className="grid grid-cols-2 gap-3 py-2 text-center animate-fade-in">
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">100</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">Performance</div>
+                            </div>
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">100</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">Accessibility</div>
+                            </div>
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">&lt; 0.8s</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">LCP Speed</div>
+                            </div>
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">0.000</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">CLS Shift</div>
+                            </div>
                           </div>
-                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                            <div className="text-xl font-bold font-mono text-white">&lt; 0.8s</div>
-                            <div className="text-[9px] font-mono text-neutral-400 uppercase">LCP Speed</div>
-                          </div>
-                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
-                            <div className="text-xl font-bold font-mono text-white">0.000</div>
-                            <div className="text-[9px] font-mono text-neutral-400 uppercase">CLS Shift</div>
-                          </div>
-                        </div>
-                        <div className="text-center text-[10px] font-mono text-neutral-400">
-                          Vercel Global Edge Network
+                        )}
+
+                        <div className="text-center text-[10px] font-mono text-neutral-400 pt-1 border-t border-neutral-800/60">
+                          Vercel Global Edge Network • Sub-Second Mobile
                         </div>
                       </div>
                     )}

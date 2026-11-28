@@ -37,7 +37,7 @@ export const WorkingProcess: React.FC = () => {
   ];
 
   return (
-    <section className="py-14 sm:py-20 border-b border-neutral-900 bg-neutral-950/60">
+    <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950/60">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">

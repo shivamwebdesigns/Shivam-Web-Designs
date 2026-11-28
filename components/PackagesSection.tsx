@@ -732,16 +732,16 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                       <button
                         type="button"
                         onClick={() => setOpenFaq(isOpen ? null : idx)}
-                        className="w-full py-4 px-5 flex items-center justify-between text-left gap-4 cursor-pointer select-none"
+                        className="w-full py-4 px-5 flex items-center justify-between text-left gap-4 cursor-pointer select-none group"
                         aria-expanded={isOpen}
                       >
-                        <span className="text-sm font-semibold text-white">{faq.q}</span>
-                        <span className="font-mono text-neutral-400 text-base flex-shrink-0">
+                        <span className="text-sm font-semibold text-white group-hover:text-neutral-200 transition-colors">{faq.q}</span>
+                        <span className={`font-mono text-neutral-400 text-base flex-shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'rotate-180 text-white' : ''}`}>
                           {isOpen ? '−' : '+'}
                         </span>
                       </button>
                       {isOpen && (
-                        <div className="px-5 pb-4 text-xs sm:text-sm text-neutral-400 leading-relaxed border-t border-neutral-900 pt-3">
+                        <div className="px-5 pb-4 text-xs sm:text-sm text-neutral-400 leading-relaxed border-t border-neutral-900 pt-3 animate-fade-in">
                           {faq.a}
                         </div>
                       )}

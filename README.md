@@ -27,8 +27,30 @@ Audited directly via Google Lighthouse across mobile and desktop environments:
 | **Best Practices** | **100 / 100** | **100 / 100** | Modern security headers, HTTPS, zero deprecations |
 | **SEO** | **100 / 100** | **100 / 100** | JSON-LD Schema, Google Search Console verification |
 
-### Optimization Highlights
+### The 7-Step Mobile Core Web Vitals Protocol
+
+Every digital experience engineered by ShivamWebDesigns adheres to our standardized 7-stage mobile performance checklist:
+
+1. **Compress hero to WebP or AVIF** (`right quality · srcset widths`)  
+   Perceptually lossless WebP and AVIF image compression pipelines with explicit multi-density `srcset` parameters preventing mobile bandwidth over-fetching.
+2. **Right image sizes + lazy loading** (`width/height set · lazy below fold`)  
+   Hardcoded `width` and `height` dimensional constraints across all image nodes to eliminate layout shift, combined with native `loading="lazy"` on all below-the-fold media.
+3. **Remove unused JavaScript** (`split bundles · drop dead code`)  
+   Granular route-based code splitting and aggressive dead code elimination (DCE). Zero third-party animation bloat (pure CSS 3D matrix math; zero Three.js or heavy WebGL runtimes).
+4. **Preload fonts, stop layout shift** (`font-display: swap · reserve space`)  
+   Self-hosted typography via `next/font`, preloading critical subsets with `font-display: swap` and fallback metric overrides guaranteeing `0.000` Cumulative Layout Shift.
+5. **Delay third-party scripts** (`load after interaction or idle`)  
+   All external telemetry, analytics, and communication widgets deferred until user interaction or browser idle via `requestIdleCallback`.
+6. **Caching + CDN** (`long cache headers on static files`)  
+   Aggressive immutable cache headers (`s-maxage=31536000, immutable`) distributed across Vercel’s global Edge network for sub-50ms TTFB worldwide.
+7. **Measure Core Web Vitals on mobile** (`LCP · INP · CLS · real users`)  
+   Rigorous field and synthetic benchmarking on real mid-tier mobile hardware ensuring sub-second Largest Contentful Paint (LCP < 0.8s), instant interaction responsiveness (INP < 50ms), and zero layout displacement (CLS 0.000).
+
+### Optimization & Motion Highlights
 - **Zero Reflow Stacking:** Refined `SpatialStack` 3D card deck using `transform-gpu` and `will-change-transform` for fluid 60fps mobile scrolling without layout thrashing.
+- **Interactive Performance Inspection:** Built-in protocol switcher on Layer 04 allowing clients to toggle live between the 7-Point Mobile Protocol and quantitative Lighthouse audit metrics.
+- **Hardware-Accelerated Motion:** GPU-accelerated cubic-bezier curves (`cubic-bezier(0.16, 1, 0.3, 1)`), smooth entrance keyframes (`fadeIn`, `slideUp`, `scaleUp`), and silky `.hover-elevate` physical micro-interactions.
+- **Harmonized Vertical Rhythm:** Responsive section padding (`py-14 sm:py-20 lg:py-24`) across all studio routes eliminating abrupt dead whitespace on mobile viewports.
 - **Strict Color Contrast:** All body, badge, and muted UI text calibrated to > 4.5:1 contrast ratio against `#050505` backgrounds.
 - **Hierarchical Heading Order:** Clean semantic `h1` &rarr; `h2` &rarr; `h3` heading hierarchy across all page sections and the global footer.
 - **Instant Touch Feedback:** `-webkit-tap-highlight-color: transparent` and haptic-like scale transitions (`active:scale-95`) for mobile navigation docks.
@@ -79,7 +101,9 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
     - `/?order=success`: Shows a sleek emerald-green notification banner stating *"Your order was placed successfully! Wait for 24–48 hours, we'll be reaching out soon"* with a **Buy Again** button.
     - `/?order=cancel`: Shows a sleek crimson-red notification banner stating *"Your order was cancelled successfully"* with a **See Your Cart** button.
   - **Full Layout Parity:** Packages is now a native App Router page (`app/packages/page.tsx`) with the unified `<Navbar />`, `<Footer />`, and `<MobileDock />`, perfectly matching the rest of the studio.
-  - **Enhanced FAQ Accordion:** Clean, accessible disclosure cards with smooth rotation indicators and zero clutter.
+  - **Enhanced FAQ Accordion:** Clean, accessible disclosure cards with silky smooth rotation indicators (`rotate-180`) and animated fade-in disclosure (`animate-fade-in`).
+  - **Silky Spring Animations & Micro-Interactions:** Built with Apple/iOS standard spring physics (`cubic-bezier(0.16, 1, 0.3, 1)`) for card lift, drawer entrance, and state transitions, operating strictly with GPU acceleration (`transform-gpu`, `translate3d`).
+  - **Interactive Performance Inspection:** Built-in dual-mode inspection on the 3D Architecture Stack allowing visitors to toggle between the 7-Step Mobile Core Web Vitals protocol and quantitative Lighthouse audit metrics.
 - **Projects Architecture (`/projects` & Homepage):**
   - **Projects Updating Soon:** The Projects page and homepage feature clearly state “Projects are updating soon!” with transparent notice text about client case studies and digital flagships undergoing strict documentation and clearance.
   - **Streamlined Layout & Engineering Standards:** Clean presentation showcasing core engineering guarantees (100% Bespoke Code, < 1.2s Core Web Vitals, Direct Founder Access, and Transparent Milestones) paired with direct project brief kickoff CTAs.

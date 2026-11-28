@@ -30,7 +30,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Detailed Breakdown */}
-      <section className="py-24 border-b border-neutral-900 bg-black">
+      <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="space-y-24">
             {servicesData.map((service, index) => (
