@@ -458,7 +458,7 @@ export function GlobalCart() {
                   {/* Full Name */}
                   <div>
                     <label htmlFor="cart-name" className="text-[10px] font-mono text-neutral-400 block mb-1">
-                      Full Name *
+                      Full Name <span className="text-red-400">*</span>
                     </label>
                     <input
                       id="cart-name"
@@ -489,7 +489,7 @@ export function GlobalCart() {
                   {/* Phone / WhatsApp */}
                   <div>
                     <label htmlFor="cart-phone" className="text-[10px] font-mono text-neutral-400 block mb-1">
-                      Phone / WhatsApp *
+                      Phone / WhatsApp <span className="text-red-400">*</span>
                     </label>
                     <input
                       id="cart-phone"
@@ -520,7 +520,7 @@ export function GlobalCart() {
                   {/* Email Address */}
                   <div className="sm:col-span-2">
                     <label htmlFor="cart-email" className="text-[10px] font-mono text-neutral-400 block mb-1">
-                      Email Address *
+                      Email Address <span className="text-red-400">*</span>
                     </label>
                     <input
                       id="cart-email"
