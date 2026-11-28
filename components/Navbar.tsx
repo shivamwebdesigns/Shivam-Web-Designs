@@ -35,21 +35,29 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Official SWD Monogram Only - Pure, Seamless & HD */}
+          {/* Official Brand Identity: SWD Monogram Symbol + Type Logo */}
           <Link
             href="/"
-            className="flex items-center group transition-transform duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 rounded-lg p-0.5"
+            className="flex items-center gap-2.5 group transition-transform duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 rounded-lg p-0.5"
             aria-label="ShivamWebDesigns — Home"
           >
-            <div className="relative flex items-center">
+            <div className="relative flex items-center flex-shrink-0">
               <Image
                 src={siteConfig.assets.logoPng}
                 alt="ShivamWebDesigns Bespoke Monogram"
                 width={66}
                 height={44}
-                className="h-9 sm:h-11 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
+                className="h-8 sm:h-10 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
                 priority
               />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-xs sm:text-sm text-white tracking-tight leading-tight group-hover:text-neutral-200 transition-colors">
+                ShivamWebDesigns
+              </span>
+              <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-widest leading-none mt-0.5 hidden min-[360px]:block">
+                Digital Studio
+              </span>
             </div>
           </Link>
 
@@ -72,19 +80,6 @@ export function Navbar() {
               );
             })}
           </nav>
-
-          {/* Mobile Center Pill: 01 // CAPABILITIES & EXPERTISE with blended background */}
-          <div className="flex md:hidden items-center justify-center flex-1 px-1.5 mx-1 overflow-hidden">
-            <Link
-              href="/#services"
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800/80 hover:border-neutral-700 text-[10px] font-mono tracking-wider text-neutral-300 hover:text-white backdrop-blur-md transition-all active:scale-95 shadow-sm group truncate"
-              aria-label="01 // Capabilities & Expertise"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-              <span className="hidden min-[380px]:inline truncate">01 // CAPABILITIES &amp; EXPERTISE</span>
-              <span className="min-[380px]:hidden truncate">01 // CAPABILITIES</span>
-            </Link>
-          </div>
 
           {/* Right Action Cluster */}
           <div className="hidden md:flex items-center space-x-3">
