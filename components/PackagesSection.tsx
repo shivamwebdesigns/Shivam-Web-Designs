@@ -227,6 +227,15 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     setIsDragging(true);
   };
 
+  // Listen for global open cart requests (e.g. from header cart button)
+  useEffect(() => {
+    const handleOpenCartEvent = () => {
+      setCartWindowOpen(true);
+    };
+    window.addEventListener('swd-open-cart', handleOpenCartEvent);
+    return () => window.removeEventListener('swd-open-cart', handleOpenCartEvent);
+  }, []);
+
   useEffect(() => {
     if (!isDragging) return;
 
@@ -863,7 +872,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           }
           className={`fixed z-50 transition-shadow duration-200 select-none ${
             isDragging ? 'cursor-grabbing scale-[1.02] shadow-2xl shadow-emerald-500/10' : 'cursor-grab'
-          } bottom-4 left-4 right-4 sm:bottom-8 sm:right-8 sm:left-auto sm:right-auto sm:w-[400px] max-w-md mx-auto sm:mx-0 animate-fade-in`}
+          } bottom-4 left-4 right-4 sm:left-auto sm:right-8 sm:bottom-8 sm:w-[400px] max-w-md mx-auto sm:mx-0 animate-fade-in`}
           aria-label="Floating Cart Widget"
         >
           <div className="bg-neutral-950/95 backdrop-blur-2xl border border-neutral-800/90 hover:border-neutral-700/90 rounded-2xl p-4 shadow-2xl shadow-black/95 space-y-3">
