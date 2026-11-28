@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import {
   Plus,
@@ -33,6 +33,7 @@ export function GlobalCart() {
   const [orderModalStatus, setOrderModalStatus] = useState<'loading' | 'success' | 'cancelled'>('loading');
   const [waOrderUrl, setWaOrderUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const scrollBodyRef = useRef<HTMLDivElement>(null);
 
   /* ── Sync cart from localStorage ── */
   const syncCartFromStorage = () => {
@@ -80,18 +81,67 @@ export function GlobalCart() {
     };
   }, []);
 
-  /* ── Body scroll lock + Escape key ── */
+  /* ── Background scroll lock (html + body, iOS-safe) + Escape key ── */
   useEffect(() => {
     if (!cartOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollY = window.scrollY;
+    const scrollbarWidth = window.innerWidth - html.clientWidth;
+
+    const prev = {
+      htmlOverflow: html.style.overflow,
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      paddingRight: body.style.paddingRight,
+    };
+
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+    if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
+
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setCartOpen(false); };
     window.addEventListener('keydown', onKey);
+
     return () => {
-      document.body.style.overflow = prev;
+      html.style.overflow = prev.htmlOverflow;
+      body.style.overflow = prev.overflow;
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.left = prev.left;
+      body.style.right = prev.right;
+      body.style.width = prev.width;
+      body.style.paddingRight = prev.paddingRight;
+      window.scrollTo({ top: scrollY, behavior: 'instant' as ScrollBehavior });
       window.removeEventListener('keydown', onKey);
     };
   }, [cartOpen]);
+
+  /* ── Keep wheel/touch scrolling inside the drawer ──
+     Smooth-scroll libraries (e.g. Lenis) listen on window and block native
+     scrolling of inner elements. Stopping propagation here lets the drawer
+     scroll natively while the page behind stays locked. */
+  useEffect(() => {
+    const el = scrollBodyRef.current;
+    if (!el) return;
+    const stop = (e: Event) => e.stopPropagation();
+    el.addEventListener('wheel', stop, { passive: true });
+    el.addEventListener('touchmove', stop, { passive: true });
+    return () => {
+      el.removeEventListener('wheel', stop);
+      el.removeEventListener('touchmove', stop);
+    };
+  }, []);
 
   /* ── Calculations ── */
   const calc = useMemo(() => {
@@ -250,8 +300,11 @@ export function GlobalCart() {
 
         {/* ── Scrollable Body ── */}
         <div
+          ref={scrollBodyRef}
+          data-lenis-prevent
           className="px-5 py-5 space-y-5"
           style={{
+            touchAction: 'pan-y',
             flex: '1 1 0%',
             minHeight: 0,
             overflowY: 'scroll',

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   CheckCircle2,
@@ -12,6 +12,53 @@ import {
   X,
 } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
+
+/**
+ * Locks background page scroll while `locked` is true.
+ * The page stays visible; only elements with their own overflow-y-auto scroll.
+ */
+function useScrollLock(locked: boolean) {
+  useEffect(() => {
+    if (!locked) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollY = window.scrollY;
+    const scrollbarWidth = window.innerWidth - html.clientWidth;
+
+    const prev = {
+      htmlOverflow: html.style.overflow,
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      paddingRight: body.style.paddingRight,
+    };
+
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+    if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
+
+    return () => {
+      html.style.overflow = prev.htmlOverflow;
+      body.style.overflow = prev.overflow;
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.left = prev.left;
+      body.style.right = prev.right;
+      body.style.width = prev.width;
+      body.style.paddingRight = prev.paddingRight;
+      window.scrollTo({ top: scrollY, behavior: 'instant' as ScrollBehavior });
+    };
+  }, [locked]);
+}
 
 export interface OrderStatusModalProps {
   isOpen: boolean;
@@ -34,6 +81,20 @@ export function OrderStatusModal({
 }: OrderStatusModalProps) {
   const router = useRouter();
 
+  // Lock background scroll while the modal is open
+  useScrollLock(isOpen);
+
+  // Close on Escape key (only when not in the loading state)
+  useEffect(() => {
+    if (!isOpen || status === 'loading') return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, status, onClose]);
+
   if (!isOpen) return null;
 
   const handleGoHome = () => {
@@ -43,12 +104,15 @@ export function OrderStatusModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-fade-in overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Order Status"
     >
-      <div className="relative w-full max-w-lg bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black text-center overflow-hidden">
+      <div
+        data-lenis-prevent
+        className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto overscroll-contain bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black text-center"
+      >
         {/* Ambient Top Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
 

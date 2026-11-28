@@ -88,7 +88,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - **Widget Action Buttons:** Equipped with two high-contrast action triggers:
     1. **"View Cart"**: Opens the dedicated "Your Orders" drawer panel.
     2. **"Inquire"**: Direct checkout with contact validation and dual WhatsApp / studio API dispatch.
-  - **Dedicated "Your Cart" Window Modal:** Accessible from both the floating widget and the header navigation Cart button. Features an elegant right-side slide-in drawer panel (enters from the right edge, page background visible and interactive behind it), body-scroll lock (`document.body.style.overflow = 'hidden'`), and a tall full-height internally scrollable container (`overflow-y-auto overscroll-contain flex-1`):
+  - **Dedicated "Your Cart" Window Modal:** Accessible from both the floating widget and the header navigation Cart button. Features an elegant right-side slide-in drawer panel (enters from the right edge, page background visible and interactive behind it), a background scroll lock on both `<html>` and `<body>` (`position: fixed` with scroll-position restore on close, iOS Safari safe), and a tall full-height internally scrollable container (`flex-1 min-h-0 overflow-y-auto overscroll-contain`, with `data-lenis-prevent` and wheel/touch isolation so smooth-scroll libraries cannot capture the drawer's scrolling). Only the drawer body scrolls while the page behind stays visible and locked, so every field in **Your Details** stays reachable on short screens and with the mobile keyboard open:
     - **Header Controls:** Real-time item count pill, a prominent **"Clear Cart"** button (which discards all items, empties the local DB, closes the window, and removes the floating widget), and a close button.
     - **Itemized Breakdown:** Package card and individual modular add-on rows with active `+` / `−` quantity counters and `✕` delete buttons.
     - **Client Contact Form:** Name, Email, and Phone/WhatsApp fields with instant validation and persistent Local DB auto-saving (`swd-client-profile`).
@@ -105,7 +105,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - **Refined Packages Positioning & Header:** Positioned with the authoritative headline **"Website Packages Starting at ₹499"** and clear description (*"Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals."*), followed by the clean typographic eyebrow `PACKAGES // FIXED PRICES` sitting directly atop the packages deck.
   - **Unbundled Modular Add-ons:** Clean, direct add-on list for Subdomain setup (from ₹149 &bull; free with Pro), Logo design (₹99), Copywriting (₹199/page), Extra revisions (₹199), Extra page (₹299), Monthly maintenance (₹299/month).
   - **Calibrated Vertical Spacing:** Normalized section boundary padding between `02 // THE 3D ARCHITECTURE STACK` and `03 // PRODUCTION AUDIT STANDARD` (`pb-4 sm:pb-6` on stacking container and `pt-10 sm:pt-14` on audit section), eliminating void whitespace gaps on mobile and desktop.
-  - **Order Review Modal & Dual-Dispatch Submissions:** Cart orders trigger an animated status modal with loading spinner ("Reviewing Your Order…"), direct WhatsApp dispatch with popup blocker fallback button, 24–48h review notice, social channel access, and background Firestore admin logging.
+  - **Order Review Modal & Dual-Dispatch Submissions:** Cart orders trigger an animated status modal with loading spinner ("Reviewing Your Order…"), direct WhatsApp dispatch with popup blocker fallback button, 24–48h review notice, social channel access, and background Firestore admin logging. The modal uses the same `<html>` + `<body>` scroll lock, and its card scrolls independently (`overscroll-contain`) so the page behind never moves.
   - **Global URL Order State Notifications (`?order=success` & `?order=cancel`):**
     - `/?order=success`: Shows a sleek emerald-green notification banner stating *"Your order was placed successfully! Wait for 24–48 hours, we'll be reaching out soon"* with a **Buy Again** button.
     - `/?order=cancel`: Shows a sleek crimson-red notification banner stating *"Your order was cancelled successfully"* with a **See Your Cart** button.
@@ -203,7 +203,15 @@ npm run build
 
 ---
 
-## 8. License & Intellectual Property
+## 8. Changelog
+
+### Fixed
+- **"Your Orders" drawer (`components/GlobalCart.tsx`):** The page behind the drawer no longer scrolls while it is open (it stays visible), and the drawer body (package, add-ons, "Your Details" form) scrolls on its own so all fields can be filled in. The scroll lock now applies to both `<html>` and `<body>` (iOS Safari safe) and restores the previous scroll position on close. Wheel and touch events inside the drawer are no longer captured by page-level smooth-scroll handlers.
+- **Order status modal (`components/OrderStatusModal.tsx`):** Uses the same background scroll lock, with an independently scrolling card.
+
+---
+
+## 9. License & Intellectual Property
 
 - **Source Code:** Distributed under the [MIT License](LICENSE).
 - **Brand Assets & Media:** All logos, trademarks, studio photography, and proprietary brand graphics are protected under [ASSET_RIGHTS.md](ASSET_RIGHTS.md) and may not be reproduced without written consent.
