@@ -414,21 +414,25 @@ textarea {
 /* Luxury minimal scrollbar for drawer panels (visible and interactive on desktop Safari & Chrome) */
 .drawer-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #666666 #0a0a0a;
-  overflow-y: scroll !important;
+  scrollbar-color: rgba(255, 255, 255, 0.35) rgba(15, 15, 15, 0.8);
+  overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
 }
 .drawer-scrollbar::-webkit-scrollbar {
-  width: 7px;
+  width: 8px;
 }
 .drawer-scrollbar::-webkit-scrollbar-track {
-  background: #0d0d0d;
+  background: rgba(15, 15, 15, 0.7);
+  border-radius: 9999px;
 }
 .drawer-scrollbar::-webkit-scrollbar-thumb {
-  background: #525252;
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 .drawer-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #888888;
+  background: rgba(255, 255, 255, 0.55);
 }

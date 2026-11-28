@@ -37,26 +37,21 @@ export const WorkingProcess: React.FC = () => {
   ];
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950/60">
+    <section className="py-12 sm:py-16 lg:py-20 border-b border-neutral-900 bg-neutral-950/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <div className="mb-3">
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                Methodology
-              </span>
-            </div>
-            <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-2">
-              Our Working Process
-            </h2>
-            <p className="text-neutral-400 text-sm max-w-xl">
-              A transparent, disciplined four-stage engineering cycle designed to deliver excellence without delays or surprises.
-            </p>
+        <div className="max-w-3xl mb-8 sm:mb-12">
+          <div className="mb-2.5">
+            <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
+              Methodology
+            </span>
           </div>
-          <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest border border-neutral-800 px-3 py-1.5 self-start md:self-auto">
-            Sprint-Driven • Fixed Timeline
-          </div>
+          <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-3">
+            Our Working Process
+          </h2>
+          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed max-w-2xl">
+            A transparent, disciplined four-stage engineering cycle designed to deliver excellence without delays or surprises.
+          </p>
         </div>
 
         {/* Process Steps */}

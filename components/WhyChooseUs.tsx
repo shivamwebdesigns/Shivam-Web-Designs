@@ -39,16 +39,16 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
+    <section className="py-12 sm:py-16 lg:py-20 border-b border-neutral-900 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-2xl mb-16">
-          <div className="mb-3">
+        <div className="max-w-2xl mb-8 sm:mb-12">
+          <div className="mb-2.5">
             <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
               The Agency Advantage
             </span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
+          <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-3">
             Why Work With SWD
           </h2>
           <ScrollTextReveal

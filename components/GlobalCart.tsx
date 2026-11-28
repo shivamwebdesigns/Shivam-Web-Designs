@@ -83,116 +83,32 @@ export function GlobalCart() {
     };
   }, []);
 
-  /* ── Background scroll lock (iOS-safe) + Escape key ── */
+  /* ── Background scroll lock (iOS & desktop safe) + Escape key ── */
   useEffect(() => {
     if (!cartOpen) return;
 
     const html = document.documentElement;
     const body = document.body;
-    const scrollY = window.scrollY;
     const scrollbarWidth = window.innerWidth - html.clientWidth;
-    const isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
     const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
 
-    // Pause Lenis smooth scrolling so wheel/trackpad events inside the drawer scroll natively
+    // Pause Lenis smooth scrolling so wheel/trackpad events inside drawer scroll natively
     lenis?.stop?.();
 
-    const prev = {
-      htmlOverflow: html.style.overflow,
-      overflow: body.style.overflow,
-      position: body.style.position,
-      top: body.style.top,
-      left: body.style.left,
-      right: body.style.right,
-      width: body.style.width,
-      paddingRight: body.style.paddingRight,
-    };
+    const prevOverflow = body.style.overflow;
+    const prevPaddingRight = body.style.paddingRight;
 
-    // On touch devices lock body with fixed to prevent elastic page rubber-banding.
-    // On desktop, DO NOT set overflow: hidden on html, as WebKit disables trackpad routing!
-    if (isTouch) {
-      html.style.overflow = 'hidden';
-      body.style.overflow = 'hidden';
-      body.style.position = 'fixed';
-      body.style.top = `-${scrollY}px`;
-      body.style.left = '0';
-      body.style.right = '0';
-      body.style.width = '100%';
-    } else {
-      body.style.overflow = 'hidden';
-    }
+    body.style.overflow = 'hidden';
     if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
 
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setCartOpen(false); };
     window.addEventListener('keydown', onKey);
 
     return () => {
-      html.style.overflow = prev.htmlOverflow;
-      body.style.overflow = prev.overflow;
-      if (isTouch) {
-        body.style.position = prev.position;
-        body.style.top = prev.top;
-        body.style.left = prev.left;
-        body.style.right = prev.right;
-        body.style.width = prev.width;
-        window.scrollTo({ top: scrollY, behavior: 'instant' as ScrollBehavior });
-      }
-      body.style.paddingRight = prev.paddingRight;
+      body.style.overflow = prevOverflow;
+      body.style.paddingRight = prevPaddingRight;
       window.removeEventListener('keydown', onKey);
       lenis?.start?.();
-    };
-  }, [cartOpen]);
-
-  /* ── Direct Wheel & Touch Handling on the scroll body ──
-     Guarantees scrolling works reliably even if macOS Safari, trackpad gestures,
-     or smooth scroll libraries attempt to swallow or misroute delta events.
-  ── */
-  useEffect(() => {
-    if (!cartOpen) return;
-    const el = scrollBodyRef.current;
-    if (!el) return;
-
-    const onWheel = (e: WheelEvent) => {
-      const multiplier = e.deltaMode === 1 ? 24 : e.deltaMode === 2 ? 400 : 1;
-      const delta = e.deltaY * multiplier;
-      
-      const atTop = el.scrollTop <= 0 && delta < 0;
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1 && delta > 0;
-
-      if (!atTop && !atBottom) {
-        el.scrollTop += delta;
-        if (e.cancelable) e.preventDefault();
-      }
-      e.stopPropagation();
-    };
-
-    let touchStartY = 0;
-    const onTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-      e.stopPropagation();
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      const currentY = e.touches[0].clientY;
-      const delta = touchStartY - currentY;
-      touchStartY = currentY;
-
-      const atTop = el.scrollTop <= 0 && delta < 0;
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1 && delta > 0;
-
-      if (!atTop && !atBottom) {
-        e.stopPropagation();
-      }
-    };
-
-    el.addEventListener('wheel', onWheel, { passive: false });
-    el.addEventListener('touchstart', onTouchStart, { passive: true });
-    el.addEventListener('touchmove', onTouchMove, { passive: false });
-
-    return () => {
-      el.removeEventListener('wheel', onWheel);
-      el.removeEventListener('touchstart', onTouchStart);
-      el.removeEventListener('touchmove', onTouchMove);
     };
   }, [cartOpen]);
 
@@ -200,7 +116,7 @@ export function GlobalCart() {
   const checkScroll = useCallback(() => {
     const el = scrollBodyRef.current;
     if (!el) return;
-    const hasMore = el.scrollHeight - (el.scrollTop + el.clientHeight) > 24;
+    const hasMore = el.scrollHeight - (el.scrollTop + el.clientHeight) > 20;
     setCanScrollDown(hasMore);
   }, []);
 
@@ -210,11 +126,13 @@ export function GlobalCart() {
     if (!el) return;
 
     checkScroll();
-    const timer = setTimeout(checkScroll, 120);
+    const timer1 = setTimeout(checkScroll, 60);
+    const timer2 = setTimeout(checkScroll, 200);
     el.addEventListener('scroll', checkScroll, { passive: true });
     window.addEventListener('resize', checkScroll);
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
       el.removeEventListener('scroll', checkScroll);
       window.removeEventListener('resize', checkScroll);
     };
@@ -303,9 +221,32 @@ export function GlobalCart() {
   const handleDispatchOrder = async () => {
     if (calc.itemCount === 0 || isSubmitting) return;
     const name = clientName.trim(), email = clientEmail.trim(), phone = clientPhone.trim();
-    if (!name || !email || !phone) { setContactError('Please enter your Name, Email, and Phone to proceed.'); return; }
-    if (!email.includes('@') || !email.includes('.')) { setContactError('Please enter a valid email address.'); return; }
-    if (phone.replace(/\D/g, '').length < 8) { setContactError('Please enter a valid phone or WhatsApp number.'); return; }
+    if (!name || !email || !phone) {
+      setContactError('Please enter your Name, Email, and Phone to proceed.');
+      if (!name) {
+        document.getElementById('cart-name')?.focus();
+        document.getElementById('cart-name')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else if (!email) {
+        document.getElementById('cart-email')?.focus();
+        document.getElementById('cart-email')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else if (!phone) {
+        document.getElementById('cart-phone')?.focus();
+        document.getElementById('cart-phone')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      return;
+    }
+    if (!email.includes('@') || !email.includes('.')) {
+      setContactError('Please enter a valid email address.');
+      document.getElementById('cart-email')?.focus();
+      document.getElementById('cart-email')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    if (phone.replace(/\D/g, '').length < 8) {
+      setContactError('Please enter a valid phone or WhatsApp number.');
+      document.getElementById('cart-phone')?.focus();
+      document.getElementById('cart-phone')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
     setContactError(''); setIsSubmitting(true);
     const orderText = buildOrderMessage();
     const waUrl = `https://wa.me/917861965480?text=${encodeURIComponent(orderText)}`;
@@ -334,6 +275,7 @@ export function GlobalCart() {
           cartOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setCartOpen(false)}
+        onTouchMove={(e) => e.preventDefault()}
         aria-hidden="true"
       />
 
@@ -376,195 +318,279 @@ export function GlobalCart() {
           </button>
         </div>
 
-        {/* ── Scrollable Body ── */}
-        <div
-          ref={scrollBodyRef}
-          data-lenis-prevent
-          className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 py-5 space-y-5 drawer-scrollbar overscroll-contain"
-          style={{
-            WebkitOverflowScrolling: 'touch',
-          }}
-        >
+        {/* ── Relative Scroll Area with Floating Scroll-Down Helper ── */}
+        <div className="relative flex-1 min-h-0 flex flex-col">
+          {/* ── Scrollable Body ── */}
+          <div
+            ref={scrollBodyRef}
+            data-lenis-prevent
+            className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-4 sm:px-5 py-4 space-y-4 drawer-scrollbar overscroll-contain"
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y',
+            }}
+          >
 
-          {/* Empty State */}
-          {calc.itemCount === 0 && (
-            <div className="flex flex-col items-center justify-center py-16 text-center space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                <ShoppingCart className="w-6 h-6 text-neutral-600" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-neutral-400">Your cart is empty</p>
-                <p className="text-xs text-neutral-600 mt-1 font-mono">Add a package or add-ons to get started.</p>
-              </div>
-              <Link
-                href="/packages"
-                onClick={() => setCartOpen(false)}
-                className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded-xl px-5 py-2.5 transition-all active:scale-95 shadow-md shadow-white/10"
-              >
-                <span>Browse Packages</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          )}
-
-          {/* ── Selected Package ── */}
-          {calc.pkgItem && (
-            <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-4 space-y-3">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-400">
-                      Base Package
-                    </span>
-                    {calc.pkgItem.badge && (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-black">
-                        {calc.pkgItem.badge}
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="text-sm font-bold text-white leading-tight">
-                    {calc.pkgItem.name} Package
-                  </h3>
-                  <p className="text-[11px] text-neutral-500 mt-0.5 leading-relaxed line-clamp-2">
-                    {calc.pkgItem.tagline}
-                  </p>
+            {/* Empty State */}
+            {calc.itemCount === 0 && (
+              <div className="flex flex-col items-center justify-center py-16 text-center space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+                  <ShoppingCart className="w-6 h-6 text-neutral-600" />
                 </div>
-                <div className="text-right flex-shrink-0">
-                  <span className="text-sm font-mono font-bold text-white block">
-                    {fmt(calc.pkgItem.price)}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={removePackage}
-                    className="text-[10px] font-mono text-neutral-600 hover:text-rose-400 transition-colors mt-1 inline-flex items-center gap-1"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                    Remove
-                  </button>
+                <div>
+                  <p className="text-sm font-semibold text-neutral-400">Your cart is empty</p>
+                  <p className="text-xs text-neutral-600 mt-1 font-mono">Add a package or add-ons to get started.</p>
                 </div>
-              </div>
-              <div className="flex gap-4 pt-2.5 border-t border-neutral-800/60 text-[11px] font-mono text-neutral-500">
-                <span>Scope: <span className="text-neutral-300">{calc.pkgItem.scope}</span></span>
-                <span>Delivery: <span className="text-neutral-300">{calc.pkgItem.delivery}</span></span>
-              </div>
-            </div>
-          )}
-
-          {/* ── Add-ons ── */}
-          {calc.activeAddons.length > 0 && (
-            <div className="space-y-2">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-500 block px-0.5">
-                Add-on Services
-              </span>
-              {calc.activeAddons.map(({ item, qty }) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between bg-neutral-900/40 border border-neutral-800/60 rounded-xl px-3.5 py-3 gap-3"
+                <Link
+                  href="/packages"
+                  onClick={() => setCartOpen(false)}
+                  className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded-xl px-5 py-2.5 transition-all active:scale-95 shadow-md shadow-white/10"
                 >
-                  <div className="min-w-0 flex-1">
-                    <span className="text-xs font-semibold text-white block leading-tight truncate">{item.name}</span>
-                    <span className="text-[10px] font-mono text-neutral-500 block mt-0.5">
-                      {fmt(item.price)}{item.monthly ? '/mo' : ' one-time'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <div className="flex items-center bg-black/60 border border-neutral-800/60 rounded-lg overflow-hidden">
-                      <button
-                        type="button"
-                        onClick={() => updateAddonQty(item.id, -1)}
-                        className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:text-white hover:bg-neutral-800 transition-colors"
-                        aria-label={`Decrease ${item.name}`}
-                      >
-                        <Minus className="w-3 h-3" />
-                      </button>
-                      <span className="w-6 text-center font-mono text-xs font-bold text-white select-none">{qty}</span>
-                      <button
-                        type="button"
-                        onClick={() => updateAddonQty(item.id, 1)}
-                        className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:text-white hover:bg-neutral-800 transition-colors"
-                        aria-label={`Increase ${item.name}`}
-                      >
-                        <Plus className="w-3 h-3" />
-                      </button>
+                  <span>Browse Packages</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            )}
+
+            {/* ── Selected Package ── */}
+            {calc.pkgItem && (
+              <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-3.5 sm:p-4 space-y-2.5">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-400">
+                        Base Package
+                      </span>
+                      {calc.pkgItem.badge && (
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-black">
+                          {calc.pkgItem.badge}
+                        </span>
+                      )}
                     </div>
-                    <span className="font-mono text-xs font-bold text-white w-14 text-right">
-                      {fmt(item.price * qty)}
+                    <h3 className="text-sm font-bold text-white leading-tight">
+                      {calc.pkgItem.name} Package
+                    </h3>
+                    <p className="text-[11px] text-neutral-500 mt-0.5 leading-relaxed line-clamp-2">
+                      {calc.pkgItem.tagline}
+                    </p>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <span className="text-sm font-mono font-bold text-white block">
+                      {fmt(calc.pkgItem.price)}
                     </span>
+                    <button
+                      type="button"
+                      onClick={removePackage}
+                      className="text-[10px] font-mono text-neutral-600 hover:text-rose-400 transition-colors mt-1 inline-flex items-center gap-1"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      Remove
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {/* ── Client Profile ── */}
-          {calc.itemCount > 0 && (
-            <div className="bg-neutral-900/40 border border-neutral-800/60 rounded-2xl p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-500">
-                  Your Details
-                </span>
-                <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                  Auto-saved
-                </span>
+                <div className="flex gap-4 pt-2 border-t border-neutral-800/60 text-[11px] font-mono text-neutral-500">
+                  <span>Scope: <span className="text-neutral-300">{calc.pkgItem.scope}</span></span>
+                  <span>Delivery: <span className="text-neutral-300">{calc.pkgItem.delivery}</span></span>
+                </div>
               </div>
+            )}
 
-              <div className="space-y-2.5">
-                {[
-                  { label: 'Full Name *', type: 'text', value: clientName, field: 'name' as const, placeholder: 'e.g. John Doe', auto: 'name', inputMode: 'text' as const },
-                  { label: 'Email Address *', type: 'email', value: clientEmail, field: 'email' as const, placeholder: 'e.g. john@business.com', auto: 'email', inputMode: 'email' as const },
-                  { label: 'Phone / WhatsApp *', type: 'tel', value: clientPhone, field: 'phone' as const, placeholder: 'e.g. +91 98765 43210', auto: 'tel', inputMode: 'tel' as const },
-                  { label: 'Existing Website', type: 'url', value: existingSite, field: 'site' as const, placeholder: 'e.g. https://mybrand.com', auto: 'url', inputMode: 'url' as const },
-                ].map(({ label, type, value, field, placeholder, auto, inputMode }) => (
-                  <div key={field}>
-                    <label htmlFor={`cart-${field}`} className="text-[10px] font-mono text-neutral-400 block mb-1">{label}</label>
+            {/* ── Add-ons ── */}
+            {calc.activeAddons.length > 0 && (
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-500 block px-0.5">
+                  Add-on Services
+                </span>
+                {calc.activeAddons.map(({ item, qty }) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between bg-neutral-900/40 border border-neutral-800/60 rounded-xl px-3 py-2.5 gap-3"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs font-semibold text-white block leading-tight truncate">{item.name}</span>
+                      <span className="text-[10px] font-mono text-neutral-500 block mt-0.5">
+                        {fmt(item.price)}{item.monthly ? '/mo' : ' one-time'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <div className="flex items-center bg-black/60 border border-neutral-800/60 rounded-lg overflow-hidden">
+                        <button
+                          type="button"
+                          onClick={() => updateAddonQty(item.id, -1)}
+                          className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:text-white hover:bg-neutral-800 transition-colors"
+                          aria-label={`Decrease ${item.name}`}
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                        <span className="w-6 text-center font-mono text-xs font-bold text-white select-none">{qty}</span>
+                        <button
+                          type="button"
+                          onClick={() => updateAddonQty(item.id, 1)}
+                          className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:text-white hover:bg-neutral-800 transition-colors"
+                          aria-label={`Increase ${item.name}`}
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
+                      </div>
+                      <span className="font-mono text-xs font-bold text-white w-14 text-right">
+                        {fmt(item.price * qty)}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* ── Client Profile ── */}
+            {calc.itemCount > 0 && (
+              <div className="bg-neutral-900/40 border border-neutral-800/60 rounded-2xl p-3.5 sm:p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-400">
+                    Your Details
+                  </span>
+                  <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                    Auto-saved
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {/* Full Name */}
+                  <div>
+                    <label htmlFor="cart-name" className="text-[10px] font-mono text-neutral-400 block mb-1">
+                      Full Name *
+                    </label>
                     <input
-                      id={`cart-${field}`}
-                      name={field === 'phone' ? 'tel' : field === 'site' ? 'url' : field}
-                      type={type}
-                      value={value}
-                      autoComplete={auto}
-                      inputMode={inputMode}
-                      onChange={(e) => handleProfile(field, e.target.value)}
+                      id="cart-name"
+                      name="name"
+                      type="text"
+                      value={clientName}
+                      autoComplete="name"
+                      inputMode="text"
+                      onChange={(e) => handleProfile('name', e.target.value)}
                       onFocus={(e) => {
-                        // Ensure input is comfortably centered in the scroll view when tapped/focused
                         setTimeout(() => {
-                          e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         }, 80);
                       }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                           e.preventDefault();
-                          const nextField = field === 'name' ? 'email' : field === 'email' ? 'phone' : field === 'phone' ? 'site' : null;
-                          if (nextField) {
-                            const nextEl = document.getElementById(`cart-${nextField}`);
-                            nextEl?.focus();
-                            nextEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                          }
+                          const nextEl = document.getElementById('cart-phone');
+                          nextEl?.focus();
+                          nextEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         }
                       }}
-                      placeholder={placeholder}
-                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors"
+                      placeholder="e.g. John Doe"
+                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors"
                     />
                   </div>
-                ))}
+
+                  {/* Phone / WhatsApp */}
+                  <div>
+                    <label htmlFor="cart-phone" className="text-[10px] font-mono text-neutral-400 block mb-1">
+                      Phone / WhatsApp *
+                    </label>
+                    <input
+                      id="cart-phone"
+                      name="tel"
+                      type="tel"
+                      value={clientPhone}
+                      autoComplete="tel"
+                      inputMode="tel"
+                      onChange={(e) => handleProfile('phone', e.target.value)}
+                      onFocus={(e) => {
+                        setTimeout(() => {
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 80);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          const nextEl = document.getElementById('cart-email');
+                          nextEl?.focus();
+                          nextEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                      }}
+                      placeholder="e.g. +91 98765 43210"
+                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors"
+                    />
+                  </div>
+
+                  {/* Email Address */}
+                  <div className="sm:col-span-2">
+                    <label htmlFor="cart-email" className="text-[10px] font-mono text-neutral-400 block mb-1">
+                      Email Address *
+                    </label>
+                    <input
+                      id="cart-email"
+                      name="email"
+                      type="email"
+                      value={clientEmail}
+                      autoComplete="email"
+                      inputMode="email"
+                      onChange={(e) => handleProfile('email', e.target.value)}
+                      onFocus={(e) => {
+                        setTimeout(() => {
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 80);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          const nextEl = document.getElementById('cart-site');
+                          nextEl?.focus();
+                          nextEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                      }}
+                      placeholder="e.g. john@business.com"
+                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors"
+                    />
+                  </div>
+
+                  {/* Existing Website */}
+                  <div className="sm:col-span-2">
+                    <label htmlFor="cart-site" className="text-[10px] font-mono text-neutral-400 block mb-1">
+                      Existing Website <span className="text-neutral-600">(Optional)</span>
+                    </label>
+                    <input
+                      id="cart-site"
+                      name="url"
+                      type="url"
+                      value={existingSite}
+                      autoComplete="url"
+                      inputMode="url"
+                      onChange={(e) => handleProfile('site', e.target.value)}
+                      onFocus={(e) => {
+                        setTimeout(() => {
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 80);
+                      }}
+                      placeholder="e.g. https://mybrand.com"
+                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {contactError && (
+                  <p className="text-xs text-rose-400 font-mono leading-relaxed">{contactError}</p>
+                )}
+
+                {clientName && !contactError && (
+                  <p className="text-[10px] font-mono text-emerald-400">
+                    ✓ Profile saved — will be remembered on next visit
+                  </p>
+                )}
               </div>
+            )}
 
-              {contactError && (
-                <p className="text-xs text-rose-400 font-mono leading-relaxed">{contactError}</p>
-              )}
+            {/* Generous bottom clearance so all inputs and status indicators clear the fixed footer */}
+            <div className="h-20" aria-hidden="true" />
+          </div>
 
-              {clientName && !contactError && (
-                <p className="text-[10px] font-mono text-emerald-400">
-                  ✓ Profile saved — will be remembered on next visit
-                </p>
-              )}
-            </div>
-          )}
-
-          {/* ── Scroll prompt when more content is below ── */}
+          {/* ── Floating 'Scroll down for details' pill whenever more content is below ── */}
           {canScrollDown && (
-            <div className="sticky bottom-2 left-0 right-0 flex justify-center pointer-events-none z-20">
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center pointer-events-none z-30 transition-all duration-300">
               <button
                 type="button"
                 onClick={() => {
@@ -572,16 +598,13 @@ export function GlobalCart() {
                   if (!el) return;
                   el.scrollBy({ top: 220, behavior: 'smooth' });
                 }}
-                className="pointer-events-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-900/95 border border-neutral-700/80 text-[11px] font-mono text-neutral-300 hover:text-white hover:border-neutral-500 shadow-2xl backdrop-blur-md transition-all active:scale-95"
+                className="pointer-events-auto inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-neutral-900/95 hover:bg-neutral-800 border border-neutral-700/80 hover:border-neutral-500 text-[11px] font-mono text-neutral-200 hover:text-white shadow-2xl backdrop-blur-md transition-all active:scale-95"
               >
                 <span>Scroll down for details</span>
                 <ChevronDown className="w-3.5 h-3.5 animate-bounce text-emerald-400" />
               </button>
             </div>
           )}
-
-          {/* Generous bottom clearance so all inputs and status indicators clear the fixed footer */}
-          <div className="h-24" aria-hidden="true" />
         </div>
 
         {/* ── Drawer Footer — always visible ── */}
