@@ -1,21 +1,34 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 
 /**
  * ScrollAnimationProvider
  * 1. Desktop Inertia Scrolling: Lenis pinned v1.3.29 for desktop wheel/trackpad.
  *    Mobile devices (touch screens) use 100% native 120Hz ProMotion touch scrolling.
- * 2. Hairline Scroll Progress Bar: 2px top indicator with smooth scaleX.
- * 3. Section Reveal Observer:
- *    - Threshold [0, 0.1] with 50px rootMargin so sections reveal immediately upon entering view.
+ * 2. Route Navigation Scroll Reset: Instantly resets scroll position to top (0)
+ *    when navigating to pages like /contact so user never lands clamped at footer.
+ * 3. Hairline Scroll Progress Bar: 2px top indicator with smooth scaleX.
+ * 4. Section Reveal Observer:
+ *    - Threshold [0, 0.08] with 40px rootMargin so sections reveal immediately upon entering view.
  *    - No disappearing while user scrolls through tall sections.
  *    - Replays when scrolled back up above the section.
  *    - Immediate check on load to prevent any initial blank state.
  */
 export function ScrollAnimationProvider() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const pathname = usePathname();
+  const lenisRef = useRef<Lenis | null>(null);
+
+  // Reset scroll to top on client-side route navigation
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
 
   useEffect(() => {
     // Check prefers-reduced-motion
@@ -23,19 +36,20 @@ export function ScrollAnimationProvider() {
     const isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 
     // 1. Desktop-only Lenis Inertia (Touch screens keep pristine native scrolling)
-    let lenis: Lenis | null = null;
     let rafId: number;
 
     if (!prefersReducedMotion && !isTouch) {
-      lenis = new Lenis({
+      const lenis = new Lenis({
         duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: 'vertical',
         smoothWheel: true,
       });
 
+      lenisRef.current = lenis;
+
       const raf = (time: number) => {
-        lenis?.raf(time);
+        lenis.raf(time);
         rafId = requestAnimationFrame(raf);
       };
       rafId = requestAnimationFrame(raf);
@@ -94,7 +108,8 @@ export function ScrollAnimationProvider() {
 
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
-      lenis?.destroy();
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
       window.removeEventListener('scroll', updateProgress);
       observer?.disconnect();
     };

@@ -758,8 +758,8 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
             </div>
           </div>
 
-          {/* Right Column: Sticky Cart Sidebar (Desktop) */}
-          <div className="hidden lg:block lg:col-span-4 sticky top-28 space-y-6">
+          {/* Right Column: In-flow Cart on Mobile & Tablet / Sticky Sidebar on Desktop */}
+          <div id="cart" className="block lg:col-span-4 lg:sticky lg:top-28 space-y-6 mt-10 lg:mt-0 scroll-mt-24">
             <aside
               ref={cartContainerRef}
               className="bg-neutral-950/95 border border-neutral-800 rounded-2xl p-6 shadow-2xl backdrop-blur-xl space-y-6"
@@ -1048,7 +1048,14 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           <div className="w-full h-14 bg-neutral-950/95 backdrop-blur-md border border-neutral-800 rounded-full px-4 py-2 flex items-center justify-between shadow-2xl shadow-black/95">
             <button
               type="button"
-              onClick={() => setCartOpen(true)}
+              onClick={() => {
+                const el = document.getElementById('cart');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  setCartOpen(true);
+                }
+              }}
               className="flex-1 flex items-center justify-between pr-3 group text-left"
               aria-label="View Cart Summary"
             >

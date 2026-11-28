@@ -95,7 +95,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: max(4.5rem, env(safe-area-inset-top));
+    padding-top: max(7rem, calc(env(safe-area-inset-top) + 5.5rem));
     padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
   }
 
@@ -146,6 +146,20 @@
     transform: translateZ(0);
     backface-visibility: hidden;
     will-change: transform, opacity;
+  }
+  .animate-card-3d {
+    animation: cardFloat3D 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+}
+
+@keyframes cardFloat3D {
+  0%, 100% {
+    transform: perspective(600px) rotateX(8deg) rotateY(-12deg) rotateZ(-2deg) translateZ(0);
+  }
+  50% {
+    transform: perspective(600px) rotateX(-6deg) rotateY(10deg) rotateZ(2deg) translateZ(10px);
   }
 }
 

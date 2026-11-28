@@ -124,10 +124,10 @@ export function SpatialStack() {
               key={layer.index}
               id={`stack-card-${layer.index}`}
               style={{
-                top: `calc(76px + ${(layer.index - 1) * 22}px)`,
+                top: `calc(clamp(64px, 8vw, 76px) + ${(layer.index - 1) * 16}px)`,
                 zIndex: layer.index,
               }}
-              className="relative sm:sticky bg-neutral-950/95 backdrop-blur-xl border border-neutral-800/90 rounded-2xl p-5 sm:p-8 lg:p-10 shadow-2xl shadow-black/80 transition-all duration-300 group hover:border-neutral-700 transform-gpu will-change-transform"
+              className="sticky bg-neutral-950/95 backdrop-blur-xl border border-neutral-800/90 rounded-2xl p-5 sm:p-8 lg:p-10 shadow-2xl shadow-black/80 transition-all duration-300 group hover:border-neutral-700 transform-gpu will-change-transform"
             >
               {/* Subtle top edge glow highlight */}
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -189,8 +189,8 @@ export function SpatialStack() {
                           <span>CSS 3D TRANSFORM</span>
                           <span>ROTATION: [R_x, R_y]</span>
                         </div>
-                        {/* Interactive Visual Card Miniature */}
-                        <div className="relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between transform rotate-[-4deg] group-hover:rotate-[0deg] transition-transform duration-500">
+                        {/* Interactive Visual Card Miniature with continuous 3D physics floating */}
+                        <div className="relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between animate-card-3d transition-transform duration-500">
                           <div className="flex items-center justify-between">
                             <span className="text-[10px] font-mono font-bold text-white tracking-widest">SWD</span>
                             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
