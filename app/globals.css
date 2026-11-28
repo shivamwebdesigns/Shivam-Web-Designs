@@ -6,6 +6,23 @@
   :root {
     --background: 5 5 5;
     --foreground: 245 245 245;
+
+    /* Consistent Spacing Scale (4, 8, 12, 16, 24, 32, 48, 64px) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --space-16: 64px;
+
+    /* Fluid Layout & Readability Tokens */
+    --section-py: clamp(3rem, 8vw, 6rem);
+    --container-px: clamp(1rem, 5vw, 3rem);
+    --heading-p-gap: clamp(1rem, 2.5vw, 1.5rem);       /* 16px to 24px */
+    --paragraph-btn-gap: clamp(1.5rem, 3.5vw, 2rem);   /* 24px to 32px */
+    --card-grid-gap: clamp(1rem, 3vw, 2rem);           /* 16px to 32px */
   }
 
   * {
@@ -22,11 +39,97 @@
   body {
     background-color: #050505;
     color: #f5f5f5;
+    font-size: clamp(1rem, 1.1vw, 1.125rem); /* 16px to 18px body text */
+    line-height: 1.6;                        /* 1.5 to 1.7 line-height */
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    max-width: 100vw;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Optimal reading line-length & text flow */
+  p:not(.scroll-scrub-word) {
+    max-width: 65ch;
+    line-height: 1.62;
+  }
+
+  /* Fluid heading scales with tight disciplined line-height (1.1 to 1.25) */
+  h1 {
+    font-size: clamp(2.25rem, 5vw + 1rem, 4.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 3.5vw + 0.5rem, 3rem);
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 2vw + 0.25rem, 1.75rem);
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+  }
+
+  /* Spacing between elements: heading to paragraph (16-24px), paragraph to button (24-32px) */
+  h1 + p,
+  h2 + p,
+  h3 + p {
+    margin-top: var(--heading-p-gap);
+  }
+
+  p + .flex,
+  p + div > .flex,
+  p + button,
+  p + a[class*="rounded"] {
+    margin-top: var(--paragraph-btn-gap);
+  }
+
+  /* Fluid section padding: clamp(3rem, 8vw, 6rem) top and bottom */
+  section:not(#hero):not(#manifesto):not(.h-screen):not([class*="h-[300vh]"]) {
+    padding-top: var(--section-py) !important;
+    padding-bottom: var(--section-py) !important;
+    min-height: auto;
+  }
+
+  /* Hero full viewport height using mobile dvh and safe-area insets */
+  #hero,
+  main > section:first-of-type {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: max(5.5rem, env(safe-area-inset-top));
+    padding-bottom: max(3rem, env(safe-area-inset-bottom));
+  }
+
+  /* Side padding: clamp(1rem, 5vw, 3rem) so text never touches screen edges */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl {
+    padding-left: var(--container-px);
+    padding-right: var(--container-px);
+  }
+
+  /* Responsive media: max-width 100% and height auto */
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Touch ergonomics: at least 44px tall */
+  button,
+  a[role="button"],
+  a[class*="rounded"],
+  input,
+  select,
+  textarea {
+    min-height: 44px;
   }
 
   ::selection {

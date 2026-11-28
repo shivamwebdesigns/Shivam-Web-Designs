@@ -78,7 +78,7 @@ export function StudioManifesto() {
       id="manifesto"
       className="relative h-[300vh] bg-black border-t border-neutral-900"
     >
-      <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
+      <div className="sticky top-0 h-[100dvh] w-full flex items-center overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-4xl">
             {/* Eyebrow */}
