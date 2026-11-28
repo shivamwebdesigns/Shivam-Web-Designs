@@ -61,7 +61,6 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 | **`/license`** | `app/license/page.tsx` | **Legal Documentation & License Hub:** Consolidated, un-slopped dark mode legal architecture combining the **MIT License**, **Privacy Policy**, and **Terms of Service** with interactive tab switching. Linked in global footer as **Legal Documentation**. |
 | **`/privacy`** | `app/privacy/page.tsx` | **Privacy Policy:** Transparent, minimal data collection terms with zero ad trackers, DPDP Act 2023, and GDPR compliance. |
 | **`/terms`** | `app/terms/page.tsx` | **Terms of Service:** Direct studio engagement terms, milestone delivery schedule, 100% IP transfer upon settlement, and 30-day warranty. |
-| **`/admin`** | `app/admin/page.tsx` | **Private Dashboard:** Google OAuth verified intake management for studio leads. |
 
 ---
 
