@@ -217,7 +217,7 @@ export function GlobalCart() {
         }`}
         role="dialog"
         aria-modal="true"
-        aria-label="Your Cart"
+        aria-label="Your Orders"
       >
 
         {/* ── Drawer Header ── */}
@@ -228,7 +228,7 @@ export function GlobalCart() {
             </div>
             <div>
               <h2 className="text-sm font-bold text-white leading-none tracking-tight">
-                Your Cart
+                Your Orders
               </h2>
               <p className="text-[11px] font-mono text-neutral-500 mt-0.5">
                 {calc.itemCount === 0
@@ -241,14 +241,14 @@ export function GlobalCart() {
             type="button"
             onClick={() => setCartOpen(false)}
             className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-500 hover:text-white flex items-center justify-center transition-all duration-200 active:scale-90 flex-shrink-0"
-            aria-label="Close cart"
+            aria-label="Close orders panel"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* ── Scrollable Body ── */}
-        <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 space-y-5">
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-5 py-5 space-y-5">
 
           {/* Empty State */}
           {calc.itemCount === 0 && (

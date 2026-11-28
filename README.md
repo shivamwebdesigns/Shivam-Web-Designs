@@ -81,12 +81,12 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - **WebKit Hardware Optimization:** Lightweight conditional blur transition (`filter: blur(...)` bypassed when near-zero) preventing GPU layer thrashing on mobile Safari/WebKit.
   - **Hardware-Accelerated Animated Scroll Line:** 2px rounded indicator track with moving emerald pulse highlight (`#34d399`), isolated compositing layer (`isolation: isolate`, `-webkit-mask-image`), and GPU keyframe animation running at 60fps/120fps across all mobile and desktop screens. Respects `prefers-reduced-motion`.
 - **Packages & Fixed Pricing Architecture (`/packages`, `/pricing`, & Embedded on `/`):**
-  - **Global Live Screen Cart Architecture (`components/GlobalCart.tsx`):** Mounted globally in root layout (`app/layout.tsx`), "Your Cart" drawer panel are live across every single route on the platform (Home, Packages, Services, Projects, About, Contact). Toggling packages or add-ons immediately synchronizes the global cart across all tabs and routes in real time via localStorage (`swd-cart`) and custom browser events.
+  - **Global Live Screen Cart Architecture (`components/GlobalCart.tsx`):** Mounted globally in root layout (`app/layout.tsx`), "Your Orders" drawer panel are live across every single route on the platform (Home, Packages, Services, Projects, About, Contact). Toggling packages or add-ons immediately synchronizes the global cart across all tabs and routes in real time via localStorage (`swd-cart`) and custom browser events.
 
   - **Mobile-Elevated Dock Alignment:**
     - On mobile viewports, the widget is anchored at `bottom-20 left-3 right-3` (`80px` from bottom), perfectly clearing the mobile navigation dock (`MobileDock`, `bottom-0`, height ~56px) with zero overlapping or blocked touch targets.
   - **Widget Action Buttons:** Equipped with two high-contrast action triggers:
-    1. **"View Cart"**: Opens the dedicated "Your Cart" drawer panel.
+    1. **"View Cart"**: Opens the dedicated "Your Orders" drawer panel.
     2. **"Inquire"**: Direct checkout with contact validation and dual WhatsApp / studio API dispatch.
   - **Dedicated "Your Cart" Window Modal:** Accessible from both the floating widget and the header navigation Cart button. Features an elegant right-side slide-in drawer panel (enters from the right edge, page background visible and interactive behind it), body-scroll lock (`document.body.style.overflow = 'hidden'`), and a tall full-height internally scrollable container (`overflow-y-auto overscroll-contain flex-1`):
     - **Header Controls:** Real-time item count pill, a prominent **"Clear Cart"** button (which discards all items, empties the local DB, closes the window, and removes the floating widget), and a close button.
