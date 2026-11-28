@@ -1,7 +1,7 @@
 {
-  "name": "ShivamWebDesigns — 3D Business Card",
+  "name": "ShivamWebDesigns \u2014 3D Business Card",
   "short_name": "SWD Card",
-  "description": "Interactive 3D business card for ShivamWebDesigns (SWD). Rotate 360°, flip, toggle portrait/landscape, scan QR, and download direct contact details (.vcf).",
+  "description": "Interactive 3D business card for ShivamWebDesigns (SWD). Rotate 360\u00b0, flip, toggle portrait/landscape, scan QR, and download direct contact details (.vcf).",
   "start_url": "/businesscard",
   "scope": "/businesscard",
   "display": "standalone",
@@ -41,5 +41,12 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
+  ],
+  "id": "/businesscard",
+  "orientation": "any",
+  "categories": [
+    "business",
+    "utilities",
+    "productivity"
   ]
 }

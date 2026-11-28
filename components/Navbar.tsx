@@ -5,12 +5,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { siteConfig } from '@/data/siteConfig';
+import { PACKAGES, ADDONS } from '@/data/packages';
 import { Menu, X, ArrowUpRight, ShoppingCart } from 'lucide-react';
+
+const fmt = (num: number) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(num);
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -22,23 +31,41 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Sync cart count from local DB
+  // Sync cart count and total from local DB
   useEffect(() => {
     const updateCartCount = () => {
       try {
         const saved = localStorage.getItem('swd-cart');
         if (!saved) {
           setCartCount(0);
+          setCartTotal(0);
           return;
         }
         const parsed = JSON.parse(saved);
         let count = parsed?.pkg ? 1 : 0;
-        if (parsed?.add && typeof parsed.add === 'object') {
-          count += Object.values(parsed.add).reduce((sum: number, q: any) => sum + (Number(q) || 0), 0);
+        let total = 0;
+
+        if (parsed?.pkg) {
+          const pkgObj = PACKAGES.find((p) => p.id === parsed.pkg);
+          if (pkgObj) total += pkgObj.price;
         }
+
+        if (parsed?.add && typeof parsed.add === 'object') {
+          Object.entries(parsed.add).forEach(([id, qty]) => {
+            const q = Number(qty) || 0;
+            if (q > 0) {
+              count += q;
+              const addon = ADDONS.find((a) => a.id === id);
+              if (addon) total += addon.price * q;
+            }
+          });
+        }
+
         setCartCount(count);
+        setCartTotal(total);
       } catch (_) {
         setCartCount(0);
+        setCartTotal(0);
       }
     };
 
@@ -122,11 +149,11 @@ export function Navbar() {
               type="button"
               onClick={handleCartClick}
               className="relative inline-flex items-center justify-center min-h-[44px] px-3.5 py-2.5 text-xs uppercase tracking-wider font-semibold text-neutral-300 hover:text-white bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 rounded-lg transition-all duration-200 shadow-sm active:scale-95 font-mono gap-2 group"
-              aria-label="Your Cart"
-              title="Open Your Cart"
+              aria-label="Your Orders"
+              title="Open Your Orders"
             >
               <ShoppingCart className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-              <span>Cart</span>
+              <span>Orders</span>
               <span className={`w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
                 cartCount > 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
               }`}>
@@ -143,40 +170,32 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Action Cluster */}
+          {/* Mobile Action Cluster: Clean Inquire button + Three Lines (Menu) with Live Item Count */}
           <div className="flex md:hidden items-center gap-2 sm:gap-2.5 flex-shrink-0">
-            <button
-              type="button"
-              onClick={handleCartClick}
-              className="w-10 h-10 inline-flex items-center justify-center text-neutral-300 hover:text-white bg-neutral-900/70 hover:bg-neutral-800/80 border border-neutral-800/80 hover:border-neutral-700 rounded-lg transition-all duration-200 active:scale-90 relative"
-              aria-label="Open Cart"
-              title="Open Cart"
-            >
-              <ShoppingCart className="w-4 h-4 text-white" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-white text-black font-bold text-[9px] flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-
             <Link
               href="/start-project"
-              className="inline-flex items-center justify-center min-h-[40px] px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded-lg transition-all duration-200 active:scale-95 shadow-sm font-mono group"
+              className="inline-flex items-center justify-center min-h-[38px] px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded-lg transition-all duration-200 active:scale-95 shadow-sm font-mono group"
             >
               <span>Inquire</span>
               <ArrowUpRight className="ml-1 h-3.5 w-3.5 opacity-80 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
+
+            {/* Three Lines Button with item count indicator */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="w-11 h-11 inline-flex items-center justify-center text-neutral-300 hover:text-white bg-neutral-900/70 hover:bg-neutral-800/80 border border-neutral-800/80 hover:border-neutral-700 rounded-lg transition-all duration-200 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+              className="min-h-[38px] px-2.5 py-1.5 inline-flex items-center justify-center text-neutral-300 hover:text-white bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800/80 hover:border-neutral-700 rounded-lg transition-all duration-200 active:scale-90 gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 relative"
               aria-expanded={mobileMenuOpen}
-              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : `Open navigation menu${cartCount > 0 ? `, ${cartCount} items in orders` : ''}`}
             >
               <div className={`transition-transform duration-200 ${mobileMenuOpen ? 'rotate-90' : 'rotate-0'}`}>
                 {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </div>
+              {cartCount > 0 && (
+                <span className="font-mono text-[10px] font-bold bg-white text-black px-1.5 py-0.5 rounded-full leading-none shadow-sm flex items-center justify-center min-w-[18px]">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -184,7 +203,44 @@ export function Navbar() {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-neutral-950/98 backdrop-blur-2xl border-b border-neutral-800/90 px-4 pt-4 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden bg-neutral-950/98 backdrop-blur-2xl border-b border-neutral-800/90 px-4 pt-3.5 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+          {/* Dedicated "Your Orders" in Three Lines Menu with live items & total on right side */}
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              handleCartClick();
+            }}
+            className="w-full min-h-[48px] flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-white hover:bg-neutral-800 hover:border-neutral-700 transition-all active:scale-98 group mb-1 shadow-inner"
+            aria-label="Open Your Orders"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-black border border-neutral-800 flex items-center justify-center group-hover:border-neutral-700 transition-colors">
+                <ShoppingCart className="w-4 h-4 text-white" />
+              </div>
+              <div className="text-left">
+                <span className="font-bold text-xs sm:text-sm tracking-tight text-white block">
+                  Your Orders
+                </span>
+                <span className="text-[10px] font-mono text-neutral-400 block">
+                  {cartCount === 0 ? 'No items in order' : 'Tap to review spec & dispatch'}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-right">
+              <span className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded ${
+                cartCount > 0 ? 'bg-white text-black shadow-sm' : 'bg-neutral-800 text-neutral-400'
+              }`}>
+                {cartCount} {cartCount === 1 ? 'item' : 'items'}
+              </span>
+              {cartTotal > 0 && (
+                <span className="text-xs font-mono font-extrabold text-white">
+                  {fmt(cartTotal)}
+                </span>
+              )}
+            </div>
+          </button>
+
           <div className="flex flex-col space-y-1">
             {siteConfig.navigation.map((item) => {
               const isActive = pathname === item.href;
