@@ -1,10 +1,12 @@
-const CACHE_NAME = 'swd-cache-v2';
+const CACHE_NAME = 'swd-cache-v3';
 const PRECACHE_ASSETS = [
   '/',
   '/packages',
   '/site.webmanifest',
   '/favicon.ico',
   '/apple-touch-icon.png',
+  '/assets/swd-monogram.png',
+  '/assets/swd-monogram.webp',
   '/assets/logo-trimmed.png',
   '/assets/favicon-192.png',
 ];
@@ -52,6 +54,8 @@ self.addEventListener('fetch', (event) => {
     url.pathname.startsWith('/_next/static/') ||
     url.pathname.startsWith('/assets/') ||
     url.pathname.endsWith('.png') ||
+    url.pathname.endsWith('.webp') ||
+    url.pathname.endsWith('.woff2') ||
     url.pathname.endsWith('.ico') ||
     url.pathname.endsWith('.svg') ||
     url.pathname.endsWith('.jpg')

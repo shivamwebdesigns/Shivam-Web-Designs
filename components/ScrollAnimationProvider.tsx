@@ -2,25 +2,29 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import Lenis from 'lenis';
+
+type LenisInstance = {
+  scrollTo: (target: number | string | HTMLElement, options?: { immediate?: boolean }) => void;
+  destroy: () => void;
+  raf: (time: number) => void;
+};
 
 /**
  * ScrollAnimationProvider
- * 1. Desktop Inertia Scrolling: Lenis pinned v1.3.29 for desktop wheel/trackpad.
+ * 1. Desktop Inertia Scrolling: Lenis dynamically loaded on desktop only (0KB for mobile).
  *    Mobile devices (touch screens) use 100% native 120Hz ProMotion touch scrolling.
  * 2. Route Navigation Scroll Reset: Instantly resets scroll position to top (0)
  *    when navigating to pages like /contact so user never lands clamped at footer.
  * 3. Hairline Scroll Progress Bar: 2px top indicator with smooth scaleX.
  * 4. Section Reveal Observer:
- *    - Threshold [0, 0.08] with 40px rootMargin so sections reveal immediately upon entering view.
- *    - No disappearing while user scrolls through tall sections.
- *    - Replays when scrolled back up above the section.
+ *    - Threshold [0, 0.05] with 40px rootMargin so sections reveal immediately upon entering view.
+ *    - Hero section is strictly excluded from opacity animation for instant sub-second LCP.
  *    - Immediate check on load to prevent any initial blank state.
  */
 export function ScrollAnimationProvider() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
-  const lenisRef = useRef<Lenis | null>(null);
+  const lenisRef = useRef<LenisInstance | null>(null);
 
   // Reset scroll to top on client-side route navigation
   useEffect(() => {
@@ -35,25 +39,27 @@ export function ScrollAnimationProvider() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 
-    // 1. Desktop-only Lenis Inertia (Touch screens keep pristine native scrolling)
+    // 1. Desktop-only Lenis Inertia — dynamically imported (0KB bundle on mobile)
     let rafId: number;
 
     if (!prefersReducedMotion && !isTouch) {
-      const lenis = new Lenis({
-        duration: 1.1,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        smoothWheel: true,
-      });
+      import('lenis').then(({ default: Lenis }) => {
+        const lenis = new Lenis({
+          duration: 1.1,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          smoothWheel: true,
+        });
 
-      lenisRef.current = lenis;
-      (window as unknown as { lenis?: Lenis | null }).lenis = lenis;
+        lenisRef.current = lenis as unknown as LenisInstance;
+        (window as unknown as { lenis?: unknown | null }).lenis = lenis;
 
-      const raf = (time: number) => {
-        lenis.raf(time);
+        const raf = (time: number) => {
+          lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
+        };
         rafId = requestAnimationFrame(raf);
-      };
-      rafId = requestAnimationFrame(raf);
+      });
     }
 
     // 2. Scroll Progress Bar Tracking
@@ -68,11 +74,11 @@ export function ScrollAnimationProvider() {
     window.addEventListener('scroll', updateProgress, { passive: true });
     updateProgress();
 
-    // 3. Section Reveal IntersectionObserver
+    // 3. Section Reveal IntersectionObserver (Hero is excluded for instant LCP)
     let observer: IntersectionObserver | null = null;
 
     if (!prefersReducedMotion) {
-      const sections = document.querySelectorAll('section');
+      const sections = document.querySelectorAll('section:not(#hero):not([data-no-reveal])');
 
       observer = new IntersectionObserver(
         (entries) => {
@@ -111,7 +117,7 @@ export function ScrollAnimationProvider() {
       if (rafId) cancelAnimationFrame(rafId);
       lenisRef.current?.destroy();
       lenisRef.current = null;
-      (window as unknown as { lenis?: Lenis | null }).lenis = null;
+      (window as unknown as { lenis?: unknown | null }).lenis = null;
       window.removeEventListener('scroll', updateProgress);
       observer?.disconnect();
     };

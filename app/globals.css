@@ -323,6 +323,12 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
+/* Hero is strictly un-delayed for instant Core Web Vitals sub-second LCP */
+#hero {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* ==========================================================
    Section Reveals On Page Scroll (IntersectionObserver)
    ========================================================== */

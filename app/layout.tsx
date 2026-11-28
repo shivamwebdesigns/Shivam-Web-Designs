@@ -4,12 +4,8 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { MobileDock } from '@/components/MobileDock';
-import { BackToTop } from '@/components/BackToTop';
-import { IOSInstallPrompt } from '@/components/IOSInstallPrompt';
-import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister';
-import { OrderSuccessToast } from '@/components/OrderSuccessToast';
-import { GlobalCart } from '@/components/GlobalCart';
 import { ScrollAnimationProvider } from '@/components/ScrollAnimationProvider';
+import { ClientOverlays } from '@/components/ClientOverlays';
 import { siteConfig } from '@/data/siteConfig';
 import { founderData } from '@/data/founder';
 
@@ -17,12 +13,16 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
+  preload: true,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
 });
 
 export const viewport: Viewport = {
@@ -283,11 +283,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileDock />
-        <GlobalCart />
-        <BackToTop />
-        <OrderSuccessToast />
-        <IOSInstallPrompt />
-        <ServiceWorkerRegister />
+        <ClientOverlays />
       </body>
     </html>
   );

@@ -39,6 +39,12 @@ export function ScrollTextReveal({
       const rect = el.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
+      // If already at or above middle of viewport (like in hero), reveal immediately
+      if (rect.top <= windowHeight * 0.7) {
+        setProgress(1);
+        return;
+      }
+
       // Start revealing when element enters 88% of viewport, finish at 38%
       const start = windowHeight * 0.88;
       const end = windowHeight * 0.38;
