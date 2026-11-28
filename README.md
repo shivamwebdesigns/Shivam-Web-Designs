@@ -64,7 +64,24 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 ---
 
-## 4. UI Components & Interaction Features
+## 4. Engineering & Architectural Documentation Suite
+
+Authoritative GitHub engineering specifications maintained under [`docs/`](docs/):
+
+| Document | File Path | Focus & Architectural Scope |
+| :--- | :--- | :--- |
+| **Product Requirements Document (PRD)** | [`docs/PRD.md`](docs/PRD.md) | Studio vision, target personas, problem statements, commercial tier models (₹499/₹999/₹1,499), functional feature matrix, and KPIs. |
+| **Technical Architecture Document (TAD)** | [`docs/TECHNICAL_ARCHITECTURE.md`](docs/TECHNICAL_ARCHITECTURE.md) | Next.js 15 App Router architecture, hybrid SSG/Edge topology, dual-dispatch pipeline, service worker caching (v3), and zero-bloat hydration. |
+| **Security & Access Control Document (SAD)** | [`docs/SECURITY_AND_ACCESS.md`](docs/SECURITY_AND_ACCESS.md) | Threat modeling, Google OAuth 2.0 owner allowlist, zero client secrets policy, edge security headers, and DPDP Act 2023 / GDPR compliance. |
+| **Frontend Specification (FES)** | [`docs/FRONTEND_SPECIFICATION.md`](docs/FRONTEND_SPECIFICATION.md) | Dark Luxury Minimalism tokens, typography metrics (Inter/JetBrains Mono), 3D spatial Euler physics, and WCAG 2.1 AA accessibility contracts. |
+| **Features Ticket List (FTL)** | [`docs/FEATURES_TICKET_LIST.md`](docs/FEATURES_TICKET_LIST.md) | 18 production engineering tickets across 6 epics with acceptance criteria, priority tags (P0/P1), and verification commands. |
+| **Design System Guidelines** | [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) | Monochromatic color scales, spacing rhythm, 3D card textures, and accessible UI component tokens. |
+| **API Contracts & Protocols** | [`docs/API.md`](docs/API.md) | Edge routing protocols, serverless payload schemas, vCard 3.0 specification, and WhatsApp markdown message formatting. |
+| **Testing & Quality Assurance** | [`docs/TESTING.md`](docs/TESTING.md) | Quality verification scripts, Lighthouse thresholds, responsive testing matrix, and Definition of Done. |
+
+---
+
+## 5. UI Components & Interaction Features
 
 - **Header & Mobile Ergonomics (`components/Navbar.tsx`):**
   - **Bespoke SWD Monogram (`/assets/swd-monogram.png`):** High-definition transparent RGBA monogram mark engineered with mathematical alpha transparency and 100% white luminance curve. Seamlessly blends into transparent hero states, sticky frosted-glass headers (`bg-neutral-950/85 backdrop-blur-xl`), and dark footer canvases with zero letterbox edges or black box artifacts.
@@ -160,7 +177,7 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 ---
 
-## 5. Strict Identity Separation Protocol
+## 6. Strict Identity Separation Protocol
 
 To preserve operational professionalism, company channels and personal founder credentials are strictly separated:
 
@@ -184,7 +201,7 @@ To preserve operational professionalism, company channels and personal founder c
 
 ---
 
-## 6. Technology Stack
+## 7. Technology Stack
 
 - **Framework:** [Next.js 15](https://nextjs.org/) (App Router, React Server Components)
 - **UI Library:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
@@ -200,7 +217,7 @@ To preserve operational professionalism, company channels and personal founder c
 
 ---
 
-## 7. Local Development
+## 8. Local Development
 
 ### Prerequisites
 - Node.js 18.18.0 or newer
@@ -234,7 +251,7 @@ npm run build
 
 ---
 
-## 8. Changelog
+## 9. Changelog
 
 ### Fixed
 - **"Your Orders" drawer (`components/GlobalCart.tsx`):** The page behind the drawer no longer scrolls while it is open (it stays visible), and the drawer body (package, add-ons, "Your Details" form) scrolls on its own so all fields can be filled in. The scroll lock now applies to both `<html>` and `<body>` (iOS Safari safe) and restores the previous scroll position on close. Wheel and touch events inside the drawer are no longer captured by page-level smooth-scroll handlers.
@@ -242,7 +259,7 @@ npm run build
 
 ---
 
-## 9. License & Intellectual Property
+## 10. License & Intellectual Property
 
 - **Source Code:** Distributed under the [MIT License](LICENSE).
 - **Brand Assets & Media:** All logos, trademarks, studio photography, and proprietary brand graphics are protected under [ASSET_RIGHTS.md](ASSET_RIGHTS.md) and may not be reproduced without written consent.
