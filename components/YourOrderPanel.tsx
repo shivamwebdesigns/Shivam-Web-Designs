@@ -80,9 +80,26 @@ export function YourOrderPanel({
             type="button"
             onClick={onClose}
             aria-label="Close your order"
-            className="w-8 h-8 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors"
+            className="group relative flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-full bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-600/80 text-neutral-300 hover:text-white transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md hover:shadow-black/60 flex-shrink-0 cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
           >
-            <X className="w-4 h-4" />
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out pointer-events-none"
+            />
+            <span className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.16em] font-medium text-neutral-400 group-hover:text-white transition-colors duration-200 select-none">
+              <span className="w-1.5 h-1.5 rounded-full bg-neutral-500 group-hover:bg-red-400 group-hover:shadow-[0_0_6px_rgba(248,113,113,0.8)] transition-all duration-300" />
+              Close
+            </span>
+            <span className="hidden sm:inline-block text-[9px] font-mono px-1.5 py-0.5 rounded bg-neutral-800/90 group-hover:bg-neutral-700 text-neutral-400 group-hover:text-neutral-200 border border-neutral-700/50 transition-colors">
+              ESC
+            </span>
+            <div
+              aria-hidden="true"
+              className="relative w-6 h-6 rounded-full bg-neutral-800/90 group-hover:bg-neutral-700/90 border border-neutral-700/60 group-hover:border-neutral-500/80 flex items-center justify-center transition-all duration-200 flex-shrink-0"
+            >
+              <span className="absolute w-2.5 h-[1.5px] bg-neutral-300 group-hover:bg-white rounded-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] -translate-y-[3px] group-hover:translate-y-0 group-hover:rotate-45" />
+              <span className="absolute w-2.5 h-[1.5px] bg-neutral-300 group-hover:bg-white rounded-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] translate-y-[3px] group-hover:translate-y-0 group-hover:-rotate-45" />
+            </div>
           </button>
         </header>
 
