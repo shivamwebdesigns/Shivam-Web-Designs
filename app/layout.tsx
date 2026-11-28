@@ -8,6 +8,7 @@ import { BackToTop } from '@/components/BackToTop';
 import { IOSInstallPrompt } from '@/components/IOSInstallPrompt';
 import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister';
 import { OrderSuccessToast } from '@/components/OrderSuccessToast';
+import { ScrollAnimationProvider } from '@/components/ScrollAnimationProvider';
 import { siteConfig } from '@/data/siteConfig';
 import { founderData } from '@/data/founder';
 
@@ -222,6 +223,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-black text-white font-sans antialiased selection:bg-white selection:text-black flex flex-col">
+        <ScrollAnimationProvider />
         <Navbar />
         <main className="flex-1 pb-20 md:pb-0">
           {children}
