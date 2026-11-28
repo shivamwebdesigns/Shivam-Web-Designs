@@ -450,7 +450,7 @@ export function GlobalCart() {
                       value={value}
                       onChange={(e) => handleProfile(field, e.target.value)}
                       placeholder={placeholder}
-                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2.5 text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                      className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
                     />
                   </div>
                 ))}

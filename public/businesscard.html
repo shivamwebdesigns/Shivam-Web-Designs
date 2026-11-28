@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#050505">
 <title>3D Business Card | ShivamWebDesigns</title>
 <meta name="description" content="Interactive 3D business card for ShivamWebDesigns (SWD). Rotate 360°, flip, toggle portrait/landscape, scan QR, and download direct contact details (.vcf). Designed & engineered by Shivam Purohit.">
@@ -61,7 +61,7 @@
 :root{--bg:#050505;--ink:#f2f2f2;--mute:#8a8a8a;--line:#2a2a2a;--t:7px;box-sizing:border-box}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#050505;--ink:#f2f2f2;--mute:#8a8a8a;--line:#2a2a2a}}
 :root[data-theme="dark"]{--bg:#050505}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html{height:100%;min-height:100%;background:var(--bg);overflow-x:hidden}
 body{margin:0;min-height:100%;min-height:100vh;min-height:100dvh;background:radial-gradient(ellipse at 50% 30%,#1b1b1b 0,#050505 62%) var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;padding:calc(10px + env(safe-area-inset-top,0px)) 12px calc(14px + env(safe-area-inset-bottom,0px));overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;-webkit-user-select:none;user-select:none;-webkit-text-size-adjust:100%;box-sizing:border-box}
 @media (min-height:840px) and (min-width:600px){body{justify-content:center;gap:22px;padding:calc(18px + env(safe-area-inset-top,0px)) 16px calc(22px + env(safe-area-inset-bottom,0px))}}

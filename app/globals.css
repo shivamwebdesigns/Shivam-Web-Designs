@@ -375,3 +375,29 @@ section[data-reveal-section][data-revealed="true"] h3 {
     scroll-behavior: auto !important;
   }
 }
+
+/* Prevent iOS Safari auto-zoom on input focus by ensuring 16px base font on mobile */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Prevent accidental double-tap zoom gestures while preserving fluid scrolling */
+html,
+body,
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
