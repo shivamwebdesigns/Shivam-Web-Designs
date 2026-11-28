@@ -143,7 +143,7 @@ function StartProjectForm() {
               </div>
 
               <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
+                <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
                   Inquiry Saved
                 </span>
                 <h2 className="text-3xl font-light text-white tracking-tight mt-1">
@@ -219,7 +219,7 @@ function StartProjectForm() {
               <div className="space-y-6">
                 <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
                   <span>01</span>
-                  <span className="text-neutral-600">//</span>
+                  <span className="text-neutral-400">//</span>
                   <span>Contact Information</span>
                 </div>
 
@@ -255,7 +255,7 @@ function StartProjectForm() {
 
                 <div>
                   <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                    Company or Brand Name <span className="text-neutral-500">(Optional)</span>
+                    Company or Brand Name <span className="text-neutral-400">(Optional)</span>
                   </label>
                   <input
                     type="text"
@@ -271,7 +271,7 @@ function StartProjectForm() {
               <div className="space-y-6 pt-6 border-t border-neutral-900">
                 <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
                   <span>02</span>
-                  <span className="text-neutral-600">//</span>
+                  <span className="text-neutral-400">//</span>
                   <span>Project Classification</span>
                 </div>
 
@@ -324,7 +324,7 @@ function StartProjectForm() {
               <div className="space-y-6 pt-6 border-t border-neutral-900">
                 <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
                   <span>03</span>
-                  <span className="text-neutral-600">//</span>
+                  <span className="text-neutral-400">//</span>
                   <span>Parameters & Investment</span>
                 </div>
 
@@ -379,7 +379,7 @@ function StartProjectForm() {
               <div className="space-y-6 pt-6 border-t border-neutral-900">
                 <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 flex items-center gap-2">
                   <span>04</span>
-                  <span className="text-neutral-600">//</span>
+                  <span className="text-neutral-400">//</span>
                   <span>Project Specification</span>
                 </div>
 
@@ -400,7 +400,7 @@ function StartProjectForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                      Reference Website <span className="text-neutral-500">(Optional)</span>
+                      Reference Website <span className="text-neutral-400">(Optional)</span>
                     </label>
                     <input
                       type="url"
@@ -413,7 +413,7 @@ function StartProjectForm() {
 
                   <div>
                     <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                      Additional Notes <span className="text-neutral-500">(Optional)</span>
+                      Additional Notes <span className="text-neutral-400">(Optional)</span>
                     </label>
                     <input
                       type="text"
@@ -443,7 +443,7 @@ function StartProjectForm() {
                   )}
                 </button>
 
-                <div className="flex items-center justify-center gap-2 text-xs font-mono text-neutral-500">
+                <div className="flex items-center justify-center gap-2 text-xs font-mono text-neutral-400">
                   <ShieldCheck className="w-3.5 h-3.5 text-neutral-400" />
                   <span>Strict Confidentiality • No Spam • Direct Founder Review</span>
                 </div>
@@ -458,7 +458,7 @@ function StartProjectForm() {
 
 export default function StartProjectPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen pt-32 text-center text-xs font-mono text-neutral-500">Loading intake form...</div>}>
+    <Suspense fallback={<div className="min-h-screen pt-32 text-center text-xs font-mono text-neutral-400">Loading intake form...</div>}>
       <StartProjectForm />
     </Suspense>
   );

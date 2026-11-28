@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col justify-center items-center px-6 py-14 sm:py-20 lg:py-24 text-center">
       <div className="max-w-md space-y-6">
-        <div className="text-xs font-mono uppercase tracking-widest text-neutral-500">
+        <div className="text-xs font-mono uppercase tracking-widest text-neutral-400">
           HTTP 404 // NOT FOUND
         </div>
         <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-white">

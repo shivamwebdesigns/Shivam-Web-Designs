@@ -66,7 +66,7 @@ export const WhyChooseUs: React.FC = () => {
               >
                 <div>
                   <div className="flex items-center justify-between mb-8">
-                    <span className="text-xs font-mono text-neutral-500">
+                    <span className="text-xs font-mono text-neutral-400">
                       {pillar.number}
                     </span>
                     <div className="w-9 h-9 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-300">
@@ -85,7 +85,7 @@ export const WhyChooseUs: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-neutral-900 flex items-center justify-between text-xs font-mono text-neutral-600">
+                <div className="mt-8 pt-4 border-t border-neutral-900 flex items-center justify-between text-xs font-mono text-neutral-400">
                   <span>SWD STANDARD</span>
                   <span>VERIFIED</span>
                 </div>

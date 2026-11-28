@@ -85,7 +85,7 @@ export function OrderStatusModal({
             <button
               type="button"
               onClick={onCancelOrder}
-              className="text-xs font-mono text-neutral-500 hover:text-neutral-300 transition-colors underline pt-2"
+              className="text-xs font-mono text-neutral-400 hover:text-white transition-colors underline pt-2"
             >
               Cancel request
             </button>
@@ -196,7 +196,7 @@ export function OrderStatusModal({
               <button
                 type="button"
                 onClick={onCancelOrder}
-                className="text-[11px] font-mono text-neutral-500 hover:text-neutral-400 transition-colors"
+                className="text-[11px] font-mono text-neutral-400 hover:text-white transition-colors"
               >
                 Cancel or discard this order
               </button>

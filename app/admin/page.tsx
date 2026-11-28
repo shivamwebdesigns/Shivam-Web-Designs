@@ -172,7 +172,7 @@ export default function AdminPage() {
       <div className="mx-auto max-w-5xl">
         <header className="mb-10 flex flex-col gap-6 border-b border-neutral-800 pb-8 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-neutral-400">
               Private Studio Workspace
             </p>
             <h1 className="text-3xl font-light tracking-tight sm:text-5xl">
@@ -256,7 +256,7 @@ export default function AdminPage() {
                 {inquiries.length === 0 && !listLoading && !error ? (
                   <div className="border border-neutral-800 bg-neutral-950 p-8 text-center">
                     <h2 className="text-lg font-light">No inquiries saved yet</h2>
-                    <p className="mt-2 text-sm text-neutral-500">
+                    <p className="mt-2 text-sm text-neutral-400">
                       New project and contact form submissions will appear here.
                     </p>
                   </div>
@@ -277,7 +277,7 @@ export default function AdminPage() {
                             </span>
                           </div>
                           <time
-                            className="text-xs text-neutral-500"
+                            className="text-xs text-neutral-400"
                             dateTime={inquiry.createdAt ?? undefined}
                           >
                             {formatDate(inquiry.createdAt)}
@@ -294,7 +294,7 @@ export default function AdminPage() {
                               {inquiry.email}
                             </a>
                           </div>
-                          <p className="font-mono text-[10px] uppercase tracking-wider text-neutral-600">
+                          <p className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
                             Ref: {inquiry.id}
                           </p>
                         </div>
@@ -312,7 +312,7 @@ export default function AdminPage() {
                             </div>
                             {inquiry.referenceUrl && (
                               <div>
-                                <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-500">
+                                <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
                                   Reference
                                 </p>
                                 <a
@@ -374,7 +374,7 @@ export default function AdminPage() {
 function Info({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-500">
+      <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
         {label}
       </p>
       <p className="whitespace-pre-wrap break-words text-sm leading-6 text-neutral-300">

@@ -49,9 +49,9 @@ export default function ProjectsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
           {/* Engineering Standards We Guarantee */}
           <div className="space-y-6">
-            <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
               Standard Across Every Build
-            </h3>
+            </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-5 rounded-xl bg-neutral-950 border border-neutral-900 space-y-2">
@@ -94,9 +94,9 @@ export default function ProjectsPage() {
               <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block mb-2">
                 Audit Benchmark
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
                 Live 7-Step Mobile Core Web Vitals Protocol
-              </h3>
+              </h2>
             </div>
             <div className="max-w-2xl">
               <CoreWebVitalsCard />
@@ -105,9 +105,9 @@ export default function ProjectsPage() {
 
           {/* Intake Call to Action */}
           <div className="p-8 sm:p-12 rounded-2xl border border-neutral-900 bg-neutral-950 text-center space-y-4">
-            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Ready to engineer your website?
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-neutral-400 max-w-lg mx-auto leading-relaxed font-light">
               Explore our fixed-price transparent packages starting from ₹499 or submit a custom project brief.
             </p>

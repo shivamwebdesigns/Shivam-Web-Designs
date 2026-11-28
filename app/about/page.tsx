@@ -58,7 +58,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4">
-              <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
+              <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
                 01 // Origin
               </div>
               <h2 className="text-3xl font-light text-white tracking-tight sticky top-28">
@@ -86,7 +86,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="p-10 border border-neutral-900 bg-black flex flex-col justify-between">
               <div>
-                <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-3">
+                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">
                   02 // Mission
                 </div>
                 <h3 className="text-2xl font-light text-white mb-4 tracking-tight">
@@ -114,7 +114,7 @@ export default function AboutPage() {
 
             <div className="p-10 border border-neutral-900 bg-black flex flex-col justify-between">
               <div>
-                <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-3">
+                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">
                   03 // Vision
                 </div>
                 <h3 className="text-2xl font-light text-white mb-4 tracking-tight">
@@ -147,7 +147,7 @@ export default function AboutPage() {
       <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
-            <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
+            <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
               04 // Principles
             </div>
             <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
@@ -164,7 +164,7 @@ export default function AboutPage() {
                 key={i}
                 className="p-8 border border-neutral-900 bg-neutral-950/60 hover:border-neutral-800 transition-colors"
               >
-                <div className="text-xs font-mono text-neutral-500 mb-4">
+                <div className="text-xs font-mono text-neutral-400 mb-4">
                   VALUE 0{i + 1}
                 </div>
                 <h3 className="text-xl font-light text-white mb-1 tracking-tight">
@@ -199,7 +199,7 @@ export default function AboutPage() {
             </div>
 
             <div className="lg:col-span-8 flex flex-col justify-center">
-              <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
+              <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
                 05 // Leadership
               </div>
               <h2 className="text-3xl md:text-4xl font-light tracking-tight text-white mb-4">

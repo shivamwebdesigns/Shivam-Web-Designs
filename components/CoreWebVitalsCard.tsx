@@ -55,14 +55,14 @@ export function CoreWebVitalsCard({ className = '' }: { className?: string }) {
       <div className="space-y-4 sm:space-y-5">
         {CORE_WEB_VITALS_CHECKS.slice(0, 6).map((item) => (
           <div key={item.id} className="flex items-center gap-3.5 sm:gap-4">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#22c55e] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
-              <Check className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white stroke-[3]" />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#34a853] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+              <Check className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white stroke-[3.5]" />
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="text-sm sm:text-base font-bold text-neutral-900 tracking-tight leading-tight">
+              <div className="text-sm sm:text-base font-bold text-neutral-900 tracking-tight leading-tight">
                 {item.title}
-              </h4>
-              <p className="text-xs sm:text-sm text-neutral-500 font-mono tracking-tight mt-0.5">
+              </div>
+              <p className="text-xs sm:text-sm text-neutral-600 tracking-tight mt-0.5">
                 {item.subtitle}
               </p>
             </div>
@@ -70,15 +70,15 @@ export function CoreWebVitalsCard({ className = '' }: { className?: string }) {
         ))}
 
         {/* Item 7 Highlighted Card */}
-        <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#eaf7ee] border border-[#cbe9d3] flex items-center gap-3.5 sm:gap-4 shadow-sm">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-neutral-900 font-mono font-bold text-xs sm:text-sm flex items-center justify-center flex-shrink-0 shadow-sm border border-neutral-200">
+        <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#e5f5e9] border border-[#cbe9d3]/80 flex items-center gap-3.5 sm:gap-4 shadow-sm">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-neutral-800 font-sans font-semibold text-xs sm:text-sm flex items-center justify-center flex-shrink-0 shadow-sm border border-neutral-200/90">
             7
           </div>
           <div className="min-w-0 flex-1">
-            <h4 className="text-sm sm:text-base font-bold text-neutral-900 tracking-tight leading-tight">
+            <div className="text-sm sm:text-base font-bold text-neutral-900 tracking-tight leading-tight">
               Measure Core Web Vitals on mobile
-            </h4>
-            <p className="text-xs sm:text-sm font-mono text-[#2e7d32] font-semibold tracking-tight mt-0.5">
+            </div>
+            <p className="text-xs sm:text-sm text-[#2e7d32] font-semibold tracking-tight mt-0.5">
               LCP · INP · CLS · real users
             </p>
           </div>

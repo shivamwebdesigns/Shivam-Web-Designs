@@ -90,7 +90,7 @@ export default function FounderPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4">
-              <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
+              <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
                 01 // Genesis
               </div>
               <h2 className="text-3xl font-light text-white tracking-tight sticky top-28">
@@ -110,7 +110,7 @@ export default function FounderPage() {
       <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-neutral-950/40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
-            <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
+            <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
               02 // Creed
             </div>
             <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
@@ -127,7 +127,7 @@ export default function FounderPage() {
                 key={idx}
                 className="p-8 border border-neutral-900 bg-black hover:border-neutral-800 transition-colors"
               >
-                <div className="text-xs font-mono text-neutral-500 mb-4">
+                <div className="text-xs font-mono text-neutral-400 mb-4">
                   PRINCIPLE 0{idx + 1}
                 </div>
                 <h3 className="text-xl font-light text-white mb-3 tracking-tight">
@@ -146,7 +146,7 @@ export default function FounderPage() {
       <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
-            <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
+            <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
               03 // Capabilities
             </div>
             <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">
@@ -164,7 +164,7 @@ export default function FounderPage() {
                 className="p-6 border border-neutral-900 bg-neutral-950 flex flex-col justify-between"
               >
                 <div>
-                  <div className="text-xs font-mono text-neutral-500 mb-3 uppercase tracking-widest">
+                  <div className="text-xs font-mono text-neutral-400 mb-3 uppercase tracking-widest">
                     DOMAIN 0{sIdx + 1}
                   </div>
                   <h3 className="text-lg font-light text-white mb-6 tracking-tight">
@@ -176,7 +176,7 @@ export default function FounderPage() {
                         key={iIdx}
                         className="text-xs text-neutral-400 font-mono flex items-start gap-2"
                       >
-                        <span className="text-neutral-600 select-none">›</span>
+                        <span className="text-neutral-400 select-none">›</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -213,7 +213,7 @@ export default function FounderPage() {
               <div className="text-xs font-mono text-neutral-400">
                 {founderData.founderNote.signoff}
               </div>
-              <div className="text-xs font-mono text-neutral-600">
+              <div className="text-xs font-mono text-neutral-400">
                 SWD LEADERSHIP ARCHIVE
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function FounderPage() {
       <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="max-w-2xl mx-auto mb-12">
-            <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2">
+            <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">
               05 // Direct Channels
             </div>
             <h2 className="text-3xl md:text-4xl font-light tracking-tight text-white mb-4">
@@ -241,6 +241,7 @@ export default function FounderPage() {
               href={founderData.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Shivam Purohit on LinkedIn"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-neutral-950 border border-neutral-800 text-white hover:border-neutral-700 hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider"
             >
               <Linkedin className="w-4 h-4 text-neutral-400" />
@@ -251,6 +252,7 @@ export default function FounderPage() {
               href={founderData.social.github}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Shivam Purohit on GitHub"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-neutral-950 border border-neutral-800 text-white hover:border-neutral-700 hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider"
             >
               <Github className="w-4 h-4 text-neutral-400" />
@@ -261,6 +263,7 @@ export default function FounderPage() {
               href={founderData.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Shivam Purohit on Instagram"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-neutral-950 border border-neutral-800 text-white hover:border-neutral-700 hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider"
             >
               <Instagram className="w-4 h-4 text-neutral-400" />
@@ -271,6 +274,7 @@ export default function FounderPage() {
               href={founderData.social.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Contact Shivam Purohit on WhatsApp"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-neutral-950 border border-neutral-800 text-white hover:border-neutral-700 hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider"
             >
               <MessageCircle className="w-4 h-4 text-neutral-400" />
@@ -279,6 +283,7 @@ export default function FounderPage() {
 
             <a
               href={`mailto:${founderData.social.email}`}
+              aria-label="Email Shivam Purohit directly"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-neutral-950 border border-neutral-800 text-white hover:border-neutral-700 hover:bg-neutral-900 transition-colors text-xs font-mono uppercase tracking-wider"
             >
               <Mail className="w-4 h-4 text-neutral-400" />
@@ -287,6 +292,7 @@ export default function FounderPage() {
 
             <Link
               href={founderData.social.businessCard}
+              aria-label="View Shivam Purohit 3D Business Card"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-white text-black hover:bg-neutral-200 transition-colors text-xs font-mono uppercase tracking-wider font-semibold"
             >
               <CreditCard className="w-4 h-4" />

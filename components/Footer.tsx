@@ -31,9 +31,9 @@ export function Footer() {
 
           {/* Quick Navigation */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
+            <p className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4 font-semibold">
               Navigation
-            </h3>
+            </p>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/" className="hover:text-white transition-colors">
@@ -76,9 +76,9 @@ export function Footer() {
 
           {/* Core Services */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
+            <p className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4 font-semibold">
               Services
-            </h3>
+            </p>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/services#website-design" className="hover:text-white transition-colors">
@@ -115,13 +115,14 @@ export function Footer() {
 
           {/* Channels & Inquiries */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4">
+            <p className="text-xs uppercase tracking-widest font-mono text-neutral-200 mb-4 font-semibold">
               Connect
-            </h3>
+            </p>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <a
                   href={siteConfig.social.email}
+                  aria-label="Email ShivamWebDesigns Studio directly"
                   className="hover:text-white transition-colors flex items-center"
                 >
                   Direct Email
@@ -133,6 +134,7 @@ export function Footer() {
                   href={siteConfig.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="ShivamWebDesigns Studio LinkedIn Company Page"
                   className="hover:text-white transition-colors flex items-center"
                 >
                   LinkedIn
@@ -144,6 +146,7 @@ export function Footer() {
                   href={siteConfig.social.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="ShivamWebDesigns Studio GitHub Organization"
                   className="hover:text-white transition-colors flex items-center"
                 >
                   GitHub
@@ -155,6 +158,7 @@ export function Footer() {
                   href={siteConfig.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="ShivamWebDesigns Studio Instagram Profile"
                   className="hover:text-white transition-colors flex items-center"
                 >
                   Instagram
@@ -167,6 +171,7 @@ export function Footer() {
                     href={siteConfig.social.whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Chat with ShivamWebDesigns on WhatsApp"
                     className="hover:text-white transition-colors flex items-center"
                   >
                     WhatsApp

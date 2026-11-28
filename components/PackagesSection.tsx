@@ -491,9 +491,15 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed mb-4">
             Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals.
           </p>
-          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-            PACKAGES // FIXED PRICES
-          </p>
+          {isPage ? (
+            <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400">
+              PACKAGES // FIXED PRICES
+            </h2>
+          ) : (
+            <p className="text-xs font-mono uppercase tracking-widest text-neutral-400">
+              PACKAGES // FIXED PRICES
+            </p>
+          )}
         </div>
 
         {/* Main Layout Grid: Packages & Add-ons on Left, Sticky Cart on Right */}

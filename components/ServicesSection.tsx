@@ -84,6 +84,7 @@ export function ServicesSection() {
 
                 <Link
                   href={`/start-project?service=${service.slug}`}
+                  aria-label={`Inquire about ${service.title}`}
                   className="text-xs font-semibold text-white hover:underline inline-flex items-center"
                 >
                   Inquire &rarr;

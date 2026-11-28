@@ -54,7 +54,7 @@ export const WorkingProcess: React.FC = () => {
               A transparent, disciplined four-stage engineering cycle designed to deliver excellence without delays or surprises.
             </p>
           </div>
-          <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest border border-neutral-800 px-3 py-1.5 self-start md:self-auto">
+          <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest border border-neutral-800 px-3 py-1.5 self-start md:self-auto">
             Sprint-Driven • Fixed Timeline
           </div>
         </div>
@@ -71,7 +71,7 @@ export const WorkingProcess: React.FC = () => {
                   <span className="text-3xl font-light font-mono text-white">
                     {item.step}
                   </span>
-                  <span className="text-[11px] font-mono text-neutral-500 bg-neutral-900 px-2 py-0.5 border border-neutral-800">
+                  <span className="text-[11px] font-mono text-neutral-400 bg-neutral-900 px-2 py-0.5 border border-neutral-800">
                     {item.timeline}
                   </span>
                 </div>
@@ -85,7 +85,7 @@ export const WorkingProcess: React.FC = () => {
               </div>
 
               <div className="pt-6 border-t border-neutral-900">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 mb-3">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-3">
                   Key Deliverables
                 </div>
                 <ul className="space-y-1.5">
@@ -94,7 +94,7 @@ export const WorkingProcess: React.FC = () => {
                       key={dIdx}
                       className="text-xs text-neutral-300 font-mono flex items-start gap-2"
                     >
-                      <span className="text-neutral-600 select-none">›</span>
+                      <span className="text-neutral-400 select-none">›</span>
                       <span>{del}</span>
                     </li>
                   ))}

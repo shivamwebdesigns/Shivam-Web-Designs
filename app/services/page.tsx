@@ -44,7 +44,7 @@ export default function ServicesPage() {
                   <div className="lg:col-span-5 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">
+                        <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest">
                           0{index + 1} // DISCIPLINE
                         </span>
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-neutral-900 border border-neutral-800 text-[11px] font-mono text-neutral-300">
@@ -109,7 +109,7 @@ export default function ServicesPage() {
                     </div>
 
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-3">
+                      <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">
                         Technologies & Methodologies
                       </div>
                       <div className="flex flex-wrap gap-2">

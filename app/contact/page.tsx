@@ -108,7 +108,7 @@ export default function ContactPage() {
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
+                    <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-1">
                       Direct Email
                     </div>
                     <div className="text-sm font-medium text-white group-hover:underline">
@@ -131,7 +131,7 @@ export default function ContactPage() {
                       <MessageSquare className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-1">
+                      <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-1">
                         WhatsApp Quick Chat
                       </div>
                       <div className="text-sm font-medium text-white group-hover:underline">
