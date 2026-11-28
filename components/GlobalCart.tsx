@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   Plus,
   Minus,
@@ -335,28 +334,16 @@ export function GlobalCart() {
           <button
             type="button"
             onClick={() => setCartOpen(false)}
-            className="group relative w-10 h-10 rounded-full bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-600 flex items-center justify-center transition-all duration-300 active:scale-90 shadow-sm hover:shadow-lg hover:shadow-black/60 flex-shrink-0 cursor-pointer [perspective:1000px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+            className="group relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-600 hover:bg-red-500 text-white border border-red-500/80 hover:border-red-400 flex items-center justify-center transition-all duration-200 active:scale-90 shadow-lg shadow-red-950/60 hover:shadow-red-900/80 flex-shrink-0 cursor-pointer [perspective:1000px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
             aria-label="Close orders panel"
             title="Close"
           >
-            {/* Ambient hover glow halo */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-            />
-            {/* 3D Flipping Monogram Logo */}
+            {/* 3D Flipping X Icon */}
             <div
               aria-hidden="true"
-              className="relative w-6 h-6 flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(360deg)] group-active:[transform:rotateY(360deg)]"
+              className="relative w-5 h-5 flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(360deg)] group-active:[transform:rotateY(360deg)]"
             >
-              <Image
-                src="/assets/swd-monogram.png"
-                alt="Close orders panel"
-                width={24}
-                height={24}
-                className="w-5 h-5 object-contain select-none pointer-events-none drop-shadow-[0_2px_8px_rgba(255,255,255,0.18)] group-hover:scale-110 transition-transform duration-300"
-                priority
-              />
+              <X className="w-4 h-4 text-white stroke-[2.5]" />
             </div>
           </button>
         </div>
