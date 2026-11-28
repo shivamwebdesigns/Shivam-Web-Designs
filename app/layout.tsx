@@ -8,6 +8,7 @@ import { BackToTop } from '@/components/BackToTop';
 import { IOSInstallPrompt } from '@/components/IOSInstallPrompt';
 import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister';
 import { OrderSuccessToast } from '@/components/OrderSuccessToast';
+import { GlobalCart } from '@/components/GlobalCart';
 import { ScrollAnimationProvider } from '@/components/ScrollAnimationProvider';
 import { siteConfig } from '@/data/siteConfig';
 import { founderData } from '@/data/founder';
@@ -230,6 +231,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileDock />
+        <GlobalCart />
         <BackToTop />
         <OrderSuccessToast />
         <IOSInstallPrompt />

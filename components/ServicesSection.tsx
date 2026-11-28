@@ -13,7 +13,7 @@ export function ServicesSection() {
             <span className="text-xs uppercase tracking-widest font-mono text-neutral-400">
               01 // CAPABILITIES &amp; EXPERTISE
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
               End-to-End Digital Engineering Services
             </h2>
             <p className="text-base text-neutral-400 leading-relaxed">
@@ -35,7 +35,7 @@ export function ServicesSection() {
           {servicesData.map((service, index) => (
             <div
               key={service.id}
-              className="bg-black/60 border border-neutral-800/80 hover:border-neutral-600/80 rounded-xl p-8 flex flex-col justify-between transition-all duration-200 group hover:-translate-y-1 hover:shadow-xl hover:shadow-black/60"
+              className="bg-black/60 border border-neutral-800/80 hover:border-neutral-600/80 rounded-xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 group hover:-translate-y-1 hover:shadow-xl hover:shadow-black/60"
             >
               <div className="space-y-5">
                 <div className="flex items-center justify-between">

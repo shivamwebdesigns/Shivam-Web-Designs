@@ -70,12 +70,28 @@ const layers: StackLayer[] = [
 
 export function SpatialStack() {
   const [activeTab, setActiveTab] = useState(1);
+  const [tilt, setTilt] = useState<{ rx: number; ry: number } | null>(null);
+
+  const handlePreviewPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rx = Math.round(-((y - centerY) / centerY) * 18);
+    const ry = Math.round(((x - centerX) / centerX) * 22);
+    setTilt({ rx, ry });
+  };
+
+  const handlePreviewPointerLeave = () => {
+    setTilt(null);
+  };
 
   const scrollToLayer = (idx: number) => {
     setActiveTab(idx);
     const element = document.getElementById(`stack-card-${idx}`);
     if (element) {
-      const yOffset = -120;
+      const yOffset = -100;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
@@ -124,7 +140,7 @@ export function SpatialStack() {
               key={layer.index}
               id={`stack-card-${layer.index}`}
               style={{
-                top: `calc(clamp(64px, 8vw, 76px) + ${(layer.index - 1) * 16}px)`,
+                top: `calc(clamp(56px, 8vw, 76px) + ${(layer.index - 1) * 12}px)`,
                 zIndex: layer.index,
               }}
               className="sticky bg-neutral-950/95 backdrop-blur-xl border border-neutral-800/90 rounded-2xl p-5 sm:p-8 lg:p-10 shadow-2xl shadow-black/80 transition-all duration-300 group hover:border-neutral-700 transform-gpu will-change-transform"
@@ -184,13 +200,31 @@ export function SpatialStack() {
                 <div className="lg:col-span-5 w-full">
                   <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
                     {layer.previewType === '3d-card' && (
-                      <div className="flex flex-col justify-between h-full">
+                      <div
+                        onPointerMove={handlePreviewPointerMove}
+                        onPointerLeave={handlePreviewPointerLeave}
+                        className="flex flex-col justify-between h-full cursor-grab active:cursor-grabbing touch-none select-none"
+                      >
                         <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
                           <span>CSS 3D TRANSFORM</span>
-                          <span>ROTATION: [R_x, R_y]</span>
+                          <span className={tilt ? 'text-emerald-400 font-bold' : ''}>
+                            ROTATION: [{tilt ? `${tilt.rx}°` : 'R_x'}, {tilt ? `${tilt.ry}°` : 'R_y'}]
+                          </span>
                         </div>
-                        {/* Interactive Visual Card Miniature with continuous 3D physics floating */}
-                        <div className="relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between animate-card-3d transition-transform duration-500">
+                        {/* Interactive Visual Card Miniature with continuous 3D physics floating & touch tilt */}
+                        <div
+                          style={
+                            tilt
+                              ? {
+                                  transform: `perspective(600px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) translateZ(12px)`,
+                                  transition: 'transform 0.08s ease-out',
+                                }
+                              : undefined
+                          }
+                          className={`relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between ${
+                            tilt ? '' : 'animate-card-3d'
+                          } transition-transform duration-300`}
+                        >
                           <div className="flex items-center justify-between">
                             <span className="text-[10px] font-mono font-bold text-white tracking-widest">SWD</span>
                             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -200,7 +234,7 @@ export function SpatialStack() {
                           </div>
                         </div>
                         <div className="text-center text-[10px] font-mono text-neutral-400">
-                          60 FPS • Real-time Euler Math
+                          {tilt ? 'Interactive Touch / Cursor Active • 60 FPS' : 'Touch or Hover to Tilt in 3D • 60 FPS'}
                         </div>
                       </div>
                     )}

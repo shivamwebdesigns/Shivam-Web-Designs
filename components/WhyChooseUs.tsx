@@ -40,7 +40,7 @@ export const WhyChooseUs: React.FC = () => {
 
   return (
     <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-2xl mb-16">
           <div className="mb-3">

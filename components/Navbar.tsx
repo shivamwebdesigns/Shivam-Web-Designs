@@ -52,11 +52,7 @@ export function Navbar() {
   }, []);
 
   const handleCartClick = () => {
-    if (pathname === '/' || pathname === '/packages') {
-      window.dispatchEvent(new CustomEvent('swd-open-cart'));
-    } else {
-      router.push('/packages');
-    }
+    window.dispatchEvent(new CustomEvent('swd-open-cart'));
   };
 
   // Close mobile menu on route change

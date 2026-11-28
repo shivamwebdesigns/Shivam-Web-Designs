@@ -1,575 +1,105 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
 import {
   Check,
   Plus,
   Minus,
-  X,
-  ShoppingCart,
-  Sparkles,
-  ArrowRight,
-  ExternalLink,
-  Globe,
-  MessageSquare,
-  HelpCircle,
-  ShieldCheck,
-  Zap,
-  GripVertical,
 } from 'lucide-react';
-import { siteConfig } from '@/data/siteConfig';
-import { OrderStatusModal } from '@/components/OrderStatusModal';
-
-export interface PackageTier {
-  id: 'starter' | 'growth' | 'pro';
-  name: string;
-  tagline: string;
-  price: number;
-  badge?: string;
-  scope: string;
-  delivery: string;
-  stackTags: string[];
-  features: string[];
-  recommended?: boolean;
-}
-
-export interface AddonItem {
-  id: string;
-  name: string;
-  desc: string;
-  price: number;
-  category: 'branding' | 'content' | 'maintenance';
-  monthly?: boolean;
-  badge?: string;
-}
-
-const PACKAGES: PackageTier[] = [
-  {
-    id: 'starter',
-    name: 'Starter',
-    tagline: 'A digital profile page & quick identity launch',
-    price: 499,
-    scope: '1 scrolling page',
-    delivery: '1–2 days',
-    stackTags: ['HTML5 Semantic', 'Mobile First', 'Free Subdomain', 'Fast CDN'],
-    features: [
-      'Mobile-first custom responsive design',
-      'Your logo, brand photos, bio & links',
-      'Instant WhatsApp and direct call buttons',
-      'Contact details, business hours & map location',
-      'Live on a free high-speed subdomain',
-      '3 free revision rounds included',
-      '7 days dedicated post-launch support',
-    ],
-  },
-  {
-    id: 'growth',
-    name: 'Growth',
-    tagline: 'A complete one-page business flagship',
-    price: 999,
-    badge: 'Popular Package',
-    recommended: true,
-    scope: '1 page, 4–5 sections',
-    delivery: '3–5 days',
-    stackTags: ['Flagship UI', 'Lead Engine', 'Custom Domain', 'SEO Standard'],
-    features: [
-      'Everything included in Starter',
-      'Hero, about, services, gallery & contact sections',
-      'Lead inquiry form with instant email alerts',
-      'Search engine basics: meta titles & descriptions',
-      'Your own custom domain connected (.com, .in, etc.)',
-      '3 free revision rounds included',
-      '15 days dedicated post-launch support',
-    ],
-  },
-  {
-    id: 'pro',
-    name: 'Pro',
-    tagline: 'A high-performance multi-page digital flagship',
-    price: 1499,
-    scope: 'Up to 3 full pages',
-    delivery: '5–7 days',
-    stackTags: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'Spatial 3D Matrix', 'PWA Ready'],
-    features: [
-      'Everything included in Growth',
-      'Up to 3 bespoke pages (Home, Services, Case Studies)',
-      'Sub-second edge speed & 100/100 Core Web Vitals',
-      'Google Analytics 4 setup & conversion event routing',
-      'Full XML sitemap & search console indexation',
-      'Free subdomain setup included (Saves ₹149)',
-      '3 free revision rounds included',
-      '30 days dedicated post-launch support',
-    ],
-  },
-];
-
-const ADDONS: AddonItem[] = [
-  {
-    id: 'subdomain',
-    name: 'Free subdomain and setup',
-    desc: 'We configure DNS, SSL, and launch your site on a free subdomain',
-    price: 149,
-    category: 'branding',
-    badge: 'Free with Pro',
-  },
-  {
-    id: 'logo',
-    name: 'Logo design',
-    desc: 'A clean, modern brand logo and vector identity for your business',
-    price: 99,
-    category: 'branding',
-    badge: 'From ₹99',
-  },
-  {
-    id: 'copy',
-    name: 'Copywriting, per page',
-    desc: 'Compelling, conversion-focused marketing copy written for one page',
-    price: 199,
-    category: 'content',
-  },
-  {
-    id: 'rev',
-    name: 'Extra revisions',
-    desc: '3 rounds included free, then per additional feedback cycle',
-    price: 199,
-    category: 'content',
-  },
-  {
-    id: 'page',
-    name: 'Extra page',
-    desc: 'Add another fully custom, responsive page to your web project',
-    price: 299,
-    category: 'content',
-  },
-  {
-    id: 'maint',
-    name: 'Monthly maintenance',
-    desc: 'Continuous security patches, automated backups, and bug fixes',
-    price: 299,
-    category: 'maintenance',
-    monthly: true,
-    badge: 'Ongoing',
-  },
-];
-
-const FAQS = [
-  {
-    q: 'What does each package price include?',
-    a: 'Design, hand-crafted frontend development, responsive tuning, domain/subdomain connection, and the dedicated post-launch support period listed. There are zero hidden fees.',
-  },
-  {
-    q: 'Can I order just add-ons if I already have a website?',
-    a: 'Yes, absolutely! You can choose any add-ons (like Logo Design for ₹99, Copywriting, or Subdomain Setup) without selecting a package. Just paste your website link in the cart box so we can review your existing website.',
-  },
-  {
-    q: 'How does payment and milestone billing work?',
-    a: 'Starter is paid upon kickoff. Growth and Pro follow a 50% upfront commitment and 50% final settlement prior to production DNS launch. Final source code and credentials are transferred upon full clearance.',
-  },
-  {
-    q: 'How do revision cycles work?',
-    a: 'Every package includes 3 structured revision rounds free of charge. A round consists of your consolidated feedback items. Extra rounds can be added for ₹199.',
-  },
-  {
-    q: 'Do I retain 100% ownership of my website?',
-    a: 'Yes. Upon final settlement, all custom frontend source code, design assets, and content are assigned 100% to you without restrictive vendor lock-in.',
-  },
-  {
-    q: 'What content do I need to provide?',
-    a: 'Please share your logo, photos, and basic text. If you need assistance with brand writing or logo creation, our add-ons start at just ₹99.',
-  },
-  {
-    q: 'I need something custom or enterprise. What now?',
-    a: 'For custom web applications or multi-page flagships, visit our Start a Project page to submit a tailored brief.',
-  },
-];
+import { PACKAGES, ADDONS, FAQS } from '@/data/packages';
 
 interface PackagesSectionProps {
   isPage?: boolean;
 }
 
+const fmt = (num: number) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(num);
+
 export function PackagesSection({ isPage = false }: PackagesSectionProps) {
-  const [selectedPkg, setSelectedPkg] = useState<'starter' | 'growth' | 'pro' | null>(null);
-  const [addons, setAddons] = useState<{ [id: string]: number }>({});
+  const [selectedPkg, setSelectedPkg] = useState<string | null>(null);
+  const [addons, setAddons] = useState<Record<string, number>>({});
   const [existingSite, setExistingSite] = useState('');
-  const [clientName, setClientName] = useState('');
-  const [clientEmail, setClientEmail] = useState('');
-  const [clientPhone, setClientPhone] = useState('');
-  const [contactError, setContactError] = useState('');
-  const [cartWindowOpen, setCartWindowOpen] = useState(false);
-  const [orderModalOpen, setOrderModalOpen] = useState(false);
-  const [orderModalStatus, setOrderModalStatus] = useState<'loading' | 'success' | 'cancelled'>('loading');
-  const [waOrderUrl, setWaOrderUrl] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Desktop movable widget state
-  const [widgetPos, setWidgetPos] = useState<{ x: number; y: number } | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStartRef = useRef<{ startX: number; startY: number; initX: number; initY: number } | null>(null);
-  const widgetRef = useRef<HTMLDivElement>(null);
-
-  // Drag handlers on desktop
-  const handleDragMouseDown = (e: React.MouseEvent) => {
-    // Only allow primary mouse button and do not initiate drag on buttons or inputs
-    if (e.button !== 0) return;
-    if ((e.target as HTMLElement).closest('button, a, input, textarea')) return;
-    if (!widgetRef.current) return;
-    e.preventDefault();
-
-    const rect = widgetRef.current.getBoundingClientRect();
-    dragStartRef.current = {
-      startX: e.clientX,
-      startY: e.clientY,
-      initX: rect.left,
-      initY: rect.top,
-    };
-    setIsDragging(true);
-  };
-
-  // Listen for global open cart requests (e.g. from header cart button)
-  useEffect(() => {
-    const handleOpenCartEvent = () => {
-      setCartWindowOpen(true);
-    };
-    window.addEventListener('swd-open-cart', handleOpenCartEvent);
-    return () => window.removeEventListener('swd-open-cart', handleOpenCartEvent);
-  }, []);
-
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!dragStartRef.current || !widgetRef.current) return;
-      const deltaX = e.clientX - dragStartRef.current.startX;
-      const deltaY = e.clientY - dragStartRef.current.startY;
-
-      const widgetWidth = widgetRef.current.offsetWidth || 380;
-      const widgetHeight = widgetRef.current.offsetHeight || 120;
-
-      // Keep inside screen viewport with 16px safety margin
-      const newX = Math.max(16, Math.min(window.innerWidth - widgetWidth - 16, dragStartRef.current.initX + deltaX));
-      const newY = Math.max(16, Math.min(window.innerHeight - widgetHeight - 16, dragStartRef.current.initY + deltaY));
-
-      setWidgetPos({ x: newX, y: newY });
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-      dragStartRef.current = null;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (!widgetPos || !widgetRef.current) return;
-      const widgetWidth = widgetRef.current.offsetWidth || 380;
-      const widgetHeight = widgetRef.current.offsetHeight || 120;
-      const clampedX = Math.max(16, Math.min(window.innerWidth - widgetWidth - 16, widgetPos.x));
-      const clampedY = Math.max(16, Math.min(window.innerHeight - widgetHeight - 16, widgetPos.y));
-      if (clampedX !== widgetPos.x || clampedY !== widgetPos.y) {
-        setWidgetPos({ x: clampedX, y: clampedY });
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [widgetPos]);
-
-  // Restore client profile and cart from local DB (localStorage)
-  useEffect(() => {
+  // Sync state from localStorage
+  const syncFromStorage = () => {
     try {
-      // 1. Restore persistent client profile from local DB
-      const savedProfile = localStorage.getItem('swd-client-profile');
-      if (savedProfile) {
-        const p = JSON.parse(savedProfile);
-        if (p.name && typeof p.name === 'string') setClientName(p.name);
-        if (p.email && typeof p.email === 'string') setClientEmail(p.email);
-        if (p.phone && typeof p.phone === 'string') setClientPhone(p.phone);
-        if (p.existingSite && typeof p.existingSite === 'string') setExistingSite(p.existingSite);
-      }
-
-      // 2. Restore cart items
       const saved = localStorage.getItem('swd-cart');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.pkg && ['starter', 'growth', 'pro'].includes(parsed.pkg)) {
-          setSelectedPkg(parsed.pkg);
-        }
-        if (parsed.existingSite && typeof parsed.existingSite === 'string') {
-          setExistingSite(parsed.existingSite);
-        }
-        if (parsed.add && typeof parsed.add === 'object') {
-          setAddons(parsed.add);
-        }
-        if (parsed.clientName && typeof parsed.clientName === 'string') {
-          setClientName(parsed.clientName);
-        }
-        if (parsed.clientEmail && typeof parsed.clientEmail === 'string') {
-          setClientEmail(parsed.clientEmail);
-        }
-        if (parsed.clientPhone && typeof parsed.clientPhone === 'string') {
-          setClientPhone(parsed.clientPhone);
-        }
+        if (typeof parsed?.pkg === 'string') setSelectedPkg(parsed.pkg);
+        else if (parsed?.pkg === null) setSelectedPkg(null);
+
+        if (parsed?.add && typeof parsed.add === 'object') setAddons(parsed.add);
+        else if (!parsed?.add) setAddons({});
+
+        if (typeof parsed?.existingSite === 'string') setExistingSite(parsed.existingSite);
+      } else {
+        setSelectedPkg(null);
+        setAddons({});
       }
     } catch (_) {}
+  };
+
+  useEffect(() => {
+    syncFromStorage();
+    const handleCartChange = () => syncFromStorage();
+    window.addEventListener('swd-cart-change', handleCartChange);
+    window.addEventListener('storage', handleCartChange);
+    return () => {
+      window.removeEventListener('swd-cart-change', handleCartChange);
+      window.removeEventListener('storage', handleCartChange);
+    };
   }, []);
 
-  // Save client profile and cart to local DB (localStorage)
-  useEffect(() => {
+  const persistCart = (newPkg: string | null, newAddons: Record<string, number>) => {
+    setSelectedPkg(newPkg);
+    setAddons(newAddons);
     try {
-      // Persist client profile independently so details are permanently remembered
-      if (clientName || clientEmail || clientPhone || existingSite) {
-        localStorage.setItem(
-          'swd-client-profile',
-          JSON.stringify({
-            name: clientName,
-            email: clientEmail,
-            phone: clientPhone,
-            existingSite,
-          })
-        );
-      }
-
-      // Persist cart payload
+      const saved = localStorage.getItem('swd-cart');
+      const existing = saved ? JSON.parse(saved) : {};
       localStorage.setItem(
         'swd-cart',
         JSON.stringify({
-          pkg: selectedPkg,
-          add: addons,
+          ...existing,
+          pkg: newPkg,
+          add: newAddons,
           existingSite,
-          clientName,
-          clientEmail,
-          clientPhone,
         })
       );
       window.dispatchEvent(new Event('swd-cart-change'));
     } catch (_) {}
-  }, [selectedPkg, addons, existingSite, clientName, clientEmail, clientPhone]);
-
-  // Pricing calculations
-  const calc = useMemo(() => {
-    const pkgItem = selectedPkg ? PACKAGES.find((p) => p.id === selectedPkg) : null;
-    let addSub = 0;
-    let monthly = 0;
-    let qAll = 0;
-
-    Object.entries(addons).forEach(([id, qty]) => {
-      const item = ADDONS.find((a) => a.id === id);
-      if (!item || qty <= 0) return;
-      qAll += qty;
-      if (item.monthly) {
-        monthly += item.price * qty;
-      } else {
-        addSub += item.price * qty;
-      }
-    });
-
-    // Pro perk: free subdomain setup if selected
-    const freeSubdomain =
-      selectedPkg === 'pro' && addons.subdomain
-        ? ADDONS.find((a) => a.id === 'subdomain')?.price || 0
-        : 0;
-
-    // Bundle: 10% off add-ons when 2 or more add-on items are selected
-    const bundleDiscount = qAll >= 2 ? Math.round((addSub - freeSubdomain) * 0.1) : 0;
-    const basePrice = pkgItem ? pkgItem.price : 0;
-    const totalOneTime = Math.max(0, basePrice + addSub - freeSubdomain - bundleDiscount);
-
-    return {
-      pkgItem,
-      basePrice,
-      addSub,
-      monthly,
-      qAll,
-      freeSubdomain,
-      bundleDiscount,
-      totalDiscounts: freeSubdomain + bundleDiscount,
-      subtotal: basePrice + addSub,
-      totalOneTime,
-      itemCount: (pkgItem ? 1 : 0) + qAll,
-    };
-  }, [selectedPkg, addons]);
-
-  const fmt = (n: number) => '₹' + Math.round(n).toLocaleString('en-IN');
-
-  // Toggle package in cart
-  const togglePackage = (pkgId: 'starter' | 'growth' | 'pro') => {
-    setSelectedPkg((prev) => (prev === pkgId ? null : pkgId));
   };
 
-  // Add / increment addon
-  const addAddon = (id: string) => {
-    setAddons((prev) => ({
-      ...prev,
-      [id]: (prev[id] || 0) + 1,
-    }));
-  };
-
-  // Decrement addon
-  const decrementAddon = (id: string) => {
-    setAddons((prev) => {
-      const current = prev[id] || 0;
-      if (current <= 1) {
-        const next = { ...prev };
-        delete next[id];
-        return next;
-      }
-      return { ...prev, [id]: current - 1 };
-    });
-  };
-
-  // Remove addon completely
-  const removeAddon = (id: string) => {
-    setAddons((prev) => {
-      const next = { ...prev };
-      delete next[id];
-      return next;
-    });
-  };
-
-  // Clear entire cart (empties local state & DB, closes window, clears widget)
-  const clearCart = () => {
-    setSelectedPkg(null);
-    setAddons({});
-    setExistingSite('');
-    setContactError('');
-    setCartWindowOpen(false);
-    try {
-      localStorage.removeItem('swd-cart');
-      window.dispatchEvent(new Event('swd-cart-change'));
-    } catch (_) {}
-  };
-
-  // Build formatted order message
-  const buildOrderMessage = () => {
-    const lines: string[] = [];
-
-    if (!calc.pkgItem && Object.keys(addons).length === 0) {
-      return 'Hi Shivam, I’d like to know more about your website packages and add-ons.';
-    }
-
-    if (calc.pkgItem) {
-      lines.push('Hi Shivam, I’d like to order:', '');
-      lines.push(`• ${calc.pkgItem.name} Package – ${fmt(calc.pkgItem.price)}`);
+  const togglePackage = (pkgId: string) => {
+    if (selectedPkg === pkgId) {
+      // Open cart modal if already selected
+      window.dispatchEvent(new CustomEvent('swd-open-cart'));
     } else {
-      lines.push('Hi Shivam, I’d like to order standalone add-ons:', '');
+      persistCart(pkgId, addons);
     }
-
-    Object.entries(addons).forEach(([id, qty]) => {
-      const item = ADDONS.find((a) => a.id === id);
-      if (!item || qty <= 0) return;
-      lines.push(
-        `• ${item.name}${qty > 1 ? ` × ${qty}` : ''} – ${fmt(item.price * qty)}${
-          item.monthly ? ' / month' : ''
-        }`
-      );
-    });
-
-    if (clientName.trim() || clientEmail.trim() || clientPhone.trim()) {
-      lines.push('', '*Client Contact Details:*');
-      if (clientName.trim()) lines.push(`• Name: ${clientName.trim()}`);
-      if (clientEmail.trim()) lines.push(`• Email: ${clientEmail.trim()}`);
-      if (clientPhone.trim()) lines.push(`• Phone: ${clientPhone.trim()}`);
-    }
-
-    if (existingSite.trim()) {
-      lines.push('', `• Existing website: ${existingSite.trim()}`);
-    }
-
-    if (calc.totalDiscounts > 0) {
-      lines.push('', 'Offers Applied:');
-      if (calc.freeSubdomain > 0) {
-        lines.push(`• Pro Perk: Subdomain setup free (−${fmt(calc.freeSubdomain)})`);
-      }
-      if (calc.bundleDiscount > 0) {
-        lines.push(`• Bundle: 10% off add-ons (−${fmt(calc.bundleDiscount)})`);
-      }
-    }
-
-    lines.push(
-      '',
-      `Total: ${fmt(calc.totalOneTime)}${
-        calc.monthly > 0 ? ` + ${fmt(calc.monthly)} / month` : ''
-      }`
-    );
-    lines.push('', 'Please confirm and share the next steps.');
-
-    return lines.join('\n');
   };
 
-  // Dual Dispatch: WhatsApp + Studio Admin API
-  const handleDispatchOrder = async () => {
-    if (calc.itemCount === 0 || isSubmitting) return;
+  const addAddon = (addonId: string) => {
+    const current = addons[addonId] || 0;
+    const updated = { ...addons, [addonId]: current + 1 };
+    persistCart(selectedPkg, updated);
+  };
 
-    const trimmedName = clientName.trim();
-    const trimmedEmail = clientEmail.trim();
-    const trimmedPhone = clientPhone.trim();
-
-    if (!trimmedName || !trimmedEmail || !trimmedPhone) {
-      setContactError('Please enter your Name, Email, and Phone number to proceed.');
-      return;
+  const decrementAddon = (addonId: string) => {
+    const current = addons[addonId] || 0;
+    const next = Math.max(0, current - 1);
+    const updated = { ...addons };
+    if (next === 0) {
+      delete updated[addonId];
+    } else {
+      updated[addonId] = next;
     }
-
-    if (!trimmedEmail.includes('@') || !trimmedEmail.includes('.')) {
-      setContactError('Please enter a valid email address.');
-      return;
-    }
-
-    if (trimmedPhone.replace(/\D/g, '').length < 8) {
-      setContactError('Please enter a valid phone or WhatsApp number.');
-      return;
-    }
-
-    setContactError('');
-    setIsSubmitting(true);
-    const orderText = buildOrderMessage();
-    const waUrl = `https://wa.me/917861965480?text=${encodeURIComponent(orderText)}`;
-    setWaOrderUrl(waUrl);
-
-    // Immediately open the animated order status modal in loading state
-    setOrderModalStatus('loading');
-    setOrderModalOpen(true);
-    setCartWindowOpen(false);
-
-    // 1. Post to internal /api/contact for Firestore & Admin review
-    try {
-      await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: trimmedName,
-          email: trimmedEmail,
-          phone: trimmedPhone,
-          subject: `[Package Order] ${
-            calc.pkgItem ? `${calc.pkgItem.name} Package` : 'Add-ons Only'
-          } (${fmt(calc.totalOneTime)}) - ${trimmedName}`,
-          message: `${orderText}${
-            existingSite ? `\n\nClient Existing Website:\n${existingSite}` : ''
-          }`,
-        }),
-      });
-    } catch (e) {
-      console.warn('Order sync notice:', e);
-    }
-
-    // 2. Attempt WhatsApp dispatch and transition to success view
-    setTimeout(() => {
-      try {
-        window.open(waUrl, '_blank', 'noopener,noreferrer');
-      } catch (err) {
-        console.warn('Popup notice:', err);
-      }
-      setIsSubmitting(false);
-      setOrderModalStatus('success');
-    }, 700);
+    persistCart(selectedPkg, updated);
   };
 
   return (
@@ -581,7 +111,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-6 sm:mb-8">
+        <div className="max-w-3xl mb-8 sm:mb-12">
           {isPage ? (
             <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
               Website Packages Starting at ₹499
@@ -594,752 +124,271 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed mb-4">
             Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals.
           </p>
-          {isPage ? (
-            <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-              PACKAGES // FIXED PRICES
-            </h2>
-          ) : (
-            <p className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-              PACKAGES // FIXED PRICES
-            </p>
-          )}
+          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400">
+            PACKAGES // FIXED PRICES
+          </p>
         </div>
 
-        {/* Main Layout: Full width cards, add-ons, and FAQ with spacious grid */}
+        {/* Main Layout: Full width cards, add-ons, and FAQ */}
         <div className="space-y-12 sm:space-y-16">
           {/* Package Cards 3D Deck */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {PACKAGES.map((pkg) => {
-                const isSelected = selectedPkg === pkg.id;
-                const isPro = pkg.id === 'pro';
-                const isGrowth = pkg.id === 'growth';
+            {PACKAGES.map((pkg) => {
+              const isSelected = selectedPkg === pkg.id;
+              const isPro = pkg.id === 'pro';
+              const isGrowth = pkg.id === 'growth';
+
+              return (
+                <article
+                  key={pkg.id}
+                  className={`relative flex flex-col rounded-2xl p-6 transition-all duration-300 transform-gpu group backdrop-blur-xl ${
+                    isSelected
+                      ? 'border-2 border-white shadow-2xl shadow-white/20 bg-neutral-900/90 -translate-y-1'
+                      : isPro
+                      ? 'border border-neutral-600 hover:border-white shadow-xl shadow-white/10 hover:shadow-white/20 bg-neutral-950/90 hover:-translate-y-1'
+                      : isGrowth
+                      ? 'border border-neutral-700 hover:border-white shadow-lg shadow-white/5 hover:shadow-white/15 bg-neutral-950/90 hover:-translate-y-1'
+                      : 'border border-neutral-800 hover:border-neutral-500 shadow-md bg-neutral-950/90 hover:-translate-y-1'
+                  }`}
+                >
+                  {/* Top edge glow line */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+
+                  {/* Badge */}
+                  {pkg.badge && (
+                    <span className="absolute -top-3 left-6 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase bg-white text-black shadow-md shadow-white/20">
+                      {pkg.badge}
+                    </span>
+                  )}
+
+                  {/* Card Title & Tagline */}
+                  <div className="pt-2">
+                    <h3 className="text-2xl font-bold tracking-tight text-white">{pkg.name}</h3>
+                    <p className="text-xs text-neutral-400 mt-1 min-h-[32px] leading-snug">
+                      {pkg.tagline}
+                    </p>
+                  </div>
+
+                  {/* Price Block */}
+                  <div className="mt-4 pt-4 border-t border-neutral-900">
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-neutral-400">
+                      Starting at
+                    </span>
+                    <div className="text-4xl font-extrabold tracking-tight text-white mt-0.5">
+                      {fmt(pkg.price)}
+                    </div>
+                    <span className="text-[11px] text-neutral-400 block mt-1">
+                      Domain billed separately
+                    </span>
+                  </div>
+
+                  {/* Scope & Delivery Meta */}
+                  <div className="mt-4 py-3 border-y border-neutral-900/80 text-xs font-mono space-y-1.5">
+                    <div className="flex justify-between text-neutral-400">
+                      <span>Scope:</span>
+                      <span className="text-neutral-200 font-medium">{pkg.scope}</span>
+                    </div>
+                    <div className="flex justify-between text-neutral-400">
+                      <span>Delivery:</span>
+                      <span className="text-neutral-200 font-medium">{pkg.delivery}</span>
+                    </div>
+                  </div>
+
+                  {/* Features List */}
+                  <ul className="space-y-2 text-xs text-neutral-300 flex-1 my-4">
+                    {pkg.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2">
+                        <Check className="w-3.5 h-3.5 text-white flex-shrink-0 mt-0.5" />
+                        <span className="leading-snug">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Actions */}
+                  <div className="space-y-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => togglePackage(pkg.id)}
+                      className={`w-full py-2.5 px-4 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-1.5 active:scale-95 ${
+                        isSelected
+                          ? 'bg-neutral-800 text-white border border-white shadow-inner'
+                          : 'bg-white text-black hover:bg-neutral-200 shadow-md shadow-white/10'
+                      }`}
+                      aria-pressed={isSelected}
+                    >
+                      {isSelected ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>In Cart (View)</span>
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
+
+                    <a
+                      href={`https://wa.me/917861965480?text=${encodeURIComponent(
+                        `Hi Shivam, I’m interested in the ${pkg.name} Package (${fmt(
+                          pkg.price
+                        )}). Can we discuss?`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full text-center py-1.5 text-xs font-mono text-neutral-400 hover:text-white transition-colors block"
+                    >
+                      Ask on WhatsApp ›
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          {/* Modular Add-ons */}
+          <div className="pt-6">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold tracking-tight text-white">Modular Add-ons</h3>
+              <p className="text-xs sm:text-sm text-neutral-400 mt-1">
+                Select any add-on with a package, or order add-ons standalone for your existing website.
+              </p>
+            </div>
+
+            {/* Add-on Items List */}
+            <div className="divide-y divide-neutral-900 border-y border-neutral-900">
+              {ADDONS.map((item) => {
+                const qty = addons[item.id] || 0;
+                const isAdded = qty > 0;
+                const isFreePro = selectedPkg === 'pro' && item.id === 'subdomain';
 
                 return (
-                  <article
-                    key={pkg.id}
-                    className={`relative flex flex-col rounded-2xl p-6 transition-all duration-300 transform-gpu group backdrop-blur-xl ${
-                      isSelected
-                        ? 'border-2 border-white shadow-2xl shadow-white/20 bg-neutral-900/90 -translate-y-1'
-                        : isPro
-                        ? 'border border-neutral-600 hover:border-white shadow-xl shadow-white/10 hover:shadow-white/20 bg-neutral-950/90 hover:-translate-y-1'
-                        : isGrowth
-                        ? 'border border-neutral-700 hover:border-white shadow-lg shadow-white/5 hover:shadow-white/15 bg-neutral-950/90 hover:-translate-y-1'
-                        : 'border border-neutral-800 hover:border-neutral-500 shadow-md bg-neutral-950/90 hover:-translate-y-1'
-                    }`}
+                  <div
+                    key={item.id}
+                    className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-neutral-950/60 px-2 rounded-xl transition-colors"
                   >
-                    {/* Top edge glow line */}
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-
-                    {/* Badge */}
-                    {pkg.badge && (
-                      <span className="absolute -top-3 left-6 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase bg-white text-black shadow-md shadow-white/20">
-                        {pkg.badge}
-                      </span>
-                    )}
-
-                    {/* Card Title & Tagline */}
-                    <div className="pt-2">
-                      <h3 className="text-2xl font-bold tracking-tight text-white">{pkg.name}</h3>
-                      <p className="text-xs text-neutral-400 mt-1 min-h-[32px] leading-snug">
-                        {pkg.tagline}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-sm text-white">{item.name}</span>
+                        {item.badge && (
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider ${
+                              isFreePro
+                                ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'
+                                : 'bg-neutral-900 text-neutral-300 border border-neutral-800'
+                            }`}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] sm:text-xs text-neutral-400 max-w-lg leading-relaxed">
+                        {item.desc}
                       </p>
                     </div>
 
-                    {/* Price Block */}
-                    <div className="mt-4 pt-4 border-t border-neutral-900">
-                      <span className="text-[10px] font-mono tracking-widest uppercase text-neutral-400">
-                        Starting at
-                      </span>
-                      <div className="text-4xl font-extrabold tracking-tight text-white mt-0.5">
-                        {fmt(pkg.price)}
-                      </div>
-                      <span className="text-[11px] text-neutral-400 block mt-1">
-                        Domain billed separately
-                      </span>
-                    </div>
-
-                    {/* Scope & Delivery Meta */}
-                    <div className="mt-4 py-3 border-y border-neutral-900/80 text-xs font-mono space-y-1.5">
-                      <div className="flex justify-between text-neutral-400">
-                        <span>Scope:</span>
-                        <span className="text-neutral-200 font-medium">{pkg.scope}</span>
-                      </div>
-                      <div className="flex justify-between text-neutral-400">
-                        <span>Delivery:</span>
-                        <span className="text-neutral-200 font-medium">{pkg.delivery}</span>
-                      </div>
-                    </div>
-
-                    {/* Features List */}
-                    <ul className="space-y-2 text-xs text-neutral-300 flex-1 my-4">
-                      {pkg.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2">
-                          <Check className="w-3.5 h-3.5 text-white flex-shrink-0 mt-0.5" />
-                          <span className="leading-snug">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Actions */}
-                    <div className="space-y-2 pt-2">
-                      <button
-                        type="button"
-                        onClick={() => togglePackage(pkg.id)}
-                        className={`w-full py-2.5 px-4 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-1.5 active:scale-95 ${
-                          isSelected
-                            ? 'bg-neutral-800 text-white border border-white shadow-inner'
-                            : 'bg-white text-black hover:bg-neutral-200 shadow-md shadow-white/10'
-                        }`}
-                        aria-pressed={isSelected}
-                      >
-                        {isSelected ? (
-                          <>
-                            <Check className="w-3.5 h-3.5" />
-                            <span>In Cart (Selected)</span>
-                          </>
-                        ) : (
-                          <>
-                            <Plus className="w-3.5 h-3.5" />
-                            <span>Add to Cart</span>
-                          </>
-                        )}
-                      </button>
-
-                      <a
-                        href={`https://wa.me/917861965480?text=${encodeURIComponent(
-                          `Hi Shivam, I’m interested in the ${pkg.name} Package (${fmt(
-                            pkg.price
-                          )}). Can we discuss?`
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full text-center py-1.5 text-xs font-mono text-neutral-400 hover:text-white transition-colors block"
-                      >
-                        Ask on WhatsApp ›
-                      </a>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-
-            {/* Modular Add-ons */}
-            <div className="pt-6">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold tracking-tight text-white">Modular Add-ons</h3>
-                <p className="text-xs sm:text-sm text-neutral-400 mt-1">
-                  Select any add-on with a package, or order add-ons standalone for your existing website.
-                </p>
-              </div>
-
-              {/* Add-on Items List */}
-              <div className="divide-y divide-neutral-900 border-y border-neutral-900">
-                {ADDONS.map((item) => {
-                  const qty = addons[item.id] || 0;
-                  const isAdded = qty > 0;
-                  const isFreePro = selectedPkg === 'pro' && item.id === 'subdomain';
-
-                  return (
-                    <div
-                      key={item.id}
-                      className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-neutral-950/60 px-2 rounded-xl transition-colors"
-                    >
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold text-sm text-white">{item.name}</span>
-                          {item.badge && (
-                            <span
-                              className={`px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider ${
-                                isFreePro
-                                  ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'
-                                  : 'bg-neutral-900 text-neutral-300 border border-neutral-800'
-                              }`}
-                            >
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-[11px] sm:text-xs text-neutral-400 max-w-lg leading-relaxed">
-                          {item.desc}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center justify-between sm:justify-end gap-4 flex-shrink-0">
-                        <div className="text-right">
-                          <span className="font-mono text-sm font-semibold text-white">
-                            {isFreePro ? (
-                              <span className="flex items-center gap-1.5">
-                                <span className="line-through text-neutral-400 text-xs">
-                                  {fmt(item.price)}
-                                </span>
-                                <span className="text-emerald-400 font-bold">FREE</span>
+                    <div className="flex items-center justify-between sm:justify-end gap-4 flex-shrink-0">
+                      <div className="text-right">
+                        <span className="font-mono text-sm font-semibold text-white">
+                          {isFreePro ? (
+                            <span className="flex items-center gap-1.5">
+                              <span className="line-through text-neutral-400 text-xs">
+                                {fmt(item.price)}
                               </span>
-                            ) : (
-                              `${fmt(item.price)}${item.monthly ? ' / mo' : ''}`
-                            )}
-                          </span>
-                        </div>
-
-                        {/* Add / Quantity Button */}
-                        {isAdded ? (
-                          <div className="flex items-center gap-2 bg-neutral-900 border border-neutral-700 rounded-full px-2 py-1">
-                            <button
-                              type="button"
-                              onClick={() => decrementAddon(item.id)}
-                              className="w-6 h-6 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800 transition-colors"
-                              aria-label={`Decrease ${item.name}`}
-                            >
-                              <Minus className="w-3 h-3" />
-                            </button>
-                            <span className="font-mono text-xs font-bold text-white min-w-[16px] text-center">
-                              {qty}
+                              <span className="text-emerald-400 font-bold">FREE</span>
                             </span>
-                            <button
-                              type="button"
-                              onClick={() => addAddon(item.id)}
-                              className="w-6 h-6 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800 transition-colors"
-                              aria-label={`Increase ${item.name}`}
-                            >
-                              <Plus className="w-3 h-3" />
-                            </button>
-                          </div>
-                        ) : (
+                          ) : (
+                            `${fmt(item.price)}${item.monthly ? ' / mo' : ''}`
+                          )}
+                        </span>
+                      </div>
+
+                      {/* Add / Quantity Button */}
+                      {isAdded ? (
+                        <div className="flex items-center gap-2 bg-neutral-900 border border-neutral-700 rounded-full px-2 py-1">
+                          <button
+                            type="button"
+                            onClick={() => decrementAddon(item.id)}
+                            className="w-6 h-6 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800 transition-colors"
+                            aria-label={`Decrease ${item.name}`}
+                          >
+                            <Minus className="w-3 h-3" />
+                          </button>
+                          <span className="font-mono text-xs font-bold text-white min-w-[16px] text-center">
+                            {qty}
+                          </span>
                           <button
                             type="button"
                             onClick={() => addAddon(item.id)}
-                            className="px-4 py-1.5 rounded-full text-xs font-semibold bg-neutral-900 hover:bg-white text-neutral-200 hover:text-black border border-neutral-700 hover:border-white transition-all active:scale-95"
+                            className="w-6 h-6 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800 transition-colors"
+                            aria-label={`Increase ${item.name}`}
                           >
-                            + Add
+                            <Plus className="w-3 h-3" />
                           </button>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Frequently Asked Questions */}
-            <div className="pt-6">
-              <h3 className="text-2xl font-bold tracking-tight text-white mb-2">
-                Frequently Asked Questions
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-400 mb-6">
-                Everything you need to know about our packages, delivery, and deliverables.
-              </p>
-
-              <div className="space-y-3">
-                {FAQS.map((faq, idx) => {
-                  const isOpen = openFaq === idx;
-                  return (
-                    <div
-                      key={faq.q}
-                      className="border border-neutral-800/80 bg-neutral-950/70 rounded-xl overflow-hidden transition-colors hover:border-neutral-700"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setOpenFaq(isOpen ? null : idx)}
-                        className="w-full py-4 px-5 flex items-center justify-between text-left gap-4 cursor-pointer select-none group"
-                        aria-expanded={isOpen}
-                      >
-                        <span className="text-sm font-semibold text-white group-hover:text-neutral-200 transition-colors">{faq.q}</span>
-                        <span className={`font-mono text-neutral-400 text-base flex-shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'rotate-180 text-white' : ''}`}>
-                          {isOpen ? '−' : '+'}
-                        </span>
-                      </button>
-                      {isOpen && (
-                        <div className="px-5 pb-4 text-xs sm:text-sm text-neutral-400 leading-relaxed border-t border-neutral-900 pt-3 animate-fade-in">
-                          {faq.a}
                         </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => addAddon(item.id)}
+                          className="px-4 py-1.5 rounded-full text-xs font-semibold bg-neutral-900 hover:bg-white text-neutral-200 hover:text-black border border-neutral-700 hover:border-white transition-all active:scale-95"
+                        >
+                          + Add
+                        </button>
                       )}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-
-      {/* Movable Floating Cart Widget (Desktop & Mobile) - Persistent until Cart Cleared */}
-      {calc.itemCount > 0 && (
-        <div
-          ref={widgetRef}
-          onMouseDown={handleDragMouseDown}
-          style={
-            widgetPos && typeof window !== 'undefined' && window.innerWidth >= 640
-              ? { left: `${widgetPos.x}px`, top: `${widgetPos.y}px`, bottom: 'auto', right: 'auto' }
-              : undefined
-          }
-          className={`fixed z-50 transition-shadow duration-200 select-none ${
-            isDragging ? 'cursor-grabbing scale-[1.02] shadow-2xl shadow-emerald-500/10' : 'cursor-grab'
-          } bottom-4 left-4 right-4 sm:left-auto sm:right-8 sm:bottom-8 sm:w-[400px] max-w-md mx-auto sm:mx-0 animate-fade-in`}
-          aria-label="Floating Cart Widget"
-        >
-          <div className="bg-neutral-950/95 backdrop-blur-2xl border border-neutral-800/90 hover:border-neutral-700/90 rounded-2xl p-4 shadow-2xl shadow-black/95 space-y-3">
-            {/* Top Bar: Grip, Title, Count, Total */}
-            <div className="flex items-center justify-between pb-2.5 border-b border-neutral-900">
-              <div className="flex items-center gap-2.5">
-                {/* Drag Grip Handle on Desktop */}
-                <div
-                  className="hidden sm:flex items-center text-neutral-500 hover:text-neutral-300 p-0.5"
-                  title="Click and drag to move widget"
-                >
-                  <GripVertical className="w-4 h-4" />
-                </div>
-                <div className="w-7 h-7 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs flex-shrink-0">
-                  {calc.itemCount}
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                      Your Cart
-                    </span>
-                    <span className="hidden sm:inline-block text-[9px] font-mono text-neutral-500 uppercase">
-                      (Movable)
-                    </span>
                   </div>
-                  <span className="text-[11px] font-mono text-neutral-400 block truncate max-w-[160px] sm:max-w-[200px]">
-                    {calc.pkgItem?.name ? `${calc.pkgItem.name} Package` : 'Add-ons Selected'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="text-right">
-                <span className="font-mono text-sm sm:text-base font-extrabold text-white block">
-                  {fmt(calc.totalOneTime)}
-                </span>
-                {calc.monthly > 0 && (
-                  <span className="text-[10px] font-mono text-neutral-400 block">
-                    +{fmt(calc.monthly)}/mo
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Profile persistence notice */}
-            {clientName && (
-              <div className="text-[10px] font-mono text-emerald-400 flex items-center justify-between px-0.5">
-                <span>✓ Profile active: {clientName.split(' ')[0]}</span>
-                <span className="text-neutral-500">Local DB</span>
-              </div>
-            )}
-
-            {/* The Two Main Action Buttons: View Full Cart & Order */}
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              {/* Button 1: View Full Cart */}
-              <button
-                type="button"
-                onClick={() => setCartWindowOpen(true)}
-                className="w-full py-2.5 px-3 rounded-xl border border-neutral-700/80 bg-neutral-900/90 hover:bg-neutral-800 text-white font-mono text-xs font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm group"
-                aria-label="View Full Cart Window"
-              >
-                <ShoppingCart className="w-3.5 h-3.5 text-neutral-300 group-hover:scale-110 transition-transform" />
-                <span>View Full Cart</span>
-              </button>
-
-              {/* Button 2: Order / Place Order */}
-              <button
-                type="button"
-                onClick={() => {
-                  const trimmedName = clientName.trim();
-                  const trimmedEmail = clientEmail.trim();
-                  const trimmedPhone = clientPhone.trim();
-
-                  if (!trimmedName || !trimmedEmail || !trimmedPhone) {
-                    setCartWindowOpen(true);
-                    setContactError('Please enter your contact details to complete the order.');
-                  } else {
-                    handleDispatchOrder();
-                  }
-                }}
-                disabled={isSubmitting}
-                className="w-full py-2.5 px-3 bg-white text-black hover:bg-neutral-200 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-white/10"
-                aria-label="Order Cart"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>Order Now</span>
-              </button>
+                );
+              })}
             </div>
           </div>
-        </div>
-      )}
 
-      {/* Dedicated "Your Cart" Window Modal (Mobile & Desktop) */}
-      {cartWindowOpen && (
-        <div className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 animate-fade-in">
-          <div
-            className="bg-neutral-950 border border-neutral-800 rounded-3xl w-full max-w-2xl max-h-[92dvh] sm:max-h-[88vh] flex flex-col shadow-2xl shadow-black overflow-hidden animate-scale-up"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="cart-window-title"
-          >
-            {/* Window Header */}
-            <div className="px-5 py-4 sm:px-6 sm:py-5 border-b border-neutral-900 bg-neutral-950/90 backdrop-blur-md flex items-center justify-between flex-shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-sm">
-                  <ShoppingCart className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 id="cart-window-title" className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
-                    <span>Your Cart</span>
-                    <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-neutral-800 text-white border border-neutral-700">
-                      {calc.itemCount} item{calc.itemCount !== 1 ? 's' : ''}
-                    </span>
-                  </h3>
-                  <p className="text-xs text-neutral-400 font-mono">
-                    Review items, enter details &amp; order
-                  </p>
-                </div>
-              </div>
+          {/* Frequently Asked Questions */}
+          <div className="pt-6">
+            <h3 className="text-2xl font-bold tracking-tight text-white mb-2">
+              Frequently Asked Questions
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-400 mb-6">
+              Everything you need to know about our packages, delivery, and deliverables.
+            </p>
 
-              {/* Actions: Clear/Discard Cart & Close Window */}
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={clearCart}
-                  className="px-3 py-1.5 rounded-lg border border-neutral-800 text-xs font-mono text-neutral-400 hover:text-red-400 hover:border-red-900/60 hover:bg-red-950/20 transition-all flex items-center gap-1.5"
-                  title="Discard all items and empty cart"
-                >
-                  <span>Clear Cart</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCartWindowOpen(false)}
-                  className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-white flex items-center justify-center transition-colors"
-                  aria-label="Close cart window"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Scrollable Window Body */}
-            <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6 overscroll-contain">
-              {/* Selected Items Section */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">
-                    Selected Items
-                  </span>
-                  <span className="text-xs font-mono text-neutral-400">
-                    Subtotal: {fmt(calc.subtotal)}
-                  </span>
-                </div>
-
-                {calc.itemCount === 0 ? (
-                  <div className="text-center py-10 px-4 border border-dashed border-neutral-800 rounded-2xl text-neutral-400 text-xs leading-relaxed space-y-3">
-                    <p>Your cart is empty. Please select a website package or add-on.</p>
+            <div className="space-y-3">
+              {FAQS.map((faq, idx) => {
+                const isOpen = openFaq === idx;
+                return (
+                  <div
+                    key={faq.q}
+                    className="border border-neutral-800/80 bg-neutral-950/70 rounded-xl overflow-hidden transition-colors hover:border-neutral-700"
+                  >
                     <button
                       type="button"
-                      onClick={() => setCartWindowOpen(false)}
-                      className="px-4 py-2 bg-white text-black rounded-full font-mono text-xs font-semibold hover:bg-neutral-200 transition-colors"
+                      onClick={() => setOpenFaq(isOpen ? null : idx)}
+                      className="w-full py-4 px-5 flex items-center justify-between text-left gap-4 cursor-pointer select-none group"
+                      aria-expanded={isOpen}
                     >
-                      Browse Packages
+                      <span className="text-sm font-semibold text-white group-hover:text-neutral-200 transition-colors">
+                        {faq.q}
+                      </span>
+                      <span
+                        className={`font-mono text-neutral-400 text-base flex-shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                          isOpen ? 'rotate-180 text-white' : ''
+                        }`}
+                      >
+                        {isOpen ? '−' : '+'}
+                      </span>
                     </button>
-                  </div>
-                ) : (
-                  <div className="space-y-2.5">
-                    {/* Selected Package Row */}
-                    {calc.pkgItem && (
-                      <div className="flex items-start justify-between p-3.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 gap-3">
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-white block">
-                              {calc.pkgItem.name} Package
-                            </span>
-                            {calc.pkgItem.badge && (
-                              <span className="px-2 py-0.5 rounded-full text-[9px] font-mono uppercase tracking-widest bg-white text-black font-bold">
-                                {calc.pkgItem.badge}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-xs text-neutral-400">
-                            {calc.pkgItem.scope} &bull; {calc.pkgItem.delivery} delivery
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="font-mono text-sm font-bold text-white">
-                            {fmt(calc.pkgItem.price)}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => setSelectedPkg(null)}
-                            className="p-1.5 text-neutral-400 hover:text-red-400 hover:bg-neutral-800 rounded-lg transition-colors"
-                            aria-label="Remove package"
-                            title="Remove package"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
+                    {isOpen && (
+                      <div className="px-5 pb-4 text-xs sm:text-sm text-neutral-400 leading-relaxed border-t border-neutral-900 pt-3 animate-fade-in">
+                        {faq.a}
                       </div>
                     )}
-
-                    {/* Selected Add-ons */}
-                    {Object.entries(addons).map(([id, qty]) => {
-                      const item = ADDONS.find((a) => a.id === id);
-                      if (!item || qty <= 0) return null;
-                      const linePrice = item.price * qty;
-                      const isFreePro = selectedPkg === 'pro' && id === 'subdomain';
-
-                      return (
-                        <div
-                          key={id}
-                          className="flex items-center justify-between p-3.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 gap-3"
-                        >
-                          <div className="space-y-0.5">
-                            <span className="text-xs sm:text-sm font-semibold text-white block">
-                              {item.name}
-                            </span>
-                            <span className="text-[11px] text-neutral-400 block font-mono">
-                              {isFreePro ? (
-                                <span className="text-emerald-400 font-semibold">Free Perk with Pro Package</span>
-                              ) : (
-                                `${fmt(item.price)} each${item.monthly ? ' / month' : ''}`
-                              )}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-3">
-                            {/* Quantity Adjusters */}
-                            <div className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 rounded-full px-2 py-1">
-                              <button
-                                type="button"
-                                onClick={() => decrementAddon(id)}
-                                className="w-5 h-5 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800"
-                                aria-label="Decrease quantity"
-                              >
-                                <Minus className="w-2.5 h-2.5" />
-                              </button>
-                              <span className="font-mono text-xs font-bold text-white min-w-[14px] text-center">
-                                {qty}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={() => addAddon(id)}
-                                className="w-5 h-5 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800"
-                                aria-label="Increase quantity"
-                              >
-                                <Plus className="w-2.5 h-2.5" />
-                              </button>
-                            </div>
-
-                            <span className="font-mono text-xs sm:text-sm font-bold text-white min-w-[60px] text-right">
-                              {isFreePro ? <span className="text-emerald-400">FREE</span> : fmt(linePrice)}
-                            </span>
-
-                            <button
-                              type="button"
-                              onClick={() => removeAddon(id)}
-                              className="p-1.5 text-neutral-400 hover:text-red-400 hover:bg-neutral-800 rounded-lg transition-colors"
-                              aria-label={`Remove ${item.name}`}
-                              title={`Remove ${item.name}`}
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
                   </div>
-                )}
-              </div>
-
-              {/* Client Contact Details */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-neutral-900/60 border border-neutral-800 space-y-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="text-xs sm:text-sm font-bold text-white tracking-tight">
-                      Your Contact Details
-                    </h4>
-                    <p className="text-[11px] text-neutral-400">
-                      Required for order confirmation and direct WhatsApp collaboration.
-                    </p>
-                  </div>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-900/80 px-2 py-0.5 rounded-full">
-                    ✓ Local DB Active
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div>
-                    <label className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={clientName}
-                      onChange={(e) => {
-                        setClientName(e.target.value);
-                        if (contactError) setContactError('');
-                      }}
-                      placeholder="e.g. John Doe"
-                      className="w-full h-10 px-3 rounded-xl text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={clientEmail}
-                      onChange={(e) => {
-                        setClientEmail(e.target.value);
-                        if (contactError) setContactError('');
-                      }}
-                      placeholder="name@company.com"
-                      className="w-full h-10 px-3 rounded-xl text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1">
-                      Phone / WhatsApp *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={clientPhone}
-                      onChange={(e) => {
-                        setClientPhone(e.target.value);
-                        if (contactError) setContactError('');
-                      }}
-                      placeholder="+91 98765 43210"
-                      className="w-full h-10 px-3 rounded-xl text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
-                    />
-                  </div>
-                </div>
-
-                {contactError && (
-                  <p className="text-xs font-mono text-red-400 bg-red-950/40 border border-red-900/60 rounded-xl p-2.5 leading-tight">
-                    {contactError}
-                  </p>
-                )}
-              </div>
-
-              {/* Already Have a Website Input */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-neutral-900/60 border border-neutral-800 space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-white">
-                    <Globe className="w-4 h-4 text-neutral-400" />
-                    <span>Already have a website?</span>
-                  </div>
-                  {existingSite.length > 3 && (
-                    <span className="text-[10px] font-mono text-emerald-400">✓ Saved</span>
-                  )}
-                </div>
-                <p className="text-[11px] text-neutral-400 leading-tight">
-                  Paste your link so we can review your current architecture for redesign or add-ons:
-                </p>
-                <input
-                  type="url"
-                  value={existingSite}
-                  onChange={(e) => setExistingSite(e.target.value)}
-                  placeholder="https://yourwebsite.com"
-                  className="w-full h-10 px-3 rounded-xl text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
-                />
-              </div>
-
-              {/* Explicit Arithmetic Order Breakdown */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-neutral-900/90 border border-neutral-800 space-y-2 text-xs">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-2">
-                  Order Summary
-                </span>
-
-                {calc.pkgItem && (
-                  <div className="flex justify-between text-neutral-300">
-                    <span>{calc.pkgItem.name} Package</span>
-                    <span className="font-mono font-semibold">{fmt(calc.basePrice)}</span>
-                  </div>
-                )}
-
-                {calc.addSub > 0 && (
-                  <div className="flex justify-between text-neutral-300">
-                    <span>+ Add-ons ({calc.qAll} item{calc.qAll > 1 ? 's' : ''})</span>
-                    <span className="font-mono font-bold text-white">+{fmt(calc.addSub)}</span>
-                  </div>
-                )}
-
-                {calc.totalDiscounts > 0 && (
-                  <div className="flex justify-between text-emerald-400">
-                    <span>− Offers applied</span>
-                    <span className="font-mono font-bold">−{fmt(calc.totalDiscounts)}</span>
-                  </div>
-                )}
-
-                <div className="border-t border-dashed border-neutral-800 pt-2.5 flex justify-between items-baseline">
-                  <span className="text-sm font-bold text-white">Total Amount</span>
-                  <span className="font-mono text-2xl font-extrabold text-white">
-                    {fmt(calc.totalOneTime)}
-                  </span>
-                </div>
-
-                {calc.monthly > 0 && (
-                  <p className="text-[11px] text-neutral-400 font-mono text-right pt-1">
-                    Plus {fmt(calc.monthly)} / month for maintenance.
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Window Footer Sticky Action Bar */}
-            <div className="px-5 py-4 sm:px-6 sm:py-5 border-t border-neutral-900 bg-neutral-950/95 flex flex-col sm:flex-row items-center justify-between gap-3 flex-shrink-0">
-              <div className="w-full sm:w-auto text-left">
-                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
-                  Final Payable
-                </span>
-                <span className="text-2xl font-mono font-extrabold text-white">
-                  {fmt(calc.totalOneTime)}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2.5 w-full sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => setCartWindowOpen(false)}
-                  className="flex-1 sm:flex-none px-4 py-3 rounded-xl border border-neutral-800 hover:border-neutral-700 bg-neutral-900 text-neutral-300 hover:text-white font-mono text-xs font-medium transition-colors"
-                >
-                  Keep Browsing
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleDispatchOrder}
-                  disabled={calc.itemCount === 0 || isSubmitting}
-                  className={`flex-1 sm:flex-none py-3 px-6 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg ${
-                    calc.itemCount === 0 || isSubmitting
-                      ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed opacity-60'
-                      : 'bg-white text-black hover:bg-neutral-200 shadow-white/10'
-                  }`}
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Send Cart on WhatsApp</span>
-                </button>
-              </div>
+                );
+              })}
             </div>
           </div>
         </div>
-      )}
-
-      {/* Order Status & Confirmation Modal */}
-      <OrderStatusModal
-        isOpen={orderModalOpen}
-        status={orderModalStatus}
-        waUrl={waOrderUrl}
-        onClose={() => setOrderModalOpen(false)}
-        onBuyAgain={() => {
-          setSelectedPkg(null);
-          setAddons({});
-          setExistingSite('');
-          setOrderModalOpen(false);
-        }}
-        onCancelOrder={() => setOrderModalStatus('cancelled')}
-        onResumeCart={() => {
-          setOrderModalOpen(false);
-          setCartWindowOpen(true);
-        }}
-      />
+      </div>
     </section>
   );
 }

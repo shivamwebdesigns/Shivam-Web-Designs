@@ -8,7 +8,7 @@ import { ScrollTextReveal } from '@/components/ui/ScrollTextReveal';
 export const FounderPreview: React.FC = () => {
   return (
     <section className="py-14 sm:py-20 lg:py-24 border-b border-neutral-900 bg-black">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Portrait Column */}
           <div className="lg:col-span-5">
