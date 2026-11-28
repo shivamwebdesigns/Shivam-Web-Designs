@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Box, Code2, Layers, Zap, Sparkles } from 'lucide-react';
-import { CoreWebVitalsCard } from '@/components/CoreWebVitalsCard';
 
 interface StackLayer {
   index: number;
@@ -183,78 +182,104 @@ export function SpatialStack() {
 
                 {/* Spatial Preview Column */}
                 <div className="lg:col-span-5 w-full">
-                  {layer.previewType === 'performance' ? (
-                    <CoreWebVitalsCard />
-                  ) : (
-                    <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
-                      {layer.previewType === '3d-card' && (
-                        <div className="flex flex-col justify-between h-full">
-                          <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
-                            <span>CSS 3D TRANSFORM</span>
-                            <span>ROTATION: [R_x, R_y]</span>
+                  <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
+                    {layer.previewType === '3d-card' && (
+                      <div className="flex flex-col justify-between h-full">
+                        <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
+                          <span>CSS 3D TRANSFORM</span>
+                          <span>ROTATION: [R_x, R_y]</span>
+                        </div>
+                        {/* Interactive Visual Card Miniature */}
+                        <div className="relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between transform rotate-[-4deg] group-hover:rotate-[0deg] transition-transform duration-500">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-mono font-bold text-white tracking-widest">SWD</span>
+                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                           </div>
-                          {/* Interactive Visual Card Miniature */}
-                          <div className="relative mx-auto w-48 h-28 rounded-lg bg-neutral-900 border border-neutral-700 p-3 shadow-2xl flex flex-col justify-between transform rotate-[-4deg] group-hover:rotate-[0deg] transition-transform duration-500">
-                            <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-mono font-bold text-white tracking-widest">SWD</span>
-                              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                            </div>
-                            <div className="text-[9px] font-mono text-neutral-400">
-                              3D Spatial Business Card Engine
-                            </div>
-                          </div>
-                          <div className="text-center text-[10px] font-mono text-neutral-400">
-                            60 FPS • Real-time Euler Math
+                          <div className="text-[9px] font-mono text-neutral-400">
+                            3D Spatial Business Card Engine
                           </div>
                         </div>
-                      )}
+                        <div className="text-center text-[10px] font-mono text-neutral-400">
+                          60 FPS • Real-time Euler Math
+                        </div>
+                      </div>
+                    )}
 
-                      {layer.previewType === 'terminal' && (
-                        <div className="flex flex-col justify-between h-full font-mono text-xs">
-                          <div className="flex items-center gap-1.5 pb-2 border-b border-neutral-800">
-                            <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                            <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                            <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                            <span className="ml-2 text-[10px] text-neutral-400">architecture.ts</span>
-                          </div>
-                          <div className="space-y-1 text-[11px] text-neutral-300 py-3">
-                            <p><span className="text-neutral-400">export const</span> <span className="text-white">stack</span> = &#123;</p>
-                            <p className="pl-4">framework: <span className="text-neutral-400">&apos;Next.js 15&apos;</span>,</p>
-                            <p className="pl-4">rendering: <span className="text-neutral-400">&apos;RSC + Static SSG&apos;</span>,</p>
-                            <p className="pl-4">performance: <span className="text-emerald-400">&apos;100/100&apos;</span>,</p>
-                            <p>&#125;;</p>
-                          </div>
-                          <div className="text-[10px] text-neutral-400 pt-2 border-t border-neutral-800 flex justify-between">
-                            <span>TypeScript 5.7</span>
-                            <span>Zero Bloat</span>
-                          </div>
+                    {layer.previewType === 'terminal' && (
+                      <div className="flex flex-col justify-between h-full font-mono text-xs">
+                        <div className="flex items-center gap-1.5 pb-2 border-b border-neutral-800">
+                          <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                          <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                          <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                          <span className="ml-2 text-[10px] text-neutral-400">architecture.ts</span>
                         </div>
-                      )}
+                        <div className="space-y-1 text-[11px] text-neutral-300 py-3">
+                          <p><span className="text-neutral-400">export const</span> <span className="text-white">stack</span> = &#123;</p>
+                          <p className="pl-4">framework: <span className="text-neutral-400">&apos;Next.js 15&apos;</span>,</p>
+                          <p className="pl-4">rendering: <span className="text-neutral-400">&apos;RSC + Static SSG&apos;</span>,</p>
+                          <p className="pl-4">performance: <span className="text-emerald-400">&apos;100/100&apos;</span>,</p>
+                          <p>&#125;;</p>
+                        </div>
+                        <div className="text-[10px] text-neutral-400 pt-2 border-t border-neutral-800 flex justify-between">
+                          <span>TypeScript 5.7</span>
+                          <span>Zero Bloat</span>
+                        </div>
+                      </div>
+                    )}
 
-                      {layer.previewType === 'typography' && (
-                        <div className="flex flex-col justify-between h-full">
-                          <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
-                            International Style // Baseline
+                    {layer.previewType === 'typography' && (
+                      <div className="flex flex-col justify-between h-full">
+                        <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
+                          International Style // Baseline
+                        </div>
+                        <div className="space-y-1.5 py-2">
+                          <div className="text-3xl font-light tracking-tight text-white leading-none">
+                            Aa Bb Zz
                           </div>
-                          <div className="space-y-1.5 py-2">
-                            <div className="text-3xl font-light tracking-tight text-white leading-none">
-                              Aa Bb Zz
-                            </div>
-                            <div className="text-xs font-mono text-neutral-400">
-                              Inter • JetBrains Mono
-                            </div>
-                            <div className="h-px bg-neutral-800 my-2" />
-                            <div className="text-[11px] text-neutral-400 leading-relaxed font-light">
-                              Strict horizontal alignment, modular column grids &amp; zero superficial decor.
-                            </div>
+                          <div className="text-xs font-mono text-neutral-400">
+                            Inter • JetBrains Mono
                           </div>
-                          <div className="text-[10px] font-mono text-neutral-400">
-                            Pure Swiss Monochrome Palette
+                          <div className="h-px bg-neutral-800 my-2" />
+                          <div className="text-[11px] text-neutral-400 leading-relaxed font-light">
+                            Strict horizontal alignment, modular column grids &amp; zero superficial decor.
                           </div>
                         </div>
-                      )}
-                    </div>
-                  )}
+                        <div className="text-[10px] font-mono text-neutral-400">
+                          Pure Swiss Monochrome Palette
+                        </div>
+                      </div>
+                    )}
+
+                    {layer.previewType === 'performance' && (
+                      <div className="flex flex-col justify-between h-full">
+                        <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
+                          <span>AUDIT SCORES</span>
+                          <span className="text-emerald-400">VERIFIED PASS</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 py-2 text-center">
+                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                            <div className="text-xl font-bold font-mono text-white">100</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">Performance</div>
+                          </div>
+                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                            <div className="text-xl font-bold font-mono text-white">100</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">Accessibility</div>
+                          </div>
+                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                            <div className="text-xl font-bold font-mono text-white">&lt; 0.8s</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">LCP Speed</div>
+                          </div>
+                          <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                            <div className="text-xl font-bold font-mono text-white">0.000</div>
+                            <div className="text-[9px] font-mono text-neutral-400 uppercase">CLS Shift</div>
+                          </div>
+                        </div>
+                        <div className="text-center text-[10px] font-mono text-neutral-400">
+                          Vercel Global Edge Network • Sub-Second Mobile
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </article>

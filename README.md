@@ -27,28 +27,9 @@ Audited directly via Google Lighthouse across mobile and desktop environments:
 | **Best Practices** | **100 / 100** | **100 / 100** | Modern security headers, HTTPS, zero deprecations |
 | **SEO** | **100 / 100** | **100 / 100** | JSON-LD Schema, Google Search Console verification |
 
-### The 7-Step Mobile Core Web Vitals Protocol
-
-Every digital experience engineered by ShivamWebDesigns adheres to our standardized 7-stage mobile performance checklist:
-
-1. **Compress hero to WebP or AVIF** (`right quality · srcset widths`)  
-   Perceptually lossless WebP and AVIF image compression pipelines with explicit multi-density `srcset` parameters preventing mobile bandwidth over-fetching.
-2. **Right image sizes + lazy loading** (`width/height set · lazy below fold`)  
-   Hardcoded `width` and `height` dimensional constraints across all image nodes to eliminate layout shift, combined with native `loading="lazy"` on all below-the-fold media.
-3. **Remove unused JavaScript** (`split bundles · drop dead code`)  
-   Granular route-based code splitting and aggressive dead code elimination (DCE). Zero third-party animation bloat (pure CSS 3D matrix math; zero Three.js or heavy WebGL runtimes).
-4. **Preload fonts, stop layout shift** (`font-display: swap · reserve space`)  
-   Self-hosted typography via `next/font`, preloading critical subsets with `font-display: swap` and fallback metric overrides guaranteeing `0.000` Cumulative Layout Shift.
-5. **Delay third-party scripts** (`load after interaction or idle`)  
-   All external telemetry, analytics, and communication widgets deferred until user interaction or browser idle via `requestIdleCallback`.
-6. **Caching + CDN** (`long cache headers on static files`)  
-   Aggressive immutable cache headers (`s-maxage=31536000, immutable`) distributed across Vercel’s global Edge network for sub-50ms TTFB worldwide.
-7. **Measure Core Web Vitals on mobile** (`LCP · INP · CLS · real users`)  
-   Rigorous field and synthetic benchmarking on real mid-tier mobile hardware ensuring sub-second Largest Contentful Paint (LCP < 0.8s), instant interaction responsiveness (INP < 50ms), and zero layout displacement (CLS 0.000).
-
 ### Optimization & Motion Highlights
 - **Zero Reflow Stacking:** Refined `SpatialStack` 3D card deck using `transform-gpu` and `will-change-transform` for fluid 60fps mobile scrolling without layout thrashing.
-- **Interactive Performance Inspection:** Built-in protocol switcher on Layer 04 allowing clients to toggle live between the 7-Point Mobile Protocol and quantitative Lighthouse audit metrics.
+- **Quantitative Lighthouse Auditing:** Embedded audit metrics panel on Layer 04 highlighting verified 100/100 performance, 100/100 accessibility, sub-0.8s LCP, and zero CLS.
 - **Hardware-Accelerated Motion:** GPU-accelerated cubic-bezier curves (`cubic-bezier(0.16, 1, 0.3, 1)`), smooth entrance keyframes (`fadeIn`, `slideUp`, `scaleUp`), and silky `.hover-elevate` physical micro-interactions.
 - **Harmonized Vertical Rhythm:** Responsive section padding (`py-14 sm:py-20 lg:py-24`) across all studio routes eliminating abrupt dead whitespace on mobile viewports.
 - **Strict Color Contrast:** All body, badge, and muted UI text calibrated to > 4.5:1 contrast ratio against `#050505` backgrounds.
