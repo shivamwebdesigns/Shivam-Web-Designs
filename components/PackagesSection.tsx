@@ -205,9 +205,20 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
 
   const cartContainerRef = useRef<HTMLDivElement>(null);
 
-  // Restore cart and contact from localStorage
+  // Restore client profile and cart from local DB (localStorage)
   useEffect(() => {
     try {
+      // 1. Restore persistent client profile from local DB
+      const savedProfile = localStorage.getItem('swd-client-profile');
+      if (savedProfile) {
+        const p = JSON.parse(savedProfile);
+        if (p.name && typeof p.name === 'string') setClientName(p.name);
+        if (p.email && typeof p.email === 'string') setClientEmail(p.email);
+        if (p.phone && typeof p.phone === 'string') setClientPhone(p.phone);
+        if (p.existingSite && typeof p.existingSite === 'string') setExistingSite(p.existingSite);
+      }
+
+      // 2. Restore cart items
       const saved = localStorage.getItem('swd-cart');
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -233,9 +244,23 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     } catch (_) {}
   }, []);
 
-  // Save cart and contact to localStorage
+  // Save client profile and cart to local DB (localStorage)
   useEffect(() => {
     try {
+      // Persist client profile independently so details are permanently remembered
+      if (clientName || clientEmail || clientPhone || existingSite) {
+        localStorage.setItem(
+          'swd-client-profile',
+          JSON.stringify({
+            name: clientName,
+            email: clientEmail,
+            phone: clientPhone,
+            existingSite,
+          })
+        );
+      }
+
+      // Persist cart payload
       localStorage.setItem(
         'swd-cart',
         JSON.stringify({
@@ -502,10 +527,10 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           )}
         </div>
 
-        {/* Main Layout Grid: Packages & Add-ons on Left, Sticky Cart on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        {/* Main Layout Grid: Full width when empty, 2 columns when items added */}
+        <div className={`grid grid-cols-1 ${calc.itemCount > 0 ? 'lg:grid-cols-12 gap-8 lg:gap-10' : 'gap-8'} items-start`}>
           {/* Left Column: Cards, Add-ons, FAQ */}
-          <div className="lg:col-span-8 space-y-10 sm:space-y-12">
+          <div className={`${calc.itemCount > 0 ? 'lg:col-span-8' : 'col-span-12'} space-y-10 sm:space-y-12`}>
             {/* Package Cards 3D Deck */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {PACKAGES.map((pkg) => {
@@ -758,13 +783,14 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
             </div>
           </div>
 
-          {/* Right Column: In-flow Cart on Mobile & Tablet / Sticky Sidebar on Desktop */}
-          <div id="cart" className="block lg:col-span-4 lg:sticky lg:top-28 space-y-6 mt-10 lg:mt-0 scroll-mt-24">
-            <aside
-              ref={cartContainerRef}
-              className="bg-neutral-950/95 border border-neutral-800 rounded-2xl p-6 shadow-2xl backdrop-blur-xl space-y-6"
-              aria-label="Your Cart Summary"
-            >
+          {/* Right Column: In-flow Cart on Mobile & Tablet / Sticky Sidebar on Desktop - ONLY when items added */}
+          {calc.itemCount > 0 && (
+            <div id="cart" className="block lg:col-span-4 lg:sticky lg:top-28 space-y-6 mt-10 lg:mt-0 scroll-mt-24 animate-fade-in">
+              <aside
+                ref={cartContainerRef}
+                className="bg-neutral-950/95 border border-neutral-800 rounded-2xl p-6 shadow-2xl backdrop-blur-xl space-y-6"
+                aria-label="Your Cart Summary"
+              >
               {/* Cart Header */}
               <div className="flex items-center justify-between pb-4 border-b border-neutral-900">
                 <div className="flex items-center gap-2.5">
@@ -886,6 +912,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800/90 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold text-white">Your Contact Details</span>
+                  <span className="text-[10px] font-mono text-emerald-400">✓ Remembered in local DB</span>
                 </div>
 
                 <div className="space-y-2">
@@ -1018,75 +1045,116 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               </div>
             </aside>
           </div>
+        )}
         </div>
       </div>
 
-      {/* Minimized Floating Pill when Cart is Hidden on Mobile - ONLY if items in cart */}
+      {/* Minimized Floating Cart Launcher (Desktop & Mobile) - ONLY if items in cart */}
       {calc.itemCount > 0 && isCartHidden && (
-        <div className="lg:hidden fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] right-4 z-[45] animate-fade-in">
+        <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 animate-fade-in">
           <button
             type="button"
-            onClick={() => {
-              setIsCartHidden(false);
-              setCartOpen(true);
-            }}
-            className="h-10 px-4 bg-white text-black rounded-full shadow-2xl shadow-black flex items-center gap-2 font-mono text-xs font-bold transition-all active:scale-95 border border-neutral-300"
-            aria-label="View Cart"
+            onClick={() => setIsCartHidden(false)}
+            className="h-11 px-4 bg-white text-black hover:bg-neutral-200 rounded-full shadow-2xl shadow-black/80 flex items-center gap-2.5 font-mono text-xs font-bold transition-all active:scale-95 border border-neutral-300 group"
+            aria-label="Expand Cart Widget"
+            title="Expand Cart Widget"
           >
-            <ShoppingCart className="w-3.5 h-3.5 text-black" />
-            <span>View Cart</span>
+            <ShoppingCart className="w-4 h-4 text-black group-hover:scale-110 transition-transform" />
+            <span>Your Cart</span>
             <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-bold">
               {calc.itemCount}
             </span>
+            <span className="text-neutral-600 hidden sm:inline">• {fmt(calc.totalOneTime)}</span>
           </button>
         </div>
       )}
 
-      {/* Floating Bottom Bar on Mobile Devices (Expanded) - ONLY if items in cart */}
+      {/* Screen Hover Cart Widget (Desktop & Mobile) - ONLY if items in cart */}
       {calc.itemCount > 0 && !isCartHidden && (
-        <div className="lg:hidden fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] left-4 right-4 z-[45] max-w-lg mx-auto animate-fade-in">
-          <div className="w-full h-14 bg-neutral-950/95 backdrop-blur-md border border-neutral-800 rounded-full px-4 py-2 flex items-center justify-between shadow-2xl shadow-black/95">
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('cart');
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  setCartOpen(true);
-                }
-              }}
-              className="flex-1 flex items-center justify-between pr-3 group text-left"
-              aria-label="View Cart Summary"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs">
+        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 sm:w-96 max-w-md mx-auto sm:mx-0 animate-fade-in">
+          <div className="bg-neutral-950/95 backdrop-blur-2xl border border-neutral-800/90 rounded-2xl p-4 shadow-2xl shadow-black/95 space-y-3">
+            {/* Top Bar: Title, Count, Total, and Minimize/Hide Button */}
+            <div className="flex items-center justify-between pb-2.5 border-b border-neutral-900">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs">
                   {calc.itemCount}
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
-                    {calc.itemCount} item{calc.itemCount > 1 ? 's' : ''}
+                <div>
+                  <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+                    Your Cart
                   </span>
-                  <span className="text-xs font-mono font-bold text-white">
-                    {fmt(calc.totalOneTime)}
+                  <span className="text-[11px] font-mono text-neutral-400">
+                    {calc.pkgItem?.name ? `${calc.pkgItem.name} Package` : 'Add-ons Selected'}
                   </span>
                 </div>
               </div>
-              <span className="text-xs font-mono font-semibold text-white group-hover:underline flex items-center gap-1">
-                View Cart
-              </span>
-            </button>
 
-            {/* Dedicated Hide Cart Button */}
-            <button
-              type="button"
-              onClick={() => setIsCartHidden(true)}
-              className="px-3 py-1.5 rounded-full bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 text-[11px] font-mono flex items-center gap-1 transition-colors border border-neutral-800 active:scale-95 flex-shrink-0"
-              aria-label="Hide Cart"
-              title="Hide Cart"
-            >
-              <span>Hide Cart</span>
-            </button>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-sm font-extrabold text-white">
+                  {fmt(calc.totalOneTime)}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setIsCartHidden(true)}
+                  className="w-7 h-7 rounded-full bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white flex items-center justify-center transition-colors text-xs font-mono"
+                  aria-label="Hide Cart Widget"
+                  title="Hide Cart Widget"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* Profile persistence notice from Local DB */}
+            {clientName && (
+              <div className="text-[10px] font-mono text-emerald-400 flex items-center justify-between">
+                <span>✓ Profile saved for {clientName.split(' ')[0]}</span>
+                <span className="text-neutral-500">Local DB Active</span>
+              </div>
+            )}
+
+            {/* Action Buttons: View Details & Place Order */}
+            <div className="flex items-center gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('cart');
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    setCartOpen(true);
+                  }
+                }}
+                className="px-3.5 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 text-white font-mono text-xs font-medium transition-colors flex items-center gap-1 active:scale-95"
+              >
+                <span>View Cart &darr;</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const trimmedName = clientName.trim();
+                  const trimmedEmail = clientEmail.trim();
+                  const trimmedPhone = clientPhone.trim();
+
+                  if (!trimmedName || !trimmedEmail || !trimmedPhone) {
+                    const el = document.getElementById('cart');
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                      setCartOpen(true);
+                    }
+                  } else {
+                    handleDispatchOrder();
+                  }
+                }}
+                disabled={isSubmitting}
+                className="flex-1 py-2.5 px-4 bg-white text-black hover:bg-neutral-200 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-white/10"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Place Order</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -1194,6 +1262,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
             <div className="p-3 rounded-xl bg-neutral-900 border border-neutral-800 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-white">Your Contact Details</span>
+                <span className="text-[10px] font-mono text-emerald-400">✓ Auto-saved in local DB</span>
               </div>
               <input
                 type="text"

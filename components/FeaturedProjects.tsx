@@ -4,7 +4,7 @@ import { ScrollTextReveal } from '@/components/ui/ScrollTextReveal';
 
 export const FeaturedProjects: React.FC = () => {
   return (
-    <section className="py-14 sm:py-20 border-y border-neutral-900 bg-neutral-950/40">
+    <section className="pt-10 pb-14 sm:pt-14 sm:pb-20 border-y border-neutral-900 bg-neutral-950/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-6">
           <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block">

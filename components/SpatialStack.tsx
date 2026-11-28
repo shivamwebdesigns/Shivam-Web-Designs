@@ -82,7 +82,7 @@ export function SpatialStack() {
   };
 
   return (
-    <section id="3d-stack" className="py-14 sm:py-20 lg:py-24 bg-black border-t border-neutral-900 scroll-mt-20">
+    <section id="3d-stack" className="pt-14 pb-8 sm:pt-20 sm:pb-10 lg:pt-24 lg:pb-12 bg-black border-t border-neutral-900 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">
@@ -118,7 +118,7 @@ export function SpatialStack() {
         </div>
 
         {/* Stacking Deck Container */}
-        <div className="relative flex flex-col gap-8 sm:gap-12 pb-24">
+        <div className="relative flex flex-col gap-6 sm:gap-8 pb-4 sm:pb-6">
           {layers.map((layer) => (
             <article
               key={layer.index}
