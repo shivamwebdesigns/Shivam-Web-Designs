@@ -334,7 +334,7 @@ export function GlobalCart() {
           <button
             type="button"
             onClick={() => setCartOpen(false)}
-            className="group relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-600 hover:bg-red-500 text-white border border-red-500/80 hover:border-red-400 flex items-center justify-center transition-all duration-200 active:scale-90 shadow-lg shadow-red-950/60 hover:shadow-red-900/80 flex-shrink-0 cursor-pointer [perspective:1000px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+            className="group relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-950/40 hover:bg-red-500/20 text-red-400 hover:text-red-200 border border-red-900/50 hover:border-red-500/60 flex items-center justify-center transition-all duration-300 active:scale-90 shadow-sm hover:shadow-[0_0_16px_rgba(239,68,68,0.25)] flex-shrink-0 cursor-pointer [perspective:1000px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/80"
             aria-label="Close orders panel"
             title="Close"
           >
@@ -343,7 +343,7 @@ export function GlobalCart() {
               aria-hidden="true"
               className="relative w-5 h-5 flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(360deg)] group-active:[transform:rotateY(360deg)]"
             >
-              <X className="w-4 h-4 text-white stroke-[2.5]" />
+              <X className="w-4 h-4 stroke-[2.2] transition-colors duration-200" />
             </div>
           </button>
         </div>
