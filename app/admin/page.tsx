@@ -168,20 +168,20 @@ export default function AdminPage() {
   const canLoadMore = Boolean(user && nextCursor && !listLoading);
 
   return (
-    <main className="min-h-screen bg-black px-5 py-10 text-white sm:px-8 sm:py-14">
+    <main className="min-h-screen bg-black px-5 py-12 text-white sm:px-8 sm:py-20">
       <div className="mx-auto max-w-5xl">
-        <header className="mb-10 flex flex-col gap-6 border-b border-neutral-800 pb-8 sm:flex-row sm:items-end sm:justify-between">
+        <header className="mb-12 flex flex-col gap-8 border-b border-neutral-800 pb-10 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-3xl font-light tracking-tight sm:text-5xl">
               Inquiry Archive
             </h1>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-400">
+            <p className="mt-4 max-w-xl text-sm leading-6 text-neutral-400">
               Project briefs and contact messages saved for studio review.
             </p>
           </div>
           {user && (
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-sm text-neutral-400">{user.email}</span>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+              <span className="break-all text-sm text-neutral-400">{user.email}</span>
               <button
                 type="button"
                 onClick={handleSignOut}
