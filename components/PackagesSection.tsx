@@ -481,15 +481,18 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         <div className="max-w-3xl mb-6 sm:mb-8">
           {isPage ? (
             <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
-              Websites price starts from ₹499
+              Website Packages Starting at ₹499
             </h1>
           ) : (
             <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
-              Websites price starts from ₹499
+              Website Packages Starting at ₹499
             </h2>
           )}
-          <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
-            Choose your favourite packages below. Mix and match modular add-ons or order standalone for your existing website. We review your order and reach out within 24–48 hours to confirm kickoff and next steps.
+          <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed mb-4">
+            Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals.
+          </p>
+          <p className="text-xs font-mono uppercase tracking-widest text-neutral-400">
+            PACKAGES // FIXED PRICES
           </p>
         </div>
 

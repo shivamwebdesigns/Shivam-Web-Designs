@@ -4,9 +4,9 @@ import { PackagesSection } from '@/components/PackagesSection';
 import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
-  title: 'Websites Price Starts From ₹499 | Shivam Web Designs',
+  title: 'Website Packages Starting at ₹499 | Shivam Web Designs',
   description:
-    'Websites price starts from ₹499. Choose your favourite packages and modular add-ons. Direct founder execution with guaranteed sub-second speed.',
+    'Website Packages Starting at ₹499. Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals.',
   keywords: [
     'website packages',
     'web design pricing',
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     canonical: '/packages',
   },
   openGraph: {
-    title: 'Websites Price Starts From ₹499 | Shivam Web Designs',
+    title: 'Website Packages Starting at ₹499 | Shivam Web Designs',
     description:
-      'Websites price starts from ₹499. Choose your favourite packages and modular add-ons. Direct founder execution with guaranteed sub-second speed.',
+      'Website Packages Starting at ₹499. Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals.',
     url: `${siteConfig.url}/packages`,
     siteName: siteConfig.name,
     images: [
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Websites Price Starts From ₹499 | Shivam Web Designs',
+    title: 'Website Packages Starting at ₹499 | Shivam Web Designs',
     description:
-      'Websites price starts from ₹499. Choose your favourite packages and modular add-ons with zero hidden fees.',
+      'Website Packages Starting at ₹499. Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals.',
     images: [`${siteConfig.url}/assets/github-social-preview.png`],
   },
 };
