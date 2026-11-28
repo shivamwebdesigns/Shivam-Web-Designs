@@ -10,6 +10,7 @@ import {
   ArrowRight,
   Trash2,
   ChevronDown,
+  Check,
 } from 'lucide-react';
 import { PACKAGES, ADDONS, AddonItem } from '@/data/packages';
 import { OrderStatusModal } from '@/components/OrderStatusModal';
@@ -35,6 +36,7 @@ export function GlobalCart() {
   const [waOrderUrl, setWaOrderUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);
+  const [rememberDetails, setRememberDetails] = useState(true);
   const scrollBodyRef = useRef<HTMLDivElement>(null);
 
   /* ── Sync cart from localStorage ── */
@@ -55,8 +57,10 @@ export function GlobalCart() {
         setSelectedPkg(null);
         setAddons({});
       }
+      const rem = localStorage.getItem('swd-remember-profile');
+      if (rem === 'false') setRememberDetails(false);
       const prof = localStorage.getItem('swd-client-profile');
-      if (prof) {
+      if (prof && rem !== 'false') {
         const q = JSON.parse(prof);
         if (q?.name && !clientName) setClientName(q.name);
         if (q?.email && !clientEmail) setClientEmail(q.email);
@@ -180,6 +184,21 @@ export function GlobalCart() {
     setCartOpen(false);
   };
 
+  const handleToggleRemember = (next: boolean) => {
+    setRememberDetails(next);
+    try {
+      localStorage.setItem('swd-remember-profile', String(next));
+      if (!next) {
+        localStorage.removeItem('swd-client-profile');
+      } else {
+        localStorage.setItem(
+          'swd-client-profile',
+          JSON.stringify({ name: clientName, email: clientEmail, phone: clientPhone, existingSite })
+        );
+      }
+    } catch (_) {}
+  };
+
   /* ── Profile fields ── */
   const handleProfile = (field: 'name' | 'email' | 'phone' | 'site', val: string) => {
     const n = field === 'name' ? val : clientName;
@@ -191,7 +210,11 @@ export function GlobalCart() {
     if (field === 'phone') setClientPhone(val);
     if (field === 'site') setExistingSite(val);
     try {
-      localStorage.setItem('swd-client-profile', JSON.stringify({ name: n, email: e, phone: ph, existingSite: s }));
+      if (rememberDetails) {
+        localStorage.setItem('swd-client-profile', JSON.stringify({ name: n, email: e, phone: ph, existingSite: s }));
+      } else {
+        localStorage.removeItem('swd-client-profile');
+      }
       localStorage.setItem('swd-cart', JSON.stringify({ pkg: selectedPkg, add: addons, existingSite: s, clientName: n, clientEmail: e, clientPhone: ph }));
     } catch (_) {}
   };
@@ -448,10 +471,6 @@ export function GlobalCart() {
                   <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-400">
                     Your Details
                   </span>
-                  <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                    Auto-saved
-                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -576,11 +595,26 @@ export function GlobalCart() {
                   <p className="text-xs text-rose-400 font-mono leading-relaxed">{contactError}</p>
                 )}
 
-                {clientName && !contactError && (
-                  <p className="text-[10px] font-mono text-emerald-400">
-                    ✓ Profile saved — will be remembered on next visit
-                  </p>
-                )}
+                {/* Remember details tick button */}
+                <button
+                  type="button"
+                  onClick={() => handleToggleRemember(!rememberDetails)}
+                  className="flex items-center gap-2 pt-1 text-left cursor-pointer group select-none"
+                  aria-pressed={rememberDetails}
+                >
+                  <div
+                    className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                      rememberDetails
+                        ? 'bg-emerald-500 border-emerald-400 text-black shadow-sm shadow-emerald-500/20'
+                        : 'bg-neutral-900 border-neutral-700 text-transparent group-hover:border-neutral-500'
+                    }`}
+                  >
+                    <Check className="w-3 h-3 stroke-[3]" />
+                  </div>
+                  <span className="text-[11px] font-mono text-neutral-400 group-hover:text-neutral-200 transition-colors">
+                    Remember my details for next visit
+                  </span>
+                </button>
               </div>
             )}
 
