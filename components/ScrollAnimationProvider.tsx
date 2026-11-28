@@ -87,8 +87,8 @@ export function ScrollAnimationProvider() {
           });
         },
         {
-          threshold: [0, 0.08],
-          rootMargin: '0px 0px -40px 0px',
+          threshold: [0, 0.05],
+          rootMargin: '0px 0px 40px 0px',
         }
       );
 
@@ -97,7 +97,7 @@ export function ScrollAnimationProvider() {
 
         // Immediately reveal any section in view on mount (no flash or blank space)
         const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
+        if (rect.top < window.innerHeight * 1.05 && rect.bottom > 0) {
           section.setAttribute('data-revealed', 'true');
         } else {
           section.setAttribute('data-revealed', 'false');

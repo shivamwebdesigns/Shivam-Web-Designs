@@ -3,7 +3,7 @@
   "short_name": "SWD Card",
   "description": "Interactive 3D business card for ShivamWebDesigns (SWD). Rotate 360\u00b0, flip, toggle portrait/landscape, scan QR, and download direct contact details (.vcf).",
   "start_url": "/businesscard",
-  "scope": "/businesscard",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#050505",

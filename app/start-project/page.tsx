@@ -225,12 +225,16 @@ function StartProjectForm() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                    <label htmlFor="brief-name" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                       Full Name <span className="text-red-400">*</span>
                     </label>
                     <input
+                      id="brief-name"
+                      name="name"
                       type="text"
                       required
+                      autoComplete="name"
+                      inputMode="text"
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       placeholder="Your full name"
@@ -239,12 +243,16 @@ function StartProjectForm() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                    <label htmlFor="brief-email" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                       Email Address <span className="text-red-400">*</span>
                     </label>
                     <input
+                      id="brief-email"
+                      name="email"
                       type="email"
                       required
+                      autoComplete="email"
+                      inputMode="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="you@example.com"
@@ -254,11 +262,14 @@ function StartProjectForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                  <label htmlFor="brief-company" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                     Company or Brand Name <span className="text-neutral-400">(Optional)</span>
                   </label>
                   <input
+                    id="brief-company"
+                    name="organization"
                     type="text"
+                    autoComplete="organization"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     placeholder="Your company or brand"
@@ -399,11 +410,15 @@ function StartProjectForm() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                    <label htmlFor="brief-url" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                       Reference Website <span className="text-neutral-400">(Optional)</span>
                     </label>
                     <input
+                      id="brief-url"
+                      name="url"
                       type="url"
+                      autoComplete="url"
+                      inputMode="url"
                       value={formData.referenceUrl}
                       onChange={(e) => setFormData({ ...formData, referenceUrl: e.target.value })}
                       placeholder="https://example.com"
@@ -412,11 +427,14 @@ function StartProjectForm() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                    <label htmlFor="brief-notes" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                       Additional Notes <span className="text-neutral-400">(Optional)</span>
                     </label>
                     <input
+                      id="brief-notes"
+                      name="notes"
                       type="text"
+                      autoComplete="off"
                       value={formData.additionalRequirements}
                       onChange={(e) => setFormData({ ...formData, additionalRequirements: e.target.value })}
                       placeholder="e.g. Existing brand assets available"

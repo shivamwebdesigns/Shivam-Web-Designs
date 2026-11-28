@@ -214,12 +214,16 @@ export default function ContactPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                        <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                           Your Name <span className="text-red-400">*</span>
                         </label>
                         <input
+                          id="contact-name"
+                          name="name"
                           type="text"
                           required
+                          autoComplete="name"
+                          inputMode="text"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="Your Name"
@@ -228,12 +232,16 @@ export default function ContactPage() {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                        <label htmlFor="contact-email" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                           Email Address <span className="text-red-400">*</span>
                         </label>
                         <input
+                          id="contact-email"
+                          name="email"
                           type="email"
                           required
+                          autoComplete="email"
+                          inputMode="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder="you@example.com"
@@ -243,11 +251,14 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                      <label htmlFor="contact-subject" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                         Subject
                       </label>
                       <input
+                        id="contact-subject"
+                        name="subject"
                         type="text"
+                        autoComplete="off"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         placeholder="e.g. Design consultation / Partnership inquiry"
@@ -256,10 +267,12 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
+                      <label htmlFor="contact-message" className="block text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
                         Message <span className="text-red-400">*</span>
                       </label>
                       <textarea
+                        id="contact-message"
+                        name="message"
                         required
                         rows={5}
                         value={formData.message}

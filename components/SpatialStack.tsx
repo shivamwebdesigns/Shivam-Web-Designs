@@ -71,6 +71,7 @@ const layers: StackLayer[] = [
 export function SpatialStack() {
   const [activeTab, setActiveTab] = useState(1);
   const [tilt, setTilt] = useState<{ rx: number; ry: number } | null>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
 
   const handlePreviewPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -84,8 +85,32 @@ export function SpatialStack() {
   };
 
   const handlePreviewPointerLeave = () => {
+    setIsInteracting(false);
     setTilt(null);
   };
+
+  // Mobile Gyroscope Device Motion listener for natural 3D tilt responsiveness
+  useEffect(() => {
+    let mounted = true;
+    const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
+      if (!mounted || isInteracting) return;
+      if (e.gamma !== null && e.beta !== null) {
+        const rx = Math.max(-18, Math.min(18, Math.round((e.beta - 45) * 0.35)));
+        const ry = Math.max(-22, Math.min(22, Math.round(e.gamma * 0.45)));
+        setTilt({ rx, ry });
+      }
+    };
+
+    if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
+    }
+    return () => {
+      mounted = false;
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('deviceorientation', handleDeviceOrientation);
+      }
+    };
+  }, [isInteracting]);
 
   const scrollToLayer = (idx: number) => {
     setActiveTab(idx);
@@ -201,8 +226,26 @@ export function SpatialStack() {
                   <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
                     {layer.previewType === '3d-card' && (
                       <div
-                        onPointerMove={handlePreviewPointerMove}
-                        onPointerLeave={handlePreviewPointerLeave}
+                        onPointerDown={(e) => {
+                          setIsInteracting(true);
+                          try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {}
+                          handlePreviewPointerMove(e);
+                        }}
+                        onPointerMove={(e) => {
+                          if (isInteracting || e.pointerType === 'mouse') {
+                            handlePreviewPointerMove(e);
+                          }
+                        }}
+                        onPointerUp={(e) => {
+                          try { e.currentTarget.releasePointerCapture(e.pointerId); } catch (_) {}
+                          handlePreviewPointerLeave();
+                        }}
+                        onPointerCancel={handlePreviewPointerLeave}
+                        onPointerLeave={(e) => {
+                          if (e.pointerType === 'mouse') {
+                            handlePreviewPointerLeave();
+                          }
+                        }}
                         className="flex flex-col justify-between h-full cursor-grab active:cursor-grabbing touch-none select-none"
                       >
                         <div className="flex items-center justify-between text-xs font-mono text-neutral-400">

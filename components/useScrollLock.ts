@@ -52,14 +52,16 @@ function lock() {
     paddingRight: body.style.paddingRight,
   };
 
-  html.style.overflow = 'hidden';
-  body.style.overflow = 'hidden';
   if (isTouch) {
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
     body.style.position = 'fixed';
     body.style.top = `-${scrollY}px`;
     body.style.left = '0';
     body.style.right = '0';
     body.style.width = '100%';
+  } else {
+    body.style.overflow = 'hidden';
   }
   if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
 

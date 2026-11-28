@@ -133,6 +133,9 @@
   .text-balance {
     text-wrap: balance;
   }
+  .safe-area-top {
+    padding-top: max(0.85rem, env(safe-area-inset-top));
+  }
   .safe-area-bottom {
     padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   }
@@ -405,20 +408,21 @@ textarea {
 /* Luxury minimal scrollbar for drawer panels (visible and interactive on desktop Safari & Chrome) */
 .drawer-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #525252 #0a0a0a;
+  scrollbar-color: #666666 #0a0a0a;
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch;
 }
 .drawer-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 7px;
 }
 .drawer-scrollbar::-webkit-scrollbar-track {
-  background: #0a0a0a;
-  border-radius: 9999px;
+  background: #0d0d0d;
 }
 .drawer-scrollbar::-webkit-scrollbar-thumb {
-  background: #404040;
+  background: #525252;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .drawer-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #737373;
+  background: #888888;
 }

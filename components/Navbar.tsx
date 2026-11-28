@@ -99,9 +99,12 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-neutral-950/85 backdrop-blur-xl border-b border-neutral-800/80 py-3 sm:py-3.5 shadow-2xl shadow-black/60'
-          : 'bg-transparent py-4 sm:py-5'
+          ? 'bg-neutral-950/85 backdrop-blur-xl border-b border-neutral-800/80 pb-3 sm:pb-3.5 shadow-2xl shadow-black/60'
+          : 'bg-transparent pb-4 sm:pb-5'
       }`}
+      style={{
+        paddingTop: 'max(0.85rem, env(safe-area-inset-top, 0px))',
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">

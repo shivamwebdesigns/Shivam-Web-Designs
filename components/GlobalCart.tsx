@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Plus,
@@ -9,6 +9,7 @@ import {
   ShoppingCart,
   ArrowRight,
   Trash2,
+  ChevronDown,
 } from 'lucide-react';
 import { PACKAGES, ADDONS, AddonItem } from '@/data/packages';
 import { OrderStatusModal } from '@/components/OrderStatusModal';
@@ -33,6 +34,7 @@ export function GlobalCart() {
   const [orderModalStatus, setOrderModalStatus] = useState<'loading' | 'success' | 'cancelled'>('loading');
   const [waOrderUrl, setWaOrderUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
   const scrollBodyRef = useRef<HTMLDivElement>(null);
 
   /* ── Sync cart from localStorage ── */
@@ -81,7 +83,7 @@ export function GlobalCart() {
     };
   }, []);
 
-  /* ── Background scroll lock (html + body, iOS-safe) + Escape key ── */
+  /* ── Background scroll lock (iOS-safe) + Escape key ── */
   useEffect(() => {
     if (!cartOpen) return;
 
@@ -106,17 +108,18 @@ export function GlobalCart() {
       paddingRight: body.style.paddingRight,
     };
 
-    html.style.overflow = 'hidden';
-    body.style.overflow = 'hidden';
-
-    // Only apply fixed position lock on touch devices to avoid rubber-banding.
-    // On desktop, position: fixed on body breaks Safari trackpad scroll-chaining for child dialogs!
+    // On touch devices lock body with fixed to prevent elastic page rubber-banding.
+    // On desktop, DO NOT set overflow: hidden on html, as WebKit disables trackpad routing!
     if (isTouch) {
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
       body.style.position = 'fixed';
       body.style.top = `-${scrollY}px`;
       body.style.left = '0';
       body.style.right = '0';
       body.style.width = '100%';
+    } else {
+      body.style.overflow = 'hidden';
     }
     if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
 
@@ -139,6 +142,83 @@ export function GlobalCart() {
       lenis?.start?.();
     };
   }, [cartOpen]);
+
+  /* ── Direct Wheel & Touch Handling on the scroll body ──
+     Guarantees scrolling works reliably even if macOS Safari, trackpad gestures,
+     or smooth scroll libraries attempt to swallow or misroute delta events.
+  ── */
+  useEffect(() => {
+    if (!cartOpen) return;
+    const el = scrollBodyRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      const multiplier = e.deltaMode === 1 ? 24 : e.deltaMode === 2 ? 400 : 1;
+      const delta = e.deltaY * multiplier;
+      
+      const atTop = el.scrollTop <= 0 && delta < 0;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1 && delta > 0;
+
+      if (!atTop && !atBottom) {
+        el.scrollTop += delta;
+        if (e.cancelable) e.preventDefault();
+      }
+      e.stopPropagation();
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      e.stopPropagation();
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const currentY = e.touches[0].clientY;
+      const delta = touchStartY - currentY;
+      touchStartY = currentY;
+
+      const atTop = el.scrollTop <= 0 && delta < 0;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1 && delta > 0;
+
+      if (!atTop && !atBottom) {
+        e.stopPropagation();
+      }
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+
+    return () => {
+      el.removeEventListener('wheel', onWheel);
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+    };
+  }, [cartOpen]);
+
+  /* ── Detect scroll clearance for "Scroll down for details" prompt ── */
+  const checkScroll = useCallback(() => {
+    const el = scrollBodyRef.current;
+    if (!el) return;
+    const hasMore = el.scrollHeight - (el.scrollTop + el.clientHeight) > 24;
+    setCanScrollDown(hasMore);
+  }, []);
+
+  useEffect(() => {
+    if (!cartOpen) return;
+    const el = scrollBodyRef.current;
+    if (!el) return;
+
+    checkScroll();
+    const timer = setTimeout(checkScroll, 120);
+    el.addEventListener('scroll', checkScroll, { passive: true });
+    window.addEventListener('resize', checkScroll);
+    return () => {
+      clearTimeout(timer);
+      el.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [cartOpen, checkScroll, selectedPkg, addons]);
 
   /* ── Calculations ── */
   const calc = useMemo(() => {
@@ -431,22 +511,37 @@ export function GlobalCart() {
 
               <div className="space-y-2.5">
                 {[
-                  { label: 'Full Name *', type: 'text', value: clientName, field: 'name' as const, placeholder: 'e.g. John Doe' },
-                  { label: 'Email Address *', type: 'email', value: clientEmail, field: 'email' as const, placeholder: 'e.g. john@business.com' },
-                  { label: 'Phone / WhatsApp *', type: 'tel', value: clientPhone, field: 'phone' as const, placeholder: 'e.g. +91 98765 43210' },
-                  { label: 'Existing Website', type: 'url', value: existingSite, field: 'site' as const, placeholder: 'e.g. https://mybrand.com' },
-                ].map(({ label, type, value, field, placeholder }) => (
+                  { label: 'Full Name *', type: 'text', value: clientName, field: 'name' as const, placeholder: 'e.g. John Doe', auto: 'name', inputMode: 'text' as const },
+                  { label: 'Email Address *', type: 'email', value: clientEmail, field: 'email' as const, placeholder: 'e.g. john@business.com', auto: 'email', inputMode: 'email' as const },
+                  { label: 'Phone / WhatsApp *', type: 'tel', value: clientPhone, field: 'phone' as const, placeholder: 'e.g. +91 98765 43210', auto: 'tel', inputMode: 'tel' as const },
+                  { label: 'Existing Website', type: 'url', value: existingSite, field: 'site' as const, placeholder: 'e.g. https://mybrand.com', auto: 'url', inputMode: 'url' as const },
+                ].map(({ label, type, value, field, placeholder, auto, inputMode }) => (
                   <div key={field}>
-                    <label className="text-[10px] font-mono text-neutral-600 block mb-1">{label}</label>
+                    <label htmlFor={`cart-${field}`} className="text-[10px] font-mono text-neutral-400 block mb-1">{label}</label>
                     <input
+                      id={`cart-${field}`}
+                      name={field === 'phone' ? 'tel' : field === 'site' ? 'url' : field}
                       type={type}
                       value={value}
+                      autoComplete={auto}
+                      inputMode={inputMode}
                       onChange={(e) => handleProfile(field, e.target.value)}
                       onFocus={(e) => {
                         // Ensure input is comfortably centered in the scroll view when tapped/focused
                         setTimeout(() => {
-                          e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        }, 50);
+                          e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 80);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          const nextField = field === 'name' ? 'email' : field === 'email' ? 'phone' : field === 'phone' ? 'site' : null;
+                          if (nextField) {
+                            const nextEl = document.getElementById(`cart-${nextField}`);
+                            nextEl?.focus();
+                            nextEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          }
+                        }
                       }}
                       placeholder={placeholder}
                       className="w-full bg-black/60 border border-neutral-800/80 rounded-lg px-3 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors"
@@ -467,8 +562,26 @@ export function GlobalCart() {
             </div>
           )}
 
+          {/* ── Scroll prompt when more content is below ── */}
+          {canScrollDown && (
+            <div className="sticky bottom-2 left-0 right-0 flex justify-center pointer-events-none z-20">
+              <button
+                type="button"
+                onClick={() => {
+                  const el = scrollBodyRef.current;
+                  if (!el) return;
+                  el.scrollBy({ top: 220, behavior: 'smooth' });
+                }}
+                className="pointer-events-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-900/95 border border-neutral-700/80 text-[11px] font-mono text-neutral-300 hover:text-white hover:border-neutral-500 shadow-2xl backdrop-blur-md transition-all active:scale-95"
+              >
+                <span>Scroll down for details</span>
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce text-emerald-400" />
+              </button>
+            </div>
+          )}
+
           {/* Generous bottom clearance so all inputs and status indicators clear the fixed footer */}
-          <div className="h-16" aria-hidden="true" />
+          <div className="h-24" aria-hidden="true" />
         </div>
 
         {/* ── Drawer Footer — always visible ── */}

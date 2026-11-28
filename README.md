@@ -108,9 +108,20 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
   - **Order Review Modal & Dual-Dispatch Submissions:** Cart orders trigger an animated status modal with loading spinner ("Reviewing Your Order…"), direct WhatsApp dispatch with popup blocker fallback button, 24–48h review notice, social channel access, and background Firestore admin logging. The modal uses the same `<html>` + `<body>` scroll lock, and its card scrolls independently (`overscroll-contain`) so the page behind never moves.
   - **Dual-Mode Interactive Orders Drawer ("Your Orders"):**
     - Seamless sliding order drawer accessible globally from navbar and mobile menu.
-    - **Native Unblocked Scrolling Engine:** Resolved Safari trackpad and mouse wheel scroll latching by pausing Lenis inertia (`lenis.stop()`) on drawer mount, eliminating intrusive `e.stopPropagation()` handlers, and isolating desktop body scroll lock (`overflow: hidden` without destructive `position: fixed` disruption).
-    - **Visible Luxury Drawer Scrollbar:** Beautiful minimal dark scrollbar (`.drawer-scrollbar`) with thin 6px track and styled thumb, always visible and draggable across macOS Safari, Chrome, Edge, and Firefox.
-    - **Focus Auto-Alignment & Clearance:** All client profile fields (Name, Email, Phone/WhatsApp, Website) automatically center smoothly upon focus (`scrollIntoView`), accompanied by generous bottom clearance (`h-16`) to guarantee full visibility above fixed footer action buttons.
+    - **Native Unblocked Scrolling Engine:** Resolved Safari trackpad and mouse wheel scroll latching by adding direct hardware-accelerated wheel event listeners (`el.scrollTop += delta`), touch gesture isolation, pausing Lenis inertia (`lenis.stop()`) on drawer mount, and isolating desktop body scroll lock without destructive `html { overflow: hidden }` disruptions.
+    - **Visible Luxury Drawer Scrollbar:** High-contrast minimal dark scrollbar (`.drawer-scrollbar`) with `overflow-y: scroll !important`, styled 7px track and `#525252` thumb, permanently visible and draggable across macOS Safari, Chrome, Edge, and Firefox.
+    - **Interactive Scroll Helper Pill:** Real-time clearance observer detecting scrollable overflow; dynamically surfaces a sticky, frosted pill button (*"Scroll down for details ↓"*) that auto-scrolls down on click and fades away once the bottom fields are reached.
+    - **Focus Auto-Alignment & Field Progression:** All client profile fields (Name, Email, Phone/WhatsApp, Website) automatically center smoothly upon focus (`scrollIntoView({ block: 'center' })`) and advance cleanly via the `Enter` key, accompanied by generous bottom clearance (`h-24`) to guarantee full visibility above fixed footer action buttons.
+  - **Comprehensive Form Autofill Standardization:**
+    - Full HTML5 autofill compliance across the Orders Drawer (`GlobalCart.tsx`), Contact Form (`app/contact/page.tsx`), and Project Brief (`app/start-project/page.tsx`).
+    - Semantic `autoComplete` attributes (`name`, `email`, `tel`, `url`, `organization`), `inputMode` (`text`, `email`, `tel`, `url`), and explicit `htmlFor`/`id` labels to trigger iOS QuickType and Android AutoFill suggestions instantly.
+  - **Mobile 3D Touch Physics & Gyroscope Motion:**
+    - Integrated multi-touch pointer capture (`setPointerCapture`, `onPointerMove`, `onPointerUp`) in `SpatialStack.tsx` for silky mobile card drag and tilt.
+    - Device orientation gyroscope sensor listener (`deviceorientation`) translating physical smartphone Euler angles (`beta`, `gamma`) into real-time 3D card tilt across both the main stack and standalone business card pages.
+  - **iPhone Standalone PWA Architecture ("Open as Web App"):**
+    - Dynamic Island & notch collision resolution via `paddingTop: 'max(0.85rem, env(safe-area-inset-top, 0px))'` on `Navbar.tsx`, keeping top navigation, back buttons, and logos unobstructed.
+    - Standalone iOS link breakout trap (`window.navigator.standalone`) preventing internal clicks from launching Safari and keeping the app inside its native container.
+    - Extended PWA manifest scope (`"scope": "/"`, `"id": "/"`, `"orientation": "any"`).
   - **Global URL Order State Notifications (`?order=success` & `?order=cancel`):**
     - `/?order=success`: Shows a sleek emerald-green notification banner stating *"Your order was placed successfully! Wait for 24–48 hours, we'll be reaching out soon"* with a **Buy Again** button.
     - `/?order=cancel`: Shows a sleek crimson-red notification banner stating *"Your order was cancelled successfully"* with a **See Your Cart** button.
