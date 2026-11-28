@@ -16,6 +16,7 @@ import {
   HelpCircle,
   ShieldCheck,
   Zap,
+  GripVertical,
 } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 import { OrderStatusModal } from '@/components/OrderStatusModal';
@@ -195,15 +196,83 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
   const [clientEmail, setClientEmail] = useState('');
   const [clientPhone, setClientPhone] = useState('');
   const [contactError, setContactError] = useState('');
-  const [isCartHidden, setIsCartHidden] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
+  const [cartWindowOpen, setCartWindowOpen] = useState(false);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
   const [orderModalStatus, setOrderModalStatus] = useState<'loading' | 'success' | 'cancelled'>('loading');
   const [waOrderUrl, setWaOrderUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const cartContainerRef = useRef<HTMLDivElement>(null);
+  // Desktop movable widget state
+  const [widgetPos, setWidgetPos] = useState<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartRef = useRef<{ startX: number; startY: number; initX: number; initY: number } | null>(null);
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  // Drag handlers on desktop
+  const handleDragMouseDown = (e: React.MouseEvent) => {
+    // Only allow primary mouse button and do not initiate drag on buttons or inputs
+    if (e.button !== 0) return;
+    if ((e.target as HTMLElement).closest('button, a, input, textarea')) return;
+    if (!widgetRef.current) return;
+    e.preventDefault();
+
+    const rect = widgetRef.current.getBoundingClientRect();
+    dragStartRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      initX: rect.left,
+      initY: rect.top,
+    };
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!dragStartRef.current || !widgetRef.current) return;
+      const deltaX = e.clientX - dragStartRef.current.startX;
+      const deltaY = e.clientY - dragStartRef.current.startY;
+
+      const widgetWidth = widgetRef.current.offsetWidth || 380;
+      const widgetHeight = widgetRef.current.offsetHeight || 120;
+
+      // Keep inside screen viewport with 16px safety margin
+      const newX = Math.max(16, Math.min(window.innerWidth - widgetWidth - 16, dragStartRef.current.initX + deltaX));
+      const newY = Math.max(16, Math.min(window.innerHeight - widgetHeight - 16, dragStartRef.current.initY + deltaY));
+
+      setWidgetPos({ x: newX, y: newY });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      dragStartRef.current = null;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!widgetPos || !widgetRef.current) return;
+      const widgetWidth = widgetRef.current.offsetWidth || 380;
+      const widgetHeight = widgetRef.current.offsetHeight || 120;
+      const clampedX = Math.max(16, Math.min(window.innerWidth - widgetWidth - 16, widgetPos.x));
+      const clampedY = Math.max(16, Math.min(window.innerHeight - widgetHeight - 16, widgetPos.y));
+      if (clampedX !== widgetPos.x || clampedY !== widgetPos.y) {
+        setWidgetPos({ x: clampedX, y: clampedY });
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [widgetPos]);
 
   // Restore client profile and cart from local DB (localStorage)
   useEffect(() => {
@@ -324,16 +393,11 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
 
   // Toggle package in cart
   const togglePackage = (pkgId: 'starter' | 'growth' | 'pro') => {
-    setSelectedPkg((prev) => {
-      const next = prev === pkgId ? null : pkgId;
-      if (next) setIsCartHidden(false);
-      return next;
-    });
+    setSelectedPkg((prev) => (prev === pkgId ? null : pkgId));
   };
 
   // Add / increment addon
   const addAddon = (id: string) => {
-    setIsCartHidden(false);
     setAddons((prev) => ({
       ...prev,
       [id]: (prev[id] || 0) + 1,
@@ -362,12 +426,17 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     });
   };
 
-  // Clear entire cart
+  // Clear entire cart (empties local state & DB, closes window, clears widget)
   const clearCart = () => {
     setSelectedPkg(null);
     setAddons({});
     setExistingSite('');
     setContactError('');
+    setCartWindowOpen(false);
+    try {
+      localStorage.removeItem('swd-cart');
+      window.dispatchEvent(new Event('swd-cart-change'));
+    } catch (_) {}
   };
 
   // Build formatted order message
@@ -459,7 +528,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
     // Immediately open the animated order status modal in loading state
     setOrderModalStatus('loading');
     setOrderModalOpen(true);
-    setCartOpen(false);
+    setCartWindowOpen(false);
 
     // 1. Post to internal /api/contact for Firestore & Admin review
     try {
@@ -527,12 +596,10 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           )}
         </div>
 
-        {/* Main Layout Grid: Full width when empty, 2 columns when items added */}
-        <div className={`grid grid-cols-1 ${calc.itemCount > 0 ? 'lg:grid-cols-12 gap-8 lg:gap-10' : 'gap-8'} items-start`}>
-          {/* Left Column: Cards, Add-ons, FAQ */}
-          <div className={`${calc.itemCount > 0 ? 'lg:col-span-8' : 'col-span-12'} space-y-10 sm:space-y-12`}>
-            {/* Package Cards 3D Deck */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Main Layout: Full width cards, add-ons, and FAQ with spacious grid */}
+        <div className="space-y-12 sm:space-y-16">
+          {/* Package Cards 3D Deck */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
               {PACKAGES.map((pkg) => {
                 const isSelected = selectedPkg === pkg.id;
                 const isPro = pkg.id === 'pro';
@@ -782,67 +849,217 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Right Column: In-flow Cart on Mobile & Tablet / Sticky Sidebar on Desktop - ONLY when items added */}
-          {calc.itemCount > 0 && (
-            <div id="cart" className="block lg:col-span-4 lg:sticky lg:top-28 space-y-6 mt-10 lg:mt-0 scroll-mt-24 animate-fade-in">
-              <aside
-                ref={cartContainerRef}
-                className="bg-neutral-950/95 border border-neutral-800 rounded-2xl p-6 shadow-2xl backdrop-blur-xl space-y-6"
-                aria-label="Your Cart Summary"
-              >
-              {/* Cart Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-neutral-900">
-                <div className="flex items-center gap-2.5">
-                  <ShoppingCart className="w-5 h-5 text-white" />
-                  <h3 className="text-base font-bold text-white tracking-tight">Your Cart</h3>
-                  <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-white text-black">
-                    {calc.itemCount}
+      {/* Movable Floating Cart Widget (Desktop & Mobile) - Persistent until Cart Cleared */}
+      {calc.itemCount > 0 && (
+        <div
+          ref={widgetRef}
+          onMouseDown={handleDragMouseDown}
+          style={
+            widgetPos && typeof window !== 'undefined' && window.innerWidth >= 640
+              ? { left: `${widgetPos.x}px`, top: `${widgetPos.y}px`, bottom: 'auto', right: 'auto' }
+              : undefined
+          }
+          className={`fixed z-50 transition-shadow duration-200 select-none ${
+            isDragging ? 'cursor-grabbing scale-[1.02] shadow-2xl shadow-emerald-500/10' : 'cursor-grab'
+          } bottom-4 left-4 right-4 sm:bottom-8 sm:right-8 sm:left-auto sm:right-auto sm:w-[400px] max-w-md mx-auto sm:mx-0 animate-fade-in`}
+          aria-label="Floating Cart Widget"
+        >
+          <div className="bg-neutral-950/95 backdrop-blur-2xl border border-neutral-800/90 hover:border-neutral-700/90 rounded-2xl p-4 shadow-2xl shadow-black/95 space-y-3">
+            {/* Top Bar: Grip, Title, Count, Total */}
+            <div className="flex items-center justify-between pb-2.5 border-b border-neutral-900">
+              <div className="flex items-center gap-2.5">
+                {/* Drag Grip Handle on Desktop */}
+                <div
+                  className="hidden sm:flex items-center text-neutral-500 hover:text-neutral-300 p-0.5"
+                  title="Click and drag to move widget"
+                >
+                  <GripVertical className="w-4 h-4" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  {calc.itemCount}
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+                      Your Cart
+                    </span>
+                    <span className="hidden sm:inline-block text-[9px] font-mono text-neutral-500 uppercase">
+                      (Movable)
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-mono text-neutral-400 block truncate max-w-[160px] sm:max-w-[200px]">
+                    {calc.pkgItem?.name ? `${calc.pkgItem.name} Package` : 'Add-ons Selected'}
                   </span>
                 </div>
-                {calc.itemCount > 0 && (
-                  <button
-                    type="button"
-                    onClick={clearCart}
-                    className="text-xs font-mono text-neutral-400 hover:text-white transition-colors"
-                  >
-                    Clear Cart
-                  </button>
-                )}
               </div>
 
-              {/* Items List */}
-              <div className="space-y-3 pr-1">
+              <div className="text-right">
+                <span className="font-mono text-sm sm:text-base font-extrabold text-white block">
+                  {fmt(calc.totalOneTime)}
+                </span>
+                {calc.monthly > 0 && (
+                  <span className="text-[10px] font-mono text-neutral-400 block">
+                    +{fmt(calc.monthly)}/mo
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Profile persistence notice */}
+            {clientName && (
+              <div className="text-[10px] font-mono text-emerald-400 flex items-center justify-between px-0.5">
+                <span>✓ Profile active: {clientName.split(' ')[0]}</span>
+                <span className="text-neutral-500">Local DB</span>
+              </div>
+            )}
+
+            {/* The Two Main Action Buttons: View Full Cart & Order */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              {/* Button 1: View Full Cart */}
+              <button
+                type="button"
+                onClick={() => setCartWindowOpen(true)}
+                className="w-full py-2.5 px-3 rounded-xl border border-neutral-700/80 bg-neutral-900/90 hover:bg-neutral-800 text-white font-mono text-xs font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm group"
+                aria-label="View Full Cart Window"
+              >
+                <ShoppingCart className="w-3.5 h-3.5 text-neutral-300 group-hover:scale-110 transition-transform" />
+                <span>View Full Cart</span>
+              </button>
+
+              {/* Button 2: Order / Place Order */}
+              <button
+                type="button"
+                onClick={() => {
+                  const trimmedName = clientName.trim();
+                  const trimmedEmail = clientEmail.trim();
+                  const trimmedPhone = clientPhone.trim();
+
+                  if (!trimmedName || !trimmedEmail || !trimmedPhone) {
+                    setCartWindowOpen(true);
+                    setContactError('Please enter your contact details to complete the order.');
+                  } else {
+                    handleDispatchOrder();
+                  }
+                }}
+                disabled={isSubmitting}
+                className="w-full py-2.5 px-3 bg-white text-black hover:bg-neutral-200 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-white/10"
+                aria-label="Order Cart"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Order Now</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Dedicated "Your Cart" Window Modal (Mobile & Desktop) */}
+      {cartWindowOpen && (
+        <div className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 animate-fade-in">
+          <div
+            className="bg-neutral-950 border border-neutral-800 rounded-3xl w-full max-w-2xl max-h-[92dvh] sm:max-h-[88vh] flex flex-col shadow-2xl shadow-black overflow-hidden animate-scale-up"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cart-window-title"
+          >
+            {/* Window Header */}
+            <div className="px-5 py-4 sm:px-6 sm:py-5 border-b border-neutral-900 bg-neutral-950/90 backdrop-blur-md flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-sm">
+                  <ShoppingCart className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 id="cart-window-title" className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+                    <span>Your Cart</span>
+                    <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-neutral-800 text-white border border-neutral-700">
+                      {calc.itemCount} item{calc.itemCount !== 1 ? 's' : ''}
+                    </span>
+                  </h3>
+                  <p className="text-xs text-neutral-400 font-mono">
+                    Review items, enter details &amp; order
+                  </p>
+                </div>
+              </div>
+
+              {/* Actions: Clear/Discard Cart & Close Window */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={clearCart}
+                  className="px-3 py-1.5 rounded-lg border border-neutral-800 text-xs font-mono text-neutral-400 hover:text-red-400 hover:border-red-900/60 hover:bg-red-950/20 transition-all flex items-center gap-1.5"
+                  title="Discard all items and empty cart"
+                >
+                  <span>Clear Cart</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCartWindowOpen(false)}
+                  className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-white flex items-center justify-center transition-colors"
+                  aria-label="Close cart window"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable Window Body */}
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6 overscroll-contain">
+              {/* Selected Items Section */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+                    Selected Items
+                  </span>
+                  <span className="text-xs font-mono text-neutral-400">
+                    Subtotal: {fmt(calc.subtotal)}
+                  </span>
+                </div>
+
                 {calc.itemCount === 0 ? (
-                  <div className="text-center py-8 px-4 border border-dashed border-neutral-800 rounded-xl text-neutral-400 text-xs leading-relaxed">
-                    Your cart is currently empty.
-                    <br />
-                    Pick a package or select add-ons to build your website order.
+                  <div className="text-center py-10 px-4 border border-dashed border-neutral-800 rounded-2xl text-neutral-400 text-xs leading-relaxed space-y-3">
+                    <p>Your cart is empty. Please select a website package or add-on.</p>
+                    <button
+                      type="button"
+                      onClick={() => setCartWindowOpen(false)}
+                      className="px-4 py-2 bg-white text-black rounded-full font-mono text-xs font-semibold hover:bg-neutral-200 transition-colors"
+                    >
+                      Browse Packages
+                    </button>
                   </div>
                 ) : (
-                  <>
+                  <div className="space-y-2.5">
                     {/* Selected Package Row */}
                     {calc.pkgItem && (
-                      <div className="flex items-start justify-between p-3 rounded-xl bg-neutral-900/80 border border-neutral-800 gap-3">
-                        <div className="space-y-0.5">
-                          <span className="text-xs font-bold text-white block">
-                            {calc.pkgItem.name} Package
-                          </span>
-                          <span className="text-[11px] text-neutral-400 block">
-                            {calc.pkgItem.scope}
-                          </span>
+                      <div className="flex items-start justify-between p-3.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 gap-3">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-white block">
+                              {calc.pkgItem.name} Package
+                            </span>
+                            {calc.pkgItem.badge && (
+                              <span className="px-2 py-0.5 rounded-full text-[9px] font-mono uppercase tracking-widest bg-white text-black font-bold">
+                                {calc.pkgItem.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-neutral-400">
+                            {calc.pkgItem.scope} &bull; {calc.pkgItem.delivery} delivery
+                          </p>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-semibold text-white">
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-sm font-bold text-white">
                             {fmt(calc.pkgItem.price)}
                           </span>
                           <button
                             type="button"
                             onClick={() => setSelectedPkg(null)}
-                            className="text-neutral-400 hover:text-white p-1"
+                            className="p-1.5 text-neutral-400 hover:text-red-400 hover:bg-neutral-800 rounded-lg transition-colors"
                             aria-label="Remove package"
+                            title="Remove package"
                           >
-                            <X className="w-3.5 h-3.5" />
+                            <X className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
@@ -858,111 +1075,145 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                       return (
                         <div
                           key={id}
-                          className="flex items-start justify-between p-3 rounded-xl bg-neutral-900/80 border border-neutral-800 gap-3"
+                          className="flex items-center justify-between p-3.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 gap-3"
                         >
-                          <div className="space-y-1">
-                            <span className="text-xs font-semibold text-white block">
+                          <div className="space-y-0.5">
+                            <span className="text-xs sm:text-sm font-semibold text-white block">
                               {item.name}
                             </span>
-                            <div className="flex items-center gap-1.5">
+                            <span className="text-[11px] text-neutral-400 block font-mono">
+                              {isFreePro ? (
+                                <span className="text-emerald-400 font-semibold">Free Perk with Pro Package</span>
+                              ) : (
+                                `${fmt(item.price)} each${item.monthly ? ' / month' : ''}`
+                              )}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-3">
+                            {/* Quantity Adjusters */}
+                            <div className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 rounded-full px-2 py-1">
                               <button
                                 type="button"
                                 onClick={() => decrementAddon(id)}
-                                className="w-5 h-5 flex items-center justify-center text-neutral-300 hover:text-white rounded hover:bg-neutral-800"
-                                aria-label="Less"
+                                className="w-5 h-5 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800"
+                                aria-label="Decrease quantity"
                               >
                                 <Minus className="w-2.5 h-2.5" />
                               </button>
-                              <span className="font-mono text-xs text-white px-1">{qty}</span>
+                              <span className="font-mono text-xs font-bold text-white min-w-[14px] text-center">
+                                {qty}
+                              </span>
                               <button
                                 type="button"
                                 onClick={() => addAddon(id)}
-                                className="w-5 h-5 flex items-center justify-center text-neutral-300 hover:text-white rounded hover:bg-neutral-800"
-                                aria-label="More"
+                                className="w-5 h-5 flex items-center justify-center text-neutral-300 hover:text-white rounded-full hover:bg-neutral-800"
+                                aria-label="Increase quantity"
                               >
                                 <Plus className="w-2.5 h-2.5" />
                               </button>
                             </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs font-semibold text-white">
-                              {isFreePro ? (
-                                <span className="text-emerald-400">FREE</span>
-                              ) : (
-                                `${fmt(linePrice)}${item.monthly ? '/mo' : ''}`
-                              )}
+
+                            <span className="font-mono text-xs sm:text-sm font-bold text-white min-w-[60px] text-right">
+                              {isFreePro ? <span className="text-emerald-400">FREE</span> : fmt(linePrice)}
                             </span>
+
                             <button
                               type="button"
                               onClick={() => removeAddon(id)}
-                              className="text-neutral-400 hover:text-white p-1"
+                              className="p-1.5 text-neutral-400 hover:text-red-400 hover:bg-neutral-800 rounded-lg transition-colors"
                               aria-label={`Remove ${item.name}`}
+                              title={`Remove ${item.name}`}
                             >
-                              <X className="w-3.5 h-3.5" />
+                              <X className="w-4 h-4" />
                             </button>
                           </div>
                         </div>
                       );
                     })}
-                  </>
+                  </div>
                 )}
               </div>
 
-              {/* Client Contact Info */}
-              <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800/90 space-y-2.5">
+              {/* Client Contact Details */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-neutral-900/60 border border-neutral-800 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-white">Your Contact Details</span>
-                  <span className="text-[10px] font-mono text-emerald-400">✓ Remembered in local DB</span>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-white tracking-tight">
+                      Your Contact Details
+                    </h4>
+                    <p className="text-[11px] text-neutral-400">
+                      Required for order confirmation and direct WhatsApp collaboration.
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-900/80 px-2 py-0.5 rounded-full">
+                    ✓ Local DB Active
+                  </span>
                 </div>
 
-                <div className="space-y-2">
-                  <input
-                    type="text"
-                    required
-                    value={clientName}
-                    onChange={(e) => {
-                      setClientName(e.target.value);
-                      if (contactError) setContactError('');
-                    }}
-                    placeholder="Full Name"
-                    className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
-                  />
-                  <input
-                    type="email"
-                    required
-                    value={clientEmail}
-                    onChange={(e) => {
-                      setClientEmail(e.target.value);
-                      if (contactError) setContactError('');
-                    }}
-                    placeholder="Email Address"
-                    className="w-full h-8 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
-                  />
-                  <input
-                    type="tel"
-                    required
-                    value={clientPhone}
-                    onChange={(e) => {
-                      setClientPhone(e.target.value);
-                      if (contactError) setContactError('');
-                    }}
-                    placeholder="Phone / WhatsApp Number"
-                    className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={clientName}
+                      onChange={(e) => {
+                        setClientName(e.target.value);
+                        if (contactError) setContactError('');
+                      }}
+                      placeholder="e.g. John Doe"
+                      className="w-full h-10 px-3 rounded-xl text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={clientEmail}
+                      onChange={(e) => {
+                        setClientEmail(e.target.value);
+                        if (contactError) setContactError('');
+                      }}
+                      placeholder="name@company.com"
+                      className="w-full h-10 px-3 rounded-xl text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1">
+                      Phone / WhatsApp *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={clientPhone}
+                      onChange={(e) => {
+                        setClientPhone(e.target.value);
+                        if (contactError) setContactError('');
+                      }}
+                      placeholder="+91 98765 43210"
+                      className="w-full h-10 px-3 rounded-xl text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
+                    />
+                  </div>
                 </div>
 
                 {contactError && (
-                  <p className="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-900/50 rounded-md p-1.5 leading-tight">
+                  <p className="text-xs font-mono text-red-400 bg-red-950/40 border border-red-900/60 rounded-xl p-2.5 leading-tight">
                     {contactError}
                   </p>
                 )}
               </div>
 
               {/* Already Have a Website Input */}
-              <div className="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800/90 space-y-2">
+              <div className="p-4 sm:p-5 rounded-2xl bg-neutral-900/60 border border-neutral-800 space-y-2">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
-                    <Globe className="w-3.5 h-3.5 text-neutral-400" />
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-white">
+                    <Globe className="w-4 h-4 text-neutral-400" />
                     <span>Already have a website?</span>
                   </div>
                   {existingSite.length > 3 && (
@@ -970,20 +1221,23 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   )}
                 </div>
                 <p className="text-[11px] text-neutral-400 leading-tight">
-                  Paste your URL so we can review your existing site for add-ons or updates:
+                  Paste your link so we can review your current architecture for redesign or add-ons:
                 </p>
                 <input
                   type="url"
                   value={existingSite}
                   onChange={(e) => setExistingSite(e.target.value)}
                   placeholder="https://yourwebsite.com"
-                  className="w-full h-8 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-400 focus:outline-none focus:border-white transition-colors"
+                  className="w-full h-10 px-3 rounded-xl text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
 
-              {/* Explicit Math Breakdown */}
-              <div className="pt-4 border-t border-neutral-900 space-y-2 text-xs">
-                {/* Base Package Line */}
+              {/* Explicit Arithmetic Order Breakdown */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-neutral-900/90 border border-neutral-800 space-y-2 text-xs">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-2">
+                  Order Summary
+                </span>
+
                 {calc.pkgItem && (
                   <div className="flex justify-between text-neutral-300">
                     <span>{calc.pkgItem.name} Package</span>
@@ -991,17 +1245,13 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   </div>
                 )}
 
-                {/* Add-ons line with explicit '+' sign */}
                 {calc.addSub > 0 && (
                   <div className="flex justify-between text-neutral-300">
-                    <span>
-                      + Add-ons ({calc.qAll} item{calc.qAll > 1 ? 's' : ''})
-                    </span>
+                    <span>+ Add-ons ({calc.qAll} item{calc.qAll > 1 ? 's' : ''})</span>
                     <span className="font-mono font-bold text-white">+{fmt(calc.addSub)}</span>
                   </div>
                 )}
 
-                {/* Discounts with explicit '−' sign */}
                 {calc.totalDiscounts > 0 && (
                   <div className="flex justify-between text-emerald-400">
                     <span>− Offers applied</span>
@@ -1009,11 +1259,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   </div>
                 )}
 
-                {/* Divider */}
-                <div className="border-t border-dashed border-neutral-800 pt-2" />
-
-                {/* Grand Total */}
-                <div className="flex justify-between items-baseline pt-1">
+                <div className="border-t border-dashed border-neutral-800 pt-2.5 flex justify-between items-baseline">
                   <span className="text-sm font-bold text-white">Total Amount</span>
                   <span className="font-mono text-2xl font-extrabold text-white">
                     {fmt(calc.totalOneTime)}
@@ -1021,21 +1267,40 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                 </div>
 
                 {calc.monthly > 0 && (
-                  <p className="text-[11px] text-neutral-400 font-mono text-right">
+                  <p className="text-[11px] text-neutral-400 font-mono text-right pt-1">
                     Plus {fmt(calc.monthly)} / month for maintenance.
                   </p>
                 )}
               </div>
+            </div>
 
-              {/* Order Submission CTA */}
-              <div className="space-y-2 pt-2">
+            {/* Window Footer Sticky Action Bar */}
+            <div className="px-5 py-4 sm:px-6 sm:py-5 border-t border-neutral-900 bg-neutral-950/95 flex flex-col sm:flex-row items-center justify-between gap-3 flex-shrink-0">
+              <div className="w-full sm:w-auto text-left">
+                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
+                  Final Payable
+                </span>
+                <span className="text-2xl font-mono font-extrabold text-white">
+                  {fmt(calc.totalOneTime)}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => setCartWindowOpen(false)}
+                  className="flex-1 sm:flex-none px-4 py-3 rounded-xl border border-neutral-800 hover:border-neutral-700 bg-neutral-900 text-neutral-300 hover:text-white font-mono text-xs font-medium transition-colors"
+                >
+                  Keep Browsing
+                </button>
+
                 <button
                   type="button"
                   onClick={handleDispatchOrder}
                   disabled={calc.itemCount === 0 || isSubmitting}
-                  className={`w-full py-3.5 px-6 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2 shadow-lg active:scale-95 ${
-                    calc.itemCount === 0
-                      ? 'bg-neutral-800 text-neutral-400 cursor-not-allowed opacity-60'
+                  className={`flex-1 sm:flex-none py-3 px-6 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg ${
+                    calc.itemCount === 0 || isSubmitting
+                      ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed opacity-60'
                       : 'bg-white text-black hover:bg-neutral-200 shadow-white/10'
                   }`}
                 >
@@ -1043,318 +1308,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
                   <span>Send Cart on WhatsApp</span>
                 </button>
               </div>
-            </aside>
-          </div>
-        )}
-        </div>
-      </div>
-
-      {/* Minimized Floating Cart Launcher (Desktop & Mobile) - ONLY if items in cart */}
-      {calc.itemCount > 0 && isCartHidden && (
-        <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 animate-fade-in">
-          <button
-            type="button"
-            onClick={() => setIsCartHidden(false)}
-            className="h-11 px-4 bg-white text-black hover:bg-neutral-200 rounded-full shadow-2xl shadow-black/80 flex items-center gap-2.5 font-mono text-xs font-bold transition-all active:scale-95 border border-neutral-300 group"
-            aria-label="Expand Cart Widget"
-            title="Expand Cart Widget"
-          >
-            <ShoppingCart className="w-4 h-4 text-black group-hover:scale-110 transition-transform" />
-            <span>Your Cart</span>
-            <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-bold">
-              {calc.itemCount}
-            </span>
-            <span className="text-neutral-600 hidden sm:inline">• {fmt(calc.totalOneTime)}</span>
-          </button>
-        </div>
-      )}
-
-      {/* Screen Hover Cart Widget (Desktop & Mobile) - ONLY if items in cart */}
-      {calc.itemCount > 0 && !isCartHidden && (
-        <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 sm:w-96 max-w-md mx-auto sm:mx-0 animate-fade-in">
-          <div className="bg-neutral-950/95 backdrop-blur-2xl border border-neutral-800/90 rounded-2xl p-4 shadow-2xl shadow-black/95 space-y-3">
-            {/* Top Bar: Title, Count, Total, and Minimize/Hide Button */}
-            <div className="flex items-center justify-between pb-2.5 border-b border-neutral-900">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs">
-                  {calc.itemCount}
-                </div>
-                <div>
-                  <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                    Your Cart
-                  </span>
-                  <span className="text-[11px] font-mono text-neutral-400">
-                    {calc.pkgItem?.name ? `${calc.pkgItem.name} Package` : 'Add-ons Selected'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-extrabold text-white">
-                  {fmt(calc.totalOneTime)}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setIsCartHidden(true)}
-                  className="w-7 h-7 rounded-full bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white flex items-center justify-center transition-colors text-xs font-mono"
-                  aria-label="Hide Cart Widget"
-                  title="Hide Cart Widget"
-                >
-                  ✕
-                </button>
-              </div>
             </div>
-
-            {/* Profile persistence notice from Local DB */}
-            {clientName && (
-              <div className="text-[10px] font-mono text-emerald-400 flex items-center justify-between">
-                <span>✓ Profile saved for {clientName.split(' ')[0]}</span>
-                <span className="text-neutral-500">Local DB Active</span>
-              </div>
-            )}
-
-            {/* Action Buttons: View Details & Place Order */}
-            <div className="flex items-center gap-2 pt-1">
-              <button
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById('cart');
-                  if (el) {
-                    el.scrollIntoView({ behavior: 'smooth' });
-                  } else {
-                    setCartOpen(true);
-                  }
-                }}
-                className="px-3.5 py-2.5 rounded-xl border border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 text-white font-mono text-xs font-medium transition-colors flex items-center gap-1 active:scale-95"
-              >
-                <span>View Cart &darr;</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  const trimmedName = clientName.trim();
-                  const trimmedEmail = clientEmail.trim();
-                  const trimmedPhone = clientPhone.trim();
-
-                  if (!trimmedName || !trimmedEmail || !trimmedPhone) {
-                    const el = document.getElementById('cart');
-                    if (el) {
-                      el.scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                      setCartOpen(true);
-                    }
-                  } else {
-                    handleDispatchOrder();
-                  }
-                }}
-                disabled={isSubmitting}
-                className="flex-1 py-2.5 px-4 bg-white text-black hover:bg-neutral-200 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center justify-center gap-1.5 shadow-md shadow-white/10"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>Place Order</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Mobile Cart Sheet Drawer */}
-      {cartOpen && (
-        <div className="lg:hidden fixed inset-0 z-[60] flex flex-col justify-end bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div
-            className="bg-neutral-950 border-t border-neutral-800 rounded-t-3xl max-h-[92dvh] flex flex-col p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] space-y-4 shadow-2xl overflow-y-auto overscroll-contain"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile Cart Summary"
-          >
-            {/* Header */}
-            <div className="sticky top-[-1rem] z-10 -mx-4 px-4 py-3 bg-neutral-950/95 backdrop-blur-md flex items-center justify-between pb-3 border-b border-neutral-900">
-              <div className="flex items-center gap-2">
-                <ShoppingCart className="w-5 h-5 text-white" />
-                <h3 className="text-base font-bold text-white">Your Cart ({calc.itemCount})</h3>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCartOpen(false);
-                    setIsCartHidden(true);
-                  }}
-                  className="h-11 px-3 rounded-full border border-neutral-800 text-xs font-mono text-neutral-300 hover:text-white hover:border-neutral-600 flex items-center gap-1 transition-colors"
-                >
-                  <span>Hide Cart</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCartOpen(false)}
-                  className="w-11 h-11 rounded-full border border-neutral-800 flex items-center justify-center text-neutral-400 hover:text-white"
-                  aria-label="Close cart"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Mobile Items List */}
-            <div className="space-y-3 divide-y divide-neutral-900">
-              {calc.itemCount === 0 ? (
-                <div className="text-center py-6 text-neutral-400 text-xs">Your cart is empty.</div>
-              ) : (
-                <>
-                  {calc.pkgItem && (
-                    <div className="flex justify-between items-center pt-2">
-                      <div>
-                        <span className="text-xs font-bold text-white block">
-                          {calc.pkgItem.name} Package
-                        </span>
-                        <span className="text-[11px] text-neutral-400 block">
-                          {calc.pkgItem.scope}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-white">
-                          {fmt(calc.pkgItem.price)}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setSelectedPkg(null)}
-                          className="text-neutral-400 p-1"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {Object.entries(addons).map(([id, qty]) => {
-                    const item = ADDONS.find((a) => a.id === id);
-                    if (!item || qty <= 0) return null;
-                    const linePrice = item.price * qty;
-                    const isFreePro = selectedPkg === 'pro' && id === 'subdomain';
-
-                    return (
-                      <div key={id} className="flex justify-between items-center pt-2">
-                        <div>
-                          <span className="text-xs font-semibold text-white block">{item.name}</span>
-                          <span className="text-[11px] text-neutral-400 block">Qty: {qty}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-bold text-white">
-                            {isFreePro ? 'FREE' : fmt(linePrice)}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => removeAddon(id)}
-                            className="text-neutral-400 p-1"
-                          >
-                            <X className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </>
-              )}
-            </div>
-
-            {/* Contact in Mobile */}
-            <div className="p-3 rounded-xl bg-neutral-900 border border-neutral-800 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-white">Your Contact Details</span>
-                <span className="text-[10px] font-mono text-emerald-400">✓ Auto-saved in local DB</span>
-              </div>
-              <input
-                type="text"
-                required
-                value={clientName}
-                onChange={(e) => {
-                  setClientName(e.target.value);
-                  if (contactError) setContactError('');
-                }}
-                placeholder="Full Name"
-                className="w-full h-11 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
-              />
-              <input
-                type="email"
-                required
-                value={clientEmail}
-                onChange={(e) => {
-                  setClientEmail(e.target.value);
-                  if (contactError) setContactError('');
-                }}
-                placeholder="Email Address"
-                className="w-full h-11 px-3 rounded-lg text-xs font-sans bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
-              />
-              <input
-                type="tel"
-                required
-                value={clientPhone}
-                onChange={(e) => {
-                  setClientPhone(e.target.value);
-                  if (contactError) setContactError('');
-                }}
-                placeholder="Phone / WhatsApp Number"
-                className="w-full h-11 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
-              />
-              {contactError && (
-                <p className="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-900/50 rounded-md p-1.5 leading-tight">
-                  {contactError}
-                </p>
-              )}
-            </div>
-
-            {/* Existing Website in Mobile */}
-            <div className="p-3 rounded-xl bg-neutral-900 border border-neutral-800 space-y-1.5">
-              <span className="text-xs font-semibold text-white block">
-                Already have a website?
-              </span>
-              <input
-                type="url"
-                value={existingSite}
-                onChange={(e) => setExistingSite(e.target.value)}
-                placeholder="https://yourwebsite.com"
-                className="w-full h-11 px-3 rounded-lg text-xs font-mono bg-black border border-neutral-800 text-white placeholder-neutral-400 focus:outline-none"
-              />
-            </div>
-
-            {/* Explicit Arithmetic Math in Mobile */}
-            <div className="pt-3 border-t border-neutral-900 space-y-1.5 text-xs">
-              {calc.pkgItem && (
-                <div className="flex justify-between text-neutral-300">
-                  <span>{calc.pkgItem.name} Package</span>
-                  <span className="font-mono">{fmt(calc.basePrice)}</span>
-                </div>
-              )}
-              {calc.addSub > 0 && (
-                <div className="flex justify-between text-neutral-300">
-                  <span>+ Add-ons ({calc.qAll} items)</span>
-                  <span className="font-mono font-bold text-white">+{fmt(calc.addSub)}</span>
-                </div>
-              )}
-              {calc.totalDiscounts > 0 && (
-                <div className="flex justify-between text-emerald-400">
-                  <span>− Offers applied</span>
-                  <span className="font-mono font-bold">−{fmt(calc.totalDiscounts)}</span>
-                </div>
-              )}
-              <div className="border-t border-dashed border-neutral-800 pt-2 flex justify-between items-baseline">
-                <span className="text-sm font-bold text-white">Total Amount</span>
-                <span className="font-mono text-xl font-extrabold text-white">
-                  {fmt(calc.totalOneTime)}
-                </span>
-              </div>
-            </div>
-
-            {/* Submit */}
-            <button
-              type="button"
-              onClick={handleDispatchOrder}
-              disabled={calc.itemCount === 0 || isSubmitting}
-              className="w-full py-3.5 px-6 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-black shadow-lg"
-            >
-              Send Cart on WhatsApp
-            </button>
           </div>
         </div>
       )}
@@ -1374,7 +1328,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         onCancelOrder={() => setOrderModalStatus('cancelled')}
         onResumeCart={() => {
           setOrderModalOpen(false);
-          setCartOpen(true);
+          setCartWindowOpen(true);
         }}
       />
     </section>

@@ -85,7 +85,7 @@ export function OrderSuccessToast() {
               </Link>
             ) : (
               <Link
-                href="/packages#cart"
+                href="/packages"
                 onClick={() => setToastType(null)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black text-xs font-mono font-bold uppercase tracking-wider hover:bg-neutral-200 transition-colors shadow-md active:scale-95"
               >
