@@ -1017,7 +1017,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
 
       {/* Minimized Floating Pill when Cart is Hidden on Mobile - ONLY if items in cart */}
       {calc.itemCount > 0 && isCartHidden && (
-        <div className="lg:hidden fixed bottom-16 right-4 z-40 animate-fade-in">
+        <div className="lg:hidden fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] right-4 z-[45] animate-fade-in">
           <button
             type="button"
             onClick={() => {
@@ -1038,7 +1038,7 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
 
       {/* Floating Bottom Bar on Mobile Devices (Expanded) - ONLY if items in cart */}
       {calc.itemCount > 0 && !isCartHidden && (
-        <div className="lg:hidden fixed bottom-16 left-4 right-4 z-40 max-w-lg mx-auto animate-fade-in">
+        <div className="lg:hidden fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] left-4 right-4 z-[45] max-w-lg mx-auto animate-fade-in">
           <div className="w-full h-14 bg-neutral-950/95 backdrop-blur-md border border-neutral-800 rounded-full px-4 py-2 flex items-center justify-between shadow-2xl shadow-black/95">
             <button
               type="button"

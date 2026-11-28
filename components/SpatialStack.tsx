@@ -127,7 +127,7 @@ export function SpatialStack() {
                 top: `calc(76px + ${(layer.index - 1) * 22}px)`,
                 zIndex: layer.index,
               }}
-              className="sticky bg-neutral-950/95 backdrop-blur-xl border border-neutral-800/90 rounded-2xl p-5 sm:p-8 lg:p-10 shadow-2xl shadow-black/80 transition-all duration-300 group hover:border-neutral-700 transform-gpu will-change-transform"
+              className="relative sm:sticky bg-neutral-950/95 backdrop-blur-xl border border-neutral-800/90 rounded-2xl p-5 sm:p-8 lg:p-10 shadow-2xl shadow-black/80 transition-all duration-300 group hover:border-neutral-700 transform-gpu will-change-transform"
             >
               {/* Subtle top edge glow highlight */}
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
