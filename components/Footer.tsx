@@ -13,14 +13,18 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-5">
-            <Link href="/" className="inline-block" aria-label="ShivamWebDesigns Home">
+            <Link
+              href="/"
+              className="inline-flex items-center group transition-transform duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-lg p-0.5"
+              aria-label="ShivamWebDesigns — Home"
+            >
               <div className="relative flex items-center">
                 <Image
                   src={siteConfig.assets.logoPng}
-                  alt="Shivam Web Designs"
-                  width={84}
-                  height={56}
-                  className="h-12 sm:h-14 w-auto object-contain transition-opacity duration-200 hover:opacity-90"
+                  alt="ShivamWebDesigns Bespoke Monogram"
+                  width={72}
+                  height={48}
+                  className="h-10 sm:h-12 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
                 />
               </div>
             </Link>

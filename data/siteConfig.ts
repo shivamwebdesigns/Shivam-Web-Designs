@@ -68,7 +68,7 @@ export const siteConfig: SiteConfig = {
   },
   url: 'https://shivamwebdesigns.devs.li',
   assets: {
-    logoPng: '/assets/logo-trimmed.png',
+    logoPng: '/assets/swd-monogram.png',
     favicon: '/assets/favicon-512.png',
     bannerDesktop: '/assets/banner-desktop.png',
     bannerMobile: '/assets/banner-mobile.png',

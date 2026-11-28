@@ -67,6 +67,12 @@ ShivamWebDesigns operates on a strict **monochromatic, editorial Swiss aesthetic
 
 ## 4. UI Components & Interaction Features
 
+- **Header & Mobile Ergonomics (`components/Navbar.tsx`):**
+  - **Bespoke SWD Monogram (`/assets/swd-monogram.png`):** High-definition transparent RGBA monogram mark engineered with mathematical alpha transparency. Seamlessly blends into transparent hero states, sticky frosted-glass headers (`bg-neutral-950/85 backdrop-blur-xl`), and dark footer canvases with zero letterbox edges or black box artifacts.
+  - **Mobile Inquire Button & 44px Touch Targets:** Strictly compliant with WCAG 2.2 AA minimum touch target sizes (`min-h-[44px]`), styled with crisp Swiss monospace typography (`text-xs font-semibold uppercase tracking-wider font-mono`), subtle directional arrow (`ArrowUpRight`), active tactile haptic scaling (`active:scale-95`), and comfortable spacing (`gap-2.5 sm:gap-3`).
+  - **Animated Mobile Hamburger Trigger:** 44×44px interactive button with smooth 90-degree rotational micro-animation (`rotate-90`), frosted dark glass background (`bg-neutral-900/70`), and robust accessibility announcements (`aria-expanded`, `aria-label`).
+  - **Desktop Navigation Micro-Interactions:** Rounded navigation pills with smooth background transitions, active route badges, and an elevated "Start a Project" CTA with hover offset animation.
+  - **Footer Monogram Integration (`components/Footer.tsx`):** Identical transparent HD monogram mark with calibrated clear space, accessible focus rings, and high-contrast typography.
 - **Packages & Fixed Pricing Architecture (`/packages`, `/pricing`, & Embedded on `/`):**
   - **Fixed-Price Tiers:** Starter (₹499 &bull; digital profile page), Growth (₹999 &bull; one-page website with inquiry form and basic SEO), Pro (₹1,499 &bull; multi-page architecture up to 3 pages with analytics, speed tuning, and glowing white highlights).
   - **Refined Packages Positioning & Header:** Positioned with the authoritative headline **"Website Packages Starting at ₹499"** and clear description (*"Flexible solutions for businesses, creators and growing brands. Choose a package that fits your goals."*), followed by the clean typographic eyebrow `PACKAGES // FIXED PRICES` sitting directly atop the packages deck.
