@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { verifyAdminIdToken } from '@/lib/admin-auth';
 import {
+  FieldValue,
   getFirebaseAdminConfigStatus,
   getFirebaseAdminDb,
   getFirebaseErrorCode,
@@ -87,6 +88,11 @@ export async function GET(request: Request) {
           ? data.createdAt.toDate().toISOString()
           : null;
 
+      const completedAt =
+        data.completedAt && typeof data.completedAt.toDate === 'function'
+          ? data.completedAt.toDate().toISOString()
+          : null;
+
       return {
         id: document.id,
         kind: data.kind === 'contact' ? 'contact' : 'project',
@@ -102,6 +108,8 @@ export async function GET(request: Request) {
         subject: data.subject ?? '',
         message: data.message ?? '',
         emailStatus: data.emailStatus ?? 'pending',
+        isDone: Boolean(data.isDone),
+        completedAt,
         createdAt,
       };
     });
@@ -115,6 +123,52 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     console.error('[SWD_ADMIN_INQUIRIES_READ_ERROR]', {
+      name: error instanceof Error ? error.name : 'UnknownError',
+      code: getFirebaseErrorCode(error),
+      ...getFirebaseAdminConfigStatus(),
+    });
+    return unavailable();
+  }
+}
+
+export async function PATCH(request: Request) {
+  const authorization = request.headers.get('authorization');
+  const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
+  if (!token) {
+    return unauthorized();
+  }
+
+  const identity = await verifyAdminIdToken(token);
+  if (identity.kind !== 'authorized') {
+    return unauthorized();
+  }
+
+  try {
+    const payload = await request.json();
+    const id = payload?.id;
+    const isDone = payload?.isDone;
+
+    if (typeof id !== 'string' || typeof isDone !== 'boolean') {
+      return NextResponse.json({ error: 'Invalid payload.' }, { status: 400 });
+    }
+
+    const docRef = getFirebaseAdminDb().collection('inquiries').doc(id);
+    const existing = await docRef.get();
+    if (!existing.exists) {
+      return NextResponse.json({ error: 'Inquiry not found.' }, { status: 404 });
+    }
+
+    await docRef.update({
+      isDone,
+      completedAt: isDone ? FieldValue.serverTimestamp() : null,
+    });
+
+    return NextResponse.json(
+      { success: true, id, isDone },
+      { headers: { 'Cache-Control': 'private, no-store' } }
+    );
+  } catch (error) {
+    console.error('[SWD_ADMIN_INQUIRY_PATCH_ERROR]', {
       name: error instanceof Error ? error.name : 'UnknownError',
       code: getFirebaseErrorCode(error),
       ...getFirebaseAdminConfigStatus(),
