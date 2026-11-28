@@ -212,9 +212,10 @@ export function GlobalCart() {
 
       {/* ── Cart Drawer — slides in from RIGHT edge ── */}
       <div
-        className={`fixed top-0 right-0 h-screen w-full sm:w-[460px] z-[9999] bg-neutral-950 border-l border-neutral-800/80 flex flex-col overflow-hidden shadow-[-24px_0_80px_rgba(0,0,0,0.9)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 right-0 w-full sm:w-[460px] z-[9999] bg-neutral-950 border-l border-neutral-800/80 flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           cartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ height: '100dvh', maxHeight: '100dvh', boxShadow: '-24px 0 80px rgba(0,0,0,0.9)' }}
         role="dialog"
         aria-modal="true"
         aria-label="Your Orders"
@@ -249,8 +250,15 @@ export function GlobalCart() {
 
         {/* ── Scrollable Body ── */}
         <div
-          className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-5 py-5 space-y-5"
-          style={{ WebkitOverflowScrolling: 'touch' }}
+          className="px-5 py-5 space-y-5"
+          style={{
+            flex: '1 1 0%',
+            minHeight: 0,
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehavior: 'contain',
+          }}
         >
 
           {/* Empty State */}
@@ -406,6 +414,9 @@ export function GlobalCart() {
               )}
             </div>
           )}
+
+          {/* Bottom padding so last field clears the sticky footer */}
+          <div className="h-4" aria-hidden="true" />
         </div>
 
         {/* ── Drawer Footer — always visible ── */}
