@@ -81,14 +81,14 @@ export function YourOrderPanel({
             onClick={onClose}
             aria-label="Close your order"
             title="Close"
-            className="group relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-950/40 hover:bg-red-500/20 text-red-400 hover:text-red-200 border border-red-900/50 hover:border-red-500/60 flex items-center justify-center transition-all duration-300 active:scale-90 shadow-sm hover:shadow-[0_0_16px_rgba(239,68,68,0.25)] flex-shrink-0 cursor-pointer [perspective:1000px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/80"
+            className="group relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-neutral-400 hover:text-red-400 transition-colors duration-200 active:scale-90 flex-shrink-0 cursor-pointer [perspective:1000px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-red-400/80 rounded-md"
           >
             {/* 3D Flipping X Icon */}
             <div
               aria-hidden="true"
               className="relative w-5 h-5 flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(360deg)] group-active:[transform:rotateY(360deg)]"
             >
-              <X className="w-4 h-4 stroke-[2.2] transition-colors duration-200" />
+              <X className="w-5 h-5 stroke-[2] transition-colors duration-200 group-hover:drop-shadow-[0_0_8px_rgba(248,113,113,0.6)]" />
             </div>
           </button>
         </header>
