@@ -62,8 +62,9 @@ export function ScrollAnimationProvider() {
       });
     }
 
-    // 2. Scroll Progress Bar Tracking
+    // 2. Scroll Progress Bar Tracking (Desktop only, hidden on mobile)
     const updateProgress = () => {
+      if (window.innerWidth < 768) return;
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       if (totalScroll > 0) {
         const current = window.scrollY;
@@ -126,7 +127,7 @@ export function ScrollAnimationProvider() {
   return (
     <div
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 h-[2px] z-[9999] pointer-events-none bg-transparent"
+      className="hidden md:block fixed top-0 left-0 right-0 h-[2px] z-[9999] pointer-events-none bg-transparent"
     >
       <div
         className="h-full bg-white origin-left shadow-[0_0_8px_rgba(255,255,255,0.7)]"
