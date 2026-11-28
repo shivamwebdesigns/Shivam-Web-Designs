@@ -121,7 +121,7 @@ export function Navbar() {
                   ShivamWebDesigns
                 </span>
                 <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-widest leading-none mt-0.5 hidden min-[360px]:block">
-                  Digital Studio
+                  Web Agency
                 </span>
               </div>
             </Link>
