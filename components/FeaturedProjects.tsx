@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { CoreWebVitalsCard } from '@/components/CoreWebVitalsCard';
+import { ScrollTextReveal } from '@/components/ui/ScrollTextReveal';
 
 export const FeaturedProjects: React.FC = () => {
   return (
@@ -15,9 +16,10 @@ export const FeaturedProjects: React.FC = () => {
             <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-white leading-tight">
               Projects are updating soon!
             </h2>
-            <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
-              Our production client builds and flagship case studies are currently undergoing NDA clearance and documentation. In the meantime, every digital experience we engineer strictly adheres to our live 7-step mobile Core Web Vitals optimization protocol.
-            </p>
+            <ScrollTextReveal
+              text="Our production client builds and flagship case studies are currently undergoing NDA clearance and documentation. In the meantime, every digital experience we engineer strictly adheres to our live 7-step mobile Core Web Vitals optimization protocol."
+              className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed"
+            />
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="/start-project"

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
+import { StudioManifesto } from '@/components/StudioManifesto';
 import { ServicesSection } from '@/components/ServicesSection';
 import { PackagesSection } from '@/components/PackagesSection';
 import { SpatialStack } from '@/components/SpatialStack';
@@ -44,6 +45,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col">
       <Hero />
+      <StudioManifesto />
       <ServicesSection />
       <PackagesSection />
       <SpatialStack />

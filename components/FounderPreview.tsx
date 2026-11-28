@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, CreditCard } from 'lucide-react';
 import { founderData } from '@/data/founder';
+import { ScrollTextReveal } from '@/components/ui/ScrollTextReveal';
 
 export const FounderPreview: React.FC = () => {
   return (
@@ -49,9 +50,10 @@ export const FounderPreview: React.FC = () => {
             </h2>
 
             <blockquote className="border-l-2 border-white pl-6 py-1 mb-8">
-              <p className="text-lg md:text-xl font-light text-neutral-200 leading-snug italic">
-                &ldquo;{founderData.founderNote.quote}&rdquo;
-              </p>
+              <ScrollTextReveal
+                text={`“${founderData.founderNote.quote}”`}
+                className="text-lg md:text-xl font-light text-neutral-200 leading-snug italic"
+              />
             </blockquote>
 
             <p className="text-base text-neutral-400 leading-relaxed mb-6">

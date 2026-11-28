@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
+import { ScrollTextReveal } from '@/components/ui/ScrollTextReveal';
 
 export function Hero() {
   return (
@@ -14,9 +15,10 @@ export function Hero() {
           </h1>
 
           {/* Supporting Text */}
-          <p className="text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed text-balance">
-            {siteConfig.supportingText}
-          </p>
+          <ScrollTextReveal
+            text={siteConfig.supportingText}
+            className="text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed text-balance"
+          />
 
           {/* Dual CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 sm:pt-4">
