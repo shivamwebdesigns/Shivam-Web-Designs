@@ -34,11 +34,11 @@ export function StudioManifesto() {
 
     const handleScroll = () => {
       const rect = section.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
-      // Reveal smoothly as section scrolls into the active reading zone
-      const start = windowHeight * 0.88;
-      const end = windowHeight * 0.38;
+      // Reveal smoothly across the section's viewport journey (wide range optimized for mobile & desktop)
+      const start = windowHeight * 0.95;
+      const end = windowHeight * 0.18;
       const current = rect.top;
       const rawProgress = (start - current) / (start - end);
       targetProgressRef.current = Math.min(Math.max(rawProgress, 0), 1);
@@ -46,16 +46,18 @@ export function StudioManifesto() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
+    window.addEventListener('touchmove', handleScroll, { passive: true });
+    window.addEventListener('touchend', handleScroll, { passive: true });
     handleScroll();
 
-    // Lerp update loop (0.08 factor for silky ease)
+    // Lerp update loop (0.12 factor for silky smooth tracking on mobile touch & desktop)
     const updateLerp = () => {
       const target = targetProgressRef.current;
       const current = currentProgressRef.current;
       const diff = target - current;
 
-      if (Math.abs(diff) > 0.0004) {
-        currentProgressRef.current = current + diff * 0.08;
+      if (Math.abs(diff) > 0.0002) {
+        currentProgressRef.current = current + diff * 0.12;
         setDisplayProgress(currentProgressRef.current);
       } else if (current !== target) {
         currentProgressRef.current = target;
@@ -71,6 +73,8 @@ export function StudioManifesto() {
       cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('touchmove', handleScroll);
+      window.removeEventListener('touchend', handleScroll);
     };
   }, []);
 
@@ -117,8 +121,8 @@ export function StudioManifesto() {
                   }`}
                   style={{
                     opacity,
-                    filter: `blur(${blur.toFixed(2)}px)`,
-                    transform: `translate3d(0, ${translateY.toFixed(2)}px, 0)`,
+                    filter: blur > 0.25 ? `blur(${blur.toFixed(1)}px)` : 'none',
+                    transform: `translate3d(0, ${translateY.toFixed(1)}px, 0)`,
                   }}
                 >
                   {word}
@@ -129,7 +133,7 @@ export function StudioManifesto() {
 
           {/* Bottom Indicator */}
           <div className="pt-6 sm:pt-8 flex items-center gap-3 text-xs font-mono text-neutral-400 uppercase tracking-widest">
-            <span className="text-white font-medium">SCROLL</span>
+            <span className="text-white font-medium tracking-wider">SCROLL</span>
             <div className="scroll-indicator-line" aria-hidden="true">
               <span className="scroll-indicator-highlight" />
             </div>

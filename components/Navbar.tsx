@@ -73,6 +73,19 @@ export function Navbar() {
             })}
           </nav>
 
+          {/* Mobile Center Pill: 01 // CAPABILITIES & EXPERTISE with blended background */}
+          <div className="flex md:hidden items-center justify-center flex-1 px-1.5 mx-1 overflow-hidden">
+            <Link
+              href="/#services"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800/80 hover:border-neutral-700 text-[10px] font-mono tracking-wider text-neutral-300 hover:text-white backdrop-blur-md transition-all active:scale-95 shadow-sm group truncate"
+              aria-label="01 // Capabilities & Expertise"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+              <span className="hidden min-[380px]:inline truncate">01 // CAPABILITIES &amp; EXPERTISE</span>
+              <span className="min-[380px]:hidden truncate">01 // CAPABILITIES</span>
+            </Link>
+          </div>
+
           {/* Right Action Cluster */}
           <div className="hidden md:flex items-center space-x-3">
             <Link
@@ -85,10 +98,10 @@ export function Navbar() {
           </div>
 
           {/* Mobile Action Cluster */}
-          <div className="flex md:hidden items-center gap-2.5 sm:gap-3">
+          <div className="flex md:hidden items-center gap-2 sm:gap-2.5 flex-shrink-0">
             <Link
               href="/start-project"
-              className="inline-flex items-center justify-center min-h-[44px] px-4 py-2 text-xs font-semibold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded-lg transition-all duration-200 active:scale-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 font-mono group"
+              className="inline-flex items-center justify-center min-h-[44px] px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-black bg-white hover:bg-neutral-200 rounded-lg transition-all duration-200 active:scale-95 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 font-mono group"
             >
               <span>Inquire</span>
               <ArrowUpRight className="ml-1 h-3.5 w-3.5 opacity-80 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
