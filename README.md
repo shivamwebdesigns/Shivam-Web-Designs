@@ -48,7 +48,7 @@ Every digital experience engineered by ShivamWebDesigns adheres to our standardi
 
 ### Optimization & Motion Highlights
 - **Zero Reflow Stacking:** Refined `SpatialStack` 3D card deck using `transform-gpu` and `will-change-transform` for fluid 60fps mobile scrolling without layout thrashing.
-- **Interactive Performance Inspection:** Built-in protocol switcher on Layer 04 allowing clients to toggle live between the 7-Point Mobile Protocol and quantitative Lighthouse audit metrics.
+- **Micro-Interaction Suite:** High-performance `TextShimmer` metallic glows across section eyebrows & badges, `TextMorph` keyword cycling in the Hero headline, and `ScrollTextReveal` illuminating the Studio Manifesto word-by-word with zero external animation library overhead.
 - **Hardware-Accelerated Motion:** GPU-accelerated cubic-bezier curves (`cubic-bezier(0.16, 1, 0.3, 1)`), smooth entrance keyframes (`fadeIn`, `slideUp`, `scaleUp`), and silky `.hover-elevate` physical micro-interactions.
 - **Harmonized Vertical Rhythm:** Responsive section padding (`py-14 sm:py-20 lg:py-24`) across all studio routes eliminating abrupt dead whitespace on mobile viewports.
 - **Strict Color Contrast:** All body, badge, and muted UI text calibrated to > 4.5:1 contrast ratio against `#050505` backgrounds.

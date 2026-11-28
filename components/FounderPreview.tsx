@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, CreditCard } from 'lucide-react';
 import { founderData } from '@/data/founder';
+import { TextShimmer } from '@/components/ui/TextShimmer';
 
 export const FounderPreview: React.FC = () => {
   return (
@@ -40,7 +41,7 @@ export const FounderPreview: React.FC = () => {
           <div className="lg:col-span-7 flex flex-col justify-center">
             <div className="mb-3">
               <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                Leadership & Philosophy
+                <TextShimmer>06 // LEADERSHIP &amp; PHILOSOPHY</TextShimmer>
               </span>
             </div>
 

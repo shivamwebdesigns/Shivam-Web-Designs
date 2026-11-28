@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Box, Code2, Layers, Zap, Sparkles } from 'lucide-react';
-import { CoreWebVitalsCard } from '@/components/CoreWebVitalsCard';
+import { TextShimmer } from '@/components/ui/TextShimmer';
 
 interface StackLayer {
   index: number;
@@ -88,7 +88,7 @@ export function SpatialStack() {
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">
           <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-4">
-            02 // THE 3D ARCHITECTURE STACK
+            <TextShimmer>02 // THE 3D ARCHITECTURE STACK</TextShimmer>
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
             Four Layers of Engineering Precision
@@ -183,10 +183,7 @@ export function SpatialStack() {
 
                 {/* Spatial Preview Column */}
                 <div className="lg:col-span-5 w-full">
-                  {layer.previewType === 'performance' ? (
-                    <CoreWebVitalsCard />
-                  ) : (
-                    <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
+                  <div className="relative aspect-[4/3] rounded-xl bg-black border border-neutral-800 p-6 flex flex-col justify-between overflow-hidden shadow-inner">
                       {layer.previewType === '3d-card' && (
                         <div className="flex flex-col justify-between h-full">
                           <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
@@ -253,9 +250,38 @@ export function SpatialStack() {
                           </div>
                         </div>
                       )}
+
+                      {layer.previewType === 'performance' && (
+                        <div className="flex flex-col justify-between h-full">
+                          <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
+                            <span>AUDIT SCORES</span>
+                            <span className="text-emerald-400">VERIFIED PASS</span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3 py-2 text-center">
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">100</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">Performance</div>
+                            </div>
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">100</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">Accessibility</div>
+                            </div>
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">&lt; 0.8s</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">LCP Speed</div>
+                            </div>
+                            <div className="p-2.5 bg-neutral-900/60 border border-neutral-800 rounded">
+                              <div className="text-xl font-bold font-mono text-white">0.000</div>
+                              <div className="text-[9px] font-mono text-neutral-400 uppercase">CLS Shift</div>
+                            </div>
+                          </div>
+                          <div className="text-center text-[10px] font-mono text-neutral-400">
+                            Vercel Global Edge Network • Sub-Second Mobile
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </div>
               </div>
             </article>
           ))}

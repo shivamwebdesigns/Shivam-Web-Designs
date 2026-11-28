@@ -1,5 +1,6 @@
 import React from 'react';
 import { Shield, Zap, Sparkles, UserCheck } from 'lucide-react';
+import { TextShimmer } from '@/components/ui/TextShimmer';
 
 export const WhyChooseUs: React.FC = () => {
   const pillars = [
@@ -44,7 +45,7 @@ export const WhyChooseUs: React.FC = () => {
         <div className="max-w-2xl mb-16">
           <div className="mb-3">
             <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-              The Agency Advantage
+              <TextShimmer>04 // THE AGENCY ADVANTAGE</TextShimmer>
             </span>
           </div>
           <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white mb-4">

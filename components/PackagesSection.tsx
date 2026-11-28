@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 import { OrderStatusModal } from '@/components/OrderStatusModal';
+import { TextShimmer } from '@/components/ui/TextShimmer';
 
 export interface PackageTier {
   id: 'starter' | 'growth' | 'pro';
@@ -481,11 +482,11 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
         <div className="max-w-3xl mb-6 sm:mb-8">
           {isPage ? (
             <h1 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
-              Website Packages Starting at ₹499
+              Website Packages <TextShimmer className="font-medium text-white">Starting at ₹499</TextShimmer>
             </h1>
           ) : (
             <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-white mb-4 leading-tight">
-              Website Packages Starting at ₹499
+              Website Packages <TextShimmer className="font-medium text-white">Starting at ₹499</TextShimmer>
             </h2>
           )}
           <p className="text-base sm:text-lg text-neutral-400 font-light leading-relaxed mb-4">
@@ -493,11 +494,11 @@ export function PackagesSection({ isPage = false }: PackagesSectionProps) {
           </p>
           {isPage ? (
             <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-              PACKAGES // FIXED PRICES
+              <TextShimmer>PACKAGES // FIXED PRICES</TextShimmer>
             </h2>
           ) : (
             <p className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-              PACKAGES // FIXED PRICES
+              <TextShimmer>PACKAGES // FIXED PRICES</TextShimmer>
             </p>
           )}
         </div>
